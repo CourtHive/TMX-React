@@ -1,0 +1,35 @@
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: 'transparent';
+}
+
+body {
+  font-family: Avenir, sans-serif;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: local('Avenir'), url('../assets/37C23B_2_0.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: local('Avenir'), url('../assets/37C23B_6_0.woff2') format('woff2');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: local('Avenir'), url('../assets/37C23B_8_0.woff2') format('woff2');
+  font-weight: 700;
+}

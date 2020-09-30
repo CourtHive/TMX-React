@@ -1,0 +1,112 @@
+import { env } from 'config/defaults';
+import { setDev } from 'config/setDev';
+import { config } from 'config/config';
+import { tmxStore } from 'stores/tmxStore';
+import { context } from 'services/context';
+import { resetDB } from 'services/storage/resetDB';
+import { saveMyTournaments } from 'services/officiating/tournaments';
+
+import { parse as parseQueryString } from 'services/queryString';
+import { updateReady, popupsBlocked } from 'services/notifications/statusMessages';
+import { initOptimizedResizing } from 'components/hooks/useOptimizedRefresh';
+import { idiomSetup } from './idiom/idiomSetup';
+
+import EventEmitter from 'wolfy87-eventemitter';
+
+import 'styles/main.css';
+
+export function setupTMX() {
+    setEnv();
+    setWindow();
+    setContext();
+    idiomSetup();
+
+    config.init().then(tmxReady, initializationFailed);
+}
+
+function initializationFailed(err) {
+    if (err && err.name === 'OpenFailedError') {
+        resetDB();
+    } else {
+        tmxStore.dispatch({
+            type: 'toaster state',
+            payload: { severity: 'error', message: 'Initialization Error' }
+        });    
+    }
+}
+
+function tmxReady() {
+    setDev({env});
+    saveMyTournaments();
+    tmxStore.dispatch({
+        type: 'set initial state',
+        payload: { visibleTabs: env.visibleTabs, enabledComponents: env.enabledComponents }
+    });
+    console.log('%c TMX Ready','color: lightgreen');
+}
+
+function setContext() {
+    initOptimizedResizing();
+    context.ee = new EventEmitter();
+}
+
+function setWindow() {
+   // to disable context menu on the page
+    document.oncontextmenu = () => false;
+    window.addEventListener('contextmenu', (e) => { e.preventDefault(); }, false);
+    window.packageEntry = { updateReady };
+    window.onerror = (msg, url, lineNo, columnNo, error) => {
+        let error_message = typeof msg === 'object' ? JSON.stringify(msg) : msg;
+        let eventError = { error_message, url, stack: { lineNo, columnNo, error } };
+        let message = {
+            title: 'warn',
+            notice: `Error Detected: Development has been notified!. Try CourtHive.com/tmx-`
+        };
+        context.ee.emit('addMessage', message);
+        context.ee.emit('emitTmx', { action: 'clientError', payload: { eventError } });
+    };
+    window.onunhandledrejection = (event) => {
+        event.preventDefault();
+        let reason = event.reason;
+        let message = reason && (reason.stack || reason);
+        if (message && typeof message === 'string' && message.indexOf('blocked') > 0) {
+            popupsBlocked();
+        } else {
+            console.log('Unhandled rejection:', (reason && (reason.stack || reason)));
+            context.ee.emit('logError', reason);
+        }
+    };
+}
+
+function setEnv() {
+    env.device = getDevice();
+    env.version_check = new Date().getTime();
+    console.log('version:', env.version);
+
+    eventListeners();
+    context.queryString = parseQueryString();
+}
+
+function eventListeners() {
+    let setOrientation = () => { env.orientation = (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape'; };
+    window.addEventListener("orientationchange", function() { setOrientation(); }, false);
+    window.addEventListener("resize", function() { setOrientation(); }, false);
+    setOrientation();
+}
+
+function getDevice() {
+    let nav = getNavigator();
+    let device = {
+        isStandalone: nav && 'standalone' in nav && nav.standalone,
+        isIDevice: nav && (/iphone|ipod|ipad/i).test(nav.userAgent),
+        isIpad: nav && (/iPad/i).test(nav.userAgent),
+        isWindows: nav && (/indows/i).test(nav.userAgent),
+        isMobile: nav && /Mobi/.test(nav.userAgent)
+    };
+    return device;
+}
+
+function getNavigator() {
+    try { return navigator || window.navigator; }
+    catch (e) { return undefined; };
+};

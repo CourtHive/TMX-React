@@ -1,0 +1,12 @@
+#!/bin/bash
+clear
+start=$(date +"%T")
+printf "Build start : $start\r\n"
+cp src/images/courthive.png src/images/splash.png
+cp src/indices/index.plus.js src/index.js
+cp src/indices/index.ch.html public/index.html
+cp src/config/customizations/tmx.js src/config/defaults.js
+npm run build
+end=$(date +"%T")
+COLOR='\033[0;36m'
+printf "${COLOR}Build end : $end\r\n"
