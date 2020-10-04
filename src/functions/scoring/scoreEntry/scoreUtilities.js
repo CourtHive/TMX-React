@@ -83,7 +83,11 @@ export function removeFromScore({ analysis, matchUp, lowSide }) {
       const matchTiebreakScoreString = newScore.slice(lastMatchTiebreakOpenBracketIndex + 1);
       const splitScoreString = matchTiebreakScoreString.split(MATCH_TIEBREAK_JOINER);
       const side1TiebreakScore =
-        splitScoreString?.length > 0 && splitScoreString[0] !== undefined && parseInt(splitScoreString[0]);
+        (splitScoreString?.length > 0 &&
+          splitScoreString[0] !== undefined &&
+          !isNaN(parseInt(splitScoreString[0])) &&
+          parseInt(splitScoreString[0])) ||
+        undefined;
       const side2TiebreakScore =
         (splitScoreString?.length > 1 && splitScoreString[1] !== undefined && parseInt(splitScoreString[1])) ||
         undefined;
