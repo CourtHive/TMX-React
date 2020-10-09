@@ -1,6 +1,24 @@
 import { fixtures } from 'tods-competition-factory';
 const { flagIOC } = fixtures;
 
+function getDrawPosition(d) {
+  const winningSide = d.data.winningSide;
+  return winningSide ? d.data.drawPositions[winningSide - 1] : d.data.drawPosition || '';
+}
+
+function getSeeding({ opponent, side, options }) {
+  const seedNumber = options.names.seed_number && !side && opponent.seedValue;
+  const blockSeeding = opponent.seedValue && !side && opponent.seedBlock && options.names.seedBlock;
+  const blockThreshold =
+    typeof blockSeeding === 'boolean' || (!isNaN(blockSeeding) && opponent.seedValue >= blockSeeding);
+  const seedBlock = blockSeeding && blockThreshold && opponent.seedBlock;
+  return seedBlock || seedNumber;
+}
+
+function compressName(name) {
+  return name.replace(/["'., ]/g, '');
+}
+
 export default class ParticipantData {
   constructor({ participants, info, options, roundWidth, nextUnfilledDrawPositions } = {}) {
     this._nextUnfilledDrawPositions = nextUnfilledDrawPositions || [];
@@ -32,7 +50,7 @@ export default class ParticipantData {
     const data = d && d.data;
     if (!data || typeof data !== 'object') return '';
 
-    const sides = data.Sides;
+    const sides = data.sides;
     const winningSide = data.winningSide;
     const matchUpId = data.matchUpId;
     const isByeMatchUp = sides && sides.filter((f) => f).reduce((p, c) => c.bye || p, false);
@@ -272,22 +290,4 @@ export default class ParticipantData {
     }, undefined);
     return participant;
   }
-}
-
-function getDrawPosition(d) {
-  const winningSide = d.data.winningSide;
-  return winningSide ? d.data.drawPositions[winningSide - 1] : d.data.drawPosition || '';
-}
-
-function getSeeding({ opponent, side, options }) {
-  const seedNumber = options.names.seed_number && !side && opponent.seedValue;
-  const blockSeeding = opponent.seedValue && !side && opponent.seedBlock && options.names.seedBlock;
-  const blockThreshold =
-    typeof blockSeeding === 'boolean' || (!isNaN(blockSeeding) && opponent.seedValue >= blockSeeding);
-  const seedBlock = blockSeeding && blockThreshold && opponent.seedBlock;
-  return seedBlock || seedNumber;
-}
-
-function compressName(name) {
-  return name.replace(/["'., ]/g, '');
 }

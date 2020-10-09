@@ -3,10 +3,12 @@ import Dexie from 'dexie';
 export const db = (function () {
   const db = {};
 
+  const DexieDB = process.env.REACT_APP_DEXIE_DB;
+
   db.initDB = () => {
     try {
       return new Promise((resolve) => {
-        db.db = new Dexie('TMX', { autoOpen: true });
+        db.db = new Dexie(DexieDB || 'TMX', { autoOpen: true });
         db.db.version(1).stores({
           tournaments: '&tournamentId, name, startDate, endDate',
           settings: 'key',

@@ -128,7 +128,7 @@ export interface MatchUpInterface {
   tieMatchUps?: MatchUpInterface[];
   timeItems?: TimeItemType[];
   tournamentId?: string;
-  Sides: SideInterface[] | undefined[]; // TODO: use camelCase
+  sides: SideInterface[] | undefined[]; // TODO: use camelCase
   winningSide?: number;
   readyToScore?: boolean;
 }

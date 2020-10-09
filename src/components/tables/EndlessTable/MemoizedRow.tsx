@@ -17,6 +17,11 @@ const MemoizedRow = memo(({ index, style, data }: ListChildComponentProps) => {
     rowConfig,
     VLRef
   } = data.props;
+  // TODO: fix => react-window dynamic row sizes are not working.
+  const offset = data?.data?.reduce((accumulator, currentValue, currentIndex) => {
+    const value = currentIndex < index ? rowConfig?.rowSize(currentIndex) : 0;
+    return value ? accumulator + value : accumulator;
+  }, 0);
   return (
     <DraggableRow
       cellConfig={cellConfig}
@@ -24,6 +29,7 @@ const MemoizedRow = memo(({ index, style, data }: ListChildComponentProps) => {
       customClassName={customClassName}
       headerCells={headerCells}
       index={index}
+      offsetTop={offset}
       onCellClick={onCellClick}
       onDrop={onDrop}
       onRowMouseOver={onRowMouseOver}

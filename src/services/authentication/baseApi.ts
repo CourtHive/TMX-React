@@ -7,14 +7,13 @@ import { getJwtTokenStorageKey } from 'config/localStorage';
 // import { showError } from 'services/notification';
 // import { showLoadingBar } from 'services/loadingBar';
 
-
 const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_CHCS_ROOT_URL,
+  baseURL: process.env.REACT_APP_CHCS_ROOT_URL
 });
 
 axiosInstance.interceptors.request.use(
-  config => {
+  (config) => {
     const ProviderCtx = env?.org?.ouid;
     const token = localStorage.getItem(JWT_TOKEN_STORAGE_NAME);
     if (token) config.headers.common.Authorization = `Bearer ${token}`;
@@ -22,17 +21,17 @@ axiosInstance.interceptors.request.use(
 
     return config;
   },
-  error => {
+  (error) => {
     AppToaster.show({ icon: 'error', intent: 'error', message: error.message });
     return Promise.reject(error);
-  },
-)
+  }
+);
 
 axiosInstance.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     if (error.message === 'Network Error') {
       AppToaster.show({ icon: 'error', intent: 'error', message: error.message });
     }
@@ -47,7 +46,7 @@ axiosInstance.interceptors.response.use(
       const message = error.response.data.message || error.response.data.error || error.response.data;
       AppToaster.show({ icon: 'error', intent: 'error', message });
     }
-  },
+  }
 );
 
 const addAuthorization = (): void => {
@@ -62,5 +61,5 @@ const removeAuthorization = (): void => {
 export const baseApi = {
   ...axiosInstance,
   addAuthorization,
-  removeAuthorization,
+  removeAuthorization
 };

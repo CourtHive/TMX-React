@@ -14,6 +14,7 @@ import {
 } from 'components/tables/EndlessTable/typedefs';
 import { useStyles } from 'components/tables/EndlessTable/styles';
 import { useCombinedRefs } from 'components/hooks/useCombinedRefs';
+import { DEFAULT_ROW_SIZE } from 'components/tables/EndlessTable/constants';
 
 export interface DraggableRowProps<T extends RowData> {
   cellConfig?: CellConfigInterface;
@@ -21,6 +22,7 @@ export interface DraggableRowProps<T extends RowData> {
   customClassName?: string;
   headerCells: HTMLCollection;
   index: number;
+  offsetTop?: number;
   onCellClick?: (event?: React.MouseEvent<HTMLDivElement, MouseEvent>, rowItem?: T, cellIIndex?: number) => void;
   onDrop?: (
     dragObject: DragObjectItemInterface<T>,
@@ -43,6 +45,7 @@ const DraggableRow = <T extends RowData>({
   customClassName,
   headerCells,
   index,
+  offsetTop,
   onCellClick,
   onDrop,
   onRowMouseOver,
@@ -75,6 +78,8 @@ const DraggableRow = <T extends RowData>({
   const ref = (rowConfig?.draggableRow && rowConfig?.draggableRow(rowItem, index) && !customDragHandleProvided
     ? combinedRefs
     : dropRow) as React.RefObject<HTMLDivElement>;
+  const rowHeightDefined = rowConfig?.rowSize(index);
+  const rowHeight = rowHeightDefined || DEFAULT_ROW_SIZE;
 
   const handleRowClick = (event) => {
     onRowClick && onRowClick(event, rowItem, index);
@@ -97,7 +102,7 @@ const DraggableRow = <T extends RowData>({
       onMouseOver={handleOnMouseOver}
       onMouseLeave={handleOnMouseOut}
       ref={ref}
-      style={{ display: 'table', width: '100%', ...style }}
+      style={{ ...style, display: 'table', width: '100%', height: rowHeight, top: offsetTop }}
     >
       {columns.map(({ key, getValue }, cellIndex) => (
         <DraggableCell

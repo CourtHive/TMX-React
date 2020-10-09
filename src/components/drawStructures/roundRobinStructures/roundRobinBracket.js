@@ -149,7 +149,7 @@ export function roundRobinBracket() {
           if (d.matchUp && d.matchUp.winningSide !== undefined) {
             const winnerIndex = d.matchUp.winningSide - 1;
             const loserIndex = 1 - winnerIndex;
-            const losingSide = d.matchUp.Sides[loserIndex];
+            const losingSide = d.matchUp.sides[loserIndex];
             console.log('score adornment', { losingSide });
           }
           // indicate w.o. for losing row by changing text to red
@@ -515,7 +515,7 @@ export function roundRobinBracket() {
     if (matchUp && matchUp.score) {
       const winningSide = matchUp.winningSide;
       if (winningSide) {
-        const winnerParticipantId = matchUp.Sides[winningSide - 1].participantId;
+        const winnerParticipantId = matchUp.sides[winningSide - 1].participantId;
         const winnerPosition = participants.reduce((position, participant, i) => {
           return participant.participantId === winnerParticipantId ? i + 1 : position;
         }, undefined);

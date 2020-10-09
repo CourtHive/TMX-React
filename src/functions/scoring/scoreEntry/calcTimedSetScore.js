@@ -23,6 +23,9 @@ export function calcTimedSetScore({ analysis, lowSide, matchUp, message, value }
     }
   } else if (value === BACKSPACE) {
     ({ score, sets, outcomeRemoved } = removeFromScore({ analysis, matchUp }));
+    if (score.trim() === '') {
+      score = score.trim();
+    }
     if (!score) sets = [];
 
     if (outcomeRemoved) {
@@ -72,24 +75,31 @@ export function calcTimedSetScore({ analysis, lowSide, matchUp, message, value }
     matchUp.winningSide = undefined;
     updated = true;
   } else if (!isNaN(value)) {
-    const greaterThanZero = parseInt(value) > 0;
+    let currentSetScore;
 
     if (sets[setIndex].side2Score === undefined) {
-      // if side2Score is undefined then add value to first set score
-      if (greaterThanZero || sets[setIndex].side1Score) {
-        sets[setIndex].side1Score = parseInt((sets[setIndex].side1Score || 0).toString() + value);
-        const newScore = (score || '') + value;
-        score = newScore;
-        updated = true;
-      }
+      const newValue = parseInt((sets[setIndex].side1Score || 0).toString() + value)
+        .toString()
+        .slice(0, 2);
+      sets[setIndex].side1Score = parseInt(newValue);
+      currentSetScore = sets[setIndex].side1Score.toString();
+      updated = true;
     } else {
-      // if side2Score is NOT undefined then add value to second set score
-      if (greaterThanZero || sets[setIndex].side2Score) {
-        sets[setIndex].side2Score = parseInt((sets[setIndex].side2Score || 0).toString() + value);
-        const newScore = (score.trim() || '') + value;
-        score = newScore;
-        updated = true;
-      }
+      const newValue = parseInt((sets[setIndex].side2Score || 0).toString() + value)
+        .toString()
+        .slice(0, 2);
+      sets[setIndex].side2Score = parseInt(newValue);
+      currentSetScore = [sets[setIndex].side1Score, sets[setIndex].side2Score].join('-');
+      updated = true;
+    }
+    if (updated) {
+      const priorSetScores = (sets.slice(0, setIndex) || [])
+        .map((set) => {
+          const { side1Score, side2Score } = set;
+          return [side1Score, side2Score].join('-');
+        })
+        .join(' ');
+      score = priorSetScores + ' ' + currentSetScore;
     }
   }
 

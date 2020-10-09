@@ -30,8 +30,8 @@ export const TieMatchUpContainer = (props) => {
   };
 
   const handleEditParticipant = ({ tieMatchUp, sideNumber, participantId, sideMember }) => {
-    const { drawId, matchUpId: tieMatchUpId, Sides } = tieMatchUp;
-    const side = Sides[sideNumber - 1];
+    const { drawId, matchUpId: tieMatchUpId, sides } = tieMatchUp;
+    const side = sides[sideNumber - 1];
     const individualParticipants = side?.participant?.individualParticipants?.map((participant) => ({
       participantId: participant?.participantId
     }));

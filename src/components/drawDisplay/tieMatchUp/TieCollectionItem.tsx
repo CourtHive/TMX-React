@@ -90,10 +90,10 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
   const handleFilterOptionsSide2 = (options: ParticipantInterface[]) =>
     filterOptions(collectionMatchUp.matchUpType, options, 2);
 
-  const side1Participant = collectionMatchUp.Sides[0]?.participant;
-  const side2Participant = collectionMatchUp.Sides[1]?.participant;
-  const side1IndividualParticipants = collectionMatchUp.Sides[0]?.participant?.individualParticipants || [];
-  const side2IndividualParticipants = collectionMatchUp.Sides[1]?.participant?.individualParticipants || [];
+  const side1Participant = collectionMatchUp.sides[0]?.participant;
+  const side2Participant = collectionMatchUp.sides[1]?.participant;
+  const side1IndividualParticipants = collectionMatchUp.sides[0]?.participant?.individualParticipants || [];
+  const side2IndividualParticipants = collectionMatchUp.sides[1]?.participant?.individualParticipants || [];
   const side1Member1Participant = isDouble ? side1IndividualParticipants[0] : side1Participant;
   const side1Member2Participant = side1IndividualParticipants[1];
   const side2Member1Participant = isDouble ? side2IndividualParticipants[0] : side2Participant;

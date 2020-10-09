@@ -21,9 +21,9 @@ export const matchUpAsRow = (matchUp, index) => {
     time: convertTime(DateHHMM(matchUp.schedule.scheduledTime), env),
     eventName: matchUp.eventName,
     round: matchUp.roundNumber,
-    side1: matchUp.Sides[0]?.participant?.name || 'None',
-    side2: matchUp.Sides[1]?.participant?.name || 'None',
-    side1Id: matchUp.Sides[0]?.participant?.participantId || 'None',
-    side2Id: matchUp.Sides[1]?.participant?.participantId || 'None'
+    side1: matchUp.sides[0]?.participant?.name || 'None',
+    side2: matchUp.sides[1]?.participant?.name || 'None',
+    side1Id: matchUp.sides[0]?.participant?.participantId || 'None',
+    side2Id: matchUp.sides[1]?.participant?.participantId || 'None'
   };
 };

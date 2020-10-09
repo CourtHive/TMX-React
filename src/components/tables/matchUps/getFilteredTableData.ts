@@ -1,4 +1,3 @@
-
 import { RowData } from 'components/tables/EndlessTable';
 import { matchUpFilter } from 'components/tables/utils';
 import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
@@ -48,8 +47,8 @@ export const getFilteredMatchUpsTableData = (
       startTime: matchUp.schedule.startTime,
       endTime: matchUp.schedule.endTime,
       // TODO: what happens for doubles?
-      player1: matchUp.Sides[0]?.participant?.name,
-      player2: matchUp.Sides[1]?.participant?.name,
+      player1: matchUp.sides[0]?.participant?.name,
+      player2: matchUp.sides[1]?.participant?.name,
       status: matchUp.matchUpStatus,
       score: matchUp.score,
       readyToScore: matchUp.readyToScore

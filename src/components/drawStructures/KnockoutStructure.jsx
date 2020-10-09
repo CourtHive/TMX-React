@@ -94,16 +94,19 @@ export function KnockoutStructure(props) {
     const participantName =
       isDrawPosition &&
       node &&
-      ((node.Sides &&
-        node.Sides.filter((f) => f).reduce((name, side) => {
-          return (side.participant && side.participant.name) || name;
-        }, undefined)) ||
+      ((node.sides &&
+        node.sides
+          .filter((f) => f)
+          .reduce((name, side) => {
+            return (side.participant && side.participant.name) || name;
+          }, undefined)) ||
         (node.participant && node.participant.name));
 
     const participantNames =
       node &&
-      node.Sides &&
-      node.Sides.filter((f) => f)
+      node.sides &&
+      node.sides
+        .filter((f) => f)
         .map((side) => {
           if (!side.participant) return undefined;
           const singleParticipantName = side.participant.person && side.participant.person.standardFamilyName;

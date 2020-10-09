@@ -9,18 +9,6 @@ import {
   WINNING_STATUSES
 } from 'functions/scoring/scoreEntry/constants';
 
-export function addOutcome({ score, lowSide, outcome }) {
-  ({ score } = removeOutcome({ score }));
-
-  if (lowSide === 2) {
-    const lastScoreCharacter = score && score[score.length - 1];
-    const spacer = lastScoreCharacter !== SPACE_CHARACTER ? SPACE_CHARACTER : '';
-    return score + spacer + outcome;
-  } else {
-    return outcome + SPACE_CHARACTER + score;
-  }
-}
-
 function removeOutcome({ score }) {
   if (!score) return { score: '' };
 
@@ -39,6 +27,37 @@ function removeOutcome({ score }) {
   if (!score || !score.trim()) score = '';
 
   return { score, removed };
+}
+
+export function addOutcome({ score, lowSide, outcome }) {
+  ({ score } = removeOutcome({ score }));
+
+  if (lowSide === 2) {
+    const lastScoreCharacter = score && score[score.length - 1];
+    const spacer = lastScoreCharacter !== SPACE_CHARACTER ? SPACE_CHARACTER : '';
+    return score + spacer + outcome;
+  } else {
+    return outcome + SPACE_CHARACTER + score;
+  }
+}
+
+export function testTiebreakEntry({ score, brackets = SET_TIEBREAK_BRACKETS }) {
+  if (!score) return false;
+  const [open, close] = brackets.split('');
+  const splitScore = score.split('');
+  const lastOpenBracketIndex = Math.max(...indices(open, splitScore));
+  const lastCloseBracketIndex = Math.max(...indices(close, splitScore));
+  const isTiebreakEntry = lastOpenBracketIndex > lastCloseBracketIndex;
+  return { isTiebreakEntry, lastOpenBracketIndex };
+}
+
+export function lastNumericIndex(str) {
+  const arr = str.split('');
+  const indices = arr.reduce((a, e, i) => {
+    if (e.match(/\d+/g)) a.push(i);
+    return a;
+  }, []);
+  return indices.pop();
 }
 
 export function removeFromScore({ analysis, matchUp, lowSide }) {
@@ -150,7 +169,9 @@ export function removeFromScore({ analysis, matchUp, lowSide }) {
         newSets = sets;
         newSets[sets.length - 1] = lastSet;
       }
-      Object.assign(newSets[newSets.length - 1], { winningSide: undefined });
+      if (newSets[newSets.length - 1]) {
+        Object.assign(newSets[newSets.length - 1], { winningSide: undefined });
+      }
     } else if (openSetTiebreak) {
       newSets = sets;
       Object.assign(newSets[newSets.length - 1], {
@@ -177,16 +198,6 @@ export function removeFromScore({ analysis, matchUp, lowSide }) {
   return { score, sets };
 }
 
-export function testTiebreakEntry({ score, brackets = SET_TIEBREAK_BRACKETS }) {
-  if (!score) return false;
-  const [open, close] = brackets.split('');
-  const splitScore = score.split('');
-  const lastOpenBracketIndex = Math.max(...indices(open, splitScore));
-  const lastCloseBracketIndex = Math.max(...indices(close, splitScore));
-  const isTiebreakEntry = lastOpenBracketIndex > lastCloseBracketIndex;
-  return { isTiebreakEntry, lastOpenBracketIndex };
-}
-
 export function checkValidMatchTiebreak({ score }) {
   if (!score) return false;
   const lastScoreChar = score && score[score.length - 1].trim();
@@ -200,15 +211,6 @@ export function checkValidMatchTiebreak({ score }) {
   const isValid =
     isNumericEnding && lastOpenBracketIndex > lastCloseBracketIndex && lastJoinerIndex > lastOpenBracketIndex;
   return isValid;
-}
-
-export function lastNumericIndex(str) {
-  const arr = str.split('');
-  const indices = arr.reduce((a, e, i) => {
-    if (e.match(/\d+/g)) a.push(i);
-    return a;
-  }, []);
-  return indices.pop();
 }
 
 export function getHighTiebreakValue({ lowValue = 0, NoAD = false, tiebreakTo } = {}) {

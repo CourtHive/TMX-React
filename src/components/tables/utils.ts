@@ -9,6 +9,17 @@ export const filterTableRows = (tableData, visibleColumns, targetValue) => {
   });
 };
 
+export function opponentsInclude({ matchUp, participantIds }) {
+  const opponentIds = matchUp?.sides
+    ?.map((side) => {
+      const participantId = side?.participantId;
+      const individualParticipants = side?.individidualParticipants || [];
+      return individualParticipants.concat(participantId);
+    })
+    .flat();
+  return opponentIds.find((opponentId) => participantIds.includes(opponentId));
+}
+
 export const matchUpFilter = (matchUp, teamIds?: string[], selectedDraw?: string) => {
   const NONE = '-';
   if (matchUp.matchUpStatus === 'BYE') return false;
@@ -16,15 +27,6 @@ export const matchUpFilter = (matchUp, teamIds?: string[], selectedDraw?: string
   if (teamIds?.length && !opponentsInclude({ matchUp, participantIds: teamIds })) return false;
   return true;
 };
-
-export function opponentsInclude({matchUp, participantIds}) {
-  const opponentIds = matchUp?.Sides?.map(side => {
-    let participantId = side?.participantId;
-    let individualParticipants = side?.individidualParticipants || [];
-    return individualParticipants.concat(participantId);
-  }).flat();
-  return opponentIds.find(opponentId => participantIds.includes(opponentId));
-}
 
 export const getColumnMenuItems = (tableColumns, onClick) => {
   return tableColumns.map((column) => ({
@@ -38,4 +40,4 @@ export const getColumnMenuItems = (tableColumns, onClick) => {
 
 export const getMouse = (event) => {
   return { x: event.clientX, y: event.clientY, pageX: event.pageX, pageY: event.pageY };
-}
+};

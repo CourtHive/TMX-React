@@ -18,6 +18,7 @@ import {
 } from 'components/tables/EndlessTable/typedefs';
 import CustomDragPreviewFactory from 'components/tables/EndlessTable/CustomDragPreviewFactory';
 import MemoizedRow from 'components/tables/EndlessTable/MemoizedRow';
+import { DEFAULT_ROW_SIZE } from './constants';
 
 export interface RowData {
   id: string;
@@ -80,6 +81,8 @@ const EndlessTable = <T extends RowData>({
   const paperComputedStyle = paperDiv ? getComputedStyle(paperDiv) : undefined;
   const previewBackgroundColor = paperComputedStyle?.backgroundColor || '#ffffff';
   const previewWidth = paperComputedStyle?.width || '100%';
+  const dataLength = data?.length;
+  const columnsLength = columns?.length;
 
   // marginLeft fixes custom preview drag handle issue
   const previewStyle = {
@@ -92,8 +95,8 @@ const EndlessTable = <T extends RowData>({
     setVLRef(listRef?.current);
     setHeaderCells(headerRowRef?.current?.children);
     setDivDistanceFromLeft(headerRowRef?.current?.getBoundingClientRect()?.x);
-    setPaperDiv(paperRef?.current)
-   
+    setPaperDiv(paperRef?.current);
+
     // provides support for initialScrollOffset until the issue within the react-window is resolved
     if (initialScrollOffset && listRef?.current) {
       listRef.current.scrollTo({ top: initialScrollOffset });
@@ -102,19 +105,22 @@ const EndlessTable = <T extends RowData>({
      * This is important because in cases where the user dynamically adds / removes columns, the component needs
      * to be re-rendered again, so the refs can be consistent. Without this, DOM refs are always "late by one" render.
      */
-    if (domColumnsCount !== columns.length) {
-      triggerUpdate(columns.length);
+    if (domColumnsCount !== columnsLength) {
+      triggerUpdate(columnsLength);
     }
-    if (domRowsCount !== data.length) {
-      triggerUpdateRows(data.length);
+    if (domRowsCount !== dataLength) {
+      triggerUpdateRows(dataLength);
     }
-  }, [domColumnsCount, domRowsCount, columns.length, data.length, initialScrollOffset]);
+  }, [domColumnsCount, domRowsCount, columnsLength, dataLength, initialScrollOffset]);
 
   const getRowHeight = (index: number) => {
     if (rowConfig?.rowSize) {
-      return rowConfig.rowSize(index);
+      const isDefined = rowConfig.rowSize(index);
+      if (isDefined) {
+        return isDefined;
+      }
     }
-    return 52;
+    return DEFAULT_ROW_SIZE;
   };
   const allRowsHeight = data.reduce((total, _, index) => total + getRowHeight(index), 0);
 
@@ -151,7 +157,7 @@ const EndlessTable = <T extends RowData>({
               ))}
             </TableRow>
           </TableHead>
-          {domColumnsCount && domColumnsCount > 0 && domColumnsCount !== columns.length ? (
+          {domColumnsCount && domColumnsCount > 0 && domColumnsCount !== columnsLength ? (
             <div style={{ height: tableConfig?.tableHeight || 300, width: '100%' }} />
           ) : (
             <>

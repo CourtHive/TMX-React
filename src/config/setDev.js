@@ -4,6 +4,7 @@ import { exportFx } from 'services/files/exportFx';
 import { coms } from 'services/communications/SocketIo/coms';
 import { fetchFx } from 'services/communications/Axios/fetchFx';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
+import { JSONPath } from 'jsonpath-plus';
 
 import { UUID } from 'functions/UUID';
 import { isLocalhost } from 'functions/isLocalhost';
@@ -13,6 +14,18 @@ import { drawEngine, tournamentEngine, competitionEngine } from 'tods-competitio
 import { fetchURL } from 'services/communications/Axios/fetch/fetchURL';
 
 import { tmxStore } from 'stores/tmxStore';
+
+let addDevErrors = 0;
+export function addDev(variable) {
+  try {
+    Object.keys(variable).forEach((key) => (window.dev[key] = variable[key]));
+  } catch (err) {
+    if (!addDevErrors) {
+      console.log('production environment');
+      addDevErrors += 1;
+    }
+  }
+}
 
 export function setDev({ env }) {
   // if ?dev= equals env.dev then enable dev object access in console
@@ -33,6 +46,7 @@ export function setDev({ env }) {
   addDev({ UUID });
   addDev({ context });
   addDev({ fetchFx });
+  addDev({ JSONPath });
   addDev({ exportFx });
   addDev({ tmxStore });
   addDev({ fetchURL });
@@ -41,16 +55,4 @@ export function setDev({ env }) {
   addDev({ matchUpFormatCode });
   addDev({ tournamentEngine });
   addDev({ competitionEngine });
-}
-
-let addDevErrors = 0;
-export function addDev(variable) {
-  try {
-    Object.keys(variable).forEach((key) => (window.dev[key] = variable[key]));
-  } catch (err) {
-    if (!addDevErrors) {
-      console.log('production environment');
-      addDevErrors += 1;
-    }
-  }
 }

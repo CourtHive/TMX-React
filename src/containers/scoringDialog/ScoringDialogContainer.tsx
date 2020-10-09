@@ -30,7 +30,7 @@ interface ScoringDialogContainerType {
 const ScoringDialogContainer: React.FC<ScoringDialogContainerType> = ({ matchUp, matchUpFormat, handleClose }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const sides = matchUp?.Sides as SideInterface[];
+  const sides = matchUp?.sides as SideInterface[];
 
   const validSides = sides?.reduce((valid, side) => Boolean(valid && side.participantId), true);
 
@@ -149,8 +149,8 @@ const ScoringDialogContainer: React.FC<ScoringDialogContainerType> = ({ matchUp,
   };
   const processScoringOutcome = ({ outcome, matchUp }) => {
     const { matchUpFormat } = outcome;
-    const { drawId, matchUpId, matchUpTieId, Sides: matchUpSides, eventName } = matchUp;
-    const Sides = matchUpSides.map((side) => ({
+    const { drawId, matchUpId, matchUpTieId, sides: matchUpSides, eventName } = matchUp;
+    const sides = matchUpSides.map((side) => ({
       name: side?.participant?.name
     }));
     dispatch({
@@ -159,7 +159,7 @@ const ScoringDialogContainer: React.FC<ScoringDialogContainerType> = ({ matchUp,
         methods: [
           {
             method: 'setMatchUpStatus',
-            params: { drawId, matchUpId, matchUpTieId, matchUpFormat, Sides, eventName, outcome }
+            params: { drawId, matchUpId, matchUpTieId, matchUpFormat, sides, eventName, outcome }
           }
         ]
       }

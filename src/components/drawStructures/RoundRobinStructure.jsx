@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -77,8 +77,9 @@ export const RoundRobinStructure = (props) => {
 
     const participantNames =
       matchUp &&
-      matchUp.Sides &&
-      matchUp.Sides.filter((f) => f)
+      matchUp.sides &&
+      matchUp.sides
+        .filter((f) => f)
         .map((side) => {
           return side.participant && side.participant.person && side.participant.person.standardFamilyName;
         })
@@ -118,7 +119,7 @@ export const RoundRobinStructure = (props) => {
     dispatch({
       type: 'tournamentEngine',
       payload: {
-        methods: [ { method: 'removeDrawPositionAssignment', params } ]
+        methods: [{ method: 'removeDrawPositionAssignment', params }]
       }
     });
   }
@@ -153,11 +154,11 @@ export const RoundRobinStructure = (props) => {
           type: 'tournamentEngine',
           payload: {
             methods: [
-                {
-                    method: 'assignDrawPosition',
-                    params: selection.value
-                }
-              ]
+              {
+                method: 'assignDrawPosition',
+                params: selection.value
+              }
+            ]
           }
         });
       }

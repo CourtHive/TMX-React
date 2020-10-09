@@ -213,8 +213,8 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
         minutes: 10
       });
     } else if (value === 'TB') {
-      const newSetFormat = !isFinalSet ? { tiebreakSet: { tiebreakTo: setTiebreakTo } } : { ...setFormat };
-      const newFinalSetFormat = isFinalSet && { tiebreakFormat: undefined, tiebreakSet: { tiebreakTo: setTiebreakTo } };
+      const newSetFormat = !isFinalSet ? { tiebreakSet: { tiebreakTo: setTiebreakTo || 7 } } : { ...setFormat };
+      const newFinalSetFormat = isFinalSet && { tiebreakSet: { tiebreakTo: setTiebreakTo || 7 } };
       onChange({
         bestOf: bestOfValue,
         setFormat: newSetFormat as SetFormatInterface,

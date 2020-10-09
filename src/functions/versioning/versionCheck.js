@@ -7,6 +7,13 @@ const { INDIVIDUAL } = participantTypes;
 
 const legacyRatingCategories = ['UTR', 'WTN', 'UTR-D', 'WTN-D', 'NTRP', 'ELO'];
 
+/*
+To use JSONpath
+import { JSONPath } from 'jsonpath-plus'
+
+JSONPath({json: tournamentRecord, path: '$...matchUps'}).flat()
+*/
+
 export const versionCheck = (function () {
   const fx = {};
 

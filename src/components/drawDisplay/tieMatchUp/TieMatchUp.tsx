@@ -38,18 +38,18 @@ const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
   const classes = useStyles();
   const mediaBreakpoints = useMediaQuery('(min-width:800px)');
   const { tieMatchUps, tieFormat } = matchUp || {};
-  const side1AvailableParticipants = matchUp?.Sides[0].participant.individualParticipants;
-  const side2AvailableParticipants = matchUp?.Sides[1].participant.individualParticipants;
+  const side1AvailableParticipants = matchUp?.sides[0].participant.individualParticipants;
+  const side2AvailableParticipants = matchUp?.sides[1].participant.individualParticipants;
   const drawTieFormat = drawData?.drawDefinition?.tieFormat;
   const collectionDefinitions = (tieFormat || drawTieFormat).collectionDefinitions;
   const sideName = (sideNumber) => {
-    const side = (matchUp.Sides || [])[sideNumber - 1];
+    const side = (matchUp.sides || [])[sideNumber - 1];
     const participant = side?.participant;
     return participant?.name || `Side ${sideNumber}`;
   };
 
   const sideLogo = (sideNumber) => {
-    const side = (matchUp.Sides || [])[sideNumber - 1];
+    const side = (matchUp.sides || [])[sideNumber - 1];
     const participant = side?.participant;
     const profiles = participant?.onlineProfiles || [];
     const url = profiles.reduce<string | undefined>((url, candidate) => {
@@ -69,7 +69,7 @@ const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
   };
   const handleFilterOptions = (matchUpType: string, options: ParticipantInterface[], side: number) => {
     const alreadySelected = tieMatchUps.flatMap((tieMatchUp) => {
-      const matchUpSide = tieMatchUp.Sides[side - 1];
+      const matchUpSide = tieMatchUp.sides[side - 1];
 
       return matchUpType === 'DOUBLES'
         ? matchUpSide?.participant?.individualParticipants?.length > 0 && tieMatchUp.matchUpType === matchUpType
