@@ -1,28 +1,35 @@
+export function reverseStringScore(score, split = ' ') {
+  let irreversible = null;
 
-export function reverseStringScore(score, split=' ') {
-    let irreversible = null;
-    if (score) {
-        let reversed = score.split(split).map(parseSet).join(split);
-        let result = (irreversible) ? `${irreversible} ${reversed}` : reversed;
-        return result;
-    }
+  const parseSetScore = (set) => {
+    const ss = /(\d+)/;
+    const sst = /(\d+)\((\d+)\)/;
+    if (sst.test(set)) return { games: sst.exec(set)[1], tiebreak: sst.exec(set)[2] };
+    if (ss.test(set)) return { games: ss.exec(set)[1] };
+    irreversible = set;
+    return undefined;
+  };
 
-    function parseSet(set) {
-        let divider = set.indexOf('/') > 0 ? '/' : '-';
-        let set_scores = set.split(divider).map(parseSetScore).reverse().filter(f=>f);
-        let set_games = set_scores.map(s=>s.games);
-        let tb_scores = set_scores.map(s=>s.tiebreak).filter(f=>f);
-        let tiebreak = tb_scores.length === 1 ? `(${tb_scores[0]})` : '';
-        let set_score = tb_scores.length < 2 ? set_games.join(divider) : set_games.map((s, i) => `${s}(${tb_scores[i]})`).join(divider);
-        return `${set_score}${tiebreak}`;
-    }
+  const parseSet = (set) => {
+    const divider = set.indexOf('/') > 0 ? '/' : '-';
+    const setScores = set
+      .split(divider)
+      .map(parseSetScore)
+      .reverse()
+      .filter((f) => f);
+    const setGames = setScores.map((s) => s.games);
+    const tiebreakScores = setScores.map((s) => s.tiebreak).filter((f) => f);
+    const tiebreak = tiebreakScores.length === 1 ? `(${tiebreakScores[0]})` : '';
+    const setScore =
+      tiebreakScores.length < 2
+        ? setGames.join(divider)
+        : setGames.map((s, i) => `${s}(${tiebreakScores[i]})`).join(divider);
+    return `${setScore}${tiebreak}`;
+  };
 
-    function parseSetScore(set) {
-        let ss = /(\d+)/;
-        let sst = /(\d+)\((\d+)\)/;
-        if (sst.test(set)) return { games: sst.exec(set)[1], tiebreak: sst.exec(set)[2] };
-        if (ss.test(set)) return { games: ss.exec(set)[1] };
-        irreversible = set;
-        return undefined;
-    }
+  if (score) {
+    const reversed = score.split(split).map(parseSet).join(split);
+    const result = irreversible ? `${irreversible} ${reversed}` : reversed;
+    return result;
+  }
 }
