@@ -1,51 +1,6 @@
-import {
-  FocusedSetInterface,
-  ScoringMatchUpInterface,
-  SetScoresInterface,
-  SetWinnerEnum
-} from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
+import { ScoringMatchUpInterface, SetWinnerEnum } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 import { ParticipantInterface } from 'components/dialogs/scoringDialog/typedefs/participantTypes';
 import { ScoringDetailsInterface, SetResultInterface } from 'typedefs/store/tmxTypes';
-
-export const getSetsIfExistingScore = (setsExistingScores: Array<SetResultInterface>[], existingScore: boolean) => {
-  return existingScore
-    ? setsExistingScores.map((set, i) => {
-        const side1 = set[0];
-        const side2 = set[1];
-        const hasTiebreak = side1.tiebreak || side2.tiebreak;
-        const isTiebreakSet = side1.supertiebreak || side2.supertiebreak;
-        const retired =
-          side1.gamePoints === '0' || !!side1.gamePoints || side2.gamePoints === '0' || !!side2.gamePoints;
-        const retiredInTiebreak = hasTiebreak && (side1.isRetiredInTiebreak || side2.isRetiredInTiebreak);
-        const currentSet: SetScoresInterface = {
-          setNumber: i + 1,
-          isManuallyFocused: FocusedSetInterface.NONE,
-          isTiebreakSet: isTiebreakSet,
-          tiebreak: !hasTiebreak
-            ? undefined
-            : {
-                side1: side1.tiebreak ? side1.tiebreak.toString() : (side2.tiebreak + 2).toString(),
-                side2: side2.tiebreak ? side2.tiebreak.toString() : (side1.tiebreak + 2).toString()
-              },
-          side1: side1.games.toString(),
-          side2: side2.games.toString(),
-          winner:
-            retired || retiredInTiebreak || side1.games === side2.games
-              ? SetWinnerEnum.NONE
-              : side1.games > side2.games
-              ? SetWinnerEnum.SIDE1
-              : SetWinnerEnum.SIDE2
-        };
-        if (retired) {
-          currentSet.gameResult = {
-            side1: set[0]?.gamePoints || '0',
-            side2: set[1]?.gamePoints || '0'
-          };
-        }
-        return currentSet;
-      })
-    : undefined;
-};
 
 export const getExistingScoreFromMatch = (matchUp: ScoringMatchUpInterface) => {
   return matchUp.sets
@@ -91,7 +46,7 @@ export const getScore = (matchUp: ScoringMatchUpInterface, winningSide: any) => 
   const existingScores = getExistingScoreFromMatch(matchUp);
   const existingScoresIfUndefined = existingScores[0] === undefined ? [] : existingScores;
 
-  let winner = (winningSide && winningSide - 1) || 0;
+  const winner = (winningSide && winningSide - 1) || 0;
   const loser = 1 - winner;
   // create string score which is expected if there's an existing score which is not empty
   let score =
