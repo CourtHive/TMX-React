@@ -42,15 +42,67 @@ export function KnockoutStructure(props) {
     seeds: { color: 'red' }
   });
 
-  function positionClick(node, coords, teamIndex) {
-    console.log({ node, teamIndex });
-    const data = node.data || node;
-    actionMenu(data, coords);
-  }
-
   const closeMenu = () => {
     setMenuData({});
   };
+
+  function scoreMatchUp({ matchUp }) {
+    dispatch({ type: 'scoring details', payload: { matchUp } });
+  }
+
+  function scoreAction(node) {
+    const data = node.data || node;
+    scoreMatchUp({ matchUp: data });
+  }
+
+  function removeAssignment(_, params) {
+    dispatch({
+      type: 'tournamentEngine',
+      payload: {
+        methods: [{ method: 'removeDrawPositionAssignment', params }]
+      }
+    });
+  }
+
+  function findParticipantName({ bye, participantId, unassignedByes }) {
+    const participant = drawData.participants.reduce((participant, candidate) => {
+      return candidate.participantId === participantId ? candidate : participant;
+    }, undefined);
+    const byeOption = bye && `BYE {${unassignedByes}}`;
+    return (participant && participant.name) || byeOption || 'Unknown';
+  }
+
+  function assignPosition(_, payload) {
+    function doAssignment({ selection } = {}) {
+      if (selection && selection.value) {
+        dispatch({
+          type: 'tournamentEngine',
+          payload: {
+            methods: [
+              {
+                method: 'assignDrawPosition',
+                params: selection.value
+              }
+            ]
+          }
+        });
+      }
+    }
+    if (payload.validToAssign) {
+      const options = payload.validToAssign.map((valid) => {
+        let label = findParticipantName(valid);
+        if (valid.seedValue) label += ` [${valid.seedValue}]`;
+        return { value: valid, label };
+      });
+      const callback = (value) => {
+        if (value) doAssignment(value);
+        setPickerData();
+      };
+      if (options.length) {
+        setPickerData({ options, callback });
+      }
+    }
+  }
 
   // singleClickAction indicates that if an item is the only valid item no popover menu required
   const menuActions = [
@@ -147,71 +199,19 @@ export function KnockoutStructure(props) {
     }
   }
 
-  function scoreAction(node) {
-    const data = node.data || node;
-    scoreMatchUp({ matchUp: data });
-  }
-
-  function removeAssignment(_, params) {
-    dispatch({
-      type: 'tournamentEngine',
-      payload: {
-        methods: [{ method: 'removeDrawPositionAssignment', params }]
-      }
-    });
-  }
-
-  function assignPosition(_, payload) {
-    if (payload.validToAssign) {
-      const options = payload.validToAssign.map((valid) => {
-        let label = findParticipantName(valid);
-        if (valid.seedValue) label += ` [${valid.seedValue}]`;
-        return { value: valid, label };
-      });
-      const callback = (value) => {
-        if (value) doAssignment(value);
-        setPickerData();
-      };
-      if (options.length) {
-        setPickerData({ options, callback });
-      }
-    }
-    function doAssignment({ selection } = {}) {
-      if (selection && selection.value) {
-        dispatch({
-          type: 'tournamentEngine',
-          payload: {
-            methods: [
-              {
-                method: 'assignDrawPosition',
-                params: selection.value
-              }
-            ]
-          }
-        });
-      }
-    }
-  }
-
-  function findParticipantName({ bye, participantId, unassignedByes }) {
-    const participant = drawData.participants.reduce((participant, candidate) => {
-      return candidate.participantId === participantId ? candidate : participant;
-    }, undefined);
-    const byeOption = bye && `BYE {${unassignedByes}}`;
-    return (participant && participant.name) || byeOption || 'Unknown';
-  }
-
   function scoreClick(node) {
     const matchUp = node.data || node;
-    const { validActions } = drawEngine.matchUpActions(matchUp);
+    const { validActions } = node.drawPosition ? drawEngine.positionActions(node) : drawEngine.matchUpActions(node);
     const validActionTypes = validActions.map((action) => action.type);
     if (validActionTypes.includes('SCORE')) {
       scoreMatchUp({ matchUp });
     }
   }
 
-  function scoreMatchUp({ matchUp }) {
-    dispatch({ type: 'scoring details', payload: { matchUp } });
+  function positionClick(node, coords, teamIndex) {
+    console.log({ node, teamIndex });
+    const data = node.data || node;
+    actionMenu(data, coords);
   }
 
   const events = {
