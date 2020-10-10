@@ -10,6 +10,26 @@ function getMatchUp(d) {
   }
 }
 
+function ymd2date(ymd) {
+  const parts = ymd.split('-');
+  if (!parts || parts.length !== 3) return new Date(ymd);
+  if (isNaN(parseInt(parts[1]))) return new Date(ymd);
+  return new Date(parts[0], parseInt(parts[1]) - 1, parts[2]);
+}
+
+function timeDisplay(schedule) {
+  const scheduleTime = schedule && (schedule.startTime || schedule.scheduledTime);
+  const displayTime = convertTime(DateHHMM(scheduleTime), env);
+  return scheduleTime ? displayTime : '';
+}
+
+function getScore(matchUp) {
+  return {
+    score: matchUp && (matchUp.score || matchUp.delegated_score),
+    delegated: matchUp && !matchUp.score && matchUp.delegated_score
+  };
+}
+
 export function scoreDetail(d) {
   const matchUp = getMatchUp(d);
   const { delegated } = getScore(matchUp);
@@ -48,7 +68,7 @@ export function matchDetail(d, o, info) {
   if (!matchUp) return;
 
   const { score } = getScore(matchUp);
-  if (score) return score;
+  if (score && !matchUp.participantId) return score;
 
   const schedule = matchUp.schedule;
   if (schedule) {
@@ -76,24 +96,4 @@ export function dateDetail(d, o) {
     const monthAbbreviation = o.matchdates.monthsShort[month].toUpperCase();
     return `${dayAbbreviation}. ${monthAbbreviation} ${date.getDate()}`;
   }
-}
-
-function ymd2date(ymd) {
-  const parts = ymd.split('-');
-  if (!parts || parts.length !== 3) return new Date(ymd);
-  if (isNaN(parseInt(parts[1]))) return new Date(ymd);
-  return new Date(parts[0], parseInt(parts[1]) - 1, parts[2]);
-}
-
-function timeDisplay(schedule) {
-  const scheduleTime = schedule && (schedule.startTime || schedule.scheduledTime);
-  const displayTime = convertTime(DateHHMM(scheduleTime), env);
-  return scheduleTime ? displayTime : '';
-}
-
-function getScore(matchUp) {
-  return {
-    score: matchUp && (matchUp.score || matchUp.delegated_score),
-    delegated: matchUp && !matchUp.score && matchUp.delegated_score
-  };
 }
