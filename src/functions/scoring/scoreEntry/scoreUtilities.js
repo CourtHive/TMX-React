@@ -218,7 +218,8 @@ export function getHighTiebreakValue({ lowValue = 0, NoAD = false, tiebreakTo } 
   if (lowValue + 1 >= tiebreakTo) {
     return lowValue + winBy;
   }
-  return parseInt(tiebreakTo);
+  const highValue = parseInt(tiebreakTo);
+  return highValue;
 }
 
 export function getMatchUpWinner({ analysis, matchUp }) {
