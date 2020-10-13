@@ -61,7 +61,7 @@
     "redux": "4.0.5",
     "socket.io": "2.3.0",
     "source-map-explorer": "2.5.0",
-    "tods-competition-factory": "0.1.45",
+    "tods-competition-factory": "0.1.47",
     "tods-matchup-format-code": "1.0.7",
     "typeface-roboto": "1.1.13",
     "wolfy87-eventemitter": "5.2.9",
