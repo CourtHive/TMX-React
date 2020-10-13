@@ -201,7 +201,7 @@ export function KnockoutStructure(props) {
 
   function scoreClick(node) {
     const matchUp = node.data || node;
-    const { validActions } = node.drawPosition ? drawEngine.positionActions(node) : drawEngine.matchUpActions(node);
+    const { validActions } = node.drawPosition ? drawEngine.positionActions(node) : drawEngine.matchUpActions(matchUp);
     const validActionTypes = validActions.map((action) => action.type);
     if (validActionTypes.includes('SCORE')) {
       scoreMatchUp({ matchUp });
