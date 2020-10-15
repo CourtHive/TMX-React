@@ -65,12 +65,12 @@ const SetResultInput: React.FC<SetResultInputProps> = ({
     !!finalSetFormat?.tiebreakSet || !!(!finalSetFormat && matchConfigParsed?.setFormat?.tiebreakSet);
   const minimalSetNumberToBeFinal = Math.ceil(matchConfigParsed.bestOf / 2);
   const setSide1OrSide2Winner = (!isSide1 && set.side1 > set.side2) || (isSide1 && set.side1 < set.side2);
-  const timed = matchConfigParsed.timed;
   // introduced `isManuallyFocused to prevent debouncing when user selects value to edit
   const setIsManuallyFocused = set.isManuallyFocused !== FocusedSetInterface.NONE;
 
   const isDecisionSet = checkIfDecisionSet(set.setNumber, matchConfigParsed.bestOf);
   const setFormat = matchConfigParsed.setFormat;
+  const timed = matchConfigParsed.timed || setFormat.timed;
   const setIsTiebreak = !!setFormat?.tiebreakSet;
 
   // second part of the condition uses matchConfigParsed.bestOf as the number of final set

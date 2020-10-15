@@ -3,7 +3,7 @@ import { it } from 'date-fns/locale';
 
 describe('smoketest', () => {
   const clickIdTarget = (id) => cy.get(`#${id}`).click();
-  const clickButtonContains = (content) => cy.get('button').get(`[title="${content}"]`).click();
+  // const clickButtonContains = (content) => cy.get('button').get(`[title="${content}"]`).click();
   const openMainMenu = () => clickIdTarget('tmxNav');
 
   const timestring = new Date().getTime().toString();
@@ -20,12 +20,12 @@ describe('smoketest', () => {
   it('Can load', () => cy.visit(`http://localhost:3000`));
   it('Can Open Main Menu', () => openMainMenu());
   it('Can navigate to tournaments', () => clickIdTarget('mm-tournaments'));
-  
+
   it('Can add and navigate to a new tournament', () => {
     clickIdTarget('addTournament');
     cy.get(`#customTournamentName`).clear().type(tournamentName);
     clickIdTarget('submitNewTournament');
-    cy.get(`[value="${tournamentName}"]`).click()
+    cy.get(`[value="${tournamentName}"]`).click();
   });
 
   it('Can add players', () => {
@@ -56,7 +56,7 @@ describe('smoketest', () => {
     clickIdTarget('addNewDraw');
     cy.get(`#customDrawName`).clear().type(testDraw);
     clickIdTarget('submitNewDraw');
-    cy.get(`[value="${testDraw}"]`).click()
+    cy.get(`[value="${testDraw}"]`).click();
   });
 
   it('can enter scores', () => {
@@ -68,7 +68,7 @@ describe('smoketest', () => {
   it('can access the tournament record', () => {
     cy.window().then((win) => {
       const tournamentRecords = win.dev.tmxStore.getState().tmx.records;
-      console.log({tournamentRecords});
+      console.log({ tournamentRecords });
     });
   });
 });

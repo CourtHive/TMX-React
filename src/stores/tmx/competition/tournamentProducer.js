@@ -93,6 +93,7 @@ const changeTournament = (state, action) =>
     const tournamentId = action?.payload?.unifiedTournamentId?.tournamentId || action?.payload?.tournamentId;
     const initialState = storeInitialState();
     if (tournamentId) {
+      // TODO: is it necessary to assign initialState?
       Object.assign(draftState, initialState, { initialized: true });
       draftState.records = { [tournamentId]: action.payload };
       draftState.selectedTournamentId = tournamentId;
