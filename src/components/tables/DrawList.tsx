@@ -20,6 +20,8 @@ import { AddDrawButton } from 'components/buttons/addDraw';
 import NoticePaper from 'components/papers/notice/NoticePaper';
 import EndlessTable from 'components/tables/EndlessTable';
 
+import { drawEngine } from 'tods-competition-factory';
+
 export function EventDrawList(props) {
   const { selectedEvent } = props;
   const dispatch = useDispatch();
@@ -133,6 +135,7 @@ export function EventDrawList(props) {
     const { eventId } = selectedEvent;
     uncheckAllRows();
     setEditMode(false);
+    drawEngine.reset();
 
     dispatch({
       type: 'tournamentEngine',
