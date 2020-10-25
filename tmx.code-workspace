@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "workbench.colorCustomizations": {
+      "activityBar.activeBackground": "#28015a",
+      "activityBar.activeBorder": "#ebf3f2",
+      "activityBar.background": "#28015a",
+      "activityBar.foreground": "#ebeef0",
+      "activityBar.inactiveForeground": "#eff3f799",
+      "activityBarBadge.background": "#06b9a5",
+      "activityBarBadge.foreground": "#15202b",
+      "statusBar.background": "#28015a",
+      "statusBar.foreground": "#eff2f5",
+      "statusBarItem.hoverBackground": "#f7df1e",
+      "titleBar.activeBackground": "#28015a",
+      "titleBar.activeForeground": "#f0f4f8",
+      "titleBar.inactiveBackground": "#28015a",
+      "titleBar.inactiveForeground": "#15202b99"
+    }
+  }
+}
