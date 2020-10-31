@@ -14,7 +14,7 @@ import ScoringDialogActions from 'components/dialogs/scoringDialog/ScoringDialog
 import CancelButton from 'components/buttons/cancel/CancelButton';
 import CustomDialog from 'components/dialogs/CustomDialog';
 import MatchFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
-import HotDiv from 'components/inputs/hotDiv/HotDiv';
+import KeyScoreEntry from 'components/inputs/keyScoreEntry/KeyScoreEntry';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
 import { MatchConfigurationInterface } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 
@@ -22,21 +22,49 @@ export function ScoreEntry() {
   const classes = useStyles();
 
   const initialValues = [
-    { score: undefined, sets: [], winningSide: undefined },
-    { score: undefined, sets: [], winningSide: undefined },
-    { score: undefined, sets: [], winningSide: undefined }
+    {
+      updated: undefined,
+      score: undefined,
+      sets: [],
+      winningSide: undefined,
+      matchUpId: 'm001',
+      matchUpStatus: undefined
+    },
+    {
+      updated: undefined,
+      score: undefined,
+      sets: [],
+      winningSide: undefined,
+      matchUpId: 'm002',
+      matchUpStatus: undefined
+    },
+    {
+      updated: undefined,
+      score: undefined,
+      sets: [],
+      winningSide: undefined,
+      matchUpId: 'm003',
+      matchUpStatus: undefined
+    }
   ];
 
   const defaultMatchUpFormat = 'SET3-S:6/TB7';
   const [open, setOpen] = useState(false);
   const [matchUpFormat, setMatchUpFormat] = useState(defaultMatchUpFormat);
   const [values, setValues] = useState(initialValues);
-  const [currentRow, setCurrentRow] = useState(0);
+  const [currentMatchUpId, setCurrentMatchUpId] = useState(initialValues[0].matchUpId);
 
   const closeDialog = () => setOpen(false);
 
   const resetValues = () => {
     setValues(initialValues);
+  };
+
+  const updateData = (data) => {
+    const newData = values.map((value) => {
+      return value.matchUpId === data.matchUpId ? data : value;
+    });
+    setValues(newData);
   };
 
   const scoreFormatChange = (format) => {
@@ -92,6 +120,21 @@ export function ScoreEntry() {
   const handleCloseDialog = () => {
     setOpen(false);
   };
+  const handleRowChange = (increment = 0, matchUpId) => {
+    if (matchUpId) {
+      let nextRowIndex = values.map((matchUp) => matchUp.matchUpId).indexOf(matchUpId) + increment;
+      if (nextRowIndex >= 0) {
+        if (nextRowIndex > 2) {
+          nextRowIndex = 0;
+        }
+        const nextMatchUpId = values[nextRowIndex].matchUpId;
+        setCurrentMatchUpId(nextMatchUpId);
+      } else {
+        const nextMatchUpId = values[values.length - 1].matchUpId;
+        setCurrentMatchUpId(nextMatchUpId);
+      }
+    }
+  };
 
   return (
     <>
@@ -104,14 +147,15 @@ export function ScoreEntry() {
             MatchUp 1
             <Grid container direction="row">
               <div style={{ paddingTop: '.5em' }}>{values[0].winningSide === 1 ? <WinIndicator /> : null}</div>
-              <HotDiv
-                currentRow={currentRow}
+              <KeyScoreEntry
+                currentMatchUpId={currentMatchUpId}
                 matchUpFormat={matchUpFormat}
-                onClick={setCurrentRow}
-                row={0}
-                rowsLength={3}
-                setValues={setValues}
-                values={values}
+                rowChange={handleRowChange}
+                data={values[0]}
+                updateData={updateData}
+                setRowSizes={() => {
+                  console.log('not implemented');
+                }}
               />
               <div style={{ paddingTop: '.5em' }}>{values[0].winningSide === 2 ? <WinIndicator /> : null}</div>
             </Grid>
@@ -122,14 +166,15 @@ export function ScoreEntry() {
             MatchUp 2
             <Grid container direction="row">
               <div style={{ paddingTop: '.5em' }}>{values[1].winningSide === 1 ? <WinIndicator /> : null}</div>
-              <HotDiv
-                currentRow={currentRow}
+              <KeyScoreEntry
+                currentMatchUpId={currentMatchUpId}
                 matchUpFormat={matchUpFormat}
-                onClick={setCurrentRow}
-                row={1}
-                rowsLength={3}
-                setValues={setValues}
-                values={values}
+                rowChange={handleRowChange}
+                data={values[1]}
+                updateData={updateData}
+                setRowSizes={() => {
+                  console.log('not implemented');
+                }}
               />
               <div style={{ paddingTop: '.5em' }}>{values[1].winningSide === 2 ? <WinIndicator /> : null}</div>
             </Grid>
@@ -140,14 +185,15 @@ export function ScoreEntry() {
             MatchUp 3
             <Grid container direction="row">
               <div style={{ paddingTop: '.5em' }}>{values[2].winningSide === 1 ? <WinIndicator /> : null}</div>
-              <HotDiv
-                currentRow={currentRow}
+              <KeyScoreEntry
+                currentMatchUpId={currentMatchUpId}
                 matchUpFormat={matchUpFormat}
-                onClick={setCurrentRow}
-                row={2}
-                rowsLength={3}
-                setValues={setValues}
-                values={values}
+                rowChange={handleRowChange}
+                data={values[2]}
+                updateData={updateData}
+                setRowSizes={() => {
+                  console.log('not implemented');
+                }}
               />
               <div style={{ paddingTop: '.5em' }}>{values[2].winningSide === 2 ? <WinIndicator /> : null}</div>
             </Grid>
