@@ -1,1 +1,1 @@
-export const DEFAULT_ROW_SIZE = 52;
+export const DEFAULT_ROW_SIZE = 55;
