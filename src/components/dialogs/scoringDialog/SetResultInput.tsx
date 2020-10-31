@@ -26,7 +26,6 @@ import {
   StatusIconSideEnum
 } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 import { usePrevious } from 'components/hooks/usePrevious';
-import { checkSetIsComplete } from 'functions/scoring/scoreEntry/winningSide';
 
 import { drawEngine } from 'tods-competition-factory';
 
@@ -308,7 +307,7 @@ const SetResultInput: React.FC<SetResultInputProps> = ({
 
           const isCurrentTiebreak = !noTiebreak && side1Value >= (tiebreakAt || 0) && side2Value >= (tiebreakAt || 0);
 
-          const hasWinningSide = checkSetIsComplete({
+          const hasWinningSide = drawEngine.checkSetIsComplete({
             isDecidingSet: isDecisionSet,
             isTiebreakSet: currentSet.isTiebreakSet,
             matchUpScoringFormat: matchConfigParsed,
