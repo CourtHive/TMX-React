@@ -83,7 +83,7 @@
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react": "7.21.5",
     "esm": "3.2.25",
-    "jest-environment-jsdom": "26.5.2",
+    "jest-environment-jsdom": "26.6.1",
     "jsdom": "16.4.0",
     "prettier": "2.1.2",
     "prettier-eslint": "11.0.0",
