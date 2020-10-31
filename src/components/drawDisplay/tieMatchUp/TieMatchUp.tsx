@@ -2,7 +2,6 @@ import React from 'react';
 import { useStyles } from './styles';
 import { useMediaQuery } from '@material-ui/core';
 
-// import { drawEngine } from 'competitionFactory';
 import { drawEngine } from 'tods-competition-factory';
 
 import TieTeam from './TieTeam';

@@ -40,7 +40,7 @@ export function TournamentOverview(props) {
   // find categories present in existing events
   const events = tournamentRecord.events || [];
   const categoryReducer = (list, event) => {
-    const categoryNames = list.map((member) => member.categoryName);
+    const categoryNames = list.filter((f) => f).map((member) => member.categoryName);
     return event?.category?.categoryName && categoryNames.includes(event.category.categoryName)
       ? list
       : list.concat(event.category);

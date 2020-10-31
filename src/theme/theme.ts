@@ -1,7 +1,9 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 import {
-  ACTION_DISABLED, BACKGROUND_GREY, DIVIDER_GREY,
+  ACTION_DISABLED,
+  BACKGROUND_GREY,
+  DIVIDER_GREY,
   ERROR_MAIN,
   MAIN,
   MAIN_BACKGROUND_COLOR,
@@ -54,8 +56,8 @@ export const theme = createMuiTheme({
   overrides: {
     MuiTab: {
       wrapper: {
-        flexDirection:'row',
-      },
-    },
-  },
+        flexDirection: 'row'
+      }
+    }
+  }
 });
