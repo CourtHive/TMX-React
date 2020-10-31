@@ -9,7 +9,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import SearchIcon from '@material-ui/icons/Search';
-import HotDiv from 'components/inputs/keyScoreEntry/KeyScoreEntry';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
 import TMXIconButton from 'components/buttons/TMXIconButton';
 import NoticePaper from 'components/papers/notice/NoticePaper';
@@ -72,19 +71,6 @@ export const MatchUpsTable: React.FC = () => {
     );
   });
 
-  const matchUpScores = matchUps.map((matchUp) => {
-    const sets = matchUp?.sets?.filter((set) => {
-      return set.setNumber && (set.side1Score || set.side2Score || set.side1TiebreakScore || set.side2TiebreakScore);
-    });
-    return Object.assign(
-      {},
-      {
-        ...matchUp,
-        sets: sets || [],
-        score: matchUp.score || ''
-      }
-    );
-  });
   const [isInEditMode /*setIsInEditMode*/] = useState(false);
 
   const [filteredData, setFilteredData] = useState([]);
