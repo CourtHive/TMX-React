@@ -1,4 +1,4 @@
-import produce from "immer";
+import produce from 'immer';
 
 const scoringDetails = (state, action) =>
   produce(state, (draftState) => {
@@ -23,7 +23,7 @@ const scoringTieMatchUp = (state, action) =>
 
 export const matchesProducer = {
   'scoring details': scoringDetails,
-  'scoring tieMatchUp': scoringTieMatchUp,
-}
+  'scoring tieMatchUp': scoringTieMatchUp
+};
 
 export default matchesProducer;

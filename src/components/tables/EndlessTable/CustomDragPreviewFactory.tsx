@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { useDragLayer, XYCoord } from 'react-dnd';
 
-import TableRowPreview from 'components/tables/EndlessTable/RowPreview';
+import RowPreview from 'components/tables/EndlessTable/RowPreview';
 import CustomPreviewWrapper from 'components/tables/EndlessTable/CustomPreviewWrapper';
 import { ColumnData, RowData } from 'components/tables/EndlessTable';
 import CellPreview from 'components/tables/EndlessTable/CellPreview';
@@ -69,7 +69,7 @@ const CustomDragPreviewFactory = <T extends RowData>({
         return customTableRowPreview ? (
           <CustomPreviewWrapper>{customTableRowPreview(item)}</CustomPreviewWrapper>
         ) : (
-          <TableRowPreview
+          <RowPreview
             columns={columns}
             headerCells={headerCells}
             itemWrapper={item}

@@ -9,7 +9,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import SearchIcon from '@material-ui/icons/Search';
-import HotDiv from 'components/inputs/hotDiv/HotDiv';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
 import TMXIconButton from 'components/buttons/TMXIconButton';
 import NoticePaper from 'components/papers/notice/NoticePaper';
@@ -72,23 +71,8 @@ export const MatchUpsTable: React.FC = () => {
     );
   });
 
-  const matchUpScores = matchUps.map((matchUp) => {
-    const sets = matchUp?.sets?.filter((set) => {
-      return set.setNumber && (set.side1Score || set.side2Score || set.side1TiebreakScore || set.side2TiebreakScore);
-    });
-    return Object.assign(
-      {},
-      {
-        ...matchUp,
-        sets: sets || [],
-        score: matchUp.score || ''
-      }
-    );
-  });
-  const [values, setValues] = useState<any[]>(matchUpScores);
   const [isInEditMode /*setIsInEditMode*/] = useState(false);
 
-  const [currentRow, setCurrentRow] = useState(0);
   const [filteredData, setFilteredData] = useState([]);
   const [matchUpData, setMatchUpData] = useState(undefined);
   const [filterValue, setFilterValue] = useState<string>('');
@@ -98,7 +82,6 @@ export const MatchUpsTable: React.FC = () => {
     selectedTeamId !== NONE && teamParticipants.find((team) => team.participantId === selectedTeamId);
   const teamIds = selectedTeam?.individualParticipants || [];
 
-  const defaultMatchUpFormat = 'SET3-S:6/TB7';
   const selectedDraw = undefined; // was useSelector
   const filteredMatchUpsTableData: MatchUpsTableDataInterface[] = getFilteredMatchUpsTableData(
     classes,
@@ -108,17 +91,7 @@ export const MatchUpsTable: React.FC = () => {
     teamIds
   );
 
-  const hotDivEntry = (rowItem): ReactNode => (
-    <HotDiv
-      currentRow={currentRow}
-      matchUpFormat={rowItem.matchUpFormat || defaultMatchUpFormat}
-      onClick={setCurrentRow}
-      row={rowItem.index}
-      rowsLength={filterValue ? filteredData.length : filteredMatchUpsTableData.length}
-      setValues={setValues}
-      values={values}
-    />
-  );
+  const hotDivEntry = (): ReactNode => <></>;
 
   const tableColumns = getTableColumns(classes, hotDivEntry, hiddenColumns, isInEditMode, selectedRowIndex, t);
 

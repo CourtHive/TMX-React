@@ -12,7 +12,7 @@ interface TableRowPreviewProps<T extends RowData> {
   listDiv: HTMLDivElement;
 }
 
-const TableRowPreview = <T extends RowData>({
+const RowPreview = <T extends RowData>({
   columns,
   headerCells,
   itemWrapper,
@@ -36,4 +36,4 @@ const TableRowPreview = <T extends RowData>({
   ) : null;
 };
 
-export default TableRowPreview;
+export default RowPreview;
