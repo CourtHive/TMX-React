@@ -12,13 +12,7 @@ interface CellPreviewProps<T extends RowData> {
   style?: CSSProperties;
 }
 
-const CellPreview = <T extends RowData>({
-  cellConfig,
-  columns,
-  headerCells,
-  item,
-  style
-}: CellPreviewProps<T>) => {
+const CellPreview = <T extends RowData>({ cellConfig, columns, headerCells, item, style }: CellPreviewProps<T>) => {
   const getValue = () => ({
     node: columns[item.startIndex]?.getValue(item.item).node
   });
