@@ -14,7 +14,7 @@
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.56",
     "@material-ui/pickers": "3.2.10",
-    "@types/yup": "0.29.8",
+    "@types/yup": "0.29.9",
     "axios": "0.21.0",
     "classnames": "2.2.6",
     "d3": "5.16.0",
