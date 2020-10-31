@@ -1,3 +1,5 @@
+# Endless Table
+
 ## TMX Endless Table is an adaptation of TMX Virtualized Table created by Vuk Nikolic
 
 Endless table is created on top of React material-ui table, and it provides `virtualization` functionality for the
@@ -6,14 +8,14 @@ table. It uses `react-window` as a library which provides virtual list, and `rea
 The goal of this component is to leave absolute freedom for the user regarding the design, it's possible to fully
 customize it "from the outside".
 
-#### Dependencies
+### Dependencies
 
 - `"react-window": "^1.8.5"`
 - `"react-dnd": "^11.1.3"`
 - `"react-dnd-html5-backend": "^11.1.3"`
 - `useCombinedRefs` - a custom hook which comines Refs. TODO: Add `useCombineRefs` to the Endless table utils.
 
-#### Usage
+### Usage
 
 The most basic use case is to provide only `data` and `columns` props. Data represents rows, and columns represent
 table columns. Endless table is strongly typed, so in order to avoid typescript complains, both `data` and `columns`
@@ -182,7 +184,7 @@ html class to the table wrapper (_Paper_) component, `rowConfig` className adds 
 (_TableRow_) component, and the `cellConfig` className adds html class to the cell wrapper(_TableCell_) component. This
 way the user has a possibility to apply styles to any DOM element down the tree by using css selectors like `& > div`.
 
-###### Individual row / cell styling
+#### Individual row / cell styling
 
 Custom styles for each individual row can be provided by passing `className` property to each element of the `data`
 array:
