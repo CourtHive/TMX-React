@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { areEqual, ListChildComponentProps } from 'react-window';
 import DraggableRow from 'components/tables/EndlessTable/DraggableRow';
+import { DEFAULT_ROW_SIZE } from 'components/tables/EndlessTable/constants';
 
 const MemoizedRow = memo(({ index, style, data }: ListChildComponentProps) => {
   const rowItem = data.data[index];
@@ -17,9 +18,9 @@ const MemoizedRow = memo(({ index, style, data }: ListChildComponentProps) => {
     rowConfig,
     VLRef
   } = data.props;
-  // TODO: fix => react-window dynamic row sizes are not working.
   const offset = data?.data?.reduce((accumulator, currentValue, currentIndex) => {
-    const value = currentIndex < index ? rowConfig?.rowSize(currentIndex) : 0;
+    const value =
+      currentIndex < index ? (rowConfig?.rowSize && rowConfig.rowSize(currentIndex)) || DEFAULT_ROW_SIZE : 0;
     return value ? accumulator + value : accumulator;
   }, 0);
   return (
