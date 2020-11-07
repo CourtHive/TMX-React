@@ -471,7 +471,7 @@ export function EventParticipants(props) {
       payload: {
         methods: [
           {
-            method: 'deleteEventEntries',
+            method: 'removeEventEntries',
             params: { participantIds, eventId }
           }
         ]
