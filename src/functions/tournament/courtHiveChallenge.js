@@ -9,7 +9,7 @@ const {
 } = utilities;
 
 export function courtHiveChallenge() {
-  const { participants } = tournamentEngine.generateFakeParticipants({ participantsCount: 32, matchUpType: 'SINGLES' });
+  const { participants } = tournamentEngine.generateMockParticipants({ participantsCount: 32, matchUpType: 'SINGLES' });
   const tournamentId = UUID();
   const tournament = {
     org: {},
