@@ -5,7 +5,7 @@ import { HOME, NOT_FOUND, USER_TEST, TOURNAMENT } from 'config/router/constants'
 import HomePage from 'pages/HomePage';
 import NotFoundPage from 'pages/NotFoundPage';
 import UserTestsPage from 'pages/UserTestsPage';
-import TournamentPage from 'pages/TournamentPage'
+import TournamentPage from 'pages/TournamentPage';
 
 const MainRouter = () => {
   return (

@@ -27,6 +27,15 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+const addAuthorization = (): void => {
+  const token = localStorage.getItem(JWT_TOKEN_STORAGE_NAME);
+  axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+const removeAuthorization = (): void => {
+  axiosInstance.defaults.headers.common.Authorization = undefined;
+};
+
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
@@ -48,15 +57,6 @@ axiosInstance.interceptors.response.use(
     }
   }
 );
-
-const addAuthorization = (): void => {
-  const token = localStorage.getItem(JWT_TOKEN_STORAGE_NAME);
-  axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-const removeAuthorization = (): void => {
-  axiosInstance.defaults.headers.common.Authorization = undefined;
-};
 
 export const baseApi = {
   ...axiosInstance,
