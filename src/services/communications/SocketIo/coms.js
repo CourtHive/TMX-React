@@ -45,6 +45,53 @@ export const coms = (function () {
     return getNavigator().onLine || isLocalhost;
   };
 
+  function socketEmit(msg, data) {
+    if (!oi.socket.connected) console.log('socket not connected');
+    oi.socket.emit(msg, data);
+  }
+
+  function emitTmx(data, ackCallback) {
+    if (!data.payload) data.payload = {};
+    const loginValues = getLoginState();
+    const personId = loginValues && loginValues.personId;
+
+    Object.assign(data.payload, {
+      personId,
+      uuuid: env.uuuid,
+      version: env.version,
+      provider: env.org?.abbr,
+      providerId: env.org?.ouid,
+      timestamp: new Date().getTime()
+    });
+
+    if (ackCallback && typeof ackCallback === 'function') {
+      const ackId = UUID.new();
+      Object.assign(data.payload, { ackId });
+      fx.requestAcknowledgement({ ackId, callback: ackCallback });
+    }
+
+    if (connected) {
+      socketEmit('tmx', data);
+    } else {
+      // this queue is not persisted if browser refreshes
+      // to insure the server says synced with locl copy of tournament
+      // this queue must persist... implement in localStorage?
+      socketQueue.push({ data, ackCallback });
+    }
+  }
+  fx.emitTmx = emitTmx;
+
+  function tmxError(err) {
+    if (!err) return;
+    const message = err.phrase ? i18n.t(`phrases.${err.phrase}`) : err.error;
+    if (message) {
+      tmxStore.dispatch({
+        type: 'toaster state',
+        payload: { severity: 'error', message }
+      });
+    }
+  }
+
   // keyQueue is used for keys that can't be sent/submitted until the env is set up with user uuid
   fx.queueKey = (key) => {
     keyQueue.push(key);
@@ -57,11 +104,22 @@ export const coms = (function () {
     keyQueue = [];
   };
 
+  function connectionEvent() {
+    fx.connectAction();
+    const tournament = getTournamentRecord();
+    const tournamentId = tournament?.unifiedTournamentId?.tournamentId || tournament?.tournamentId;
+    if (contentEquals('tournament') && tournament) {
+      fx.joinTournament({ tournamentId });
+    } else {
+      if (tournamentId) fx.leaveTournament(tournamentId);
+    }
+  }
+
   fx.connected = () => connected;
   function comsConnect() {
     connected = true;
     connectionEvent();
-    console.log('%c Connected to Server', 'color: lightgreen');
+    if (isLocalhost) console.log('%c Connected to Server', 'color: lightgreen');
     while (socketQueue.length) {
       const message = socketQueue.pop();
       emitTmx(message.data, message.ackCallback);
@@ -76,17 +134,6 @@ export const coms = (function () {
     fx.emitTmx({ action: 'clientError', payload: { eventError } });
   };
 
-  function connectionEvent() {
-    fx.connectAction();
-    const tournament = getTournamentRecord();
-    const tournamentId = tournament?.unifiedTournamentId?.tournamentId || tournament?.tournamentId;
-    if (contentEquals('tournament') && tournament) {
-      fx.joinTournament({ tournamentId });
-    } else {
-      if (tournamentId) fx.leaveTournament(tournamentId);
-    }
-  }
-
   function comsDisconnect() {
     console.log('%c Server disconnect', 'color: orange');
     connected = false;
@@ -97,6 +144,17 @@ export const coms = (function () {
   fx.connectAction = () => {
     fx.sendQueuedKeys();
   };
+
+  function receiveAcknowledgement(msg) {
+    if (isLocalhost) {
+      console.log(`%c received acknowledgement: ${msg.type}`, 'color: lightgreen');
+    }
+
+    if (msg.ackId && ackRequests[msg.ackId]) {
+      ackRequests[msg.ackId](msg);
+      delete ackRequests[msg.ackId];
+    }
+  }
 
   fx.connectSocket = () => {
     const chcsRootURL = isLocalhost
@@ -170,17 +228,6 @@ export const coms = (function () {
     }
   };
 
-  function receiveAcknowledgement(msg) {
-    if (isLocalhost) {
-      console.log(`%c received acknowledgement: ${msg.type}`, 'color: lightgreen');
-    }
-
-    if (msg.ackId && ackRequests[msg.ackId]) {
-      ackRequests[msg.ackId](msg);
-      delete ackRequests[msg.ackId];
-    }
-  }
-
   fx.leaveTournament = (tournamentId) => {
     if (connected && tournamentId) {
       fx.emitTmx({ action: 'leaveTournament', payload: { tournamentId } });
@@ -200,17 +247,6 @@ export const coms = (function () {
   fx.orgLiveScores = ({ ouid }) => {
     return connected ? fx.emitTmx({ orgLiveScores: { ouid } }) : false;
   };
-
-  function tmxError(err) {
-    if (!err) return;
-    const message = err.phrase ? i18n.t(`phrases.${err.phrase}`) : err.error;
-    if (message) {
-      tmxStore.dispatch({
-        type: 'toaster state',
-        payload: { severity: 'error', message }
-      });
-    }
-  }
 
   fx.deleteMatch = (data) => {
     if (!data || !data.muid || !data.tournamentId) return;
@@ -241,45 +277,9 @@ export const coms = (function () {
     }
   };
 
-  fx.emitTmx = emitTmx;
-  function emitTmx(data, ackCallback) {
-    if (!data.payload) data.payload = {};
-    const loginValues = getLoginState();
-    const personId = loginValues && loginValues.personId;
-
-    Object.assign(data.payload, {
-      personId,
-      uuuid: env.uuuid,
-      version: env.version,
-      provider: env.org?.abbr,
-      providerId: env.org?.ouid,
-      timestamp: new Date().getTime()
-    });
-
-    if (ackCallback && typeof ackCallback === 'function') {
-      const ackId = UUID.new();
-      Object.assign(data.payload, { ackId });
-      fx.requestAcknowledgement({ ackId, callback: ackCallback });
-    }
-
-    if (connected) {
-      socketEmit('tmx', data);
-    } else {
-      // this queue is not persisted if browser refreshes
-      // to insure the server says synced with locl copy of tournament
-      // this queue must persist... implement in localStorage?
-      socketQueue.push({ data, ackCallback });
-    }
-  }
-
   fx.requestAcknowledgement = ({ ackId, callback }) => {
     if (ackId) ackRequests[ackId] = callback;
   };
-
-  function socketEmit(msg, data) {
-    if (!oi.socket.connected) console.log('socket not connected');
-    oi.socket.emit(msg, data);
-  }
 
   // takes a promise or async function
   fx.catchAsync = (fn) => (...args) => {

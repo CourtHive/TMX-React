@@ -6,11 +6,23 @@ import { db } from 'services/storage/db';
 import { TournamentCalendarModel } from 'models/tournamentCalendarModel';
 import { getJwtTokenStorageKey } from 'config/localStorage';
 import { validateToken } from 'services/authentication/actions';
+import { isDev } from 'functions/isDev';
 
 const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
 
 export async function getMyTournamentsReq() {
   return baseApi.get<TournamentCalendarModel[]>(`/officiating/tournament-calendar/my-tournaments`);
+}
+
+function addMissing(trnys) {
+  performTask(db.addTournament, trnys, false).then(
+    () => {
+      console.log('success');
+    },
+    () => {
+      console.log('failure');
+    }
+  );
 }
 
 export async function saveMyTournaments() {
@@ -48,17 +60,6 @@ export async function saveMyTournaments() {
       console.log({ err });
     }
   } else {
-    console.log('not logged in');
+    if (isDev()) console.log('%c not logged in', 'color: pink');
   }
-}
-
-function addMissing(trnys) {
-  performTask(db.addTournament, trnys, false).then(
-    () => {
-      console.log('success');
-    },
-    () => {
-      console.log('failure');
-    }
-  );
 }

@@ -15,15 +15,6 @@ import EventEmitter from 'wolfy87-eventemitter';
 
 import 'styles/main.css';
 
-export function setupTMX() {
-  setEnv();
-  setWindow();
-  setContext();
-  idiomSetup();
-
-  config.init().then(tmxReady, initializationFailed);
-}
-
 function initializationFailed(err) {
   if (err && err.name === 'OpenFailedError') {
     resetDB();
@@ -84,13 +75,24 @@ function setWindow() {
   };
 }
 
-function setEnv() {
-  env.device = getDevice();
-  env.version_check = new Date().getTime();
-  console.log('version:', env.version);
+function getNavigator() {
+  try {
+    return navigator || window.navigator;
+  } catch (e) {
+    return undefined;
+  }
+}
 
-  eventListeners();
-  context.queryString = parseQueryString();
+function getDevice() {
+  const nav = getNavigator();
+  const device = {
+    isStandalone: nav && 'standalone' in nav && nav.standalone,
+    isIDevice: nav && /iphone|ipod|ipad/i.test(nav.userAgent),
+    isIpad: nav && /iPad/i.test(nav.userAgent),
+    isWindows: nav && /indows/i.test(nav.userAgent),
+    isMobile: nav && /Mobi/.test(nav.userAgent)
+  };
+  return device;
 }
 
 function eventListeners() {
@@ -114,22 +116,20 @@ function eventListeners() {
   setOrientation();
 }
 
-function getDevice() {
-  const nav = getNavigator();
-  const device = {
-    isStandalone: nav && 'standalone' in nav && nav.standalone,
-    isIDevice: nav && /iphone|ipod|ipad/i.test(nav.userAgent),
-    isIpad: nav && /iPad/i.test(nav.userAgent),
-    isWindows: nav && /indows/i.test(nav.userAgent),
-    isMobile: nav && /Mobi/.test(nav.userAgent)
-  };
-  return device;
+function setEnv() {
+  env.device = getDevice();
+  env.version_check = new Date().getTime();
+  console.log(`%c version: ${env.version}`, 'color: cyan');
+
+  eventListeners();
+  context.queryString = parseQueryString();
 }
 
-function getNavigator() {
-  try {
-    return navigator || window.navigator;
-  } catch (e) {
-    return undefined;
-  }
+export function setupTMX() {
+  setEnv();
+  setWindow();
+  setContext();
+  idiomSetup();
+
+  config.init().then(tmxReady, initializationFailed);
 }
