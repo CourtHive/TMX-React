@@ -43,6 +43,10 @@ const setLoadingState = (state, action) =>
   produce(state, (draftState) => {
     draftState.loadingState = action.payload;
   });
+const dbLoaded = (state, action) =>
+  produce(state, (draftState) => {
+    draftState.dbLoaded = action.payload;
+  });
 const pubAction = (state) =>
   produce(state, (draftState) => {
     const timestamp = new Date().getTime();
@@ -99,6 +103,7 @@ const rootProducer = {
   'display calendar': displayCalendar,
   'display splash': displaySplash,
 
+  'db loaded': dbLoaded,
   'key loaded': incrementKeyLoads,
   'specify components': specifyEnabledComponents,
 

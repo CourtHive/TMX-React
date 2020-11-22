@@ -1,6 +1,7 @@
 import React /*useEffect*/ from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { context } from 'services/context';
 
 import { getJwtTokenStorageKey } from 'config/localStorage';
@@ -24,24 +25,23 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { populateCalendar } from 'functions/calendar';
 import { displayTournament } from 'functions/tournament/tournamentDisplay';
+import { showCalendar } from 'services/screenSlaver';
 
 const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
 
-export function TournamentRoot() {
+export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
 
   // const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
   const scoringDetails = useSelector((state: any) => state.tmx.scoringDetails);
 
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournament = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
   const iconTabs = useSelector((state: any) => state.tmx.visible.iconTabs);
 
   const theme = useTheme();
-  // const downSm = useMediaQuery(theme.breakpoints.down('sm'));
   const downXs = useMediaQuery(theme.breakpoints.down('xs'));
   const loggedIn = getLoginState();
   const loginModal = () => dispatch({ type: 'login modal', payload: true });
@@ -65,7 +65,7 @@ export function TournamentRoot() {
   }, [keyLoads]);
   */
 
-  const tournamentName = tournament.name || t('trn');
+  const tournamentName = tournamentRecord.name || t('trn');
   const tieFormat = scoringDetails?.matchUp?.tieFormat;
   const matchUp = !tieFormat && scoringDetails?.matchUp;
   const tieMatchUp = tieFormat && scoringDetails?.matchUp;
@@ -102,13 +102,18 @@ export function TournamentRoot() {
         <LoginIcon />
       </Grid>
       <Grid container direction="column" justify="flex-start">
-        <TournamentTabs />
+        <TournamentTabs tournament={tournamentRecord} tabIndex={tabIndex} />
       </Grid>
       <Grid container direction="column" justify="center" alignItems="center">
         {/* divider and then any other menu items */}
       </Grid>
     </Grid>
   );
+
+  const handleLogoClick = () => {
+    showCalendar();
+    history.push('/');
+  };
 
   return (
     <>
@@ -143,7 +148,7 @@ export function TournamentRoot() {
         </Grid>
 
         <Grid item>
-          <ProviderLogo />
+          <ProviderLogo onClick={handleLogoClick} />
         </Grid>
       </Grid>
 
@@ -152,7 +157,7 @@ export function TournamentRoot() {
         {downXs && !iconTabs ? null : (
           <Grid item style={{ flexGrow: 1 }}>
             <Grid container direction="column" className={classes.content}>
-              <TournamentTabsContent />
+              <TournamentTabsContent tournamentRecord={tournamentRecord} tabIndex={tabIndex} params={params} />
             </Grid>
           </Grid>
         )}

@@ -1,7 +1,8 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from 'components/tables/styles';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,11 +22,13 @@ import NoticePaper from 'components/papers/notice/NoticePaper';
 import EndlessTable from 'components/tables/EndlessTable';
 
 import { drawEngine } from 'tods-competition-factory';
+import { drawRoute } from 'components/tournament/tabRoute';
 
 export function EventDrawList(props) {
   const { selectedEvent } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
   const classes = useStyles();
   const ref = useRef(null);
 
@@ -68,7 +71,7 @@ export function EventDrawList(props) {
 
   const data = drawDefinitions
     .filter((f) => f)
-    .map((drawDefinition, index) => {
+    .map((drawDefinition) => {
       const { drawId, drawName } = drawDefinition;
       const checked = checkedDrawIds.includes(drawId);
 
@@ -314,6 +317,9 @@ export function EventDrawList(props) {
   const handleOnRowClick = (_, rowData) => {
     if (editMode) return;
     dispatch({ type: 'select event draw', payload: rowData.drawId });
+    const { eventId } = selectedEvent;
+    const nextRoute = drawRoute({ tournamentId: selectedTournamentId, eventId, drawId: rowData.drawId });
+    history.push(nextRoute);
   };
 
   if (!data.length) {

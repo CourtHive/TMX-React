@@ -29,11 +29,8 @@ export function addDev(variable) {
 
 export function setDev({ env }) {
   // if ?dev= equals env.dev then enable dev object access in console
-  if (
-    (context.queryString.dev && env.dev === context.queryString.dev) ||
-    window.location.host.indexOf('localhost:3') === 0
-  ) {
-    console.log('dev initialized');
+  if ((context.queryString.dev && env.dev === context.queryString.dev) || isLocalhost) {
+    console.log('%c dev initialized', 'color: yellow');
     context.isDev = true;
     window.dev = {};
   }

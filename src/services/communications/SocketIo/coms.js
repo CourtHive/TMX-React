@@ -3,6 +3,7 @@ import { token } from 'config/bearerToken';
 import { context } from 'services/context';
 import { contentEquals } from 'services/screenSlaver';
 import { getLoginState } from 'services/authentication/loginState';
+import { isLocalhost } from 'functions/isLocalhost';
 import { isDev } from 'functions/isDev';
 
 import i18n from 'i18next';
@@ -24,10 +25,6 @@ export const coms = (function () {
   const ackRequests = {};
   let connected = false;
 
-  fx.init = () => {
-    initListeners();
-  };
-
   function initListeners() {
     context.ee.addListener('emitTmx', fx.emitTmx);
     context.ee.addListener('sendKey', fx.sendKey);
@@ -35,13 +32,17 @@ export const coms = (function () {
     context.ee.addListener('logError', fx.logError);
   }
 
+  fx.init = () => {
+    initListeners();
+  };
+
   const oi = {
     socket: undefined
   };
 
   fx.onLine = () => {
     // eslint-disable-next-line
-    return getNavigator().onLine || location.hostname === 'localhost';
+    return getNavigator().onLine || isLocalhost;
   };
 
   // keyQueue is used for keys that can't be sent/submitted until the env is set up with user uuid
@@ -98,10 +99,9 @@ export const coms = (function () {
   };
 
   fx.connectSocket = () => {
-    const chcsRootURL =
-      window.location.host === 'localhost:3000'
-        ? 'http://localhost:8065'
-        : process.env.REACT_APP_CHCS_ROOT_URL || window.location.host;
+    const chcsRootURL = isLocalhost
+      ? 'http://localhost:8065'
+      : process.env.REACT_APP_CHCS_ROOT_URL || window.location.host;
 
     const chcsServerPath = process.env.REACT_APP_CHCS_SERVER_PATH || '';
     const socketIoPath = env.socketIo.tmx || '';
@@ -171,7 +171,7 @@ export const coms = (function () {
   };
 
   function receiveAcknowledgement(msg) {
-    if (window.location.hostname === 'localhost') {
+    if (isLocalhost) {
       console.log(`%c received acknowledgement: ${msg.type}`, 'color: lightgreen');
     }
 

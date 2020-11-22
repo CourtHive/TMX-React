@@ -1,12 +1,13 @@
 export const TAB_TOURNAMENT = 0;
-export const TAB_PLAYERS = 1;
+export const TAB_PARTICIPANTS = 1;
 export const TAB_EVENTS = 2;
 export const TAB_LOCATIONS = 3;
 export const TAB_SCHEDULE = 4;
 export const TAB_MATCHUPS = 5;
 export const TAB_SETTINGS = 6;
+export const TAB_POINTS = 0;
 
-export const PTAB_PLAYERS = 'players';
+export const PTAB_PARTICIPANTS = 'players';
 export const PTAB_TEAMS = 'teams';
 export const PTAB_GROUPS = 'groups';
 export const PTAB_OFFICIALS = 'officials';

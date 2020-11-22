@@ -10,13 +10,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
   tab: {
     minWidth: '40px!important',
     fontSize: '14px!important',
-    textTransform: 'none',
-//     padding: '0 12px'
+    textTransform: 'none'
+    //     padding: '0 12px'
   },
   tabSm: {
     minWidth: '40px!important',
     fontSize: '12px!important'
-  },
+  }
 }));
 
 export const TabPanel = (props) => {

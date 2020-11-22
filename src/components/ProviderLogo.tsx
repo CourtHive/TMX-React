@@ -7,7 +7,7 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import TournamentLogo from 'components/tournament/TournamentLogo';
 import { useStyles } from 'components/tournament/styles';
 
-const ProviderLogo = () => {
+const ProviderLogo = (props) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -16,7 +16,7 @@ const ProviderLogo = () => {
   return (
     <Grid className={!downSm ? classes.menuRightWrapper : classes.menuRightWrapperSm} container direction="row">
       <Grid className={classes.menuRightSubWrapper} item>
-        <TournamentLogo />
+        <TournamentLogo {...props} />
       </Grid>
     </Grid>
   );

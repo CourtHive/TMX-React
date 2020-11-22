@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import useTheme from '@material-ui/core/styles/useTheme';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -38,29 +38,18 @@ export function AvailableParticipants(props) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { callback } = props;
+  const { callback, tournamentRecord, selectedEvent, selectedDraw } = props;
 
-  const selectedEventId = useSelector((state: any) => state.tmx.select.events.event);
-  const selectedDrawId = useSelector((state: any) => state.tmx.select.draws.draw);
-
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const selectedDrawId = selectedDraw?.drawId;
 
   const [tableData, setTableData] = useState([]);
   const [filterValue, setFilterValue] = useState();
   const [filteredData, setFilteredData] = useState([]);
 
-  const tournamentEvents = tournamentRecord.events || [];
-  const tournamentParticipants = tournamentRecord.participants || [];
-  const selectedEvent = tournamentEvents.reduce((p, c) => (c.eventId === selectedEventId ? c : p), undefined);
+  const tournamentParticipants = tournamentRecord?.participants || [];
   const { eventType } = selectedEvent || {};
 
-  const tournamentDraws = tournamentEvents
-    .map((event) => event.drawDefinitions)
-    .flat()
-    .filter((f) => f);
-
-  const drawDefinition = tournamentDraws.reduce((p, c) => (c.drawId === selectedDrawId ? c : p), undefined);
+  const drawDefinition = selectedDraw;
 
   const enteredInEvent = (selectedEvent && getEntries(selectedEvent).participantIds) || [];
   const enteredInDraw =

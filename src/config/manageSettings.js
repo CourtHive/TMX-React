@@ -90,80 +90,78 @@ export function envSettings() {
       const registeredMethod = fetchRegistered && (fetchRegistered.url || fetchRegistered.request) ? true : false;
       context.settings.fetchRegisteredPlayers = registeredMethod;
 
-      if (!env.embedded) {
-        const misc = getKey('envSettings');
-        if (misc && misc.settings) {
-          boolAttrs(misc.settings);
-          keyWalk(misc.settings, env);
-        }
+      const misc = getKey('envSettings');
+      if (misc && misc.settings) {
+        boolAttrs(misc.settings);
+        keyWalk(misc.settings, env);
+      }
 
-        const org = getKey('orgData');
-        if (org) {
-          Object.keys(env.org).forEach((key) => {
-            try {
-              if (org[key]) {
-                env.org[key] = org[key];
-              }
-            } catch (err) {
-              console.log('%c Error assigning key', { org, key });
+      const org = getKey('orgData');
+      if (org) {
+        Object.keys(env.org).forEach((key) => {
+          try {
+            if (org[key]) {
+              env.org[key] = org[key];
             }
-          });
-        }
+          } catch (err) {
+            console.log('%c Error assigning key', { org, key });
+          }
+        });
+      }
 
-        const superUser = getKey('superUser');
-        if (superUser) context.state.admin = superUser.auth;
+      const superUser = getKey('superUser');
+      if (superUser) context.state.admin = superUser.auth;
 
-        const pt = getKey('pointsTable');
-        if (pt) env.points.points_table = pt.table;
+      const pt = getKey('pointsTable');
+      if (pt) env.points.points_table = pt.table;
 
-        const cal = getKey('calendarSettings');
-        if (cal && cal.settings) {
-          boolAttrs(cal.settings);
-          keyWalk(cal.settings, env.calendar);
-        }
+      const cal = getKey('calendarSettings');
+      if (cal && cal.settings) {
+        boolAttrs(cal.settings);
+        keyWalk(cal.settings, env.calendar);
+      }
 
-        const points = getKey('pointsSettings');
-        if (points && points.settings) {
-          boolAttrs(points.settings);
-          fxAttrs(points.settings);
-          Object.assign(env.points, points.settings);
-        }
+      const points = getKey('pointsSettings');
+      if (points && points.settings) {
+        boolAttrs(points.settings);
+        fxAttrs(points.settings);
+        Object.assign(env.points, points.settings);
+      }
 
-        const draws = getKey('drawSettings');
-        if (draws && draws.settings) {
-          boolAttrs(draws.settings);
-          keyWalk(draws.settings, env.draws);
-        }
+      const draws = getKey('drawSettings');
+      if (draws && draws.settings) {
+        boolAttrs(draws.settings);
+        keyWalk(draws.settings, env.draws);
+      }
 
-        const publishing = getKey('publishingSettings');
-        if (publishing && publishing.settings) {
-          boolAttrs(publishing.settings);
-          keyWalk(publishing.settings, env.publishing);
-        }
+      const publishing = getKey('publishingSettings');
+      if (publishing && publishing.settings) {
+        boolAttrs(publishing.settings);
+        keyWalk(publishing.settings, env.publishing);
+      }
 
-        const printing = getKey('printingSettings');
-        if (printing && printing.settings) {
-          boolAttrs(printing.settings);
-          keyWalk(printing.settings, env.printing);
-        }
+      const printing = getKey('printingSettings');
+      if (printing && printing.settings) {
+        boolAttrs(printing.settings);
+        keyWalk(printing.settings, env.printing);
+      }
 
-        const docs = getKey('docSettings');
-        if (docs && docs.settings) {
-          boolAttrs(docs.settings);
-          keyWalk(docs.settings, env.documentation);
-        }
+      const docs = getKey('docSettings');
+      if (docs && docs.settings) {
+        boolAttrs(docs.settings);
+        keyWalk(docs.settings, env.documentation);
+      }
 
-        const schedule = getKey('scheduleSettings');
-        if (schedule && schedule.settings) {
-          boolAttrs(schedule.settings);
-          keyWalk(schedule.settings, env.schedule);
-        }
+      const schedule = getKey('scheduleSettings');
+      if (schedule && schedule.settings) {
+        boolAttrs(schedule.settings);
+        keyWalk(schedule.settings, env.schedule);
+      }
 
-        const custom = getKey('customSettings');
-        if (custom && custom.settings) {
-          boolAttrs(custom.settings);
-          keyWalk(custom.settings, env);
-        }
+      const custom = getKey('customSettings');
+      if (custom && custom.settings) {
+        boolAttrs(custom.settings);
+        keyWalk(custom.settings, env);
       }
 
       const devset = getKey('devSettings');
@@ -176,7 +174,7 @@ export function envSettings() {
       // is a legacy situation where .value was used to store uuuids...
       const uuuid = getKey('userUUID');
       if (!uuuid || !uuuid.value) {
-        env.firstTimeUser = !window.embedded;
+        env.firstTimeUser = true;
         env.uuuid = UUID.generate();
         db.addSetting({ key: 'userUUID', value: env.uuuid, settings: env.uuuid });
         coms.emitTmx({ action: 'newClient', notice: 'New TMX Client' });

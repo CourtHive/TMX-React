@@ -1,27 +1,42 @@
 import React, { useEffect } from 'react';
 import { TournamentRoot } from 'components/tournament/TournamentRoot';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { db } from 'services/storage/db';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import { context } from 'services/context';
+import { env } from 'config/defaults';
 
-const TournamentPage: React.FC = () => {
+const TournamentPage = (props) => {
+  const { tabIndex, match } = props;
+  const dispatch = useDispatch();
+
+  const dbLoaded = useSelector((state: any) => state.tmx.dbLoaded);
   const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournament = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
-  const location = useLocation();
-  const locationPathnameArray = location.pathname.split('/');
-  const tournamentId = locationPathnameArray[locationPathnameArray.length - 1];
+  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const tournamentId = match?.params?.tournamentId;
 
   useEffect(() => {
-    if (!tournament) {
-      console.log({ tournamentId });
-      // dispatch({ type: 'change tournament', payload: tournamentFromAPI });
+    function go(tournament) {
+      dispatch({ type: 'change tournament', payload: tournament });
+      const org = tournament?.unifiedTournamentId?.organisation || tournament?.org?.abbr;
+      const isTourneyOrg = org.organisationAbbreviation === env.org.abbr;
+      const editing = isTourneyOrg || !org?.organisationId;
+      if (editing) {
+        dispatch({ type: 'edit state', payload: true });
+        context.state.edit = true;
+      }
+    }
+    if (!tournamentRecord && tournamentId && dbLoaded) {
+      db.findTournament(tournamentId).then(go, () => {
+        console.log('oops');
+      });
     }
   });
 
-  return tournament ? (
-    <TournamentRoot />
+  return tournamentRecord ? (
+    <TournamentRoot tournamentRecord={tournamentRecord} tabIndex={tabIndex} params={match?.params} />
   ) : (
     <Grid alignItems="center" container justify="center">
       <CircularProgress size={100} />

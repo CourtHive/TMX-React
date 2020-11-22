@@ -1,7 +1,8 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
+import { tabRoute } from './tabRoute';
 import { Tooltip, Tabs, useMediaQuery } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import GroupIcon from '@material-ui/icons/Group';
@@ -17,31 +18,34 @@ import { TMXTab } from 'components/tabs/TMXTab';
 
 import {
   TAB_TOURNAMENT,
-  TAB_PLAYERS,
+  TAB_PARTICIPANTS,
   TAB_EVENTS,
   TAB_LOCATIONS,
   TAB_SCHEDULE,
   TAB_MATCHUPS,
-  TAB_SETTINGS,
+  TAB_SETTINGS
 } from 'stores/tmx/types/tabs';
 import { useStyles } from 'components/tournament/styles';
+import { useHistory } from 'react-router-dom';
 import useTheme from '@material-ui/core/styles/useTheme';
 
-export function TournamentTabs() {
+export function TournamentTabs({ tournament, tabIndex }) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-  
+  const history = useHistory();
+
   const theme = useTheme();
   const mediaBreakpoints = useMediaQuery(theme.breakpoints.up('xs'));
   const iconTabs = useSelector((state: any) => state.tmx.visible.iconTabs);
 
-  const downXs = useMediaQuery(theme.breakpoints.down('xs'));
-
-  const labelMaker = (icon, label) => !iconTabs ? t(label) :
-    <Tooltip title={t(label)} aria-label={t(label)}>
-      {icon}
-    </Tooltip>;
+  const labelMaker = (icon, label) =>
+    !iconTabs ? (
+      t(label)
+    ) : (
+      <Tooltip title={t(label)} aria-label={t(label)}>
+        {icon}
+      </Tooltip>
+    );
 
   const infoLabel = labelMaker(<InfoIcon />, 'Information');
   const groupLabel = labelMaker(<GroupIcon />, 'Participants');
@@ -50,10 +54,10 @@ export function TournamentTabs() {
   const matchUpsLabel = labelMaker(<MatchUpsIcon />, 'Matches');
   const eventsLabel = labelMaker(<EventIcon />, 'Events');
   const settingsLabel = labelMaker(<SettingsIcon />, 'Settings');
-    
+
   const tabValues = {
     [TAB_TOURNAMENT]: { label: infoLabel, id: 'tab-tournament' },
-    [TAB_PLAYERS]: { label: groupLabel, id: 'tab-participants' },
+    [TAB_PARTICIPANTS]: { label: groupLabel, id: 'tab-participants' },
     [TAB_EVENTS]: { label: eventsLabel, id: 'tab-events' },
     [TAB_LOCATIONS]: { label: locationLabel, id: 'tab-locations' },
     [TAB_SCHEDULE]: { label: scheduleLabel, id: 'tab-schedule' },
@@ -61,27 +65,22 @@ export function TournamentTabs() {
     [TAB_SETTINGS]: { label: settingsLabel, id: 'tab-settings' }
   };
 
+  const visibleTabs = useSelector((state: any) => state.tmx.visible.tabs);
+
   const handleChange = (_, newValue) => {
-    const iconTabs = downXs;
-    const activeTab = visibleTabs[newValue];
-    dispatch({ type: 'change active tab', payload: { tab: activeTab, iconTabs }});
+    const targetTabIndex = visibleTabs[newValue];
+    const { tournamentId } = tournament || {};
+    const nextRoute = tabRoute({ tournamentId, tabIndex: targetTabIndex });
+    history.push(nextRoute);
   };
 
-  const visibleTabs = useSelector((state: any) => state.tmx.visible.tabs);
-  const visibleTabPanel = useSelector((state: any) => state.tmx.visible.tabPanel) || visibleTabs[0];
-
-  const tabIndex = visibleTabs.indexOf(visibleTabPanel);
   const value = tabIndex >= 0 ? tabIndex : 0;
-
-  if (!visibleTabPanel && visibleTabs.length) {
-    dispatch({ type: 'change active tab', payload: { tab: visibleTabs[0] }});
-  }
 
   const className = mediaBreakpoints ? classes.tab : classes.tabSm;
   return (
     <Tabs
       value={value}
-      orientation='vertical'
+      orientation="vertical"
       aria-label={'tournament tabs'}
       indicatorColor={'primary'}
       onChange={handleChange}
@@ -90,7 +89,7 @@ export function TournamentTabs() {
       textColor={'primary'}
     >
       {visibleTabs.map((t) => (
-        <TMXTab className={className} values={tabValues} root='trny' key={`tmxtab:${t}`} index={t} />
+        <TMXTab className={className} values={tabValues} root="trny" key={`tmxtab:${t}`} index={t} />
       ))}
     </Tabs>
   );

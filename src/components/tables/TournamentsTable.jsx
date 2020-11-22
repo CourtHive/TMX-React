@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Chip } from '@material-ui/core';
@@ -27,6 +28,7 @@ import { Grid, IconButton, InputAdornment, Tooltip } from '@material-ui/core/';
 import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
 
 import { utilities } from 'tods-competition-factory';
+import { tabRoute } from 'components/tournament/tabRoute';
 const { formatDate } = utilities.dateTime;
 
 function trnyRecord(tournamentRecord) {
@@ -57,6 +59,7 @@ const rowHeight = 48;
 export function TournamentsTable() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
   const classes = useStyles();
 
   const hiddenColumns = useSelector((state) => state.tmx.hiddenColumns.tournaments) || [];
@@ -71,6 +74,8 @@ export function TournamentsTable() {
 
   const handleRowClick = (_, rowItem) => {
     displayTournament(rowItem);
+    const nextRoute = tabRoute({ tournamentId: rowItem.tournamentId, tabIndex: 0 });
+    history.push(nextRoute);
   };
 
   useEffect(() => {
@@ -214,13 +219,13 @@ export function TournamentsTable() {
 
   const syncCalendar = () => {
     dispatch({ type: 'loading state', payload: true });
-    fetchCalendar().then(success, failure);
     function success(tournaments) {
       if (tournaments) updateCalendar({ tournaments, merge: true });
     }
     function failure(data) {
       console.log('failure:', data);
     }
+    fetchCalendar().then(success, failure);
   };
 
   const addTournament = () => dispatch({ type: 'visible drawer', payload: 'tournament' });

@@ -1,35 +1,37 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { useStyles } from 'components/selectors/style';
 import TMXSelect from 'components/selectors/tmxSelector/TMXSelect';
+import { drawRoute } from 'components/tournament/tabRoute';
 
 export const EventDrawSelector = (props) => {
   const { onChange } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
 
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
-  const tournamentEvents = tournamentRecord.events || [];
-  const selectedEventId = useSelector((state: any) => state.tmx.select.events.event) || '-';
-  const selectedEvent = tournamentEvents.find((e) => e.eventId === selectedEventId);
+  const { selectedEvent, selectedDraw, tournamentRecord } = props;
+  const { tournamentId } = tournamentRecord || {};
+  const { drawId: selectedDrawId } = selectedDraw || {};
 
   const eventDraws = selectedEvent?.drawDefinitions;
-  const selectedDraw = useSelector((state: any) => state.tmx.select.draws.draw);
-  const selectedExists = selectedDraw && eventDraws?.reduce((p, c) => p || c.drawId === selectedDraw, false);
+  const selectedExists = selectedDraw && eventDraws?.reduce((p, c) => p || c.drawId === selectedDrawId, false);
   const firstDraw = eventDraws?.length && eventDraws[0].drawId;
 
-  const targetDraw = (selectedExists && selectedDraw) || firstDraw;
+  const targetDraw = (selectedExists && selectedDrawId) || firstDraw;
 
   const selectDraw = (event) => {
     let value = event.target.value;
     if (value === '-') value = undefined;
     dispatch({ type: `select event draw`, payload: value });
+    const nextRoute = drawRoute({ tournamentId, eventId: selectedEvent?.eventId, drawId: value });
+    history.push(nextRoute);
     if (onChange && typeof onChange === 'function') onChange(value);
   };
 

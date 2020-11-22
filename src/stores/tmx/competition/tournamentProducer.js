@@ -17,7 +17,6 @@ import { tournamentEngine } from 'tods-competition-factory';
 
 const invokeTournamentEngine = (state, action) =>
   produce(state, (draftState) => {
-    const start = new Date();
     const tournamentId = draftState.selectedTournamentId;
     if (!tournamentId) {
       return console.log('%c Missing tournamentId', 'color: red');
@@ -74,9 +73,6 @@ const invokeTournamentEngine = (state, action) =>
       const payload = { icon: 'error', severity: 'warning', message: `${errors.length} Errors` };
       setToasterState({ draftState, payload });
     }
-
-    const end = new Date();
-    if (isDev()) console.log(`tournamentEngine execution time:`, end - start);
   });
 
 const addTournament = (state, action) =>

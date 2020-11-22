@@ -10,21 +10,23 @@ import { TournamentOverview } from 'components/panels/infoPanel/tournamentOvervi
 import { TTAB_OVERVIEW, TTAB_NOTES, TTAB_MEDIA, TTAB_ACTIONS } from 'stores/tmx/types/tabs';
 import { useStyles } from 'components/panels/infoPanel/style';
 
-export const InformationPanel = () => {
+export const InformationPanel = ({ tournamentRecord, params }) => {
   const classes = useStyles();
-  
+
   const tournamentView = useSelector((state: any) => state.tmx.visible.tournamentView);
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+
+  if (params.view) {
+    console.log('selected view', params.view);
+  }
 
   return (
-    <>  
+    <>
       <TournamentView />
       <div className={classes.divider} />
-      { tournamentView === TTAB_OVERVIEW && <TournamentOverview tournamentRecord={tournamentRecord} /> }
-      { tournamentView === TTAB_NOTES && <TournamentNotes tournamentRecord={tournamentRecord} /> }
-      { tournamentView === TTAB_MEDIA && <TournamentMedia tournamentRecord={tournamentRecord} /> }
-      { tournamentView === TTAB_ACTIONS && <TournamentActions tournamentRecord={tournamentRecord} /> }
+      {tournamentView === TTAB_OVERVIEW && <TournamentOverview tournamentRecord={tournamentRecord} />}
+      {tournamentView === TTAB_NOTES && <TournamentNotes tournamentRecord={tournamentRecord} />}
+      {tournamentView === TTAB_MEDIA && <TournamentMedia tournamentRecord={tournamentRecord} />}
+      {tournamentView === TTAB_ACTIONS && <TournamentActions tournamentRecord={tournamentRecord} />}
     </>
-  )
+  );
 };

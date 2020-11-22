@@ -7,10 +7,6 @@ import { versionCheck } from 'functions/versioning/versionCheck';
 import { initAuth } from 'services/tournamentAuthorization';
 import { tmxStore } from 'stores/tmxStore';
 
-export function editTournament({ tournamentId, tournament }) {
-  displayTournament({ tournamentId, tournament, editing: true });
-}
-
 export function displayTournament({ tournamentId, tournament, editing } = {}) {
   if (context.tournamentId && context.tournamentId !== tournamentId) {
     context.ee.emit('emitTmx', {
@@ -20,12 +16,6 @@ export function displayTournament({ tournamentId, tournament, editing } = {}) {
   }
   context.currentTab = 'tournament';
   context.tournamentId = tournamentId;
-
-  if (tournament) {
-    go(tournament);
-  } else {
-    db.findTournament(tournamentId).then(go);
-  }
 
   function go(t) {
     if (!t) return;
@@ -63,4 +53,14 @@ export function displayTournament({ tournamentId, tournament, editing } = {}) {
     showContent('tournament');
     context.currentTab = 'tournament';
   }
+
+  if (tournament) {
+    go(tournament);
+  } else {
+    db.findTournament(tournamentId).then(go);
+  }
+}
+
+export function editTournament({ tournamentId, tournament }) {
+  displayTournament({ tournamentId, tournament, editing: true });
 }

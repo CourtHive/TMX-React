@@ -16,7 +16,7 @@ export const printFx = (function () {
       let visibleTabPanel = tmxStore.getState().tmx.visible.tabPanel;
       let actions = {
          [TAB_EVENTS]: () => printDraw(target, mouse),
-         [TAB_PLAYERS]: () => playersTabPDFs(target, mouse),
+         [TAB_PARTICIPANTS]: () => playersTabPDFs(target, mouse),
          [TAB_MATCHUPS]: () => allMatches(),
          [TAB_SCHEDULE]: () => printSchedule(target, mouse)
       }

@@ -8,9 +8,8 @@ import useTheme from '@material-ui/core/styles/useTheme';
 
 import { useStyles } from 'components/tournament/styles';
 import { getLogo } from 'services/imageHandlers/getImage';
-import { showCalendar } from 'services/screenSlaver';
 
-const TournamentLogo: React.FC = () => {
+const TournamentLogo = (props) => {
   const theme = useTheme();
   const classes = useStyles();
   const [images, setImages] = useState([]);
@@ -18,7 +17,7 @@ const TournamentLogo: React.FC = () => {
   const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
 
   const handleOnClick = () => {
-    showCalendar();
+    if (props.onClick) props.onClick();
   };
 
   useEffect(() => {

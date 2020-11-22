@@ -1,27 +1,32 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { useStyles } from 'components/selectors/style';
 import TMXSelect from 'components/selectors/tmxSelector/TMXSelect';
+import { eventRoute } from 'components/tournament/tabRoute';
 
-export const EventSelector = () => {
+export const EventSelector = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const history = useHistory();
 
-  const events = tournamentRecord.events || [];
-  const selectedEventId = useSelector((state: any) => state.tmx.select.events.event) || '-';
+  const { selectedEvent, tournamentRecord } = props;
+  const events = tournamentRecord?.events || [];
+  const selectedEventId = selectedEvent?.eventId;
+  const { tournamentId } = tournamentRecord || {};
+
   const selectEvent = (event) => {
     let payload = event.target.value;
     if (payload === '-') payload = undefined;
     dispatch({ type: 'select event', payload });
-  }
+    const nextRoute = eventRoute({ tournamentId, eventId: payload });
+    history.push(nextRoute);
+  };
   const options = events.map((event) => ({ text: event.eventName, value: event.eventId }));
 
   return (

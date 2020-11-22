@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import { useStyles } from 'components/tournament/styles';
 import { TabPanel } from 'components/tabs/TabPanel';
@@ -7,7 +7,7 @@ import { TabPanel } from 'components/tabs/TabPanel';
 import {
   TAB_EVENTS,
   TAB_MATCHUPS,
-  TAB_PLAYERS,
+  TAB_PARTICIPANTS,
   TAB_SETTINGS,
   TAB_LOCATIONS,
   TAB_SCHEDULE,
@@ -22,33 +22,33 @@ import { MatchesPanel } from 'components/panels/MatchUpsPanel';
 import { SchedulePanel } from 'components/panels/SchedulePanel';
 import { LocationsPanel } from 'components/panels/locationsPanel/LocationsPanel';
 
-const TournamentTabsContent = () => {
+const TournamentTabsContent = ({ tabIndex, tournamentRecord, params }) => {
   const classes = useStyles();
 
-  const visibleTabs = useSelector((state: any) => state.tmx.visible.tabs);
-  const visibleTabPanel = useSelector((state: any) => state.tmx.visible.tabPanel) || visibleTabs[0];
+  // const visibleTabs = useSelector((state: any) => state.tmx.visible.tabs);
+  // const tabIndex = useSelector((state: any) => state.tmx.visible.tabPanel) || visibleTabs[0];
 
   return (
     <div className={classes.pageWrapper}>
-      <TabPanel value={visibleTabPanel} index={TAB_TOURNAMENT}>
-        <InformationPanel />
+      <TabPanel value={tabIndex} index={TAB_TOURNAMENT}>
+        <InformationPanel tournamentRecord={tournamentRecord} params={params} />
       </TabPanel>
-      <TabPanel value={visibleTabPanel} index={TAB_PLAYERS}>
+      <TabPanel value={tabIndex} index={TAB_PARTICIPANTS}>
         <PlayersPanel />
       </TabPanel>
-      <TabPanel value={visibleTabPanel} index={TAB_EVENTS}>
-        <EventsPanel />
+      <TabPanel value={tabIndex} index={TAB_EVENTS}>
+        <EventsPanel tournamentRecord={tournamentRecord} params={params} />
       </TabPanel>
-      <TabPanel value={visibleTabPanel} index={TAB_LOCATIONS}>
+      <TabPanel value={tabIndex} index={TAB_LOCATIONS}>
         <LocationsPanel />
       </TabPanel>
-      <TabPanel value={visibleTabPanel} index={TAB_SCHEDULE}>
+      <TabPanel value={tabIndex} index={TAB_SCHEDULE}>
         <SchedulePanel />
       </TabPanel>
-      <TabPanel value={visibleTabPanel} index={TAB_MATCHUPS}>
+      <TabPanel value={tabIndex} index={TAB_MATCHUPS}>
         <MatchesPanel />
       </TabPanel>
-      <TabPanel value={visibleTabPanel} index={TAB_SETTINGS}>
+      <TabPanel value={tabIndex} index={TAB_SETTINGS}>
         <SettingsPanel />
       </TabPanel>
     </div>

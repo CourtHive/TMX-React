@@ -1,7 +1,8 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useStyles } from 'components/tables/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import { useStyles } from 'components/tables/styles';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import { Grid, IconButton, InputAdornment, Typography } from '@material-ui/core/';
 import { getActionPanelBounds } from 'services/dynamicStyles/actionPanelBounds';
@@ -24,15 +25,18 @@ import { AddEventButton } from 'components/buttons/addEvent';
 import { getEntries, getStatusGroup } from 'functions/events';
 import EndlessTable from 'components/tables/EndlessTable';
 import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
+import { eventRoute } from 'components/tournament/tabRoute';
 
 export function EventsTable(props) {
   const { events } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
   const actionBoundsRef = useRef(null);
 
   const editState = useSelector((state: any) => state.tmx.editState);
+  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
   const hiddenColumns = useSelector((state: any) => state.tmx.hiddenColumns.events) || [];
 
   const [filterValue, setFilterValue] = useState('');
@@ -159,20 +163,11 @@ export function EventsTable(props) {
   const handleRowClick = (_, rowItem) => {
     if (editMode) return;
     dispatch({ type: 'select event', payload: rowItem.eventId });
+    const nextRoute = eventRoute({ tournamentId: selectedTournamentId, eventId: rowItem.id });
+    history.push(nextRoute);
   };
 
   const deleteAction = (eventIds) => {
-    dispatch({
-      type: 'alert dialog',
-      payload: {
-        title: `${t('delete')} ${t('Event(s)')}`,
-        content: `${t('delete')} ${t('Selected Event(s)')}?`,
-        cancel: true,
-        okTitle: t('delete'),
-        ok: doIt
-      }
-    });
-
     function doIt() {
       setEditMode(false); // after delete exit edit mode
       dispatch({
@@ -187,6 +182,17 @@ export function EventsTable(props) {
         }
       });
     }
+
+    dispatch({
+      type: 'alert dialog',
+      payload: {
+        title: `${t('delete')} ${t('Event(s)')}`,
+        content: `${t('delete')} ${t('Selected Event(s)')}?`,
+        cancel: true,
+        okTitle: t('delete'),
+        ok: doIt
+      }
+    });
   };
 
   const deleteEventAction = () => {
@@ -381,6 +387,8 @@ export function EventsTable(props) {
       const firstEvent = filteredData[0];
       if (firstEvent) {
         dispatch({ type: 'select event', payload: firstEvent.eventId });
+        const nextRoute = eventRoute({ tournamentId: selectedTournamentId, eventId: firstEvent.eventId });
+        history.push(nextRoute);
       }
     }
   };

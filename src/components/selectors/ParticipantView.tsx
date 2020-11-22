@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useStyles } from 'components/selectors/style';
 import TMXSelect from 'components/selectors/tmxSelector/TMXSelect';
 
-import { PTAB_PLAYERS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS } from 'stores/tmx/types/tabs';
+import { PTAB_PARTICIPANTS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS } from 'stores/tmx/types/tabs';
 
 import { participantRoles, participantTypes } from 'tods-competition-factory';
 const { COMPETITOR } = participantRoles;
@@ -54,7 +54,7 @@ export const ParticipantView = () => {
   };
 
   const options = [
-    { text: playersLabel, value: PTAB_PLAYERS },
+    { text: playersLabel, value: PTAB_PARTICIPANTS },
     { text: teamsLabel, value: PTAB_TEAMS },
     { text: groupsLabel, value: PTAB_GROUPS },
     { text: officialsLabel, value: PTAB_OFFICIALS }

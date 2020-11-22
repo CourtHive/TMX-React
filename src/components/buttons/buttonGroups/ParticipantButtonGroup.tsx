@@ -10,7 +10,7 @@ import { participantRoles, participantTypes } from 'tods-competition-factory';
 const { COMPETITOR } = participantRoles;
 const { INDIVIDUAL, TEAM, GROUP } = participantTypes;
 
-import { PTAB_PLAYERS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS } from 'stores/tmx/types/tabs';
+import { PTAB_PARTICIPANTS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS } from 'stores/tmx/types/tabs';
 
 export function ParticipantButtonGroup() {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ export function ParticipantButtonGroup() {
       aria-label="text alignment"
       style={{ height: 36 }}
     >
-      <ToggleButton value={PTAB_PLAYERS} aria-label="draw" className={classes.noWrap}>
+      <ToggleButton value={PTAB_PARTICIPANTS} aria-label="draw" className={classes.noWrap}>
         {playersLabel}
       </ToggleButton>
       <ToggleButton value={PTAB_TEAMS} aria-label="competitors" className={classes.noWrap}>

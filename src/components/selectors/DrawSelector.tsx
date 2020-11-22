@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -22,6 +22,7 @@ export const DrawSelector = (props) => {
     .flat()
     .filter((f) => f);
 
+  // TODO: remove dependency on useSelector
   const selectedDraw = useSelector((state: any) => state.tmx.select[mode].draw);
   const selectedExists = selectedDraw && tournamentDraws.reduce((p, c) => p || c.drawId === selectedDraw, false);
   const firstDraw = tournamentDraws.length && tournamentDraws[0].drawId;
@@ -36,7 +37,7 @@ export const DrawSelector = (props) => {
   };
 
   const drawOption = (drawDefinition) => {
-    let category = drawDefinition.category ? `${drawDefinition.category} ` : '';
+    const category = drawDefinition.category ? `${drawDefinition.category} ` : '';
     const name = drawDefinition.drawName || drawDefinition.name || drawDefinition.drawId;
     return { text: `${category}${name}`, value: drawDefinition.drawId };
   };

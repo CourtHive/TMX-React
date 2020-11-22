@@ -3,15 +3,15 @@ import { tmxStore } from '../stores/tmxStore';
 
 let content;
 
-function selectDisplay(which) {
-  setState('tmxcontent', which);
-  setState('splash', which);
-  setState('mytournaments', which);
-}
 function setState(id, which) {
   const display = id === which;
   const docnode = document.getElementById(id);
   if (docnode) docnode.style.display = display ? 'flex' : 'none';
+}
+function selectDisplay(which) {
+  setState('tmxcontent', which);
+  setState('splash', which);
+  setState('mytournaments', which);
 }
 
 function clearContext() {

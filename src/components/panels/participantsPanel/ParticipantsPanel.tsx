@@ -11,7 +11,7 @@ import { PlayersTable } from 'components/tables/playersTable/PlayersTable';
 import { TeamsTable } from 'components/tables/teamsTable/TeamsTable';
 import { GroupsTable } from 'components/tables/groupsTable/GroupsTable';
 
-import { PTAB_PLAYERS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS } from 'stores/tmx/types/tabs';
+import { PTAB_PARTICIPANTS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS } from 'stores/tmx/types/tabs';
 
 export const PlayersPanel = () => {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ export const PlayersPanel = () => {
               {t('Participants')}
             </Link>
             <ParticipantView />
-            {participantView === PTAB_PLAYERS && <SignedInSelector />}
+            {participantView === PTAB_PARTICIPANTS && <SignedInSelector />}
           </Breadcrumbs>
         </Grid>
         <Grid item style={{ flexGrow: 1 }}>
@@ -37,7 +37,7 @@ export const PlayersPanel = () => {
       </Grid>
       <div className={classes.divider} />
       <div style={{ backgroundColor: 'white', width: '100%' }}>
-        {participantView !== PTAB_PLAYERS ? null : <PlayersTable />}
+        {participantView !== PTAB_PARTICIPANTS ? null : <PlayersTable />}
         {participantView !== PTAB_TEAMS ? null : <TeamsTable />}
         {participantView !== PTAB_GROUPS ? null : <GroupsTable />}
         {participantView !== PTAB_OFFICIALS ? null : 'Officials'}

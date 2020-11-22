@@ -1,13 +1,13 @@
 import { COMPONENT_SPLASH, COMPONENT_CALENDAR, COMPONENT_TOURNAMENT } from './types/components';
 import {
   TAB_TOURNAMENT,
-  TAB_PLAYERS,
+  TAB_PARTICIPANTS,
   TAB_EVENTS,
   TAB_LOCATIONS,
   TAB_SCHEDULE,
   TAB_MATCHUPS,
   TAB_SETTINGS,
-  PTAB_PLAYERS,
+  PTAB_PARTICIPANTS,
   DTAB_DRAW,
   LTAB_OVERVIEW,
   TTAB_OVERVIEW
@@ -34,6 +34,7 @@ export const storeInitialState = () => ({
   keyLoads: 0,
   drawResize: 0,
 
+  dbLoaded: false,
   authState: false,
   editState: false,
   loginModal: false,
@@ -101,7 +102,7 @@ export const storeInitialState = () => ({
     }
   },
   visible: {
-    tabs: [TAB_TOURNAMENT, TAB_PLAYERS, TAB_EVENTS, TAB_LOCATIONS, TAB_SCHEDULE, TAB_MATCHUPS, TAB_SETTINGS],
+    tabs: [TAB_TOURNAMENT, TAB_PARTICIPANTS, TAB_EVENTS, TAB_LOCATIONS, TAB_SCHEDULE, TAB_MATCHUPS, TAB_SETTINGS],
     iconTabs: true,
     dialog: undefined,
     drawer: undefined,
@@ -110,7 +111,7 @@ export const storeInitialState = () => ({
     drawView: DTAB_DRAW,
     locationView: LTAB_OVERVIEW,
     tournamentView: TTAB_OVERVIEW,
-    participantView: PTAB_PLAYERS,
+    participantView: PTAB_PARTICIPANTS,
     dualMatch: undefined,
     alertDialog: undefined,
     drawActive: undefined,
