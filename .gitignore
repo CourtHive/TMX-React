@@ -16,6 +16,7 @@
 
 # development
 .VSCodeCounter
+.nvimlog
 
 # production
 /build
