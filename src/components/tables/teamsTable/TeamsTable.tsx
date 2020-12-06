@@ -60,7 +60,7 @@ export const TeamsTable = () => {
   const events = tournamentRecord.events || [];
   const tournamentParticipants = tournamentRecord.participants || [];
   const participantsInEvents = []
-    .concat(...events.map((event) => event.entries.map((entry) => entry.participantId)))
+    .concat(...events.map((event) => event.entries?.map((entry) => entry.participantId)))
     .flat(Infinity);
 
   const participants = tournamentParticipants.filter((participant) => {

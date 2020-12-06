@@ -17,10 +17,9 @@ export const RepresentativesButton = (props) => {
   const { participants, drawDefinition } = props;
   const { drawId } = drawDefinition || {};
 
-  const entryIds = drawDefinition?.entries?.map((e) => e.participantId);
-  const representativeParticipantIds = drawDefinition?.entries
-    .filter((e) => e.representative)
-    .map((e) => e.participantId);
+  const entries = drawDefinition?.entries || [];
+  const entryIds = entries.map((e) => e.participantId);
+  const representativeParticipantIds = entries.filter((e) => e.representative).map((e) => e.participantId);
   const hasReps = representativeParticipantIds?.length;
 
   const [repValue, setRepValue] = useState(hasReps);

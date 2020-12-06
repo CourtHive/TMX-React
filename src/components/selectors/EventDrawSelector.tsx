@@ -49,8 +49,8 @@ export const EventDrawSelector = (props) => {
       <MenuItem value="-">
         <em>{t('schedule.alldraws')}</em>
       </MenuItem>
-      {drawOptions.map((e) => (
-        <MenuItem key={e.value} value={e.value}>
+      {drawOptions.map((e, i) => (
+        <MenuItem key={e.value || i} value={e.value}>
           {e.text}
         </MenuItem>
       ))}

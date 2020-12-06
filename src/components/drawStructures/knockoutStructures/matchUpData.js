@@ -24,8 +24,20 @@ function timeDisplay(schedule) {
 }
 
 function getScore(matchUp) {
+  let displayScore = '';
+  const { winningSide, score, delegated_score } = matchUp || {};
+  if (typeof score === 'string') {
+    displayScore = score || delegated_score || '';
+  } else {
+    if (winningSide === 2) {
+      displayScore = score?.scoreStringSide2;
+    } else {
+      displayScore = score?.scoreStringSide1 || '';
+    }
+  }
+
   return {
-    score: matchUp && (matchUp.score || matchUp.delegated_score),
+    score: displayScore,
     delegated: matchUp && !matchUp.score && matchUp.delegated_score
   };
 }

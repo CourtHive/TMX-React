@@ -46,14 +46,17 @@ export const DrawsPanel = (props) => {
     return candidate.structureId === structureId ? candidate : structure;
   }, undefined);
 
-  const { matchUps, roundMatchUps } = drawEngine
+  // const { matchUps, roundMatchUps } = drawEngine
+  const result = drawEngine
     .setState(drawDefinition)
     .setParticipants(participants)
     .allStructureMatchUps({ structureId });
+  const { matchUps, roundMatchUps } = result;
 
   const { nextUnfilledDrawPositions } = drawEngine.getNextUnfilledDrawPositions({ structureId });
 
   const renderMatchUps = matchUps.filter((matchUp) => matchUp.drawPositions);
+  console.log({ result, drawDefinition, structureId, matchUps, renderMatchUps });
   const drawData = {
     matchUps: renderMatchUps,
     drawDefinition,
