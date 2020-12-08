@@ -53,7 +53,7 @@ export function version2events(sourceEvents) {
       name: key.split('|').join(' '),
       rank: firstEvent.rank,
       indoorOutdoor: firstEvent.indoorOutdoor,
-      surface: firstEvent.surface,
+      surfaceCategory: firstEvent.surfaceCategory,
       category: firstEvent.category,
       gender: firstEvent.gender,
       format: firstEvent.format

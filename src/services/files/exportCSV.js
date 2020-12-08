@@ -100,7 +100,7 @@ export const exportCSV = (function () {
       Side2Player2ID: (p4 && getID(p4.id)) || '',
 
       MatchWinner: +matchUp.winner_index + 1,
-      SurfaceType: matchUp.event.surface || '',
+      SurfaceType: matchUp.event.surfaceCategory || '',
       Score: matchUp.score,
 
       MatchUpType: match_type,

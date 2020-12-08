@@ -225,7 +225,7 @@ export function EditEvent(props) {
           name="surfaceCategory"
           control={control}
           options={surfaceOptions}
-          label={t('events.surface')}
+          label={t('events.surfaceCategory')}
         />
         <Controller
           autoOk

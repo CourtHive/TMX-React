@@ -41,7 +41,7 @@ export function EditTournament(props) {
   const defaultValues = {
     name: t('tournaments.new'),
     indoorOutdoor: 'o',
-    surface: 'H',
+    surfaceCategory: 'H',
     startDate: new Date(),
     endDate: new Date()
   };
@@ -55,7 +55,7 @@ export function EditTournament(props) {
   if (currentEnd < currentStart) setValue('endDate', currentStart);
   useEffect(() => {
     register({ name: 'indoorOutdoor' });
-    register({ name: 'surface' });
+    register({ name: 'surfaceCategory' });
   }, [register]);
 
   const SubmitButton = (props) => {
@@ -156,11 +156,11 @@ export function EditTournament(props) {
           id="tournamentInOut"
         />
         <ControlledSelector
-          defaultValue={defaultValues.surface}
-          name="surface"
+          defaultValue={defaultValues.surfaceCategory}
+          name="surfaceCategory"
           control={control}
           options={surfaceOptions}
-          label={t('events.surface')}
+          label={t('events.surfaceCategory')}
           id="tournamentSurface"
         />
         <Grid container direction="row">

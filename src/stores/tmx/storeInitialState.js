@@ -68,7 +68,7 @@ export const storeInitialState = () => ({
     locations: [],
     tournaments: [],
     draws: ['scheduled', 'completed'],
-    events: ['rank', 'indoorOutdoor', 'surface'],
+    events: ['rank', 'indoorOutdoor', 'surfaceCategory'],
     matchUps: ['event', 'format', 'scheduleTime', 'startTime', 'endTime', 'umpire'],
     eventParticipants: ['firstName', 'lastName', 'seedPosition', 'otherName', 'ioc'],
     participants: ['firstName', 'lastName', 'otherName', 'ioc']

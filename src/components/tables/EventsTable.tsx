@@ -68,7 +68,7 @@ export function EventsTable(props) {
       G: t('surfaces.grass'),
       R: t('surfaces.carpet')
     };
-    return values[rowData.surface] || '';
+    return values[rowData.surfaceCategory] || '';
   };
 
   function eventName(event) {
@@ -92,7 +92,7 @@ export function EventsTable(props) {
       participants: approvedCount(event),
       confirmed: registrationStatus(event),
       indoorOutdoor: renderInOut(event),
-      surface: renderSurface(event),
+      surfaceCategory: renderSurface(event),
       scheduledMatches: event.scheduledMatches,
       completed: event.completed,
       draws: event?.drawDefinitions?.length,
@@ -293,10 +293,10 @@ export function EventsTable(props) {
       hidden: () => isHidden('indoorOutdoor')
     },
     {
-      key: 'surface',
-      getTitle: () => ({ node: t('events.surface'), className: classes.countColumn }),
-      getValue: (row) => ({ node: row.surface }),
-      hidden: () => isHidden('surface')
+      key: 'surfaceCategory',
+      getTitle: () => ({ node: t('events.surfaceCategory'), className: classes.countColumn }),
+      getValue: (row) => ({ node: row.surfaceCategory }),
+      hidden: () => isHidden('surfaceCategory')
     },
     {
       key: 'scheduledMatches',

@@ -647,7 +647,7 @@ export const defaultIdiom = () => ({
         created: 'Created',
         category: 'Category',
         rank: 'Rank',
-        surface: 'Surface',
+        surfaceCategory: 'Surface',
         approveteam: 'Approve',
         destroyteam: 'Destroy',
         entered: 'Entered',
