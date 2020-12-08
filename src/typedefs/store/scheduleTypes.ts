@@ -36,7 +36,7 @@ export interface FinishingPositionRangeType {
 }
 
 export interface TimeItemBaseType {
-  timeStamp: string;
+  createdAt: string;
   itemType: string; // TODO: define enum
   itemSubject?: string; // TODO: define enum
   itemClass?: string; // TODO: define enu,

@@ -7,5 +7,5 @@ export interface ScaleModel {
   scaleValue: number;
   // valueBasis for U14 Ranking of #1 could be attribute: 'points', value: 2000
   valueBasis: AttributeModel<number>[];
-  timestamp: Date;
+  createdAt: Date;
 }
