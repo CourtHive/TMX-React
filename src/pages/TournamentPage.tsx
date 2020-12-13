@@ -21,7 +21,7 @@ const TournamentPage = (props) => {
     function go(tournament) {
       dispatch({ type: 'change tournament', payload: tournament });
       const org = tournament?.unifiedTournamentId?.organisation || tournament?.org?.abbr;
-      const isTourneyOrg = org.organisationAbbreviation === env.org.abbr;
+      const isTourneyOrg = org?.organisationAbbreviation === env.org.abbr;
       const editing = isTourneyOrg || !org?.organisationId;
       if (editing) {
         dispatch({ type: 'edit state', payload: true });
