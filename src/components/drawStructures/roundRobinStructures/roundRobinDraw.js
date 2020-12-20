@@ -171,7 +171,7 @@ function buildBrackets({ drawData }) {
     });
 
     const matchUpFormat = drawData.drawDefinition.matchUpFormat;
-    const { participantResults } = drawEngine.tallyBracket({ matchUps, matchUpFormat });
+    const { participantResults } = drawEngine.tallyParticipantResults({ matchUps, matchUpFormat });
 
     const bracket = {
       nextUnfilledDrawPositions: drawData.nextUnfilledDrawPositions,

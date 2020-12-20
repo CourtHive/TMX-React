@@ -56,7 +56,8 @@ export const EventsPanel = ({ tournamentRecord, params }) => {
       const matchUpType = selectedEvent.eventType;
       const policyDefinitions = [SCORING_POLICY, SEEDING_ITF];
       Object.assign(values, { eventId: selectedEvent.eventId, matchUpType, policyDefinitions });
-      const { drawDefinition } = tournamentEngine.generateDrawDefinition(values);
+      const result = tournamentEngine.generateDrawDefinition(values);
+      const { drawDefinition } = result;
       const { eventId } = selectedEvent;
       if (eventId && drawDefinition) {
         dispatch({

@@ -50,7 +50,7 @@ export function NewDraw(props) {
     seedsCount: 0,
     customName: '',
     drawSize: approvedDrawSize,
-    drawType: 'ELIMINATION',
+    drawType: 'SINGLE_ELIMINATION',
     automated: 'automated',
     scoring: 'standard',
     groups: groupsDefault,
@@ -67,8 +67,8 @@ export function NewDraw(props) {
     { text: t('adr'), value: 'automated' }
   ];
 
-  const selectedStructure = watch('drawType', 'ELIMINATION');
-  const defaultDrawSize = selectedStructure === 'DOUBLE ELIMINATION' ? '12' : defaultValues.drawSize;
+  const selectedStructure = watch('drawType', 'SINGLE_ELIMINATION');
+  const defaultDrawSize = selectedStructure === 'DOUBLE_ELIMINATION' ? '12' : defaultValues.drawSize;
 
   const structureOptions = getStructureOptions();
   if (structureOptions.map((o) => o.value).indexOf(selectedStructure) < 0) {
@@ -100,7 +100,7 @@ export function NewDraw(props) {
 
   const seedOptions = seedRange.map((o) => ({ text: o, value: o }));
   const drawSizeVales =
-    selectedStructure === 'DOUBLE ELIMINATION' ? [6, 12, 24, 48] : [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
+    selectedStructure === 'DOUBLE_ELIMINATION' ? [6, 12, 24, 48] : [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
   const drawSizeOptions = drawSizeVales.map((o) => ({ text: o, value: o }));
 
   const bracketSizes = env.draws.rr_draw.brackets;
@@ -264,21 +264,21 @@ export function NewDraw(props) {
 
   function getStructureOptions() {
     const structureOptions = [
-      { text: t('Single Elimination'), value: 'ELIMINATION' },
-      { text: t('Double Elimination'), value: 'DOUBLE ELIMINATION' },
-      { text: t('draws.feedin'), value: 'FEED IN' },
+      { text: t('Single Elimination'), value: 'SINGLE_ELIMINATION' },
+      { text: t('Double Elimination'), value: 'DOUBLE_ELIMINATION' },
+      { text: t('draws.feedin'), value: 'FEED_IN' },
       { text: t('draws.compass'), value: 'COMPASS' },
       { text: t('Olympic'), value: 'OLYMPIC' },
       { text: t('Playoff'), value: 'PLAYOFF' },
-      { text: t('Feed In Championship'), value: 'FEED IN CHAMPIONSHIP' },
-      { text: t('FIC-SF'), value: 'FEED IN CHAMPIONSHIP TO SF' },
-      { text: t('FIC-QF'), value: 'FEED IN CHAMPIONSHIP TO QF' },
-      { text: t('FIC-R16'), value: 'FEED IN CHAMPIONSHIP TO R16' },
-      { text: t('MFIC'), value: 'MODIFIED FEED IN CHAMPIONSHIP' },
-      { text: t('Curtis Consolation'), value: 'CURTIS CONSOLATION' },
-      { text: t('FMLC'), value: 'FIRST MATCH LOSER CONSOLATION' },
-      { text: t('Round Robin'), value: 'ROUND ROBIN' },
-      { text: t('RRWP'), value: 'ROUND ROBIN WITH PLAYOFF' },
+      { text: t('Feed In Championship'), value: 'FEED_IN_CHAMPIONSHIP' },
+      { text: t('FIC-SF'), value: 'FEED_IN_CHAMPIONSHIP_TO_SF' },
+      { text: t('FIC-QF'), value: 'FEED_IN_CHAMPIONSHIP_TO_QF' },
+      { text: t('FIC-R16'), value: 'FEED_IN_CHAMPIONSHIP_TO_R16' },
+      { text: t('MODIFIED_FEED_IN_CHAMPIONSHIP'), value: 'MODIFIED_FEED_IN_CHAMPIONSHIP' },
+      { text: t('Curtis Consolation'), value: 'CURTIS_CONSOLATION' },
+      { text: t('FIRST_MATCH_LOSER_CONSOLATION'), value: 'FIRST_MATCH_LOSER_CONSOLATION' },
+      { text: t('Round Robin'), value: 'ROUND_ROBIN' },
+      { text: t('RRWP'), value: 'ROUND_ROBIN_WITH_PLAYOFF' },
       { text: t('Adhoc'), value: 'ADHOC' }
     ];
     return structureOptions;

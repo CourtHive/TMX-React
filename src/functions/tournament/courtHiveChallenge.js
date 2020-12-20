@@ -9,7 +9,20 @@ const {
 } = utilities;
 
 export function courtHiveChallenge() {
-  const { participants } = tournamentEngine.generateMockParticipants({ participantsCount: 32, matchUpType: 'SINGLES' });
+  const { participants: maleParticipants } = tournamentEngine.generateMockParticipants({
+    participantsCount: 16,
+    matchUpType: 'DOUBLES',
+    sex: 'MALE'
+  });
+
+  const { participants: femaleParticipants } = tournamentEngine.generateMockParticipants({
+    participantsCount: 16,
+    matchUpType: 'DOUBLES',
+    sex: 'FEMALE'
+  });
+
+  const participants = [...maleParticipants, ...femaleParticipants];
+
   const tournamentId = UUID();
   const tournament = {
     org: {},
