@@ -11,6 +11,8 @@ import { updateReady, popupsBlocked } from 'services/notifications/statusMessage
 import { initOptimizedResizing } from 'components/hooks/useOptimizedRefresh';
 import { idiomSetup } from './idiom/idiomSetup';
 
+import { tournamentEngine } from 'tods-competition-factory';
+
 import EventEmitter from 'wolfy87-eventemitter';
 
 import 'styles/main.css';
@@ -119,7 +121,9 @@ function eventListeners() {
 function setEnv() {
   env.device = getDevice();
   env.version_check = new Date().getTime();
-  console.log(`%c version: ${env.version}`, 'color: cyan');
+  const cfv = tournamentEngine.version();
+  console.log(`%cversion: ${env.version}`, 'color: lightblue');
+  console.log(`%cfactory: ${cfv}`, 'color: lightblue');
 
   eventListeners();
   context.queryString = parseQueryString();
