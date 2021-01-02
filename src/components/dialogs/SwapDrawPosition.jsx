@@ -13,7 +13,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 */
 
 export const SwapDrawPosition = () => {
-    /*
+  /*
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const editState = useSelector(state => state.tmx.editState);
@@ -96,5 +96,5 @@ export const SwapDrawPosition = () => {
         </>
     );
     */
-   return null;
+  return null;
 };

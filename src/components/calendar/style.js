@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   title: {
     fontSize: '24px',
@@ -22,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   datePickerRoot: {
     marginTop: '1em',
@@ -30,17 +30,17 @@ export const useStyles = makeStyles(theme => ({
     float: 'left'
   },
   dateInput: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   menuRightWrapper: {
     height: '100%',
     padding: '10px 25px 10px 0'
   },
   menuRightWrapperSm: {
-    height: '100%',
+    height: '100%'
   },
   menuRight: {
     height: '100%',
@@ -76,5 +76,5 @@ export const useStyles = makeStyles(theme => ({
   pageWrapper: {
     width: '100%',
     padding: '0'
-  },
+  }
 }));

@@ -10,7 +10,7 @@ export const AddGroupingButton = (props) => {
   const { onClick, label } = props;
 
   return (
-    <Button startIcon={<AddBoxIcon />} className={classes.button} variant='outlined' onClick={onClick}>
+    <Button startIcon={<AddBoxIcon />} className={classes.button} variant="outlined" onClick={onClick}>
       {label}
     </Button>
   );

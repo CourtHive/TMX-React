@@ -9,22 +9,17 @@ export function MainMenuButton() {
   const iconTabs = useSelector((state) => state.tmx.visible.iconTabs);
 
   const toggleTabIcons = () => {
-    dispatch({type: 'set icon tabs', payload: !iconTabs});
+    dispatch({ type: 'set icon tabs', payload: !iconTabs });
   };
 
   const fab = {
     icon: <MenuIcon />,
-    label: 'Edit',
+    label: 'Edit'
   };
 
   return (
     <>
-      <IconButton
-        aria-label={fab.label}
-        className={fab.className}
-        color={fab.color}
-        onClick={toggleTabIcons}
-      >
+      <IconButton aria-label={fab.label} className={fab.className} color={fab.color} onClick={toggleTabIcons}>
         {fab.icon}
       </IconButton>
     </>

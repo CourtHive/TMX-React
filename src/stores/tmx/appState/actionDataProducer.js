@@ -11,7 +11,7 @@ const swapDrawPosition = (state, action) =>
 
 const actionDataProducer = {
   'swap draw position': swapDrawPosition,
-  'auto draw options': setAutoDrawOptions,
+  'auto draw options': setAutoDrawOptions
 };
 
 export default actionDataProducer;

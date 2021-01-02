@@ -9,12 +9,12 @@ export const TMXButton = (props) => {
   const { title, icon } = props;
   return (
     <Grid className={classes.menuRightSubWrapper} item>
-      <TMXStandardButton {...props} >
+      <TMXStandardButton {...props}>
         {title || null}
         {icon || null}
       </TMXStandardButton>
     </Grid>
-  )
-}
+  );
+};
 
 export default TMXButton;

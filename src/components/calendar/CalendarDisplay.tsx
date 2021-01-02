@@ -19,7 +19,9 @@ export function TMXcalendar() {
   // const downSm = useMediaQuery(theme.breakpoints.down('sm'));
   const downXs = useMediaQuery(theme.breakpoints.down('xs'));
 
-  useEffect(() => {}, [keyLoads]);
+  useEffect(() => {
+    // reload on keyLoad
+  }, [keyLoads]);
 
   return (
     <>

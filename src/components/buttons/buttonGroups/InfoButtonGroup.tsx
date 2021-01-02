@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ToggleButton from '@material-ui/lab/ToggleButton';
@@ -12,8 +12,8 @@ export function InfoButtonGroup() {
 
   const tournamentView = useSelector((state: any) => state.tmx.visible.tournamentView);
   const handleOnChange = (_, newView) => {
-    dispatch({ type: 'set tournament view', payload: newView })
-  }
+    dispatch({ type: 'set tournament view', payload: newView });
+  };
 
   return (
     <ToggleButtonGroup
@@ -21,21 +21,12 @@ export function InfoButtonGroup() {
       exclusive
       onChange={handleOnChange}
       aria-label="text alignment"
-      style={{height: 36}}
+      style={{ height: 36 }}
     >
-      <ToggleButton value={TTAB_OVERVIEW}>
-        {t('Overview')}
-      </ToggleButton>
-      <ToggleButton value={TTAB_NOTES}>
-        {t('Notes')}
-      </ToggleButton>
-      <ToggleButton value={TTAB_MEDIA}>
-        {t('Media')}
-      </ToggleButton>
-      <ToggleButton value={TTAB_ACTIONS}>
-        {t('Actions')}
-      </ToggleButton>
+      <ToggleButton value={TTAB_OVERVIEW}>{t('Overview')}</ToggleButton>
+      <ToggleButton value={TTAB_NOTES}>{t('Notes')}</ToggleButton>
+      <ToggleButton value={TTAB_MEDIA}>{t('Media')}</ToggleButton>
+      <ToggleButton value={TTAB_ACTIONS}>{t('Actions')}</ToggleButton>
     </ToggleButtonGroup>
-  )
+  );
 }
-

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -12,7 +12,7 @@ export const AddTournamentButton = (props) => {
   const { onClick } = props;
 
   return (
-    <Button startIcon={<AddBoxIcon />} className={classes.button} variant='outlined' onClick={onClick}>
+    <Button startIcon={<AddBoxIcon />} className={classes.button} variant="outlined" onClick={onClick}>
       {t('Add Tournament')}
     </Button>
   );

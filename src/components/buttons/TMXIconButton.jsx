@@ -14,7 +14,7 @@ export const TMXIconButton = (props) => {
     } else if (props.menuItems) {
       setAnchorEl(event.currentTarget);
     }
-  }
+  };
   const onClose = () => setAnchorEl(null);
 
   return (
@@ -38,10 +38,10 @@ export const TMXIconButton = (props) => {
           onClick={onClick}
         >
           {props.icon}
-        </IconButton> 
+        </IconButton>
       </Tooltip>
     </>
-  )
-}
+  );
+};
 
 export default TMXIconButton;
