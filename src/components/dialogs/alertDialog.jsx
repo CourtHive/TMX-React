@@ -6,9 +6,11 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } 
 
 function AlertDialog() {
   const dispatch = useDispatch();
-  const alertData = useSelector(state => state.tmx.visible.alertDialog);
+  const alertData = useSelector((state) => state.tmx.visible.alertDialog);
 
-  const handleClose = () => { dispatch({ type: 'alert dialog' }); };
+  const handleClose = () => {
+    dispatch({ type: 'alert dialog' });
+  };
 
   const title = alertData && alertData.title;
   const content = alertData && alertData.content;
@@ -20,7 +22,7 @@ function AlertDialog() {
       alertData.ok();
     }
     handleClose();
-  }
+  };
 
   return (
     <Dialog
@@ -29,23 +31,21 @@ function AlertDialog() {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      {
-        !title ? null :
-        <DialogTitle id="alert-dialog-title">{ title }</DialogTitle>
-      }
-      {
-        !content ? null :
+      {!title ? null : <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
+      {!content ? null : (
         <DialogContent>
-          <DialogContentText id="alert-dialog-description"> { content } </DialogContentText>
+          <DialogContentText id="alert-dialog-description"> {content} </DialogContentText>
         </DialogContent>
-      }
-      { !render ? null : render() }
+      )}
+      {!render ? null : render()}
       <DialogActions>
-        {
-          !cancel ? null :
-          <Button id='cancelButton' onClick={handleClose} color="primary"> Cancel </Button>
-        }
-        <Button id='okButton' onClick={okFunction} color="primary" autoFocus>
+        {!cancel ? null : (
+          <Button id="cancelButton" onClick={handleClose} color="primary">
+            {' '}
+            Cancel{' '}
+          </Button>
+        )}
+        <Button id="okButton" onClick={okFunction} color="primary" autoFocus>
           {okTitle}
         </Button>
       </DialogActions>

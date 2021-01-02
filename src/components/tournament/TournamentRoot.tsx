@@ -26,6 +26,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { populateCalendar } from 'functions/calendar';
 import { displayTournament } from 'functions/tournament/tournamentDisplay';
 import { showCalendar } from 'services/screenSlaver';
+import AlertDialog from 'components/dialogs/alertDialog';
 
 const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
 
@@ -162,6 +163,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
           </Grid>
         )}
       </Grid>
+      <AlertDialog />
     </>
   );
 }
