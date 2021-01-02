@@ -21,9 +21,9 @@ export const ActionPanelMenu = (props) => {
     selectedSignInStatus,
     deleteSelectedParticipants,
     modifyParticipantsSignInState,
-    addSelectedParticipantsToGrouping,
+    addSelectedParticipantsToGrouping
   } = props;
-  
+
   const checkedParticipants = tableData.filter((row) => row.checked);
   const activeParticipants = checkedParticipants.find(activeParticipantRow);
   const selectedCount = `${checkedParticipants.length} ${t('Selected')}`;
@@ -38,8 +38,7 @@ export const ActionPanelMenu = (props) => {
         </Grid>
         <Grid item>
           <Grid container alignItems="center" direction="row" justify="flex-end">
-            {
-              selectedSignInStatus === '-' || activeParticipants ? null :
+            {selectedSignInStatus === '-' || activeParticipants ? null : (
               <TMXIconButton
                 id="signInAction"
                 className={classes.iconMargin}
@@ -47,7 +46,7 @@ export const ActionPanelMenu = (props) => {
                 onClick={modifyParticipantsSignInState}
                 icon={<SignInIcon />}
               />
-            }
+            )}
             <TMXIconButton
               id="addSelectedToGroup"
               title={t('Groupings')}
@@ -55,8 +54,7 @@ export const ActionPanelMenu = (props) => {
               onClick={addSelectedParticipantsToGrouping}
               icon={<GroupIcon />}
             />
-            {
-              activeParticipants ? null :
+            {activeParticipants ? null : (
               <TMXIconButton
                 id="deleteSelected"
                 title={t('remove')}
@@ -64,7 +62,7 @@ export const ActionPanelMenu = (props) => {
                 onClick={deleteSelectedParticipants}
                 icon={<DeleteIcon />}
               />
-            }
+            )}
             <TMXIconButton
               id="exitSelectionMode"
               title={t('Close')}

@@ -3,10 +3,10 @@ import { makeStyles, Theme } from '@material-ui/core';
 export const useStyles = makeStyles((theme: Theme) => ({
   actionsWrapper: {
     margin: 0,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 0,
+    paddingRight: 0,
     width: 'auto',
-    backgroundColor: 'lightgray',
+    // backgroundColor: 'lightgray',
     borderRadius: 8
   },
   iconMargin: {

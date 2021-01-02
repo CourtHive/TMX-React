@@ -24,7 +24,7 @@ export function displayTournament({ tournamentId, tournament, editing } = {}) {
     const orgAbbr = env.org.abbr;
     const org = tourney.unifiedTournamentId?.organisation;
     const isTourneyOrg = org?.organisationAbbreviation === orgAbbr;
-    if (isTourneyOrg || !org.organisationId) {
+    if (isTourneyOrg || !org?.organisationId) {
       editing = true;
     }
 

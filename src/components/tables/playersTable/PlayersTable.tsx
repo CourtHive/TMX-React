@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from 'components/tables/styles';
 import { useStyles as useIconStyles } from 'components/tables/actions/styles';
 
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import SearchIcon from '@material-ui/icons/Search';
-import SignInIcon from '@material-ui/icons/EmojiPeople';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import Penalty from '@material-ui/icons/ErrorOutlineTwoTone';
 
 import { green, red } from '@material-ui/core/colors';
@@ -119,9 +118,41 @@ export const PlayersTable = () => {
   const enteredInEvent = (participantId) => participantsInEvents.includes(participantId);
   const activeParticipantRow = (row) => enteredInEvent(row.id);
 
-  const handleOnClickSignIn = () => {
-    const participantId = hoverActions?.participantId;
+  const changeSignInStatus = ({ participantId }) => {
     const participant = tournamentParticipants.find((p) => p.participantId === participantId);
+    function signIn({ participantId }) {
+      setTimeout(() => {
+        const params = { participantIds: [participantId], signInState: SIGNED_IN };
+        dispatch({
+          type: 'tournamentEngine',
+          payload: {
+            methods: [
+              {
+                method: 'participantsSignInStatus',
+                params
+              }
+            ]
+          }
+        });
+      }, 300);
+    }
+    function signOut({ participantId }) {
+      setTimeout(() => {
+        const params = { participantIds: [participantId], signInState: SIGNED_OUT };
+        dispatch({
+          type: 'tournamentEngine',
+          payload: {
+            methods: [
+              {
+                method: 'participantsSignInStatus',
+                params
+              }
+            ]
+          }
+        });
+      }, 300);
+    }
+
     if (participant) {
       const signedIn = tournamentEngine.getParticipantSignInStatus(participant);
       if (signedIn) {
@@ -137,19 +168,6 @@ export const PlayersTable = () => {
     let { participantIds } = props;
     const participant = participantId && tournamentParticipants.find((p) => p.participantId === participantId);
     const deleteWhat = participant?.name || t('Selected Participants');
-
-    if (participantId || participantIds) {
-      dispatch({
-        type: 'alert dialog',
-        payload: {
-          title: `${t('delete')} ${t('ply')}`,
-          content: `${t('delete')} ${deleteWhat}?`,
-          cancel: true,
-          okTitle: t('delete'),
-          ok: doIt
-        }
-      });
-    }
 
     function doIt() {
       participantIds = participantIds || [participantId];
@@ -167,11 +185,18 @@ export const PlayersTable = () => {
         }
       });
     }
-  };
-
-  const handleOnClickDelete = () => {
-    const participantId = hoverActions?.participantId;
-    deleteAction({ participantId });
+    if (participantId || participantIds) {
+      dispatch({
+        type: 'alert dialog',
+        payload: {
+          title: `${t('delete')} ${t('ply')}`,
+          content: `${t('delete')} ${deleteWhat}?`,
+          cancel: true,
+          okTitle: t('delete'),
+          ok: doIt
+        }
+      });
+    }
   };
 
   const deleteSelectedParticipants = () => {
@@ -183,19 +208,6 @@ export const PlayersTable = () => {
   const handleOnClickEdit = () => {
     const participantId = hoverActions?.participantId;
     const participant = tournamentParticipants.find((p) => p.participantId === participantId);
-    if (participant && participant.person) {
-      const person = participant.person;
-      if (person) {
-        setPersonData({
-          person,
-          participantId,
-          minimumBirthYear: 4,
-          maximumBirthYear: 90,
-          teamParticipants,
-          callback: savePlayerEdits
-        });
-      }
-    }
     function savePlayerEdits({ participantData, teamId }) {
       if (participantData) {
         const person = participantData.person;
@@ -217,22 +229,35 @@ export const PlayersTable = () => {
       }
       setPersonData(false);
     }
+    if (participant && participant.person) {
+      const person = participant.person;
+      if (person) {
+        setPersonData({
+          person,
+          participantId,
+          minimumBirthYear: 4,
+          maximumBirthYear: 90,
+          teamParticipants,
+          callback: savePlayerEdits
+        });
+      }
+    }
   };
 
   const actionIcons = [
-    <EditIcon
+    <MoreVertIcon
       key={1}
       className={iconClasses.actionIcon}
       data-img-selector="actions-wrapper"
       onClick={handleOnClickEdit}
-    />,
-    <SignInIcon
-      key={2}
-      className={iconClasses.actionIcon}
-      data-img-selector="actions-wrapper"
-      onClick={handleOnClickSignIn}
     />
   ];
+
+  /*
+  const handleOnClickDelete = () => {
+    const participantId = hoverActions?.participantId;
+    deleteAction({ participantId });
+  };
 
   if (!hoverActions?.inEvent) {
     actionIcons.push(
@@ -244,6 +269,7 @@ export const PlayersTable = () => {
       />
     );
   }
+  */
 
   const handleOnRowMouseOver = (event, rowItem, rowIndex) => {
     if (editMode || !editState) return;
@@ -278,13 +304,26 @@ export const PlayersTable = () => {
 
   const actionStyles: CSSProperties = hoverActions?.elementDimensions
     ? {
-        left: `${hoverActions?.elementDimensions.width - (20 + (actionIcons.length - 1) * 28)}px`,
+        // left: `${hoverActions?.elementDimensions.width - (20 + (actionIcons.length - 1) * 28)}px`,
+        left: `${window.innerWidth < 750 ? window.innerWidth - 20 : window.innerWidth - 40}px`,
         position: 'absolute',
         top: `${
           hoverActions?.elementDimensions.top + hoverActions?.index * hoverActions?.elementDimensions.height + 2
         }px`
       }
     : undefined;
+
+  const data = generatePlayerTableData({
+    classes,
+    tableData,
+    participants,
+    selectedTeam,
+    selectedGender,
+    teamParticipants,
+    groupParticipants,
+    selectedSignInStatus,
+    selectedGroupingParticipantIds
+  });
 
   const exitSelectionMode = () => {
     const updatedFilteredData = filteredData.map((row) => ({ ...row, checked: false }));
@@ -308,18 +347,6 @@ export const PlayersTable = () => {
     FEMALE: { text: t('genders.female'), value: 'F' }
   };
   const genderOptions = gendersPresent.map((g) => genderMap[g]).filter((f) => f);
-
-  const data = generatePlayerTableData({
-    classes,
-    tableData,
-    participants,
-    selectedTeam,
-    selectedGender,
-    teamParticipants,
-    groupParticipants,
-    selectedSignInStatus,
-    selectedGroupingParticipantIds
-  });
 
   const uncheckAllRows = () => {
     const updatedTableData = tableData.map((row) => ({ ...row, checked: false }));
@@ -444,7 +471,9 @@ export const PlayersTable = () => {
     className: `${classes.headerCells} ${classes.TableIndexCell}`
   });
 
-  const clickSignIn = (row) => console.log('click', { row });
+  const clickSignIn = (row) => {
+    if (row.participantId) changeSignInStatus(row);
+  };
   const renderSignedIn = (row) => {
     const status = row.signedIn ? <CheckCircleIcon style={{ color: green[500] }} /> : <NotInterestedIcon />;
     const node = (
@@ -455,13 +484,16 @@ export const PlayersTable = () => {
     return { node };
   };
 
+  const clickPaid = (row) => {
+    if (row.participantId) console.log('PAID', { row });
+  };
   const renderPaid = (row) => {
     const status = row.paid ? (
       <AccountBalanceIcon style={{ color: green[500] }} />
     ) : (
       <ErrorOutlineIcon style={{ color: red[500] }} />
     );
-    const node = <div>{status}</div>;
+    const node = <div onClick={() => clickPaid(row)}>{status}</div>;
     return { node };
   };
 
@@ -584,39 +616,6 @@ export const PlayersTable = () => {
     className: classes.EPTableConfig,
     tableHeight: window.innerHeight - 330
   };
-
-  function signIn({ participantId }) {
-    setTimeout(() => {
-      const params = { participantIds: [participantId], signInState: SIGNED_IN };
-      dispatch({
-        type: 'tournamentEngine',
-        payload: {
-          methods: [
-            {
-              method: 'participantsSignInStatus',
-              params
-            }
-          ]
-        }
-      });
-    }, 300);
-  }
-  function signOut({ participantId }) {
-    setTimeout(() => {
-      const params = { participantIds: [participantId], signInState: SIGNED_OUT };
-      dispatch({
-        type: 'tournamentEngine',
-        payload: {
-          methods: [
-            {
-              method: 'participantsSignInStatus',
-              params
-            }
-          ]
-        }
-      });
-    }, 300);
-  }
 
   const filteredRowIds = filteredData.map((row) => row.id);
   const dataForTable = data.filter((row) => {

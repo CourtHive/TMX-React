@@ -79,7 +79,7 @@ const incrementKeyLoads = (state, action) =>
 
     if (tournamentRecord && payload && payload.orgAbbr) {
       const org = tournamentRecord.unifiedTournamentId?.organisation;
-      const isTourneyOrg = org.organisationAbbreviation === payload.orgAbbr;
+      const isTourneyOrg = org?.organisationAbbreviation === payload.orgAbbr;
       const editing = isTourneyOrg || !org?.organisationId;
       draftState.editState = editing;
     }
