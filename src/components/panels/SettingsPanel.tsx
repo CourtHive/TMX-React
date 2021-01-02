@@ -35,7 +35,9 @@ function KeyEntry() {
           });
         if (existingKeys) setKeyOptions(existingKeys);
       },
-      () => {}
+      (error) => {
+        console.log({ error });
+      }
     );
   }, []);
 
