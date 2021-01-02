@@ -307,11 +307,13 @@ export const LocationsTable = (props) => {
     dispatch({ type: 'select venue', payload: { venueId: rowData.venueId } });
   };
 
+  const cancelAction = () => setLocationData(false);
+
   if (!data.length) {
     return (
       <>
-        <Drawer id="locationForm" anchor={'right'} open={Boolean(locationData)} onClose={() => setLocationData(false)}>
-          <LocationAdd addLocation={addNewLocation} />
+        <Drawer id="locationForm" anchor={'right'} open={Boolean(locationData)} onClose={cancelAction}>
+          <LocationAdd addLocation={addNewLocation} cancel={cancelAction} />
         </Drawer>
         <NoticePaper className={'info'} style={{ marginTop: '1em' }}>
           <Grid container spacing={2} direction="row" justify="flex-start">
