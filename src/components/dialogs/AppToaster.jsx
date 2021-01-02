@@ -9,10 +9,12 @@ function Alert(props) {
 
 export const AppToaster = () => {
   const dispatch = useDispatch();
-  const toasterState = useSelector(state => state.tmx.toasterState);
+  const toasterState = useSelector((state) => state.tmx.toasterState);
   const anchorOrigin = toasterState && toasterState.anchorOrigin;
   const handleClose = (_, reason) => {
-    if (reason === 'clickaway') { return; }
+    if (reason === 'clickaway') {
+      return;
+    }
     dispatch({ type: 'toaster state' });
   };
 
@@ -24,7 +26,7 @@ export const AppToaster = () => {
         autoHideDuration={3000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={toasterState.severity || "success"}>
+        <Alert onClose={handleClose} severity={toasterState.severity || 'success'}>
           {toasterState.message}
         </Alert>
       </Snackbar>

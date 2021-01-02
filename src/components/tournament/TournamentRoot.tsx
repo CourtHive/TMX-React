@@ -27,6 +27,7 @@ import { populateCalendar } from 'functions/calendar';
 import { displayTournament } from 'functions/tournament/tournamentDisplay';
 import { showCalendar } from 'services/screenSlaver';
 import AlertDialog from 'components/dialogs/alertDialog';
+import { AppToaster } from 'components/dialogs/AppToaster';
 
 const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
 
@@ -164,6 +165,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
         )}
       </Grid>
       <AlertDialog />
+      <AppToaster />
     </>
   );
 }

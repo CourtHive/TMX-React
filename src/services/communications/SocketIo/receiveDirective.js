@@ -2,11 +2,11 @@ import i18n from 'i18next';
 import { db } from 'services/storage/db';
 import { context } from 'services/context';
 import { resetDB } from 'services/storage/resetDB';
-import { IDIOM_STORAGE } from 'constants/localStorage';
 import { loadJSON } from 'services/files/importing/loadJSON';
 import { receiveOrgSettings, receiveSettings } from '../../../config/manageSettings';
 
 import { AppToaster } from 'services/notifications/toaster';
+import { IDIOM_STORAGE } from 'constants/localStorage';
 
 export function receiveTournaments({ tournaments }) {
   const newTournaments = tournaments?.map((t) => JSON.parse({ data: t })).filter((f) => f);
