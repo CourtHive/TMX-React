@@ -81,7 +81,7 @@ export const TeamsTable = () => {
         type: 'alert dialog',
         payload: {
           title: `${t('delete')} ${t('team')}`,
-          content: `${t('delete')} ${participant.name}?`,
+          content: `${t('delete')} ${participant.participantName}?`,
           cancel: true,
           okTitle: t('delete'),
           ok: doIt
@@ -279,7 +279,7 @@ export const TeamsTable = () => {
       const checked = checkedTeamIds.includes(participantId);
       return {
         checked,
-        name: participant.name,
+        name: participant.participantName,
         id: participant.participantId,
         participantId: participant.participantId,
         members: participant.individualParticipants?.length,

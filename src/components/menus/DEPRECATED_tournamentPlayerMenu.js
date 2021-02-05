@@ -20,7 +20,7 @@ export function participantMenu({ participantId, participants }) {
     return p;
   }, undefined);
   if (!participant) return;
-  const menuHeader = { primary: participant.name || '' };
+  const menuHeader = { primary: participant.participantName || '' };
 
   const enteredInEvent = false;
 
@@ -114,6 +114,7 @@ export function participantMenu({ participantId, participants }) {
     }
   }
 
+  /*
   function savePlayerEdits(p) {
     const person = p.person;
     const updatedParticipant = Object.assign({}, participant);
@@ -132,13 +133,14 @@ export function participantMenu({ participantId, participants }) {
       }
     });
   }
+  */
 
   function deletePlayer() {
     tmxStore.dispatch({
       type: 'alert dialog',
       payload: {
         title: `${i18n.t('delete')} ${i18n.t('ply')}`,
-        content: `${i18n.t('delete')} ${participant.name}?`,
+        content: `${i18n.t('delete')} ${participant.participantName}?`,
         cancel: true,
         okTitle: 'Delete',
         ok: doIt

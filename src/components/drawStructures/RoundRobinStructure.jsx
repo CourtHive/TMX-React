@@ -73,7 +73,7 @@ export const RoundRobinStructure = (props) => {
       return action.payload ? Object.assign(payloads, { [action.type]: action.payload }) : payloads;
     }, {});
 
-    const participantName = isDrawPosition && node.participant && node.participant.name;
+    const participantName = isDrawPosition && node.participant && node.participant.participantName;
 
     const participantNames =
       matchUp &&
@@ -170,7 +170,7 @@ export const RoundRobinStructure = (props) => {
       return candidate.participantId === participantId ? candidate : participant;
     }, undefined);
     const byeOption = bye && `BYE {${unassignedByes}}`;
-    return (participant && participant.name) || byeOption || 'Unknown';
+    return (participant && participant.participantName) || byeOption || 'Unknown';
   }
 
   function scoreMatchUp({ matchUp }) {

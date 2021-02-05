@@ -15,22 +15,24 @@ export function generatePlayerTableData(props) {
     selectedGroupingParticipantIds
   } = props;
 
-  const getGender = (sex) => { return sex && sex[0].toUpperCase(); };
+  const getGender = (sex) => {
+    return sex && sex[0].toUpperCase();
+  };
 
-  const statusFilter = participant => {
+  const statusFilter = (participant) => {
     const signedIn = tournamentEngine.getParticipantSignInStatus(participant);
     if (selectedSignInStatus === 'false' && signedIn) return false;
     return !(selectedSignInStatus === 'true' && !signedIn);
-  }
+  };
 
-  const participantFilter = participant => {
+  const participantFilter = (participant) => {
     if (selectedGender === 'X' && selectedSignInStatus === '-' && !selectedTeam) return true;
     if (selectedGender !== 'X' && getGender(participant.person.sex) !== selectedGender) return false;
     if (selectedTeam && selectedGroupingParticipantIds.indexOf(participant.participantId) < 0) return false;
     return statusFilter(participant);
   };
 
-  const renderName = participant => {
+  const renderName = (participant) => {
     const { person } = participant;
     if (person) {
       const firstName = person.standardGivenName;
@@ -39,15 +41,15 @@ export function generatePlayerTableData(props) {
       if (person.otherName) participantName += ` (${person.otherName})`;
       return participantName;
     } else {
-      return participant.name;
+      return participant.participantName;
     }
   };
-  
-  const renderNationality = participant => {
+
+  const renderNationality = (participant) => {
     const { person } = participant;
     if (person && person.nationalityCode) {
       const code = person.nationalityCode.toUpperCase();
-      let country = countries.find(country => {
+      let country = countries.find((country) => {
         if (country.ioc === code) return true;
         if (country.iso === code) return true;
         return false;
@@ -57,26 +59,27 @@ export function generatePlayerTableData(props) {
     }
   };
 
-  const renderTeamName = participant => {
+  const renderTeamName = (participant) => {
     const { participantId } = participant;
-    const playerTeam = teamParticipants.find(team => {
+    const playerTeam = teamParticipants.find((team) => {
       return team.participantIds?.includes(participantId);
     });
     return playerTeam?.name;
-  }
-  
-  const renderGroupNames = participant => {
+  };
+
+  const renderGroupNames = (participant) => {
     const { participantId } = participant;
-    const playerGroups = groupParticipants.filter(group => {
+    const playerGroups = groupParticipants.filter((group) => {
       return group.individualParticipants?.includes(participantId);
     });
-    const groupNames = playerGroups.map(group => group.name).join(', ');
+    const groupNames = playerGroups.map((group) => group.name).join(', ');
     return groupNames || '';
-  }
+  };
 
-  const checkedParticipantIds = (tableData?.filter(participant => participant.checked) || [])
-    .map(p=>p.participantId);
-  
+  const checkedParticipantIds = (tableData?.filter((participant) => participant.checked) || []).map(
+    (p) => p.participantId
+  );
+
   const data = participants
     .filter(participantFilter)
     .map((participant) => {
@@ -100,10 +103,10 @@ export function generatePlayerTableData(props) {
         lastName: person?.standardFamilyName,
         nationality: renderNationality(participant),
         teamName: renderTeamName(participant),
-        groups: renderGroupNames(participant),
-      }
+        groups: renderGroupNames(participant)
+      };
     })
     .map((participant, i) => ({ ...participant, index: i + 1 }));
 
-    return data;
+  return data;
 }

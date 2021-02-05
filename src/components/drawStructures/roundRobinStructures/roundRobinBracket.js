@@ -193,7 +193,7 @@ export function roundRobinBracket() {
       if (d.row && d.attr === 'player') {
         const person = d.participant && d.participant.person;
         const flag = person && participantFlag(person);
-        const name = d.participant ? d.participant.name || '' : '';
+        const name = d.participant ? d.participant.participantName || '' : '';
         return name && flag ? `${flag}${name}` : name || '';
       }
 
@@ -228,7 +228,7 @@ export function roundRobinBracket() {
 
       if (d.row && d.participant) {
         /*
-            if (d.attr === 'participant' && participant.name) {
+            if (d.attr === 'participant' && participant.participantName) {
                let doubles = participant && participant.IndividualParticipants;
                if (doubles) return '';
                if (participant.person && participant.person.nationalityCode) return participant.person.nationalityCode;
@@ -532,7 +532,7 @@ export function roundRobinBracket() {
   function participantColumnHeader(d) {
     if (d.bye) return 'BYE';
     if (!d.participant.person) {
-      return d.participant.name;
+      return d.participant.participantName;
     }
     const header = (d.participant.person && d.participant.person.standardFamilyName) || '';
     return header;

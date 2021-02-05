@@ -69,7 +69,7 @@ export function KnockoutStructure(props) {
       return candidate.participantId === participantId ? candidate : participant;
     }, undefined);
     const byeOption = bye && `BYE {${unassignedByes}}`;
-    return (participant && participant.name) || byeOption || 'Unknown';
+    return (participant && participant.participantName) || byeOption || 'Unknown';
   }
 
   function assignPosition(_, payload) {
@@ -151,9 +151,9 @@ export function KnockoutStructure(props) {
         node.sides
           .filter((f) => f)
           .reduce((name, side) => {
-            return (side.participant && side.participant.name) || name;
+            return (side.participant && side.participant.participantName) || name;
           }, undefined)) ||
-        (node.participant && node.participant.name));
+        (node.participant && node.participant.participantName));
 
     const participantNames =
       node &&
@@ -163,7 +163,7 @@ export function KnockoutStructure(props) {
         .map((side) => {
           if (!side.participant) return undefined;
           const singleParticipantName = side.participant.person && side.participant.person.standardFamilyName;
-          const doublesParticipantName = side.participant.individualParticipants && side.participant.name;
+          const doublesParticipantName = side.participant.individualParticipants && side.participant.participantName;
           return singleParticipantName || doublesParticipantName;
         })
         .filter((f) => f);

@@ -81,7 +81,7 @@ export const GroupsTable = () => {
         type: 'alert dialog',
         payload: {
           title: `${t('delete')} ${t('Group')}`,
-          content: `${t('delete')} ${participant.name}?`,
+          content: `${t('delete')} ${participant.participantName}?`,
           cancel: true,
           okTitle: t('delete'),
           ok: doIt
@@ -280,7 +280,7 @@ export const GroupsTable = () => {
       return {
         checked,
         id: participantId,
-        name: participant.name,
+        name: participant.participantName,
         participantId: participantId,
         members: participant.individualParticipants?.length,
         abbreviation: participant.participantProfile?.abbreviation

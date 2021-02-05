@@ -98,7 +98,7 @@ export function EventParticipants(props) {
 
       return {
         checked,
-        name: participant.name,
+        name: participant.participantName,
         ranking: participantScaleValue({ participant, scaleType: RANKING }),
         rating: participantScaleValue({ participant, scaleType: RATING }),
         firstName: person?.standardGivenName,

@@ -21,7 +21,7 @@ export function TeamEdit(props) {
   const teamLogoLink = teamLogoProfile?.identifier;
 
   const defaultValues = {
-    name: teamParticipant?.name,
+    name: teamParticipant?.participantName,
     code: teamParticipant?.participantProfile?.code,
     abbreviation: teamParticipant?.participantProfile?.abbreviation,
     logoLink: teamLogoLink

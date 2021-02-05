@@ -103,7 +103,7 @@ export function AvailableParticipants(props) {
         checked,
         id: participantId,
         participantId,
-        name: participant.name,
+        name: participant.participantName,
         otherName: person && participant.person.otherName,
         sex: ((person && person.sex) || '')[0],
         signedIn

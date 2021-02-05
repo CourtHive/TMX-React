@@ -72,7 +72,7 @@ export function PersonForm(props) {
         participantId: person.participantId,
         participantType: INDIVIDUAL,
         participantRole: COMPETITOR,
-        name: `${person.standardGivenName} ${person.standardFamilyName}`,
+        participantName: `${person.standardGivenName} ${person.standardFamilyName}`,
         person
       };
       const teamId = selectedTeam?.participantId;

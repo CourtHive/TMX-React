@@ -57,7 +57,7 @@ export function MatchUpTabMenu({ matchUpData, closeMenu }) {
     const participantName =
       isDrawPosition &&
       matchUp.sides.reduce((name, side) => {
-        return (side.participant && side.participant.name) || name;
+        return (side.participant && side.participant.participantName) || name;
       }, undefined);
     const participantNames = matchUp.sides
       .filter((f) => f)
