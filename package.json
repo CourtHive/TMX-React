@@ -85,7 +85,7 @@
     "esm": "3.2.25",
     "jest-environment-jsdom": "26.6.2",
     "jsdom": "16.4.0",
-    "prettier": "2.1.2",
+    "prettier": "2.2.1",
     "prettier-eslint": "11.0.0",
     "sass": "1.29.0",
     "sass-loader": "10.0.5",
