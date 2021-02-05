@@ -26,13 +26,6 @@ const invokeCompetitionEngine = (state, action) =>
 
       if (result) {
         if (result.success) {
-          /*
-        const auditTrail = competitionEngine.getAudit();
-        if (auditTrail.length) {
-          console.log('do something with audit trail', {auditTrail});
-        }
-        */
-
           const { tournamentIds } = Object.keys(tournamentRecords);
           context.ee.emit('emitTmx', {
             action: 'competitionEngineMethod',

@@ -56,11 +56,6 @@ const invokeTournamentEngine = (state, action) =>
       });
 
     if (modifications) {
-      const auditTrail = tournamentEngine.getAudit();
-      if (auditTrail.length) {
-        console.log('do something with audit trail', { auditTrail });
-      }
-
       // transition hack while tournamentEngine api normalized
       const tournamentEngineState = tournamentEngine.getState();
       const tournamentRecord = tournamentEngineState?.tournamentRecord || tournamentEngineState;
