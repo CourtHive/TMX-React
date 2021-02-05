@@ -89,7 +89,8 @@ export const env = {
     itf: false, // can be JSON, XML, or CSV... if not false then default to CSV
     utr: false,
     statCrew: false,
-    person_data: false
+    person_data: false,
+    localStorage: false
   },
   uploads: {
     matches: false

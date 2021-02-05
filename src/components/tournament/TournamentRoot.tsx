@@ -17,7 +17,7 @@ import { MainMenuButton } from 'components/buttons/MainMenuButton';
 import { useSaveTrigger } from 'components/hooks/useSaveTrigger';
 import { AuthButton } from 'components/buttons/authButton';
 import TournamentTabsContent from 'components/tournament/TournamentTabsContent';
-import ScoringDialogContainer from 'containers/scoringDialog/ScoringDialogContainer';
+import ScoringDialogContainer from 'containers/scoringObjectDialog/ScoringDialogContainer';
 import { TournamentTabs } from 'components/tournament/TournamentTabs';
 import ProviderLogo from 'components/ProviderLogo';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -120,7 +120,12 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   return (
     <>
       {!matchUp || tieMatchUp ? null : (
-        <ScoringDialogContainer matchUp={matchUp} handleClose={handleClose} matchUpFormat={matchUpFormat} />
+        <ScoringDialogContainer
+          open={!!matchUp}
+          matchUp={matchUp}
+          handleClose={handleClose}
+          matchUpFormat={matchUpFormat}
+        />
       )}
       {!loadingState ? '' : <LinearProgress />}
       <Grid

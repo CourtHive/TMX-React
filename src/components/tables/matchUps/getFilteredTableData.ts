@@ -30,26 +30,30 @@ export const getFilteredMatchUpsTableData = (
 ): MatchUpsTableDataInterface[] =>
   matchUps
     .filter((matchUp) => matchUpFilter(matchUp, teamIds, selectedDraw))
-    .map((matchUp, index) => ({
-      index: index,
-      id: matchUp.matchUpId,
-      matchUpId: matchUp.matchUpId,
-      className: index === selectedRowIndex ? classes.selectedRow : undefined,
-      roundName: `${matchUp.roundNumber}`,
-      event: matchUp.eventName,
-      format: matchUp.matchUpType,
-      // TODO: where these come from?
-      date: '',
-      court: '',
-      umpire: '',
-      matchUpFormat: matchUp.matchUpFormat,
-      scheduleTime: matchUp.schedule.time,
-      startTime: matchUp.schedule.startTime,
-      endTime: matchUp.schedule.endTime,
-      // TODO: what happens for doubles?
-      player1: matchUp.sides[0]?.participant?.name,
-      player2: matchUp.sides[1]?.participant?.name,
-      status: matchUp.matchUpStatus,
-      score: matchUp.score,
-      readyToScore: matchUp.readyToScore
-    }));
+    .map((matchUp, index) => {
+      const score = typeof matchUp?.score === 'object' ? matchUp.score.scoreStringSide1 : matchUp.score;
+
+      return {
+        index: index,
+        id: matchUp.matchUpId,
+        matchUpId: matchUp.matchUpId,
+        className: index === selectedRowIndex ? classes.selectedRow : undefined,
+        roundName: `${matchUp.roundNumber}`,
+        event: matchUp.eventName,
+        format: matchUp.matchUpType,
+        // TODO: where these come from?
+        date: '',
+        court: '',
+        umpire: '',
+        matchUpFormat: matchUp.matchUpFormat,
+        scheduleTime: matchUp.schedule.time,
+        startTime: matchUp.schedule.startTime,
+        endTime: matchUp.schedule.endTime,
+        // TODO: what happens for doubles?
+        player1: matchUp.sides[0]?.participant?.name,
+        player2: matchUp.sides[1]?.participant?.name,
+        status: matchUp.matchUpStatus,
+        score,
+        readyToScore: matchUp.readyToScore
+      };
+    });

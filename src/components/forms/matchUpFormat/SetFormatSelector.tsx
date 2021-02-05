@@ -18,35 +18,35 @@ import { getTiebreakOptions, hasTiebreakObjectBuilder } from 'components/forms/m
 interface SetFormatSelectorProps {
   disabled?: string[];
   isFinalSet?: boolean;
-  matchFormatParsed: MatchConfigurationInterface;
+  matchUpFormatParsed: MatchConfigurationInterface;
   hasFinalSet: boolean;
   onChange: (matchUpFormat: MatchConfigurationInterface) => void;
 }
 
 const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   disabled,
-  matchFormatParsed,
+  matchUpFormatParsed,
   isFinalSet,
   hasFinalSet,
   onChange
 }) => {
-  console.log({ matchFormatParsed });
+  console.log({ matchUpFormatParsed });
   const { t } = useTranslation();
   const setFormat = (isFinalSet
-    ? matchFormatParsed?.finalSetFormat
-    : matchFormatParsed?.setFormat) as SetFormatInterface;
+    ? matchUpFormatParsed?.finalSetFormat
+    : matchUpFormatParsed?.setFormat) as SetFormatInterface;
   const setsAreTiebreakSets = setFormat?.tiebreakSet;
   const setTiebreakTo = setFormat?.tiebreakFormat?.tiebreakTo || setFormat?.tiebreakSet?.tiebreakTo;
-  const tiebreakExistsRegular = matchFormatParsed?.setFormat && matchFormatParsed?.setFormat?.noTiebreak;
-  const tiebreakExistsFinal = matchFormatParsed?.finalSetFormat && matchFormatParsed?.finalSetFormat?.noTiebreak;
+  const tiebreakExistsRegular = matchUpFormatParsed?.setFormat && matchUpFormatParsed?.setFormat?.noTiebreak;
+  const tiebreakExistsFinal = matchUpFormatParsed?.finalSetFormat && matchUpFormatParsed?.finalSetFormat?.noTiebreak;
 
   const [commonState, setCommonState] = useState<SetFormatSelectorStateInterface>({
-    exact: matchFormatParsed?.bestOf === 1 ? 'exact' : 'bestof',
+    exact: matchUpFormatParsed?.bestOf === 1 ? 'exact' : 'bestof',
     what: setsAreTiebreakSets
       ? 'TB'
       : setFormat?.setTo
       ? 'S'
-      : matchFormatParsed?.timed || matchFormatParsed?.setFormat?.timed
+      : matchUpFormatParsed?.timed || matchUpFormatParsed?.setFormat?.timed
       ? 'T'
       : 'S'
   });
@@ -66,7 +66,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   const finals = [{ key: 'final', name: t('scoring_format.finalset') }];
 
   const exactly =
-    matchFormatParsed?.bestOf === 1
+    matchUpFormatParsed?.bestOf === 1
       ? [{ key: 'exact', name: 'Exactly' }]
       : [
           { key: 'bestof', name: t('scoring_format.bestof') },
@@ -84,7 +84,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
     { key: 'T', name: t('scoring_format.timedsets'), disabled: isDisabled('timed') || isFinalSet }
   ];
   const bestOfWhat =
-    !matchFormatParsed?.bestOf || matchFormatParsed?.bestOf === 1 || isFinalSet ? bestOfSingular : bestOfPlural;
+    !matchUpFormatParsed?.bestOf || matchUpFormatParsed?.bestOf === 1 || isFinalSet ? bestOfSingular : bestOfPlural;
   const adnoad = [
     { key: false, name: 'Ad' },
     { key: true, name: 'No Ad' }
@@ -92,7 +92,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   const winbywhat = [1, 2].map((key) => ({ key, name: `${t('scoring_format.winby')} ${key}` }));
 
   // bestOf value
-  const bestOfValue = matchFormatParsed?.bestOf || counts[0].key;
+  const bestOfValue = matchUpFormatParsed?.bestOf || counts[0].key;
 
   // populates the tiebreak to selector
   const tiebreakTo = [5, 7, 9, 10, 12].map((key) => ({ key, name: `TB ${key}` }));
@@ -114,18 +114,18 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
       ? { finalSetFormat: hasTiebreakObjectBuilder(event, setFormat, setTiebreakTo) as SetFormatInterface }
       : { setFormat: hasTiebreakObjectBuilder(event, setFormat, setTiebreakTo) as SetFormatInterface };
 
-    const updatedFormat = { ...matchFormatParsed, ...set };
+    const updatedFormat = { ...matchUpFormatParsed, ...set };
     onChange(updatedFormat);
   };
   const handleChangeExact = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     setCommonState({ ...commonState, exact: event.target.value as string });
   };
   const handleChangeBestOf = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    onChange({ ...matchFormatParsed, bestOf: event.target.value as number });
+    onChange({ ...matchUpFormatParsed, bestOf: event.target.value as number });
   };
   const handleChangeDefaultAd = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     onChange({
-      ...matchFormatParsed,
+      ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
         ...setFormat,
         NoAD: event.target.value as boolean
@@ -134,7 +134,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   };
   const handleChangeTiebreakTo = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     onChange({
-      ...matchFormatParsed,
+      ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
         ...setFormat,
         [setFormat?.tiebreakFormat ? 'tiebreakFormat' : 'tiebreakSet']: {
@@ -146,7 +146,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   };
   const handleChangeTiebreakAt = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     onChange({
-      ...matchFormatParsed,
+      ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
         ...setFormat,
         tiebreakAt: event.target.value as number
@@ -156,7 +156,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   const handleChangeTiebreakAd = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     const adNoAd = event.target.value === 1 ? true : (false as boolean);
     onChange({
-      ...matchFormatParsed,
+      ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
         ...setFormat,
         [setFormat?.tiebreakFormat ? 'tiebreakFormat' : 'tiebreakSet']: {
@@ -169,29 +169,29 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   const handleChangeWhatTo = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     const eventValue = event.target.value as number;
     const tiebreakAt = getTiebreakOptions(eventValue).reverse()[0];
-    if (matchFormatParsed?.timed) {
+    if (matchUpFormatParsed?.timed) {
       onChange({
-        ...matchFormatParsed,
+        ...matchUpFormatParsed,
         minutes: eventValue
       });
     } else if (isFinalSet) {
-      const existingSetFormat = matchFormatParsed?.finalSetFormat || {};
-      const isTiebreakSet = matchFormatParsed?.finalSetFormat?.tiebreakSet;
+      const existingSetFormat = matchUpFormatParsed?.finalSetFormat || {};
+      const isTiebreakSet = matchUpFormatParsed?.finalSetFormat?.tiebreakSet;
       const finalSetFormat = isTiebreakSet
         ? { tiebreakSet: { tiebreakTo: eventValue } }
         : { ...existingSetFormat, setTo: eventValue, tiebreakAt };
       onChange({
-        ...matchFormatParsed,
+        ...matchUpFormatParsed,
         finalSetFormat: finalSetFormat as SetFormatInterface
       });
     } else {
-      const existingSetFormat = matchFormatParsed?.setFormat || {};
-      const isTiebreakSet = matchFormatParsed?.setFormat?.tiebreakSet;
+      const existingSetFormat = matchUpFormatParsed?.setFormat || {};
+      const isTiebreakSet = matchUpFormatParsed?.setFormat?.tiebreakSet;
       const setFormat = isTiebreakSet
         ? { tiebreakSet: { tiebreakTo: eventValue } }
         : { ...existingSetFormat, setTo: eventValue, tiebreakAt };
       onChange({
-        ...matchFormatParsed,
+        ...matchUpFormatParsed,
         setFormat: setFormat as SetFormatInterface
       });
     }
@@ -239,7 +239,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
 
   const changeFinalSet = (event: { target: { checked: any } }) => {
     onChange({
-      ...matchFormatParsed,
+      ...matchUpFormatParsed,
       finalSetFormat: event.target.checked ? { ...setFormat } : undefined
     });
   };
@@ -247,8 +247,8 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   // methods used to determine which value should be selected on render
   // used for values from common state and to determine what type of set is it
   const activeWhatTo = () => {
-    if (matchFormatParsed?.timed) {
-      return whatTo.reduce((p, c) => (c.key === matchFormatParsed?.minutes ? c : p)).key;
+    if (matchUpFormatParsed?.timed) {
+      return whatTo.reduce((p, c) => (c.key === matchUpFormatParsed?.minutes ? c : p)).key;
     } else if (commonState.what === 'TB') {
       return whatTo.reduce((p, c) => (c.key === setTiebreakTo ? c : p)).key;
     } else {
@@ -387,7 +387,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
         </Grid>
 
         <Grid item>
-          {commonState.what === 'T' || isFinalSet || matchFormatParsed?.bestOf < 2 ? (
+          {commonState.what === 'T' || isFinalSet || matchUpFormatParsed?.bestOf < 2 ? (
             ''
           ) : (
             <FormControlLabel

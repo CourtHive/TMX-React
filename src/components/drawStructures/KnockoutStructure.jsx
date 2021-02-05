@@ -138,10 +138,11 @@ export function KnockoutStructure(props) {
       ? drawEngine.positionActions(node)
       : drawEngine.matchUpActions(node);
 
-    const validActionTypes = validActions.map((action) => action.type);
-    const validActionPayloads = validActions.reduce((payloads, action) => {
-      return action.payload ? Object.assign(payloads, { [action.type]: action.payload }) : payloads;
-    }, {});
+    const validActionTypes = validActions?.map((action) => action.type);
+    const validActionPayloads =
+      validActions?.reduce((payloads, action) => {
+        return action.payload ? Object.assign(payloads, { [action.type]: action.payload }) : payloads;
+      }, {}) || {};
 
     const participantName =
       isDrawPosition &&
@@ -176,11 +177,11 @@ export function KnockoutStructure(props) {
         ? { primary: `Draw Position ${node.drawPosition}: BYE` }
         : undefined;
 
-    if (coords && validActions.length) {
+    if (coords && validActions?.length) {
       const menuPosition = { left: coords.screen_x, top: coords.screen_y };
       const menuItems = menuActions
         .filter((menuAction) => {
-          return validActionTypes.includes(menuAction.action);
+          return validActionTypes?.includes(menuAction.action);
         })
         .map((menuAction) => {
           if (menuAction.click) {
@@ -202,8 +203,8 @@ export function KnockoutStructure(props) {
   function scoreClick(node) {
     const matchUp = node.data || node;
     const { validActions } = node.drawPosition ? drawEngine.positionActions(node) : drawEngine.matchUpActions(matchUp);
-    const validActionTypes = validActions.map((action) => action.type);
-    if (validActionTypes.includes('SCORE')) {
+    const validActionTypes = validActions?.map((action) => action.type);
+    if (validActionTypes?.includes('SCORE')) {
       scoreMatchUp({ matchUp });
     }
   }

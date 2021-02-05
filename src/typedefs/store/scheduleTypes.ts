@@ -117,11 +117,13 @@ export interface MatchUpInterface {
   tieFormat?: TieFormatInterface;
   matchUpId: string;
   matchUpStatus: string; // TODO: define enums of possible statuses
+  matchUpStatusCodes?: string[];
   matchUpType?: string;
+  roundName?: string;
   roundNumber: number;
   roundPosition: number;
   schedule?: MatchUpSchedule;
-  score?: string;
+  score?: any;
   sets?: SetScoresInterface[];
   structureId: string;
   structureName: string; // TODO: define enums of possible structure names

@@ -73,7 +73,8 @@ export function DrawParticipants(props) {
   const participantScaleValue = ({ participant, scaleType }) => {
     if (!selectedEvent) return undefined;
     const scaleAttributes = { scaleType, scaleName: category, eventType };
-    const { scaleItem } = tournamentEngine.participantScaleItem({ participant, scaleAttributes });
+    const { participantId } = participant;
+    const { scaleItem } = tournamentEngine.getParticipantScaleItem({ participantId, scaleAttributes }) || {};
     return scaleItem && scaleItem.scaleValue;
   };
 

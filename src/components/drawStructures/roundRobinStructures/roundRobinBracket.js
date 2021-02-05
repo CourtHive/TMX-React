@@ -519,7 +519,11 @@ export function roundRobinBracket() {
         const winnerPosition = participants.reduce((position, participant, i) => {
           return participant.participantId === winnerParticipantId ? i + 1 : position;
         }, undefined);
-        score = d.row === winnerPosition ? matchUp.score : reverseStringScore(matchUp.score);
+        if (typeof matchUp.score === 'object') {
+          score = d.row === winnerParticipantId ? matchUp.score.scoreStringSide1 : matchUp.score.scoreStringSide2;
+        } else {
+          score = d.row === winnerPosition ? matchUp.score : reverseStringScore(matchUp.score);
+        }
       }
     }
     return score;

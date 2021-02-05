@@ -1,4 +1,4 @@
-import { ParticipantInterface } from 'components/dialogs/scoringDialog/typedefs/participantTypes';
+import { ParticipantInterface } from 'components/dialogs/scoringObjectDialog/typedefs/participantTypes';
 
 export interface TiebreakFormatInterface {
   NoAD?: boolean;
@@ -6,10 +6,10 @@ export interface TiebreakFormatInterface {
 }
 
 export interface SetFormatInterface {
-  timed?: boolean;
-  minutes?: number;
   setTo: number;
   NoAD?: boolean;
+  timed?: boolean;
+  minutes?: number;
   noTiebreak?: boolean;
   tiebreakAt?: number;
   tiebreakFormat?: TiebreakFormatInterface;
@@ -78,9 +78,8 @@ export interface StatusIconProps {
 export interface MatchParticipantStatusSubCategory {
   label: string;
   description: string;
-  tdmCode?: string;
-  matchUpStatusCode?: string;
-  matchUpStatusCodeDisplay?: string;
+  matchUpStatusCode: string;
+  matchUpStatusCodeDisplay: string;
 }
 
 export interface MatchParticipantStatusCategory {
@@ -92,22 +91,22 @@ export interface MatchParticipantStatusCategory {
 export interface MatchParticipantStatus {
   categoryName: string;
   subCategoryName: string;
-  tdmCode?: string;
-  matchUpStatusCode?: string;
-  matchUpStatusCodeDisplay?: string;
+  matchUpStatusCode: string;
+  matchUpStatusCodeDisplay: string;
 }
 
-export interface MatchStatusInterface {
+export interface MatchUpStatusInterface {
   side1: MatchParticipantStatus;
   side2: MatchParticipantStatus;
 }
 
 export interface ScoringMatchUpInterface {
   roundName?: string;
-  participantSide1: ParticipantInterface[];
-  participantSide2: ParticipantInterface[];
+  participantSide1?: ParticipantInterface[];
+  participantSide2?: ParticipantInterface[];
   sets: SetScoresInterface[];
-  status: MatchStatusInterface;
+  status: MatchUpStatusInterface;
+  matchUpStatusCode?: string;
 }
 
 export interface SetFormatSelectorStateInterface {

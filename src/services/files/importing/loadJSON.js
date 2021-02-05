@@ -1,5 +1,6 @@
-import { db } from 'services/storage/db';
 import i18n from 'i18next';
+import { env } from 'config/defaults';
+import { db } from 'services/storage/db';
 import { performTask } from 'functions/tasks';
 import { versionCheck } from 'functions/versioning/versionCheck';
 import { AppToaster } from 'services/notifications/toaster';
@@ -36,6 +37,10 @@ function loadTournaments(json, callback) {
     importJSON = json.map(versionCheck.tournament);
   } else {
     importJSON = versionCheck.tournament(json);
+    if (env.exports?.localStorage) {
+      localStorage.removeItem('saveTournament');
+      localStorage.setItem('tournamentRecord', JSON.stringify(importJSON));
+    }
   }
   loadTask(db.addTournament, importJSON, callback);
 }

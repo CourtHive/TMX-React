@@ -1,54 +1,55 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import useTheme from '@material-ui/core/styles/useTheme';
-// import Slide from '@material-ui/core/Slide';
-// import { TransitionProps } from '@material-ui/core/transitions';
+import Slide from '@material-ui/core/Slide';
+import { useMediaQuery } from '@material-ui/core';
+import { TransitionProps } from '@material-ui/core/transitions';
 
-import { matchUpFormatCode } from 'tods-matchup-format-code';
-import ScoringDialogTitle from 'components/dialogs/scoringDialog/ScoringDialogTitle';
-import MatchParticipant from 'components/dialogs/scoringDialog/MatchParticipant';
-import ScoringDialogContent from 'components/dialogs/scoringDialog/ScoringDialogContent';
-import ScoringDialogActions from 'components/dialogs/scoringDialog/ScoringDialogActions';
+import ScoringDialogTitle from 'components/dialogs/scoringObjectDialog/ScoringDialogTitle';
+import MatchParticipant from 'components/dialogs/scoringObjectDialog/MatchParticipant';
+import ScoringDialogContent from 'components/dialogs/scoringObjectDialog/ScoringDialogContent';
+import ScoringDialogActions from 'components/dialogs/scoringObjectDialog/ScoringDialogActions';
 import CancelButton from 'components/buttons/cancel/CancelButton';
-import { useStylesCommon, useStylesScoringDialog } from 'components/dialogs/scoringDialog/styles';
+import { useStylesCommon, useStylesScoringDialog } from 'components/dialogs/scoringObjectDialog/styles';
 import CustomDialog from 'components/dialogs/CustomDialog';
 import {
   MatchConfigurationInterface,
+  // MatchParticipantStatusCategory,
   ScoringMatchUpInterface,
-  MatchParticipantStatusCategory,
   StatusIconProps
-} from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
+} from 'components/dialogs/scoringObjectDialog/typedefs/scoringTypes';
 import MatchUpFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
+import TMXStandardButton from 'components/buttons/standard/TMXStandardButton';
 
-/*
+import { matchUpFormatCode } from 'tods-matchup-format-code';
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
   ref: React.Ref<unknown>
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-*/
 
 interface ScoringDialogProps {
   id: string;
   isOpen: boolean;
   matchConfigParsed: MatchConfigurationInterface;
   matchUp: ScoringMatchUpInterface;
-  statusCategories: MatchParticipantStatusCategory[];
+  // statusCategories: MatchParticipantStatusCategory[];
+  statusCategories: any;
   StatusDisplayFactory: React.FC<StatusIconProps>;
-  setMatchUp: (matchUp: ScoringMatchUpInterface) => void;
+  error?: string;
+  setMatchUp: (matchUp: any) => void;
   closeDialog: () => void;
   clearScore: () => void;
   scoreFormatChange: (matchConfigParsed: MatchConfigurationInterface) => void;
   save: () => void;
-  applyStatus?: () => void;
   closeStatusDialog?: () => void;
   changeStatusCategory?: (event: React.ChangeEvent<{ name?: string; value: unknown }>, isSide1: boolean) => void;
+  setInitialMatchUp: () => void;
 }
 
 const ScoringDialog: React.FC<ScoringDialogProps> = ({
@@ -58,31 +59,35 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
   matchUp,
   statusCategories,
   StatusDisplayFactory,
+  error,
   scoreFormatChange,
   setMatchUp,
   closeDialog,
   clearScore,
   save,
-  applyStatus,
   closeStatusDialog,
-  changeStatusCategory
+  changeStatusCategory,
+  setInitialMatchUp
 }) => {
   const classesCommon = useStylesCommon();
   const classes = useStylesScoringDialog();
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const mediaBreakpoints = useMediaQuery(theme.breakpoints.up('sm'));
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const [shiftPressed, setShiftPressed] = useState(false);
   const [keyCodePressed, setKeyCodePressed] = useState(0);
   const [openEditScoreFormat, setOpenEditScoreFormat] = useState(false);
-  const hasMatchEnded = matchUp.status.side1.tdmCode !== 'None' || matchUp.status.side2.tdmCode !== 'None';
+  const isOpenOrInProgress = isOpen;
+  const hasMatchEnded =
+    matchUp.status.side1?.matchUpStatusCodeDisplay !== 'None' ||
+    matchUp.status.side2?.matchUpStatusCodeDisplay !== 'None';
   const saveButtonRef = useRef(null);
   const gamePointsInputExists =
-    matchUp.status.side1.categoryName === 'Retirements' ||
-    matchUp.status.side2.categoryName === 'Retirements' ||
-    matchUp.status.side1.categoryName === 'Defaults' ||
-    matchUp.status.side2.categoryName === 'Defaults';
+    matchUp.status.side1?.categoryName === 'Retirements' ||
+    matchUp.status.side2?.categoryName === 'Retirements' ||
+    matchUp.status.side1?.categoryName === 'Defaults' ||
+    matchUp.status.side2?.categoryName === 'Defaults';
 
   const handleShiftPressed = useCallback((event) => {
     // check if shift is pressed
@@ -118,9 +123,12 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
   const handleCloseEditFormatDialog = () => {
     setOpenEditScoreFormat(false);
   };
+  const handleClearScore = () => {
+    clearScore();
+  };
 
   const scoringDialogTitle = (
-    <ScoringDialogTitle id="scoring-dialog-title" onClose={closeDialog}>
+    <ScoringDialogTitle id="scoring-dialog-title">
       <div className={classes.subheaderContainer}>
         <Typography className={classes.title} variant="h6">
           {t('Enter score')}
@@ -141,20 +149,20 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
                       : set.setNumber
                   }
                 >
-                  <Grid className={mediaBreakpoints ? classesCommon.setEntry : classesCommon.setEntryXS} item>
+                  <Grid className={matches ? classesCommon.setEntry : classesCommon.setEntryXS} item>
                     <Typography className={classes.subheaderSets} variant="h6">
-                      {mediaBreakpoints ? `${t('SET')} ${set.setNumber}` : `S${set.setNumber}`}
+                      {matches ? `${t('SET')} ${set.setNumber}` : `S${set.setNumber}`}
                     </Typography>
                   </Grid>
                   {!!set.tiebreak && set.isActive && (
-                    <Grid className={mediaBreakpoints ? classesCommon.setEntry : classesCommon.setEntryXS} item>
+                    <Grid className={matches ? classesCommon.setEntry : classesCommon.setEntryXS} item>
                       <Typography className={classes.subheaderSets} variant="h6">
-                        {mediaBreakpoints ? 'TBRK' : 'TB'}
+                        {matches ? 'TBRK' : 'TB'}
                       </Typography>
                     </Grid>
                   )}
                   {set.gameResult && !matchConfigParsed.timed && (
-                    <Grid className={mediaBreakpoints ? classesCommon.setEntry : classesCommon.setEntryXS} item>
+                    <Grid className={matches ? classesCommon.setEntry : classesCommon.setEntryXS} item>
                       <Typography className={classes.subheaderSets} variant="h6">
                         {t('GAME')}
                       </Typography>
@@ -163,7 +171,7 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
                 </React.Fragment>
               ))}
               {/* empty spot */}
-              <Grid className={mediaBreakpoints ? classesCommon.setEntry : classesCommon.setEntryXS} item />
+              <Grid className={matches ? classesCommon.setEntry : classesCommon.setEntryXS} item />
             </Grid>
           </Grid>
         </Grid>
@@ -181,7 +189,7 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
             </Typography>
           </Grid>
           <Grid item>
-            <Typography id="sd-clear-score" onClick={clearScore} className={classes.actionAreaTypography}>
+            <Typography id="sd-clear-score" onClick={handleClearScore} className={classes.actionAreaTypography}>
               Clear score
             </Typography>
           </Grid>
@@ -200,27 +208,12 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
         <Grid container direction="row-reverse" spacing={2}>
           <Grid item xs={12} sm="auto">
             {/* TODO: create button wrappers with their own styles */}
-            <Button
-              id="sd-save-button"
-              ref={saveButtonRef}
-              color="primary"
-              variant="contained"
-              className={classes.actionButton}
-              onClick={save}
-            >
-              {t('Save & close')}
-            </Button>
+            <TMXStandardButton onClick={save}>{t('Save & close')}</TMXStandardButton>
           </Grid>
           <Grid item xs={12} sm="auto">
-            <CancelButton
-              id="sd-cancel-button"
-              onClick={closeDialog}
-              className={classes.actionButton}
-              variant={mediaBreakpoints ? 'text' : 'outlined'}
-            >
-              {t('Cancel')}
-            </CancelButton>
+            <TMXStandardButton onClick={closeDialog}>{t('Cancel')}</TMXStandardButton>
           </Grid>
+          {error && <div>{error}</div>}
         </Grid>
       </Grid>
     </ScoringDialogActions>
@@ -240,7 +233,6 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
           statusCategories={statusCategories}
           StatusDisplayFactory={StatusDisplayFactory}
           setMatchUp={setMatchUp}
-          applyStatus={applyStatus}
           closeStatusDialog={closeStatusDialog}
           changeStatusCategory={changeStatusCategory}
         />
@@ -255,7 +247,6 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
           statusCategories={statusCategories}
           StatusDisplayFactory={StatusDisplayFactory}
           setMatchUp={setMatchUp}
-          applyStatus={applyStatus}
           closeStatusDialog={closeStatusDialog}
           changeStatusCategory={changeStatusCategory}
         />
@@ -264,9 +255,7 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
   );
 
   const editFormatDialogTitle = (
-    <ScoringDialogTitle id="scoring-dialog-title" onClose={closeDialog}>
-      {t('Edit Score Format')}
-    </ScoringDialogTitle>
+    <ScoringDialogTitle id="scoring-dialog-title">{t('Edit Score Format')}</ScoringDialogTitle>
   );
 
   const editFormatDialogContent = (
@@ -284,7 +273,7 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
           <CancelButton
             id="close-edit-format-dialog"
             onClick={handleCloseEditFormatDialog}
-            variant={mediaBreakpoints ? 'text' : 'outlined'}
+            variant={matches ? 'text' : 'outlined'}
           >
             {t('Close')}
           </CancelButton>
@@ -293,12 +282,17 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
     </ScoringDialogActions>
   );
 
-  if (!matchUp.participantSide1 || !matchUp.participantSide2) return null;
-
   return (
     <div>
-      <CustomDialog id={id} open={isOpen} handleOnClose={closeDialog} fullScreen={!mediaBreakpoints}>
-        <div className={mediaBreakpoints ? classes.root : classes.rootXS}>
+      <CustomDialog
+        id={id}
+        open={isOpenOrInProgress}
+        onEnter={setInitialMatchUp}
+        handleOnClose={closeDialog}
+        TransitionComponent={Transition}
+        fullScreen={!matches}
+      >
+        <div className={matches ? classes.root : classes.rootXS}>
           {scoringDialogTitle}
           {scoringDialogContent}
           {scoringDialogActions}
@@ -308,9 +302,10 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
         id="edit-format-dialog"
         open={openEditScoreFormat}
         handleOnClose={handleCloseEditFormatDialog}
-        fullScreen={!mediaBreakpoints}
+        TransitionComponent={Transition}
+        fullScreen={!matches}
       >
-        <div className={mediaBreakpoints ? classes.root : classes.rootXS}>
+        <div className={matches ? classes.root : classes.rootXS}>
           {editFormatDialogTitle}
           {editFormatDialogContent}
           {editFormatDialogActions}
@@ -319,6 +314,5 @@ const ScoringDialog: React.FC<ScoringDialogProps> = ({
     </div>
   );
 };
-// TransitionComponent={Transition}
 
 export default ScoringDialog;

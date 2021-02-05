@@ -149,17 +149,15 @@ const ScoringDialogContainer: React.FC<ScoringDialogContainerType> = ({ matchUp,
   };
   const processScoringOutcome = ({ outcome, matchUp }) => {
     const { matchUpFormat } = outcome;
-    const { drawId, matchUpId, matchUpTieId, sides: matchUpSides, eventName } = matchUp;
-    const sides = matchUpSides.map((side) => ({
-      name: side?.participant?.name
-    }));
+    console.log({ outcome });
+    const { drawId, matchUpId, matchUpTieId } = matchUp;
     dispatch({
       type: 'tournamentEngine',
       payload: {
         methods: [
           {
             method: 'setMatchUpStatus',
-            params: { drawId, matchUpId, matchUpTieId, matchUpFormat, sides, eventName, outcome }
+            params: { drawId, matchUpId, matchUpTieId, matchUpFormat, outcome }
           }
         ]
       }

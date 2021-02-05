@@ -42,6 +42,10 @@ export const save = (function () {
   function syncSave(tournament) {
     if (tournament) {
       db.addTournament(tournament);
+      if (env.exports?.localStorage) {
+        localStorage.removeItem('saveTournament');
+        localStorage.setItem('tournamentRecord', JSON.stringify(tournament));
+      }
     }
   }
 

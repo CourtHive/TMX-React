@@ -13,7 +13,7 @@ import ScoringDialogTitle from 'components/dialogs/scoringDialog/ScoringDialogTi
 import ScoringDialogActions from 'components/dialogs/scoringDialog/ScoringDialogActions';
 import CancelButton from 'components/buttons/cancel/CancelButton';
 import CustomDialog from 'components/dialogs/CustomDialog';
-import MatchFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
+import MatchUpFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
 import KeyScoreEntry from 'components/inputs/keyScoreEntry/KeyScoreEntry';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
 import { MatchConfigurationInterface } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
@@ -92,8 +92,8 @@ export function ScoreEntry() {
   const editFormatDialogContent = (
     <>
       <div className={classes.editFormatDialogContentWrapper}>
-        <MatchFormatForm
-          matchFormatParsed={
+        <MatchUpFormatForm
+          matchUpFormatParsed={
             matchUpFormatCode.parse(matchUpFormat || defaultMatchUpFormat) as MatchConfigurationInterface
           }
           onChange={scoreFormatChange}

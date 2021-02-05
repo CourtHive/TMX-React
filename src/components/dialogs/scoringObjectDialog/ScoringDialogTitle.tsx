@@ -2,12 +2,11 @@ import React from 'react';
 
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 
-import { useStylesScoringDialogTitle } from 'components/dialogs/scoringDialog/styles';
+import { useStylesScoringDialogTitle } from 'components/dialogs/scoringObjectDialog/styles';
 
 interface ScoringDialogTitleProps {
   id: string;
   children: React.ReactNode;
-  onClose?: () => void;
 }
 
 const ScoringDialogTitle = (props: ScoringDialogTitleProps) => {

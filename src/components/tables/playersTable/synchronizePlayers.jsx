@@ -1,14 +1,14 @@
-import { tournamentEngine } from 'tods-competition-factory';
+import { mocksEngine } from 'tods-competition-factory';
 import { tmxStore } from 'stores/tmxStore';
 
 export const synchronizePlayers = () => {
-  const { participants: maleParticipants } = tournamentEngine.generateMockParticipants({
+  const { participants: maleParticipants } = mocksEngine.generateParticipants({
     participantsCount: 32,
     matchUpType: 'DOUBLES',
     sex: 'MALE'
   });
 
-  const { participants: femaleParticipants } = tournamentEngine.generateMockParticipants({
+  const { participants: femaleParticipants } = mocksEngine.generateParticipants({
     participantsCount: 32,
     matchUpType: 'DOUBLES',
     sex: 'FEMALE'

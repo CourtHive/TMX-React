@@ -13,18 +13,18 @@ import SetFormatSelector from 'components/forms/matchUpFormat/SetFormatSelector'
 import { useStyles } from 'components/forms/matchUpFormat/style';
 import { matchUpFormats } from 'functions/scoring/matchUpFormats';
 
-export interface MatchFormatFormProps {
+export interface MatchUpFormatFormProps {
   disabled?: string[];
-  matchFormatParsed: MatchConfigurationInterface;
+  matchUpFormatParsed: MatchConfigurationInterface;
   onChange: (matchUpFormat: MatchConfigurationInterface) => void;
 }
 
-const MatchFormatForm: React.FC<MatchFormatFormProps> = ({ disabled, matchFormatParsed, onChange }) => {
+const MatchUpFormatForm: React.FC<MatchUpFormatFormProps> = ({ disabled, matchUpFormatParsed, onChange }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const defaultMatchFormats = matchUpFormats().formats;
-  const matchFormatString = matchUpFormatCode.stringify(matchFormatParsed);
+  const matchFormatString = matchUpFormatCode.stringify(matchUpFormatParsed);
   const isNotCustom = defaultMatchFormats.find((defaultMatchFormat) => defaultMatchFormat.format === matchFormatString);
   const [scoringMode, setScoringMode] = useState(isNotCustom ? 'standard' : 'custom');
 
@@ -33,15 +33,15 @@ const MatchFormatForm: React.FC<MatchFormatFormProps> = ({ disabled, matchFormat
   };
 
   const setsUpdate = (matchUpFormat: MatchConfigurationInterface) => updateMatchUpFormat(matchUpFormat);
-  const hasFinalSet = matchFormatParsed && !!matchFormatParsed.finalSetFormat;
+  const hasFinalSet = matchUpFormatParsed && !!matchUpFormatParsed.finalSetFormat;
 
   const scoringFormatChanged = (e) => {
     const key = e && e.target && e.target.value;
     const matchUpFormat = defaultMatchFormats.find((defaultMatchFormat) => defaultMatchFormat.key === key)?.format;
-    const matchFormatParsed = matchUpFormatCode.parse(matchUpFormat) as MatchConfigurationInterface;
+    const matchUpFormatParsed = matchUpFormatCode.parse(matchUpFormat) as MatchConfigurationInterface;
     if (matchUpFormat) {
       setScoringMode('standard');
-      updateMatchUpFormat(matchFormatParsed);
+      updateMatchUpFormat(matchUpFormatParsed);
     } else {
       setScoringMode('custom');
     }
@@ -51,7 +51,7 @@ const MatchFormatForm: React.FC<MatchFormatFormProps> = ({ disabled, matchFormat
     if (scoringMode === 'custom') return 'custom';
     return (
       defaultMatchFormats.reduce<string>(
-        (p, c) => (c.format === matchUpFormatCode.stringify(matchFormatParsed) ? c.key : p),
+        (p, c) => (c.format === matchUpFormatCode.stringify(matchUpFormatParsed) ? c.key : p),
         undefined
       ) || 'standard'
     );
@@ -64,14 +64,14 @@ const MatchFormatForm: React.FC<MatchFormatFormProps> = ({ disabled, matchFormat
         <Grid container direction="row" justify="flex-start" className={classes.row}>
           <Grid item>
             <SetFormatSelector
-              matchFormatParsed={matchFormatParsed}
+              matchUpFormatParsed={matchUpFormatParsed}
               disabled={disabled}
               onChange={setsUpdate}
               hasFinalSet={hasFinalSet}
             />
-            {!hasFinalSet || matchFormatParsed.timed ? null : (
+            {!hasFinalSet || matchUpFormatParsed.timed ? null : (
               <SetFormatSelector
-                matchFormatParsed={matchFormatParsed}
+                matchUpFormatParsed={matchUpFormatParsed}
                 disabled={disabled}
                 isFinalSet={true}
                 onChange={setsUpdate}
@@ -133,4 +133,4 @@ const MatchFormatForm: React.FC<MatchFormatFormProps> = ({ disabled, matchFormat
   );
 };
 
-export default MatchFormatForm;
+export default MatchUpFormatForm;

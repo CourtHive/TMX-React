@@ -1,6 +1,6 @@
 import { db } from 'services/storage/db';
 
-import { tournamentEngine } from 'tods-competition-factory';
+import { mocksEngine } from 'tods-competition-factory';
 
 import { utilities } from 'tods-competition-factory';
 const {
@@ -9,13 +9,13 @@ const {
 } = utilities;
 
 export function courtHiveChallenge() {
-  const { participants: maleParticipants } = tournamentEngine.generateMockParticipants({
+  const { participants: maleParticipants } = mocksEngine.generateParticipants({
     participantsCount: 16,
     matchUpType: 'DOUBLES',
     sex: 'MALE'
   });
 
-  const { participants: femaleParticipants } = tournamentEngine.generateMockParticipants({
+  const { participants: femaleParticipants } = mocksEngine.generateParticipants({
     participantsCount: 16,
     matchUpType: 'DOUBLES',
     sex: 'FEMALE'
@@ -30,6 +30,7 @@ export function courtHiveChallenge() {
     metadata: { formatVersion: 2 },
     startDate: futureDate(5).getTime(),
     name: 'CourtHive Challenge',
+    tournamentName: 'CourtHive Challenge',
     endDate: futureDate(7).getTime(),
     tournamentId,
     unifiedTournamentId: { tournamentId },
