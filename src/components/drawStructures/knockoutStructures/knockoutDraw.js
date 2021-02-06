@@ -692,7 +692,7 @@ export function knockoutDraw() {
 
     const { hierarchy, maxRound, finalRound } = drawEngine.buildDrawHierarchy({ matchUps, participants });
     if (hierarchy) data.hierarchy = hierarchy;
-    console.log({ hierarchy });
+    // console.log({ hierarchy });
 
     if (matchUps && Array.isArray(matchUps)) {
       info.firstRoundPositionsCount = matchUps.filter((matchUp) => matchUp.roundNumber === 1).length * 2;
