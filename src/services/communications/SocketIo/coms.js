@@ -119,7 +119,6 @@ export const coms = (function () {
   function comsConnect() {
     connected = true;
     connectionEvent();
-    if (isLocalhost) console.log('%c Connected to Server', 'color: lightgreen');
     while (socketQueue.length) {
       const message = socketQueue.pop();
       emitTmx(message.data, message.ackCallback);
