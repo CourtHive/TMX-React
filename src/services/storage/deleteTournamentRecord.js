@@ -1,11 +1,9 @@
 import i18n from 'i18next';
 import { db } from 'services/storage/db';
 import { tmxStore } from 'stores/tmxStore';
-import { useHistory } from 'react-router-dom';
 import { showCalendar } from 'services/screenSlaver';
 
 export function deleteTournamentRecord({ tournamentId }) {
-  const history = useHistory();
   db.findTournament(tournamentId).then(doIt, (err) => console.log({ err }));
   function doIt(tournament) {
     tmxStore.dispatch({
@@ -20,7 +18,6 @@ export function deleteTournamentRecord({ tournamentId }) {
     });
 
     function okAction() {
-      history.push('/');
       deleteTournament({ tournament });
     }
   }

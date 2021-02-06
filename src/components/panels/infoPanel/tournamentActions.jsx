@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { save } from 'services/storage/save';
@@ -19,6 +20,7 @@ import { env } from 'config/defaults';
 
 export function TournamentActions(props) {
   const { t } = useTranslation();
+  const history = useHistory();
   const classes = useStyles();
 
   const { tournamentRecord } = props;
@@ -30,6 +32,7 @@ export function TournamentActions(props) {
   const mobile = env.device.isMobile || env.device.isIpad || env.device.isTablet;
 
   function requestDeleteTournament() {
+    history.push('/');
     deleteTournamentRecord({ tournamentId: tournamentId });
   }
   function exportTournamentRecord() {
