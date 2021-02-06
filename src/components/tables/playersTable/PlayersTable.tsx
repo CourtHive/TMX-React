@@ -128,7 +128,7 @@ export const PlayersTable = () => {
           payload: {
             methods: [
               {
-                method: 'participantsSignInStatus',
+                method: 'modifyParticipantsSignInStatus',
                 params
               }
             ]
@@ -144,7 +144,7 @@ export const PlayersTable = () => {
           payload: {
             methods: [
               {
-                method: 'participantsSignInStatus',
+                method: 'modifyParticipantsSignInStatus',
                 params
               }
             ]
