@@ -32,8 +32,12 @@ export function TournamentActions(props) {
   const mobile = env.device.isMobile || env.device.isIpad || env.device.isTablet;
 
   function requestDeleteTournament() {
-    history.push('/');
-    deleteTournamentRecord({ tournamentId: tournamentId });
+    deleteTournamentRecord({
+      tournamentId: tournamentId,
+      onDelete: () => {
+        history.push('/');
+      }
+    });
   }
   function exportTournamentRecord() {
     const filename = `${tournamentId}.json`;

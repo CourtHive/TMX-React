@@ -3,7 +3,7 @@ import { db } from 'services/storage/db';
 import { tmxStore } from 'stores/tmxStore';
 import { showCalendar } from 'services/screenSlaver';
 
-export function deleteTournamentRecord({ tournamentId }) {
+export function deleteTournamentRecord({ tournamentId, onDelete }) {
   db.findTournament(tournamentId).then(doIt, (err) => console.log({ err }));
   function doIt(tournament) {
     tmxStore.dispatch({
@@ -18,17 +18,18 @@ export function deleteTournamentRecord({ tournamentId }) {
     });
 
     function okAction() {
-      deleteTournament({ tournament });
+      deleteTournament({ tournament, onDelete });
     }
   }
 }
 
-function deleteTournament({ tournament }) {
+function deleteTournament({ tournament, onDelete }) {
   const tournamentId = tournament.unifiedTournamentId?.tournamentId || tournament.tournamentId;
 
   tmxStore.dispatch({ type: 'clear tournament' });
   db.deleteTournament(tournamentId).then(done, (err) => console.log({ err }));
   function done() {
+    if (typeof onDelete === 'function') onDelete();
     showCalendar();
   }
 }
