@@ -221,7 +221,8 @@ export default class ParticipantData {
     const { opponent } = this.find(d, side);
     const nationalityCode = opponent && opponent.person && opponent.person.nationalityCode;
     if (!nationalityCode || nationalityCode.length !== 3) return '';
-    return flagIOC(nationalityCode).trim();
+    const code = flagIOC(nationalityCode);
+    return code?.trim() || '';
   }
 
   flagRef(d, side) {
