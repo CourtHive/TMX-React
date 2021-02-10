@@ -170,8 +170,8 @@ function buildBrackets({ drawData }) {
       return Object.assign({}, participant, { drawPosition, structureId });
     });
 
-    const matchUpFormat = drawData.drawDefinition.matchUpFormat;
-    const { participantResults } = drawEngine.tallyParticipantResults({ matchUps, matchUpFormat });
+    // const matchUpFormat = drawData.drawDefinition.matchUpFormat;
+    // const { participantResults } = drawEngine.tallyParticipantResults({ matchUps, matchUpFormat });
 
     const bracket = {
       nextUnfilledDrawPositions: drawData.nextUnfilledDrawPositions,
@@ -180,7 +180,7 @@ function buildBrackets({ drawData }) {
       drawId: drawData.drawDefinition.drawId,
       name: structure.structureName,
       initialBracketPosition,
-      participantResults,
+      participantResults: {},
       participants,
       structureId, // structureId for the CONTAINER is different thand structureId for the bracket
       structure,
