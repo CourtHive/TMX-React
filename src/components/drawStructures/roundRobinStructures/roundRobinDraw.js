@@ -2,9 +2,6 @@ import { select as d3Select } from 'd3';
 import roundRobinBracket from './roundRobinBracket';
 import { keyWalk, roundRobinDefaultOptions } from './roundRobinDefaultOptions';
 
-// import { drawEngine } from 'competitionFactory';
-import { drawEngine } from 'tods-competition-factory';
-
 export function roundRobinDraw() {
   const o = roundRobinDefaultOptions();
 
