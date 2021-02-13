@@ -11,22 +11,26 @@ const NONE = '-';
 export function AddToGrouping(props) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  
+
   const { open, onClose, onSubmit, tableData, groupParticipants, teamParticipants } = props;
   const [groupingParticipantId, setGroupingParticipantId] = useState(NONE);
-  
+
   const checkedParticipants = tableData.filter((row) => row.checked);
   const selectedParticipantIds = checkedParticipants.map((row) => row.id);
 
-  const teamParticipantIds = teamParticipants.map(t=>t.participantId);
-  const groupParticipantIds = groupParticipants.map(t=>t.participantId);
+  const teamParticipantIds = teamParticipants.map((t) => t.participantId);
+  const groupParticipantIds = groupParticipants.map((t) => t.participantId);
 
   const teamIsSelected = teamParticipantIds.includes(groupingParticipantId);
   const groupIsSelected = groupParticipantIds.includes(groupingParticipantId);
-  const selectedGroup = groupIsSelected && groupParticipants
-    .find(groupParticipant => groupParticipant.participantId === groupingParticipantId);
-  const removeIsValid = selectedGroup && (selectedGroup.individualParticipants || [])
-    .find(participantId => selectedParticipantIds.includes(participantId));
+  const selectedGroup =
+    groupIsSelected &&
+    groupParticipants.find((groupParticipant) => groupParticipant.participantId === groupingParticipantId);
+  const removeIsValid =
+    selectedGroup &&
+    (selectedGroup.individualParticipants || []).find((participantId) =>
+      selectedParticipantIds.includes(participantId)
+    );
 
   const addToGrouping = () => {
     dispatch({
@@ -34,9 +38,9 @@ export function AddToGrouping(props) {
       payload: {
         methods: [
           {
-            method: 'addParticipantsToGrouping',
+            method: 'addIndividualParticipantIds',
             params: {
-              participantIds: selectedParticipantIds,
+              individualParticipantIds: selectedParticipantIds,
               groupingParticipantId,
               removeFromOtherTeams: teamIsSelected
             }
@@ -45,7 +49,7 @@ export function AddToGrouping(props) {
       }
     });
     onSubmit();
-  }
+  };
 
   const removeFromAllTeams = () => {
     dispatch({
@@ -55,14 +59,14 @@ export function AddToGrouping(props) {
           {
             method: 'removeParticipantsFromAllTeams',
             params: {
-              participantIds: selectedParticipantIds,
+              participantIds: selectedParticipantIds
             }
           }
         ]
       }
     });
     onSubmit();
-  }
+  };
 
   const removeFromGroup = () => {
     const checkedParticipants = tableData.filter((row) => row.checked);
@@ -75,39 +79,33 @@ export function AddToGrouping(props) {
             method: 'removeParticipantsFromGroup',
             params: {
               groupingParticipantId,
-              participantIds: selectedParticipantIds,
+              participantIds: selectedParticipantIds
             }
           }
         ]
       }
     });
     onSubmit();
-  }
+  };
 
   return (
-      <Dialog
-        open={open}
-        onClose={onClose}
-      >
-        <DialogTitle>{t('Grouping Options')}</DialogTitle>
-        <DialogContent>
-          <GroupingSelector groupingParticipantId={groupingParticipantId} onChange={setGroupingParticipantId} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose} color='secondary'>{t('ccl')}</Button>
-          {
-            groupingParticipantId !== NONE ? null :
-            <Button onClick={removeFromAllTeams}>{t('Remove From All Teams')}</Button>
-          }
-          {
-            groupingParticipantId !== NONE && removeIsValid ?
-            <Button onClick={removeFromGroup}>{t('Remove')}</Button> : null
-          }
-          {
-            groupingParticipantId === NONE ? null :
-            <Button onClick={addToGrouping}>{t('Add')}</Button>
-          }
-        </DialogActions>
-      </Dialog>
-  )
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>{t('Grouping Options')}</DialogTitle>
+      <DialogContent>
+        <GroupingSelector groupingParticipantId={groupingParticipantId} onChange={setGroupingParticipantId} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} color="secondary">
+          {t('ccl')}
+        </Button>
+        {groupingParticipantId !== NONE ? null : (
+          <Button onClick={removeFromAllTeams}>{t('Remove From All Teams')}</Button>
+        )}
+        {groupingParticipantId !== NONE && removeIsValid ? (
+          <Button onClick={removeFromGroup}>{t('Remove')}</Button>
+        ) : null}
+        {groupingParticipantId === NONE ? null : <Button onClick={addToGrouping}>{t('Add')}</Button>}
+      </DialogActions>
+    </Dialog>
+  );
 }

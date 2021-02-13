@@ -1,5 +1,5 @@
-import React from 'react'
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
@@ -9,17 +9,17 @@ const useStyles = makeStyles({
     fontSize: 15,
     '& > span': {
       marginRight: 10,
-      fontSize: 18,
-    },
-  },
+      fontSize: 18
+    }
+  }
 });
 
 const noneUUID = 'z009900a';
 
-export function ParticipantTeam({ id, label, name, selection, options, onChange, enableNone=true }) {
+export function ParticipantTeam({ id, label, participantName, selection, options, onChange, enableNone = true }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const noneOption = { name: t('NONE'), participantId: noneUUID };
+  const noneOption = { participantName: t('NONE'), participantId: noneUUID };
 
   const handleGetOptionSelected = (option, value) =>
     !option || value === '' || option.participantId === value.participantId;
@@ -27,14 +27,14 @@ export function ParticipantTeam({ id, label, name, selection, options, onChange,
   if (enableNone) {
     selection = selection || noneOption;
     options = options || [selection];
-    const containsNone = options.find(option => option.participantId === noneUUID);
+    const containsNone = options.find((option) => option.participantId === noneUUID);
     if (!containsNone) options.unshift(noneOption);
   }
 
   const handleOnChange = (_, selection) => {
-    const value = (selection.participantId === noneOption.participantId) ? undefined : selection;
+    const value = selection.participantId === noneOption.participantId ? undefined : selection;
     onChange(value);
-  }
+  };
 
   return (
     <Autocomplete
@@ -45,10 +45,10 @@ export function ParticipantTeam({ id, label, name, selection, options, onChange,
       onChange={handleOnChange}
       style={{ width: 'auto' }}
       disableClearable={true}
-      classes={{ option: classes.option, }}
-      getOptionLabel={option => option.name}
+      classes={{ option: classes.option }}
+      getOptionLabel={(option) => option.participantName}
       getOptionSelected={handleGetOptionSelected}
-      renderInput={params => (
+      renderInput={(params) => (
         <TextField
           id={id}
           fullWidth
@@ -57,7 +57,7 @@ export function ParticipantTeam({ id, label, name, selection, options, onChange,
           variant="outlined"
           placeholder={`${t('select')}...`}
           value={selection}
-          name={name}
+          name={participantName}
           inputProps={{
             ...params.inputProps
           }}
@@ -66,4 +66,3 @@ export function ParticipantTeam({ id, label, name, selection, options, onChange,
     />
   );
 }
-

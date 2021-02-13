@@ -282,7 +282,7 @@ export const GroupsTable = () => {
         id: participantId,
         name: participant.participantName,
         participantId: participantId,
-        members: participant.individualParticipants?.length,
+        members: participant.individualParticipantIds?.length,
         abbreviation: participant.participantProfile?.abbreviation
       };
     })
@@ -298,7 +298,7 @@ export const GroupsTable = () => {
       participantId: UUID.new(),
       participantType: GROUP,
       participantRole: COMPETITOR,
-      individualParticipants: []
+      individualParticipantIds: []
     };
     setGroupData({ groupParticipant });
   };

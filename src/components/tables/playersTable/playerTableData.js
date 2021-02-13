@@ -49,12 +49,12 @@ export function generatePlayerTableData(props) {
     const { person } = participant;
     if (person && person.nationalityCode) {
       const code = person.nationalityCode.toUpperCase();
-      let country = countries.find((country) => {
+      const country = countries.find((country) => {
         if (country.ioc === code) return true;
         if (country.iso === code) return true;
         return false;
       });
-      let countryName = country?.label;
+      const countryName = country?.label;
       return countryName;
     }
   };
@@ -62,9 +62,9 @@ export function generatePlayerTableData(props) {
   const renderTeamName = (participant) => {
     const { participantId } = participant;
     const playerTeam = teamParticipants.find((team) => {
-      return team.participantIds?.includes(participantId);
+      return team.individualParticipantIds?.includes(participantId);
     });
-    return playerTeam?.name;
+    return playerTeam?.participantName;
   };
 
   const renderGroupNames = (participant) => {

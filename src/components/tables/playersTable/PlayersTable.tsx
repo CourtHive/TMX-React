@@ -78,17 +78,12 @@ export const PlayersTable = () => {
     .concat(...events.map((event) => event.entries?.map((entry) => entry.participantId)))
     .flat(Infinity);
 
-  const teamParticipants = tournamentParticipants
-    .filter((participant) => {
-      return (
-        (participant.participantRole === COMPETITOR || !participant.participantRole) &&
-        participant.participantType === TEAM
-      );
-    })
-    .map((t) => {
-      const participantIds = t.individualParticipants.map((i) => (typeof i === 'object' ? i.participantId : i));
-      return Object.assign({}, t, { participantIds });
-    });
+  const teamParticipants = tournamentParticipants.filter((participant) => {
+    return (
+      (participant.participantRole === COMPETITOR || !participant.participantRole) &&
+      participant.participantType === TEAM
+    );
+  });
   const groupParticipants = tournamentParticipants.filter((participant) => {
     return (
       (participant.participantRole === COMPETITOR || !participant.participantRole) &&
@@ -106,8 +101,8 @@ export const PlayersTable = () => {
     selectedTeamId !== NONE &&
     (teamParticipants.find((team) => team.participantId === selectedTeamId) ||
       groupParticipants.find((group) => group.participantId === selectedTeamId));
-  const teamIds = selectedTeam?.participantIds || [];
-  const selectedGroupingParticipantIds = (teamIds.length && teamIds) || selectedTeam.individualParticipants || [];
+  const teamIds = selectedTeam?.individualParticipantIds || [];
+  const selectedGroupingParticipantIds = (teamIds.length && teamIds) || selectedTeam.individualParticipantIds || [];
 
   const participants = tournamentParticipants.filter((participant) => {
     const isPerson = participant.participantType === INDIVIDUAL || participant.person;
@@ -208,11 +203,11 @@ export const PlayersTable = () => {
   const handleOnClickEdit = () => {
     const participantId = hoverActions?.participantId;
     const participant = tournamentParticipants.find((p) => p.participantId === participantId);
-    function savePlayerEdits({ participantData, teamId }) {
+    function savePlayerEdits({ participantData, groupingParticipantId }) {
       if (participantData) {
         const person = participantData.person;
         const updatedParticipant = Object.assign({}, participant);
-        updatedParticipant.name = `${person.standardGivenName} ${person.standardFamilyName}`;
+        updatedParticipant.participantName = `${person.standardGivenName} ${person.standardFamilyName}`;
         updatedParticipant.person = Object.assign({}, participant.person, person);
 
         dispatch({
@@ -221,7 +216,7 @@ export const PlayersTable = () => {
             methods: [
               {
                 method: 'modifyParticipant',
-                params: { participant: updatedParticipant, teamId }
+                params: { participant: updatedParticipant, groupingParticipantId }
               }
             ]
           }
@@ -382,7 +377,7 @@ export const PlayersTable = () => {
   };
 
   const addParticipant = () => {
-    const addToStore = ({ participantData, teamId }) => {
+    const addToStore = ({ participantData, groupingParticipantId }) => {
       if (participantData) {
         participantData.participantId = UUID.new();
         dispatch({
@@ -391,7 +386,7 @@ export const PlayersTable = () => {
             methods: [
               {
                 method: 'addParticipants',
-                params: { participants: [participantData], teamId }
+                params: { participants: [participantData], groupingParticipantId }
               }
             ]
           }

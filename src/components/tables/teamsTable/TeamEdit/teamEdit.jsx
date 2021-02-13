@@ -21,7 +21,7 @@ export function TeamEdit(props) {
   const teamLogoLink = teamLogoProfile?.identifier;
 
   const defaultValues = {
-    name: teamParticipant?.participantName,
+    participantName: teamParticipant?.participantName,
     code: teamParticipant?.participantProfile?.code,
     abbreviation: teamParticipant?.participantProfile?.abbreviation,
     logoLink: teamLogoLink
@@ -36,7 +36,7 @@ export function TeamEdit(props) {
   const [logoLink, setLogoLink] = useState(teamLogoLink);
   const onSubmit = (data) => {
     const updatedParticipant = Object.assign({}, teamParticipant);
-    updatedParticipant.name = data.name;
+    updatedParticipant.participantName = data.participantName;
     updatedParticipant.participantProfile = Object.assign({}, teamParticipant.participantProfile, {
       code: data.code,
       abbreviation: data.abbreviation
@@ -102,13 +102,13 @@ export function TeamEdit(props) {
               <TeamLogo srcList={logoLink} imageWidth={50} />
             </Grid>
             <TextField
-              name="name"
+              name="participantName"
               required
               inputRef={register}
-              error={Boolean(errors.name)}
-              helperText={errors.name && errors.name.message}
+              error={Boolean(errors.participantName)}
+              helperText={errors.participantName && errors.participantName.message}
               label={t('teams.name')}
-              defaultValue={defaultValues.name}
+              defaultValue={defaultValues.participantName}
             />
             <TextField
               name="abbreviation"

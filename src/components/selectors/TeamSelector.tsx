@@ -36,7 +36,7 @@ export const TeamSelector = (props) => {
     );
   });
 
-  const optionValue = (team) => ({ text: team.name, value: team.participantId });
+  const optionValue = (team) => ({ text: team.participantName, value: team.participantId });
   const teamOptions = teamParticipants.map(optionValue).sort((a, b) => stringSort(a.text, b.text));
   const groupOptions = groupParticipants.map(optionValue).sort((a, b) => stringSort(a.text, b.text));
   if (groupOptions.length) groupOptions.unshift({ divider: true });

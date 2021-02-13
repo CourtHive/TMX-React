@@ -80,7 +80,7 @@ export const MatchUpsTable: React.FC = () => {
 
   const selectedTeam =
     selectedTeamId !== NONE && teamParticipants.find((team) => team.participantId === selectedTeamId);
-  const teamIds = selectedTeam?.individualParticipants || [];
+  const teamIds = selectedTeam?.individualParticipantIds || [];
 
   const selectedDraw = undefined; // was useSelector
   const filteredMatchUpsTableData: MatchUpsTableDataInterface[] = getFilteredMatchUpsTableData(

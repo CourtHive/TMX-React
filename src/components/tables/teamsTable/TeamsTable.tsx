@@ -279,10 +279,10 @@ export const TeamsTable = () => {
       const checked = checkedTeamIds.includes(participantId);
       return {
         checked,
-        name: participant.participantName,
+        participantName: participant.name || participant.participantName,
         id: participant.participantId,
         participantId: participant.participantId,
-        members: participant.individualParticipants?.length,
+        members: participant.individualParticipantIds?.length,
         abbreviation: participant.participantProfile?.abbreviation,
         code: participant.participantProfile?.code
       };
@@ -295,12 +295,11 @@ export const TeamsTable = () => {
   };
 
   const addParticipant = () => {
-    console.log('add participant');
     const teamParticipant = {
       participantId: UUID.new(),
       participantType: TEAM,
       participantRole: COMPETITOR,
-      individualParticipants: []
+      individualParticipantIds: []
     };
     setTeamData({ teamParticipant });
   };
@@ -383,7 +382,7 @@ export const TeamsTable = () => {
     {
       key: 'name',
       getTitle: () => ({ node: t('nm'), className: `${classes.headerCells} ${classes.EPFullNameCell}` }),
-      getValue: (row) => ({ node: row.name })
+      getValue: (row) => ({ node: row.participantName })
     },
     {
       key: 'abbr',

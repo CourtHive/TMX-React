@@ -209,8 +209,8 @@ export function KnockoutStructure(props) {
     }
   }
 
-  function positionClick(node, coords, teamIndex) {
-    console.log({ node, teamIndex });
+  function positionClick(node, coords /*, teamIndex*/) {
+    // console.log({ node, teamIndex });
     const data = node.data || node;
     actionMenu(data, coords);
   }

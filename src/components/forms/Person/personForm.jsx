@@ -54,7 +54,7 @@ export function PersonForm(props) {
   const classes = useStyles();
 
   const playerTeam = teamParticipants?.find((team) => {
-    return team.participantIds?.includes(participantId);
+    return team.individualParticipantIds?.includes(participantId);
   });
   const [selectedTeam, setSelectedTeam] = useState(playerTeam);
   const handleTeamChange = (selection) => {
@@ -75,8 +75,8 @@ export function PersonForm(props) {
         participantName: `${person.standardGivenName} ${person.standardFamilyName}`,
         person
       };
-      const teamId = selectedTeam?.participantId;
-      callback({ participantData, teamId });
+      const groupingParticipantId = selectedTeam?.participantId;
+      callback({ participantData, groupingParticipantId });
     }
   };
   const cancelFx = () => {
