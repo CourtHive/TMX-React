@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -52,22 +52,22 @@ export const PlayersTable = () => {
   const iconClasses = useIconStyles();
 
   const NONE = '-';
-  const editState = useSelector((state: any) => state.tmx.editState);
+  const editState = useSelector((state) => state.tmx.editState);
 
   const searchInput = useRef(null);
   const actionBoundsRef = useRef(null);
-  const tableRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef(null);
   const [tableData, setTableData] = useState([]);
   const [filterValue, setFilterValue] = useState('');
   const [personData, setPersonData] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
   const [hoverActions, setHoverActions] = useState(null);
   const [groupingOpen, setGroupingOpen] = useState(false);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [actionPanelStyle, setActionPanelStyle] = useState<CSSProperties>({});
+  const [editMode, setEditMode] = useState(false);
+  const [actionPanelStyle, setActionPanelStyle] = useState({});
 
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
+  const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
   tournamentEngine.setState(tournamentRecord);
 
   const tournamentParticipants = tournamentRecord.participants || [];
@@ -91,10 +91,10 @@ export const PlayersTable = () => {
     );
   });
 
-  const selectedTeamId = useSelector((state: any) => state.tmx.select.players.team);
-  const hiddenColumns = useSelector((state: any) => state.tmx.hiddenColumns.participants) || [];
-  const selectedGender = useSelector((state: any) => state.tmx.select.participants.sex);
-  const selectedSignInStatus = useSelector((state: any) => state.tmx.select.participants.signedIn);
+  const selectedTeamId = useSelector((state) => state.tmx.select.players.team);
+  const hiddenColumns = useSelector((state) => state.tmx.hiddenColumns.participants) || [];
+  const selectedGender = useSelector((state) => state.tmx.select.participants.sex);
+  const selectedSignInStatus = useSelector((state) => state.tmx.select.participants.signedIn);
   const signInOutcome = selectedSignInStatus === 'false' || selectedSignInStatus === '-';
 
   const selectedTeam =
@@ -210,16 +210,29 @@ export const PlayersTable = () => {
         updatedParticipant.participantName = `${person.standardGivenName} ${person.standardFamilyName}`;
         updatedParticipant.person = Object.assign({}, participant.person, person);
 
+        const methods = [
+          {
+            method: 'modifyParticipant',
+            params: { participant: updatedParticipant, groupingParticipantId, removeFromOtherTeams: true }
+          }
+        ];
+
+        if (!groupingParticipantId) {
+          const playerTeam = teamParticipants.find((team) => {
+            return team.individualParticipantIds?.includes(participantId);
+          });
+          if (playerTeam) {
+            const newMethod = {
+              method: 'removeIndividualParticipantIds',
+              params: { groupingParticipantId: playerTeam.participantId, individualParticipantIds: [participantId] }
+            };
+            methods.push(newMethod);
+          }
+        }
+
         dispatch({
           type: 'tournamentEngine',
-          payload: {
-            methods: [
-              {
-                method: 'modifyParticipant',
-                params: { participant: updatedParticipant, groupingParticipantId }
-              }
-            ]
-          }
+          payload: { methods }
         });
       }
       setPersonData(false);
@@ -297,7 +310,7 @@ export const PlayersTable = () => {
     }
   };
 
-  const actionStyles: CSSProperties = hoverActions?.elementDimensions
+  const actionStyles = hoverActions?.elementDimensions
     ? {
         // left: `${hoverActions?.elementDimensions.width - (20 + (actionIcons.length - 1) * 28)}px`,
         left: `${window.innerWidth < 750 ? window.innerWidth - 20 : window.innerWidth - 40}px`,
@@ -402,8 +415,7 @@ export const PlayersTable = () => {
 
   const triggerActionPanelStyle = () => {
     const { style: actionStyle } = getActionPanelBounds(actionBoundsRef);
-    const style = actionStyle as CSSProperties;
-    setActionPanelStyle(style);
+    setActionPanelStyle(actionStyle);
   };
 
   useEffect(() => {
