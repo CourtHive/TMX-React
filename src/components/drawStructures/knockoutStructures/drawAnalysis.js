@@ -32,7 +32,7 @@ function instanceCount(values) {
     return a;
   }, {});
 }
-export function feedAnalysis({ matchUps }) {
+export function feedAnalysis({ matchUps = [] }) {
   const { roundMatchUps } = drawEngine.getRoundMatchUps({ matchUps });
   const roundCounts = Object.keys(roundMatchUps).map((round) => roundMatchUps[round].length);
   const roundAnalysis = roundCounts.reduce(
@@ -51,14 +51,12 @@ export function feedAnalysis({ matchUps }) {
   return { feedIn: repeatMax > 1, roundGuide: roundAnalysis.guide, fedCount: roundAnalysis.fed, feedRounds };
 }
 
-export function scanData({ matchUps, participants }) {
+export function scanData({ participants }) {
   const dataScan = { drawPositions: true };
   if (participants) {
     dataScan.drawEntry = participants.reduce((p, c) => c.entry || p, undefined) ? true : false;
     dataScan.playerRankings = participants.reduce((p, c) => c.rank || p, undefined) ? true : false;
     dataScan.playerRatings = participants.reduce((p, c) => c.rating || p, undefined) ? true : false;
-  }
-  if (matchUps) {
   }
   return dataScan;
 }

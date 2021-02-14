@@ -179,7 +179,7 @@ export default class ParticipantData {
       if (this._options.names.first_initial || text.length > lengthThreshold) text = lastFirstI;
       if (text.length > lengthThreshold) text = lastLastI;
     } else {
-      text = `${opponent.name}${seed}`;
+      text = `${opponent.participantName}${seed}`;
     }
 
     if (otherName) {

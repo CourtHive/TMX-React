@@ -33,16 +33,16 @@ export interface PersonInterface {
   sex?: string;
 }
 
-export interface onlineProfile {
+export interface OnlineProfile {
   type: string;
   identifier: string;
 }
 export interface ParticipantInterface {
-  name?: string;
+  participantName?: string;
   participantId?: string;
   participantType?: string;
   individualParticipants?: Array<ParticipantInterface>;
-  onlineProfiles?: onlineProfile[];
+  onlineProfiles?: OnlineProfile[];
   person?: PersonInterface;
 }
 

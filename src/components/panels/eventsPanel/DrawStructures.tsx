@@ -50,6 +50,7 @@ export const DrawsPanel = (props) => {
     .setState(drawDefinition)
     .setParticipants(participants)
     .allStructureMatchUps({ structureId });
+  console.log({ drawDefinition, participants, result });
   const { matchUps, roundMatchUps } = result;
 
   const { nextUnfilledDrawPositions } = drawEngine.getNextUnfilledDrawPositions({ structureId });

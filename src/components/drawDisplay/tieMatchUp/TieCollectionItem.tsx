@@ -48,7 +48,7 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
     }
   };
   const handleGetOptionLabel = (option: ParticipantInterface) => {
-    return option?.name || '';
+    return option?.participantName || '';
   };
 
   const handleSide1Member1Change = (

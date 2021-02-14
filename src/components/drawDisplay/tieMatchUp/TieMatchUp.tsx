@@ -44,7 +44,7 @@ const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
   const sideName = (sideNumber) => {
     const side = (matchUp.sides || [])[sideNumber - 1];
     const participant = side?.participant;
-    return participant?.name || `Side ${sideNumber}`;
+    return participant?.participantName || `Side ${sideNumber}`;
   };
 
   const sideLogo = (sideNumber) => {

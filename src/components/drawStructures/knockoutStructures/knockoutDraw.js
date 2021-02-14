@@ -77,7 +77,7 @@ export function knockoutDraw() {
 
     let playerHeight = o.height / info.firstRoundPositionsCount;
 
-    const fedFirstMultiplier = info.feedRounds.includes(1) ? 3 : 1;
+    const fedFirstMultiplier = info.feedRounds?.includes(1) ? 3 : 1;
     const baseMultiplier = fedFirstMultiplier * (info.hasDoubles ? 2 : 1);
     const zoomMultiplier = info.zoom ? 2 : 1;
     const minPlayerHeightMultiplier = zoomMultiplier * baseMultiplier;
@@ -687,12 +687,14 @@ export function knockoutDraw() {
     return chart;
   };
 
-  chart.data = function ({ matchUps, participants, nextUnfilledDrawPositions } = {}) {
-    if (!matchUps && !participants) return chart;
+  chart.data = function ({ matchUps: structureMatchUps, participants, nextUnfilledDrawPositions } = {}) {
+    if (!structureMatchUps && !participants) return chart;
 
-    const { hierarchy, maxRound, finalRound } = drawEngine.buildDrawHierarchy({ matchUps, participants });
+    const { hierarchy, maxRound, finalRound, matchUps } = drawEngine.buildDrawHierarchy({
+      matchUps: structureMatchUps,
+      participants
+    });
     if (hierarchy) data.hierarchy = hierarchy;
-    // console.log({ hierarchy });
 
     if (matchUps && Array.isArray(matchUps)) {
       info.firstRoundPositionsCount = matchUps.filter((matchUp) => matchUp.roundNumber === 1).length * 2;
@@ -706,7 +708,7 @@ export function knockoutDraw() {
       info.zoom = false; // zoom will change the multiplier for playerHeight
     }
 
-    if (participants) {
+    if (matchUps && participants) {
       P.participants = participants;
       P.nextUnfilledDrawPositions = nextUnfilledDrawPositions;
       info.hasDoubles = hasDoubles({ matchUps });

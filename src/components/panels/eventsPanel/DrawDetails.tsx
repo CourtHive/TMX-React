@@ -14,19 +14,11 @@ export const DrawDetails = (props) => {
 
   return (
     <>
-      {
-        drawView !== DTAB_DRAW ? null :
-        <DrawsPanel drawDefinition={selectedDraw} />
-      }
-      {
-        drawView !== DTAB_COMPETITORS ? null :
+      {drawView !== DTAB_DRAW ? null : <DrawsPanel event={selectedEvent} drawDefinition={selectedDraw} />}
+      {drawView !== DTAB_COMPETITORS ? null : (
         <DrawParticipants selectedEvent={selectedEvent} selectedDraw={selectedDraw} />
-      }
-      {
-        drawView !== DTAB_SETTINGS ? null :
-        <DrawSettings drawDefinition={selectedDraw} participants={participants} />
-
-      }
+      )}
+      {drawView !== DTAB_SETTINGS ? null : <DrawSettings drawDefinition={selectedDraw} participants={participants} />}
     </>
   );
-}
+};

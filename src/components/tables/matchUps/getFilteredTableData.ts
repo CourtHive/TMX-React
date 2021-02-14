@@ -27,8 +27,8 @@ export const getFilteredMatchUpsTableData = (
   selectedDraw,
   selectedRowIndex,
   teamIds?: string[]
-): MatchUpsTableDataInterface[] =>
-  matchUps
+): MatchUpsTableDataInterface[] => {
+  const filteredMatchUps = matchUps
     .filter((matchUp) => matchUpFilter(matchUp, teamIds, selectedDraw))
     .map((matchUp, index) => {
       const score = typeof matchUp?.score === 'object' ? matchUp.score.scoreStringSide1 : matchUp.score;
@@ -50,10 +50,13 @@ export const getFilteredMatchUpsTableData = (
         startTime: matchUp.schedule.startTime,
         endTime: matchUp.schedule.endTime,
         // TODO: what happens for doubles?
-        player1: matchUp.sides[0]?.participant?.name,
-        player2: matchUp.sides[1]?.participant?.name,
+        player1: matchUp.sides && matchUp.sides[0]?.participant?.participantName,
+        player2: matchUp.sides && matchUp.sides[1]?.participant?.participantName,
         status: matchUp.matchUpStatus,
         score,
         readyToScore: matchUp.readyToScore
       };
     });
+  console.log(matchUps[0], filteredMatchUps[0]);
+  return filteredMatchUps;
+};
