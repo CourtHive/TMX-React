@@ -23,6 +23,7 @@ import { StructureSelector } from 'components/selectors/StructureSelector';
 import { DTAB_DRAW, TAB_EVENTS } from 'stores/tmx/types/tabs';
 import { tournamentEngine, fixtures } from 'tods-competition-factory';
 import { tabRoute } from 'components/tournament/tabRoute';
+import { defaultTieFormat } from 'policies/defaultTieFormat';
 const { SEEDING_ITF, SCORING_POLICY } = fixtures;
 
 export const EventsPanel = ({ tournamentRecord, params }) => {
@@ -58,6 +59,9 @@ export const EventsPanel = ({ tournamentRecord, params }) => {
       Object.assign(values, { eventId: selectedEvent.eventId, matchUpType, policyDefinitions });
       const result = tournamentEngine.generateDrawDefinition(values);
       const { drawDefinition } = result;
+      if (matchUpType === 'TEAM') {
+        drawDefinition.tieFormat = defaultTieFormat();
+      }
       const { eventId } = selectedEvent;
       if (eventId && drawDefinition) {
         dispatch({
