@@ -14,7 +14,7 @@ interface TieTeamProps {
   sideNumber: number;
 }
 
-const TieTeam: React.FC<TieTeamProps> = ({ importLineup, justifyContent, teamLogo, teamName, sideNumber }) => {
+const TieTeam: React.FC<TieTeamProps> = ({ /*importLineup,*/ justifyContent, teamLogo, teamName, sideNumber }) => {
   const classes = useStyles();
   const textAlign = sideNumber === 1 ? 'right' : 'left';
 
@@ -29,11 +29,6 @@ const TieTeam: React.FC<TieTeamProps> = ({ importLineup, justifyContent, teamLog
   const teamDetails = (
     <Grid className={classes.teamGridItem} item>
       <Grid alignContent="center" container direction="column">
-        <Grid item>
-          <Typography align={textAlign} className={classes.homeAway}>
-            {sideNumber === 1 ? 'HOME' : 'AWAY'}
-          </Typography>
-        </Grid>
         <Grid item>
           <Typography align={textAlign} className={classes.teamName}>
             {teamName}

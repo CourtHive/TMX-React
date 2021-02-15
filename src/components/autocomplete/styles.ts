@@ -3,7 +3,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme: Theme) => ({
   autocompleteInput: {
     backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
+    // border: '1px solid #ced4da',
     borderRadius: 2,
     fontSize: 14,
     height: '32px',

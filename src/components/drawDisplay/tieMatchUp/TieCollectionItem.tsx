@@ -1,12 +1,11 @@
 import React from 'react';
 import { useStyles } from 'components/drawDisplay/tieMatchUp/styles';
-import { useTranslation } from 'react-i18next';
 
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+
 import Typography from '@material-ui/core/Typography';
 
-import CheckIcon from '@material-ui/icons/Check';
 import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
 import TMXAutocomplete from 'components/autocomplete/TMXAutocomplete';
 import { ParticipantInterface } from 'typedefs/store/tmxTypes';
@@ -39,7 +38,6 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
   side2AvailableParticipants
 }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
   const isDouble = collectionMatchUp.matchUpType === DOUBLES;
 
   const handleEnterScore = () => {
@@ -101,36 +99,41 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
   const disableClearable = Boolean(collectionMatchUp.winningSide);
 
   const scoreString = collectionMatchUp.score?.scoreStringSide1;
+  const collectionPosition = collectionMatchUp.collectionPosition;
+
+  const leftSide =
+    collectionMatchUp.winningSide === 1
+      ? { border: 2, borderColor: 'forestgreen' }
+      : { border: 2, borderColor: 'lightgray' };
+  const rightSide =
+    collectionMatchUp.winningSide === 2
+      ? { border: 2, borderColor: 'forestgreen' }
+      : { border: 2, borderColor: 'lightgray' };
 
   return (
     <>
-      <Grid container direction="row" className={classes.collectionItemWrapper} justify="space-between">
-        <Grid className={classes.collectionItemGridWrapper} item xs={5}>
+      <Grid container direction="row" className={classes.collectionItemWrapper}>
+        <Grid className={classes.collectionPositionColumn} item>
+          <Grid container direction="row" justify="center">
+            <Grid item className={isDouble ? classes.matchUpDoublesPointsDisplay : classes.matchUpPointsDisplay}>
+              <Grid container direction="row" wrap="nowrap">
+                <Typography className={classes.collectionPositionTypography}>{collectionPosition}</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid className={classes.collectionItemGridWrapper} item>
           <Grid container direction="row">
-            <Grid item>
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-                className={classes.participantWrapper}
-              >
-                <Grid item className={classes.participantEdit}>
-                  <TMXAutocomplete
-                    autoComplete={true}
-                    autoHighlight={true}
-                    filterOptions={handleFilterOptionsSide1}
-                    fullWidth
-                    disableClearable={disableClearable}
-                    getOptionLabel={handleGetOptionLabel}
-                    getOptionSelected={handleGetOptionSelected}
-                    onChange={handleSide1Member1Change}
-                    options={side1AvailableParticipants}
-                    value={side1Member1Participant}
-                  />
-                </Grid>
-                {isDouble && (
-                  <Grid item className={`${classes.participantEdit} ${classes.participantEditDoubleBottom}`}>
+            <Box {...leftSide}>
+              <Grid item>
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.participantWrapper}
+                >
+                  <Grid item className={classes.participantEdit}>
                     <TMXAutocomplete
                       autoComplete={true}
                       autoHighlight={true}
@@ -139,75 +142,55 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
                       disableClearable={disableClearable}
                       getOptionLabel={handleGetOptionLabel}
                       getOptionSelected={handleGetOptionSelected}
-                      onChange={handleSide1Member2Change}
+                      onChange={handleSide1Member1Change}
                       options={side1AvailableParticipants}
-                      value={side1Member2Participant}
+                      value={side1Member1Participant}
                     />
                   </Grid>
-                )}
+                  {isDouble && (
+                    <Grid item className={`${classes.participantEdit} ${classes.participantEditDoubleBottom}`}>
+                      <TMXAutocomplete
+                        autoComplete={true}
+                        autoHighlight={true}
+                        filterOptions={handleFilterOptionsSide1}
+                        fullWidth
+                        disableClearable={disableClearable}
+                        getOptionLabel={handleGetOptionLabel}
+                        getOptionSelected={handleGetOptionSelected}
+                        onChange={handleSide1Member2Change}
+                        options={side1AvailableParticipants}
+                        value={side1Member2Participant}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-            {pointsValue && collectionMatchUp.winningSide === 1 ? (
-              <Grid item className={classes.matchUpPointsDisplay}>
-                <Grid container direction="row">
-                  <CheckIcon className={`${classes.tickIcon} ${classes.rightMarginIconText}`} />
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid className={classes.collectionItemPointsColumn} item>
+          <Grid container direction="row" justify="center">
+            {pointsValue ? (
+              <Grid item className={isDouble ? classes.matchUpDoublesPointsDisplay : classes.matchUpPointsDisplay}>
+                <Grid container direction="row" wrap="nowrap">
                   <Typography className={classes.matchUpPointsDisplayTypography}>{pointsValue}</Typography>
                 </Grid>
               </Grid>
             ) : null}
           </Grid>
         </Grid>
-        <Grid className={classes.collectionItemGridWrapper} item xs={2}>
-          <Grid container direction="column" justify="center" alignItems="center">
-            <Grid item>
-              <Typography className={classes.positionTypography}>
-                {`${t('Position')} #${collectionMatchUp.collectionPosition}`}
-                {pointsValue ? ` (${pointsValue}pts)` : ''}
-              </Typography>
-            </Grid>
-            <Grid item onClick={handleEnterScore}>
-              <Typography className={!scoreString ? classes.participantEditTypography : undefined}>
-                {scoreString ? scoreString : 'Match score'}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid className={classes.collectionItemGridWrapper} item xs={5}>
+        <Grid className={classes.collectionItemGridWrapper} item>
           <Grid container direction="row" justify="flex-end">
-            {pointsValue && collectionMatchUp.winningSide === 2 ? (
-              <Grid item className={classes.matchUpPointsDisplay}>
-                <Grid container direction="row">
-                  <Typography className={`${classes.matchUpPointsDisplayTypography} ${classes.rightMarginIconText}`}>
-                    {pointsValue}
-                  </Typography>
-                  <CheckIcon className={classes.tickIcon} />
-                </Grid>
-              </Grid>
-            ) : null}
-            <Grid item>
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-                className={classes.participantWrapper}
-              >
-                <Grid item className={classes.participantEdit}>
-                  <TMXAutocomplete
-                    autoComplete={true}
-                    autoHighlight={true}
-                    filterOptions={handleFilterOptionsSide2}
-                    fullWidth
-                    disableClearable={disableClearable}
-                    getOptionLabel={handleGetOptionLabel}
-                    getOptionSelected={handleGetOptionSelected}
-                    onChange={handleSide2Member1Change}
-                    options={side2AvailableParticipants}
-                    value={side2Member1Participant}
-                  />
-                </Grid>
-                {isDouble && (
-                  <Grid item className={`${classes.participantEdit} ${classes.participantEditDoubleBottom}`}>
+            <Box {...rightSide}>
+              <Grid item>
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.participantWrapper}
+                >
+                  <Grid item className={classes.participantEdit}>
                     <TMXAutocomplete
                       autoComplete={true}
                       autoHighlight={true}
@@ -216,18 +199,42 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
                       disableClearable={disableClearable}
                       getOptionLabel={handleGetOptionLabel}
                       getOptionSelected={handleGetOptionSelected}
-                      onChange={handleSide2Member2Change}
+                      onChange={handleSide2Member1Change}
                       options={side2AvailableParticipants}
-                      value={side2Member2Participant}
+                      value={side2Member1Participant}
                     />
                   </Grid>
-                )}
+                  {isDouble && (
+                    <Grid item className={`${classes.participantEdit} ${classes.participantEditDoubleBottom}`}>
+                      <TMXAutocomplete
+                        autoComplete={true}
+                        autoHighlight={true}
+                        filterOptions={handleFilterOptionsSide2}
+                        fullWidth
+                        disableClearable={disableClearable}
+                        getOptionLabel={handleGetOptionLabel}
+                        getOptionSelected={handleGetOptionSelected}
+                        onChange={handleSide2Member2Change}
+                        options={side2AvailableParticipants}
+                        value={side2Member2Participant}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
               </Grid>
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid className={classes.collectionItemGridWrapper} item>
+          <Grid container direction="column" justify="center" alignItems="center">
+            <Grid item className={classes.collectionScoreColumn} onClick={handleEnterScore}>
+              <Typography className={scoreString ? classes.scoreStringTypography : undefined}>
+                {scoreString ? scoreString : 'Match score'}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Divider className={classes.divider} />
     </>
   );
 };

@@ -86,15 +86,13 @@ const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
   const side2Logo = sideLogo(2);
 
   const tieScore = matchUp.score?.scoreStringSide1 || '0-0';
-  const sideScores = tieScore.split('-');
 
   return (
     <>
       <StandardPaper className={classes.standardPaperWithBorderTop}>
         <Container className={classes.tieMatchUpContainer} maxWidth={mediaBreakpoints ? 'lg' : 'xl'}>
-          <Grid container direction="row" justify="center">
+          <Grid container direction="row" justify="flex-start">
             <Grid item xs={5}>
-              {/* TODO: where do names come from? */}
               <TieTeam
                 importLineup={importLineup}
                 justifyContent="flex-end"
@@ -106,7 +104,7 @@ const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
             <Grid className={classes.resultContainer} item xs={2}>
               <Grid alignItems="center" container>
                 <Typography align="center" className={classes.resultTypography} variant="body1">
-                  {sideScores.join(' : ')}
+                  {tieScore.split('-').join(' - ')}
                 </Typography>
               </Grid>
             </Grid>

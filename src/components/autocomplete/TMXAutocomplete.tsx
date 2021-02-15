@@ -23,7 +23,7 @@ const TMXAutocomplete = <T extends unknown>({ ...props }: TMXAutocompleteProps<T
       renderInput={
         props.renderInput
           ? props.renderInput
-          : (params) => <TextField className={classes.autocompleteInput} {...params} variant="outlined" />
+          : (params) => <TextField className={classes.autocompleteInput} {...params} variant="standard" />
       }
       {...props}
     />
