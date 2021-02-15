@@ -2,8 +2,6 @@ import React from 'react';
 import { useStyles } from './styles';
 import { useMediaQuery } from '@material-ui/core';
 
-import { drawEngine } from 'tods-competition-factory';
-
 import TieTeam from './TieTeam';
 import TieCollectionPanel from './TieCollectionPanel';
 import { Container, Grid, Typography } from '@material-ui/core';
