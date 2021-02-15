@@ -11,7 +11,7 @@ import DrawTieMatchUps from 'components/drawDisplay/tieMatchUp/TieMatchUp';
 import { tournamentEngine } from 'tods-competition-factory';
 
 export const TieMatchUpContainer = (props) => {
-  const { tieMatchUp } = props;
+  const { tieMatchUp, tieFormat } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const classes = useStyles();
@@ -79,6 +79,7 @@ export const TieMatchUpContainer = (props) => {
             editParticipant={handleEditParticipant}
             enterScore={handleEnterScore}
             importLineup={handleImportLineup}
+            tieFormat={tieFormat}
             matchUp={matchUp}
           />
         </>

@@ -57,6 +57,5 @@ export const getFilteredMatchUpsTableData = (
         readyToScore: matchUp.readyToScore
       };
     });
-  console.log(matchUps[0], filteredMatchUps[0]);
   return filteredMatchUps;
 };

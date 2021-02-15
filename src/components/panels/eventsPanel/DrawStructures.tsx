@@ -50,7 +50,6 @@ export const DrawsPanel = (props) => {
     .setState(drawDefinition)
     .setParticipants(participants)
     .allStructureMatchUps({ structureId });
-  console.log({ drawDefinition, participants, result });
   const { matchUps, roundMatchUps } = result;
 
   const { nextUnfilledDrawPositions } = drawEngine.getNextUnfilledDrawPositions({ structureId });
@@ -143,7 +142,7 @@ export const DrawsPanel = (props) => {
         {!structure ? (
           <NoDrawsNotice />
         ) : tieMatchUp ? (
-          <TieMatchUpContainer tieMatchUp={tieMatchUp} />
+          <TieMatchUpContainer tieFormat={drawDefinition.tieFormat} tieMatchUp={tieMatchUp} />
         ) : drawIsRoundRobin ? (
           <RoundRobinStructure {...props} />
         ) : drawIsAdHoc ? null : (

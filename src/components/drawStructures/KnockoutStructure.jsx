@@ -47,7 +47,11 @@ export function KnockoutStructure(props) {
   };
 
   function scoreMatchUp({ matchUp }) {
-    dispatch({ type: 'scoring details', payload: { matchUp } });
+    if (matchUp.matchUpType === 'TEAM') {
+      dispatch({ type: 'scoring tieMatchUp', payload: { matchUp } });
+    } else {
+      dispatch({ type: 'scoring details', payload: { matchUp } });
+    }
   }
 
   function scoreAction(node) {

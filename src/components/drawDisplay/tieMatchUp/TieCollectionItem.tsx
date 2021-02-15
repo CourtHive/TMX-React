@@ -100,6 +100,8 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
   const side2Member2Participant = side2IndividualParticipants[1];
   const disableClearable = Boolean(collectionMatchUp.winningSide);
 
+  const scoreString = collectionMatchUp.score?.scoreStringSide1;
+
   return (
     <>
       <Grid container direction="row" className={classes.collectionItemWrapper} justify="space-between">
@@ -164,8 +166,8 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
               </Typography>
             </Grid>
             <Grid item onClick={handleEnterScore}>
-              <Typography className={!collectionMatchUp?.score ? classes.participantEditTypography : undefined}>
-                {collectionMatchUp?.score ? collectionMatchUp.score : 'Match score'}
+              <Typography className={!scoreString ? classes.participantEditTypography : undefined}>
+                {scoreString ? scoreString : 'Match score'}
               </Typography>
             </Grid>
           </Grid>

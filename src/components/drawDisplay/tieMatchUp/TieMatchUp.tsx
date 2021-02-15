@@ -22,25 +22,24 @@ export interface EditParticipantArgs {
 interface DrawTieMatchUpsProps {
   editParticipant?: ({ tieMatchUp, sideNumber, participantId, sideMember }: EditParticipantArgs) => void;
   enterScore?: (matchUp: MatchUpInterface) => void;
-  drawData?: any;
+  tieFormat?: any;
   importLineup?: () => void;
   matchUp: MatchUpInterface;
 }
 
 const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
   editParticipant,
+  tieFormat,
   importLineup,
   enterScore,
-  drawData,
   matchUp
 }) => {
   const classes = useStyles();
   const mediaBreakpoints = useMediaQuery('(min-width:800px)');
-  const { tieMatchUps, tieFormat } = matchUp || {};
+  const { tieMatchUps } = matchUp || {};
   const side1AvailableParticipants = matchUp?.sides[0].participant.individualParticipants;
   const side2AvailableParticipants = matchUp?.sides[1].participant.individualParticipants;
-  const drawTieFormat = drawData?.drawDefinition?.tieFormat;
-  const collectionDefinitions = (tieFormat || drawTieFormat).collectionDefinitions;
+  const collectionDefinitions = tieFormat?.collectionDefinitions;
   const sideName = (sideNumber) => {
     const side = (matchUp.sides || [])[sideNumber - 1];
     const participant = side?.participant;
@@ -88,19 +87,9 @@ const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
   const side1Logo = sideLogo(1);
   const side2Logo = sideLogo(2);
 
-  const tieScore = drawEngine.calcTieMatchUpScore({ matchUp }) || '0-0';
+  const tieScore = matchUp.score?.scoreStringSide1 || '0-0';
   const sideScores = tieScore.split('-');
 
-  /*
-          <Grid container direction="column" justify="center">
-            <Typography align="center" className={classes.headerPanel}>
-              USTA National Campus, Orlando, FL
-            </Typography>
-            <Typography align="center" className={classes.headerPanel}>
-              FRIDAY, MARCH 20, 2019 5:00 PM
-            </Typography>
-          </Grid>
-          */
   return (
     <>
       <StandardPaper className={classes.standardPaperWithBorderTop}>
