@@ -27,13 +27,14 @@ export const RepresentativesButton = (props) => {
 
   const callback = (representatives) => {
     modalVisible(false);
+    const representativeParticipantIds = (representatives || []).map((participant) => participant.participantId);
     dispatch({
       type: 'tournamentEngine',
       payload: {
         methods: [
           {
             method: 'setDrawParticipantRepresentatives',
-            params: { representatives, drawId }
+            params: { representativeParticipantIds, drawId }
           }
         ]
       }
