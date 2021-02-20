@@ -48,9 +48,9 @@ The default configuration for TMX is found in `'config/defaults.js'`. This file 
 
 When TMX is launched via `npm start` and is running on `localhost` a `dev` object is available in the browser console which can be used to access functional modules which have been added to the dev context, including the **Redux** store.
 
-```
-dev.env
-dev.tmxStore.getState().tmx.records
+```js
+dev.env;
+dev.tmxStore.getState().tmx.records;
 ```
 
 ---
@@ -74,9 +74,6 @@ The TMX Engines are:
 1. Competition Engine - operations which span tournaments, such as scheduling
 2. Tournament Engine - modify tournament attributes, add/delete participants or events
 3. Draw Engine - core logic for creating and manipulaing draws including scoring
-4. PDF Engine - generate PDFs
-5. Policy Engine - enforce policies by constraining what actions engines can perform
-6. Audit Engine - manage an audit trail
 
 Every engine has the same architecture. A core module provides default methods, such as loading documents to set state, and imports methods from **governors** which oversee different aspects of document mutation. Engines pass state and any data transformations made by middleware along to methods provided by governors.
 
@@ -86,7 +83,7 @@ When information is accessed via an engine, context is typically added to the re
 
 To access information:
 
-```
+```js
 import { useSelector } from 'react-redux';
 import { competitionEngine } from 'engines/comptitionEngine';
 
@@ -103,7 +100,7 @@ All mutations to tournament records must be made using the engines. Additionally
 
 To update information:
 
-```
+```js
 ...
 
   dispatch({

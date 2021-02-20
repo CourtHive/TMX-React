@@ -13,7 +13,6 @@ import { courtHiveChallenge } from 'functions/tournament/courtHiveChallenge';
 import { AppToaster } from 'services/notifications/toaster';
 import { showSplash } from 'services/screenSlaver';
 import { receiveAuth } from 'services/tournamentAuthorization';
-import { versionCheck } from 'functions/versioning/versionCheck';
 import { tmxStore } from 'stores/tmxStore';
 
 export const config = (function () {
@@ -160,15 +159,7 @@ export const config = (function () {
       }
       function addReceivedTournament(receivedTournament) {
         const tournament = JSON.parse(receivedTournament);
-        const versionedTournament = versionCheck.tournament(tournament);
-        if (versionedTournament) {
-          context.ee.emit('updateTournament', versionedTournament);
-          if (versionedTournament.startDate)
-            versionedTournament.startDate = new Date(versionedTournament.startDate).toISOString();
-          if (versionedTournament.endDate)
-            versionedTournament.endDate = new Date(versionedTournament.endDate).toISOString();
-          db.addTournament(versionedTournament).then(() => tournamentExists(versionedTournament), noTournament);
-        }
+        db.addTournament(tournament).then(() => tournamentExists(tournament), noTournament);
       }
       function keepReceived() {
         addReceivedTournament(msg.tournament);

@@ -2,7 +2,6 @@ import { env } from 'config/defaults';
 import { db } from 'services/storage/db';
 import { context } from 'services/context';
 import { showContent } from 'services/screenSlaver';
-import { versionCheck } from 'functions/versioning/versionCheck';
 
 import { initAuth } from 'services/tournamentAuthorization';
 import { tmxStore } from 'stores/tmxStore';
@@ -17,9 +16,8 @@ export function displayTournament({ tournamentId, tournament, editing } = {}) {
   context.currentTab = 'tournament';
   context.tournamentId = tournamentId;
 
-  function go(t) {
-    if (!t) return;
-    const tourney = versionCheck.tournament(t);
+  function go(tourney) {
+    if (!tourney) return;
 
     const orgAbbr = env.org.abbr;
     const org = tourney.unifiedTournamentId?.organisation;
