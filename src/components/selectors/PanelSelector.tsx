@@ -5,7 +5,13 @@ import { tabRoute } from 'components/tournament/tabRoute';
 import ListSelect from 'components/selectors/tmxList/ListSelect';
 import { TAB_EVENTS, TAB_MATCHUPS, TAB_PARTICIPANTS, TAB_SCHEDULE, TAB_LOCATIONS } from 'stores/tmx/types/tabs';
 
-export const PanelSelector = ({ tournamentId, contextId }) => {
+interface PanelSelectorProps {
+  tournamentId: string;
+  contextId?: any;
+  onClick?: () => void;
+}
+
+export const PanelSelector: React.FC<PanelSelectorProps> = ({ tournamentId, contextId, onClick }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const handleContextChange = ({ itemId }) => {
@@ -20,5 +26,5 @@ export const PanelSelector = ({ tournamentId, contextId }) => {
     { itemName: t('sch'), itemId: TAB_SCHEDULE },
     { itemName: t('Locations'), itemId: TAB_LOCATIONS }
   ];
-  return <ListSelect items={contextItems} selectedId={contextId} onChange={handleContextChange} />;
+  return <ListSelect items={contextItems} selectedId={contextId} onClick={onClick} onChange={handleContextChange} />;
 };

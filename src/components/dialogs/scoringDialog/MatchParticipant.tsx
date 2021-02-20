@@ -69,6 +69,7 @@ const MatchParticipant: React.FC<MatchParticipantProps> = ({
   };
 
   const handleApply = () => {
+    applyStatus();
     setOpen(false);
   };
 

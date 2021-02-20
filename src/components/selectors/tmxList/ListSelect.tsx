@@ -8,19 +8,33 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { Grid, List, ListItem, Typography } from '@material-ui/core';
 import ListPopover from '../ListPopover';
 
-const ListSelect = ({ items, onChange, selectedId }) => {
+interface ListSelectProps {
+  items: any[];
+  selectedId?: string;
+  onClick?: () => void;
+  onChange?: (event: any) => void;
+}
+
+const ListSelect: React.FC<ListSelectProps> = ({ items, onClick, onChange, selectedId }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const selectedItem = items.find(({ itemId }) => itemId === selectedId);
   const openPopover = (event) => setAnchorEl(event.currentTarget);
-  const closePopover = () => setAnchorEl(null);
+  const closePopover = () => {
+    setAnchorEl(null);
+  };
   const handleOnChange = (event) => {
     closePopover();
     if (typeof onChange === 'function') onChange(event);
   };
+  const handleOnClick = () => {
+    if (typeof onClick === 'function') {
+      onClick();
+    }
+  };
 
   return (
-    <Grid item>
+    <Grid item onClick={handleOnClick}>
       <Typography className={classes.selectedTypography} variant="h1" onClick={openPopover}>
         {selectedItem?.itemName}{' '}
         {!anchorEl ? (

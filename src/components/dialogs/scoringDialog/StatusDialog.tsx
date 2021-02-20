@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -61,7 +61,8 @@ const StatusDialog: React.FC<StatusDialogProps> = ({
   const mediaBreakpoints = useMediaQuery(theme.breakpoints.up('sm'));
   const side: StatusIconSideEnum = isSide1 ? StatusIconSideEnum.side1 : StatusIconSideEnum.side2;
   const isStatusDialogDisabled =
-    matchUp.status.side1.categoryName === Winner.categoryName || matchUp.status.side2.categoryName === Winner.categoryName;
+    matchUp.status.side1.categoryName === Winner.categoryName ||
+    matchUp.status.side2.categoryName === Winner.categoryName;
 
   const handleChangeCategory = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     changeStatusCategory

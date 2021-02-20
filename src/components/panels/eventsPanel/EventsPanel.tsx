@@ -162,12 +162,20 @@ const Toolbar = (props) => {
 
   const multipleDrawStructures = selectedDraw?.structures?.length > 1;
 
+  const handlePanelSelectorClick = () => {
+    // console.log('boo');
+  };
+
   return (
     <Grid container direction="row" justify="flex-start">
       <Grid item>
         <Grid container item justify="flex-start">
           <Breadcrumbs aria-label="breadcrumb">
-            <PanelSelector tournamentId={tournamentRecord.tournamentId} contextId={TAB_EVENTS} />
+            <PanelSelector
+              tournamentId={tournamentRecord.tournamentId}
+              contextId={TAB_EVENTS}
+              onClick={handlePanelSelectorClick}
+            />
             {selectedEvent && <EventSelector tournamentRecord={tournamentRecord} selectedEvent={selectedEvent} />}
             {selectedDraw && (
               <EventDrawSelector
