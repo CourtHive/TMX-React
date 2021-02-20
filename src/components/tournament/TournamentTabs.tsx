@@ -36,10 +36,10 @@ export function TournamentTabs({ tournament, tabIndex }) {
 
   const theme = useTheme();
   const mediaBreakpoints = useMediaQuery(theme.breakpoints.up('xs'));
-  const iconTabs = useSelector((state: any) => state.tmx.visible.iconTabs);
+  const tabState = useSelector((state: any) => state.tmx.visible.tabState);
 
   const labelMaker = (icon, label) =>
-    !iconTabs ? (
+    tabState === 'text' ? (
       t(label)
     ) : (
       <Tooltip title={t(label)} aria-label={t(label)}>

@@ -1,23 +1,21 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useStyles } from 'components/panels/styles';
 
-import { Breadcrumbs, Grid, Link } from '@material-ui/core';
+import { Breadcrumbs, Grid } from '@material-ui/core';
 import { LocationSelector } from 'components/selectors/LocationSelector';
 import { LocationsTable } from 'components/tables/locationsTable/LocationsTable';
 import { LocationOptions } from 'components/forms/editLocation/locationOptions';
 import { LocationOverview } from 'components/forms/editLocation/locationOverview';
 import { LocationCourts } from 'components/forms/editLocation/locationCourts';
 import { LocationMedia } from 'components/forms/editLocation/locationMedia';
+import { PanelSelector } from 'components/selectors/PanelSelector';
 
-// import { tournamentEngine } from 'competitionFactory';
 import { tournamentEngine } from 'tods-competition-factory';
+import { TAB_LOCATIONS } from 'stores/tmx/types/tabs';
 
-export const LocationsPanel = () => {
+export const LocationsPanel = ({ tournamentId }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const locationView = useSelector((state: any) => state.tmx.visible.locationView);
   const selectedVenueId = useSelector((state: any) => state.tmx.select.venues.venue);
@@ -27,20 +25,12 @@ export const LocationsPanel = () => {
   const { venues } = tournamentEngine.setState(tournamentRecord).getVenues() || [];
   const selectedLocation = venues.find((venue) => venue.venueId === selectedVenueId);
 
-  const clearLocationSelection = () => {
-    dispatch({ type: 'select venue' });
-  };
-
-  const locationsCount = `${t('All Locations')} (${venues.length})`;
-
   return (
     <>
       <Grid container spacing={1} direction="row" justify="flex-start">
         <Grid item>
           <Breadcrumbs aria-label="breadcrumb">
-            <Link color="primary" onClick={clearLocationSelection} className={classes.link}>
-              {locationsCount}
-            </Link>
+            <PanelSelector tournamentId={tournamentId} contextId={TAB_LOCATIONS} />
             {selectedLocation && <LocationSelector venues={venues} selectedVenueId={selectedVenueId} />}
           </Breadcrumbs>
         </Grid>

@@ -1,12 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 
 import ErrorBoundary from 'services/errors/errorBoundary';
-import { Breadcrumbs, Grid, Link } from '@material-ui/core';
-import { useStyles } from 'components/panels/styles';
+import { Breadcrumbs, Grid } from '@material-ui/core';
 
+import NoticePaper from 'components/papers/notice/NoticePaper';
 import { EventDrawList } from 'components/tables/DrawList';
 import { EventsTable } from 'components/tables/EventsTable';
 import { DrawOptions } from 'components/forms/EditDraw/DrawOptions';
@@ -20,10 +18,13 @@ import { EventSelector } from 'components/selectors/EventSelector';
 import { EventDrawSelector } from 'components/selectors/EventDrawSelector';
 import { StructureSelector } from 'components/selectors/StructureSelector';
 
-import { DTAB_DRAW, TAB_EVENTS } from 'stores/tmx/types/tabs';
+import { DTAB_DRAW } from 'stores/tmx/types/tabs';
 import { tournamentEngine, fixtures } from 'tods-competition-factory';
-import { tabRoute } from 'components/tournament/tabRoute';
 import { defaultTieFormat } from 'policies/defaultTieFormat';
+
+import { PanelSelector } from 'components/selectors/PanelSelector';
+import { TAB_EVENTS } from 'stores/tmx/types/tabs';
+
 const { SEEDING_ITF, SCORING_POLICY } = fixtures;
 
 export const EventsPanel = ({ tournamentRecord, params }) => {
@@ -99,7 +100,19 @@ export const EventsPanel = ({ tournamentRecord, params }) => {
       {selectedEvent ? (
         <EventDisplay selectedEvent={selectedEvent} selectedDraw={drawDefinition} participants={participants} />
       ) : (
-        <EventsTable events={tournamentEvents} />
+        <>
+          <NoticePaper className={'header'} style={{ marginTop: '1em' }}>
+            <Grid container spacing={2} direction="row" justify="flex-start">
+              <Grid item>Tournament Details:</Grid>
+              <Grid item style={{ flexGrow: 1 }}>
+                <Grid container direction="row" justify="flex-end">
+                  Actions
+                </Grid>
+              </Grid>
+            </Grid>
+          </NoticePaper>
+          <EventsTable events={tournamentEvents} />
+        </>
       )}
     </ErrorBoundary>
   );
@@ -122,6 +135,9 @@ const EventDetails = (props) => {
   const { selectedEvent } = props;
   return (
     <>
+      <NoticePaper className={'header'} style={{ marginTop: '1em' }}>
+        Event Details
+      </NoticePaper>
       <EventDrawList selectedEvent={selectedEvent} />
       <EventParticipants selectedEvent={selectedEvent} />
     </>
@@ -129,12 +145,9 @@ const EventDetails = (props) => {
 };
 
 const Toolbar = (props) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const history = useHistory();
 
-  const { eventCount, selectedEvent, selectedDraw, participants, tournamentRecord } = props;
+  const { selectedEvent, selectedDraw, participants, tournamentRecord } = props;
   const drawView = useSelector((state: any) => state.tmx.visible.drawView);
   const drawsTabSelected = drawView === DTAB_DRAW;
 
@@ -143,17 +156,8 @@ const Toolbar = (props) => {
   const { structureId: firstStructureId } = structures[0] || {};
   const structureId = selectedStructureId || firstStructureId;
 
-  const allEvents = `${t('schedule.allevents')} (${eventCount})`;
-  const clearEventSelections = () => {
-    dispatch({ type: 'clear event selections' });
-    const { tournamentId } = tournamentRecord;
-    const nextRoute = tabRoute({ tournamentId, tabIndex: TAB_EVENTS });
-    history.push(nextRoute);
-  };
-
-  const selectStructure = (evt) => {
-    const structureId = evt.target.value;
-    dispatch({ type: 'select structure', payload: { structureId } });
+  const selectStructure = ({ itemId }) => {
+    dispatch({ type: 'select structure', payload: { structureId: itemId } });
   };
 
   const multipleDrawStructures = selectedDraw?.structures?.length > 1;
@@ -163,14 +167,8 @@ const Toolbar = (props) => {
       <Grid item>
         <Grid container item justify="flex-start">
           <Breadcrumbs aria-label="breadcrumb">
-            <Link color="primary" onClick={clearEventSelections} className={classes.link}>
-              {allEvents}
-            </Link>
-            {selectedEvent && (
-              <div style={{ marginBottom: 5 }}>
-                <EventSelector tournamentRecord={tournamentRecord} selectedEvent={selectedEvent} />
-              </div>
-            )}
+            <PanelSelector tournamentId={tournamentRecord.tournamentId} contextId={TAB_EVENTS} />
+            {selectedEvent && <EventSelector tournamentRecord={tournamentRecord} selectedEvent={selectedEvent} />}
             {selectedDraw && (
               <EventDrawSelector
                 selectedEvent={selectedEvent}

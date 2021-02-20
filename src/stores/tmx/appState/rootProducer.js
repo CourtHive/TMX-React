@@ -59,7 +59,7 @@ const setDrawData = (state, action) =>
   });
 const setIconTabs = (state, action) =>
   produce(state, (draftState) => {
-    draftState.visible.iconTabs = action.payload;
+    draftState.visible.tabState = action.payload;
   });
 
 const setMyTournaments = (state, action) =>

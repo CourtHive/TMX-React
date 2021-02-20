@@ -15,10 +15,10 @@ const visibleDialog = (state, action) =>
 
 const setActiveTab = (state, action) =>
   produce(state, (draftState) => {
-    const { tab, iconTabs } = action.payload;
+    const { tab, tabState } = action.payload;
     draftState.visible.tabPanel = tab;
     draftState.scoringTieMatchUp = null;
-    if (iconTabs) draftState.visible.iconTabs = true;
+    if (tabState) draftState.visible.tabState = tabState;
   });
 const setDrawView = (state, action) =>
   produce(state, (draftState) => {

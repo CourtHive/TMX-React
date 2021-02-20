@@ -63,6 +63,7 @@ export const defaultIdiom = () => ({
       select: 'Select',
       selected: 'Selectd',
       group: 'GROUP',
+      groups: 'Groups',
       administrator: 'Administrator',
       revoke: 'Revoke',
       tour: 'Tour',

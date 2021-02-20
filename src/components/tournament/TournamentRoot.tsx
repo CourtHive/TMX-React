@@ -41,7 +41,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
   const scoringDetails = useSelector((state: any) => state.tmx.scoringDetails);
 
-  const iconTabs = useSelector((state: any) => state.tmx.visible.iconTabs);
+  const tabState = useSelector((state: any) => state.tmx.visible.tabState);
 
   const theme = useTheme();
   const downXs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -83,7 +83,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
 
   const LoginIcon = () => (
     <div className={classes.actionIcon} onClick={changeLoginState}>
-      {!iconTabs ? (
+      {!tabState ? (
         t('Login')
       ) : (
         <Tooltip title={t('Login')} aria-label={t('Login')}>
@@ -97,7 +97,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
     dispatch({ type: 'scoring details', payload: undefined });
   };
 
-  const navGrow = downXs && !iconTabs ? 1 : 0;
+  const navGrow = downXs && tabState === 'text' ? 1 : 0;
   const NavColumn = () => (
     <Grid item className={classes.navColumn} style={{ flexGrow: navGrow }}>
       <Grid container direction="column" justify="center" alignItems="center">
@@ -160,8 +160,8 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
       </Grid>
 
       <Grid container direction="row" justify="space-between" style={{ flexWrap: 'nowrap' }}>
-        {downXs && iconTabs ? null : <NavColumn />}
-        {downXs && !iconTabs ? null : (
+        {[undefined, 'none'].includes(tabState) ? null : <NavColumn />}
+        {downXs && tabState === 'text' ? null : (
           <Grid item style={{ flexGrow: 1 }}>
             <Grid container direction="column" className={classes.content}>
               <TournamentTabsContent tournamentRecord={tournamentRecord} tabIndex={tabIndex} params={params} />

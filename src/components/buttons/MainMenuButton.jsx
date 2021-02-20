@@ -6,10 +6,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 export function MainMenuButton() {
   const dispatch = useDispatch();
-  const iconTabs = useSelector((state) => state.tmx.visible.iconTabs);
+  const tabState = useSelector((state) => state.tmx.visible.tabState);
 
   const toggleTabIcons = () => {
-    dispatch({ type: 'set icon tabs', payload: !iconTabs });
+    const nextState = tabState === 'icon' ? 'none' : tabState === 'none' ? 'text' : 'icon';
+    dispatch({ type: 'set icon tabs', payload: nextState });
   };
 
   const fab = {

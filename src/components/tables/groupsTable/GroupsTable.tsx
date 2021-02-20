@@ -475,7 +475,7 @@ export const GroupsTable = () => {
   const rowIsChecked = !!tableData.find((row) => row.checked);
 
   const showFilterCount = filterValue.length || data.length !== participants.length;
-  const filteredCount = `${t('Showing')} ${dataForTable.length} ${t('of')} ${participants.length} ${t('tmz')}`;
+  const filteredCount = `${t('Showing')} ${dataForTable.length} ${t('of')} ${participants.length} ${t('groups')}`;
   const groupsCount = showFilterCount ? filteredCount : '';
 
   const closeGroupDrawer = () => {

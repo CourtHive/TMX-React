@@ -139,14 +139,12 @@ export function EventParticipants(props) {
     return !isValid || hiddenColumns.includes(name);
   };
 
-  const actionBoundsOffset = 75; // TODO: have this calculated rather than hardcoded
   const getActionBounds = () => {
     const boundingClient = ref?.current?.getBoundingClientRect();
-    const parentBoundingClient = ref?.current?.parentElement.getBoundingClientRect();
-    const top = (boundingClient?.top || 0) - (parentBoundingClient?.top || 0) + actionBoundsOffset + window.scrollY;
+    // const parentBoundingClient = ref?.current?.parentElement.getBoundingClientRect();
     const actionAttrs = {
       elementDimensions: {
-        top,
+        top: boundingClient?.top + window.scrollY,
         height: boundingClient?.height,
         width: boundingClient?.width
       }

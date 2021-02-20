@@ -103,7 +103,7 @@ export const storeInitialState = () => ({
   },
   visible: {
     tabs: [TAB_TOURNAMENT, TAB_PARTICIPANTS, TAB_EVENTS, TAB_LOCATIONS, TAB_SCHEDULE, TAB_MATCHUPS, TAB_SETTINGS],
-    iconTabs: true,
+    tabState: 'none',
     dialog: undefined,
     drawer: undefined,
     mainMenu: undefined,

@@ -3,14 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import MenuItem from '@material-ui/core/MenuItem';
-
-import { useStyles } from 'components/selectors/style';
-import TMXSelect from 'components/selectors/tmxSelector/TMXSelect';
 import { eventRoute } from 'components/tournament/tabRoute';
+import ListSelect from 'components/selectors/tmxList/ListSelect';
 
 export const EventSelector = (props) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
@@ -21,28 +17,16 @@ export const EventSelector = (props) => {
   const { tournamentId } = tournamentRecord || {};
 
   const selectEvent = (event) => {
-    let payload = event.target.value;
-    if (payload === '-') payload = undefined;
+    let payload = event.itemId;
+    if (payload === 'ALL') payload = undefined;
     dispatch({ type: 'select event', payload });
     const nextRoute = eventRoute({ tournamentId, eventId: payload });
     history.push(nextRoute);
   };
-  const options = events.map((event) => ({ text: event.eventName, value: event.eventId }));
 
-  return (
-    <>
-      {!options.length ? null : (
-        <TMXSelect className={classes.select} value={selectedEventId} onChange={selectEvent}>
-          <MenuItem value="-">
-            <em>{t('schedule.allevents')}</em>
-          </MenuItem>
-          {options.map((t) => (
-            <MenuItem key={t.value} value={t.value}>
-              {t.text}
-            </MenuItem>
-          ))}
-        </TMXSelect>
-      )}
-    </>
-  );
+  const unselect = { itemName: t('schedule.allevents'), itemId: 'ALL' };
+  const eventItems = events.map((event) => ({ itemName: event.eventName, itemId: event.eventId }));
+  const items = [].concat(unselect, ...eventItems);
+
+  return <ListSelect items={items} selectedId={selectedEventId} onChange={selectEvent} />;
 };

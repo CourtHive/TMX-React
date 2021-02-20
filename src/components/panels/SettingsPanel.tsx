@@ -11,7 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useStyles } from './styles';
 
+import { PanelSelector } from 'components/selectors/PanelSelector';
 import { IdiomSelector } from 'services/idiomManager';
+import { TAB_SETTINGS } from 'stores/tmx/types/tabs';
 
 function KeyEntry() {
   const { t } = useTranslation();
@@ -62,12 +64,13 @@ function KeyEntry() {
   );
 }
 
-export const SettingsPanel = () => {
+export const SettingsPanel = ({ tournamentId }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
   return (
     <div className={classes.settingsPanelContainer}>
+      <PanelSelector tournamentId={tournamentId} contextId={TAB_SETTINGS} />
       <Typography variant="h1" className={classes.sectionTitle}>
         {t('TMX Version')} {env.version}
       </Typography>

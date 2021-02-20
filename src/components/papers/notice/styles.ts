@@ -9,6 +9,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(3)
   },
   info: {
-    backgroundColor: '#C2DFFF',
+    backgroundColor: '#C2DFFF'
+  },
+  header: {
+    backgroundColor: '#F6F6F6'
   }
 }));

@@ -409,7 +409,7 @@ export function EventsTable(props) {
   const rowIsChecked = !!data.find((row) => row.checked);
 
   const showFilterCount = filterValue.length || data.length !== events.length;
-  const filteredCount = `${t('Showing')} ${dataForTable.length} ${t('of')} ${events.length} ${t('tmz')}`;
+  const filteredCount = `${t('Showing')} ${dataForTable.length} ${t('of')} ${events.length} ${t('evt')}`;
   const eventsCount = showFilterCount ? filteredCount : '';
 
   if (!dataForTable.length && !filterValue) {

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
 
 import { useStyles } from 'components/tournament/styles';
 import { TabPanel } from 'components/tabs/TabPanel';
@@ -24,9 +23,7 @@ import { LocationsPanel } from 'components/panels/locationsPanel/LocationsPanel'
 
 const TournamentTabsContent = ({ tabIndex, tournamentRecord, params }) => {
   const classes = useStyles();
-
-  // const visibleTabs = useSelector((state: any) => state.tmx.visible.tabs);
-  // const tabIndex = useSelector((state: any) => state.tmx.visible.tabPanel) || visibleTabs[0];
+  const { tournamentId } = tournamentRecord;
 
   return (
     <div className={classes.pageWrapper}>
@@ -34,22 +31,22 @@ const TournamentTabsContent = ({ tabIndex, tournamentRecord, params }) => {
         <InformationPanel tournamentRecord={tournamentRecord} params={params} />
       </TabPanel>
       <TabPanel value={tabIndex} index={TAB_PARTICIPANTS}>
-        <PlayersPanel />
+        <PlayersPanel tournamentId={tournamentId} />
       </TabPanel>
       <TabPanel value={tabIndex} index={TAB_EVENTS}>
         <EventsPanel tournamentRecord={tournamentRecord} params={params} />
       </TabPanel>
       <TabPanel value={tabIndex} index={TAB_LOCATIONS}>
-        <LocationsPanel />
+        <LocationsPanel tournamentId={tournamentId} />
       </TabPanel>
       <TabPanel value={tabIndex} index={TAB_SCHEDULE}>
-        <SchedulePanel />
+        <SchedulePanel tournamentId={tournamentId} />
       </TabPanel>
       <TabPanel value={tabIndex} index={TAB_MATCHUPS}>
         <MatchesPanel />
       </TabPanel>
       <TabPanel value={tabIndex} index={TAB_SETTINGS}>
-        <SettingsPanel />
+        <SettingsPanel tournamentId={tournamentId} />
       </TabPanel>
     </div>
   );

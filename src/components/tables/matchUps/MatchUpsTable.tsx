@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
 
 import SearchIcon from '@material-ui/icons/Search';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
@@ -29,6 +28,8 @@ import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
 // import { saveMatchUpResults } from 'components/tables/matchUps/saveMatchUpResults';
 import { useStyles } from 'components/tables/styles';
 import { isDev } from 'functions/isDev';
+import { PanelSelector } from 'components/selectors/PanelSelector';
+import { TAB_MATCHUPS } from 'stores/tmx/types/tabs';
 
 // import { tournamentEngine, participantRoles, participantTypes } from 'competitionFactory';
 import { tournamentEngine, participantRoles, participantTypes } from 'tods-competition-factory';
@@ -97,7 +98,7 @@ export const MatchUpsTable: React.FC = () => {
 
   const isHidden = (name) => hiddenColumns.indexOf(name) >= 0;
   const visibleColumns = tableColumns.filter((column) => (column.hidden ? !column.hidden() : true));
-  const matchUpsCount = `${t('mts')} (${filteredMatchUpsTableData.length})`;
+  const matchUpsCount = filteredMatchUpsTableData.length;
 
   const handleOnRowClick = (event, rowData, rowIndex) => {
     if (!editState) return;
@@ -162,9 +163,10 @@ export const MatchUpsTable: React.FC = () => {
   if (!matchUps?.length) {
     return (
       <>
-        <Typography variant="h1" className={classes.tablePaperTitle}>
+        <Grid container direction="row" justify="flex-start">
+          <PanelSelector tournamentId={selectedTournamentId} contextId={TAB_MATCHUPS} />
           {matchUpsCount}
-        </Typography>
+        </Grid>
         <NoticePaper className={'info'} style={{ marginTop: '1em' }}>
           <Grid container spacing={2} direction="row" justify="flex-start">
             <Grid item>No Matches Notice</Grid>
@@ -185,10 +187,20 @@ export const MatchUpsTable: React.FC = () => {
         <TieMatchUpContainer tieMatchUp={tieMatchUp} />
       ) : (
         <>
-          <Typography variant="h1" className={classes.tablePaperTitle}>
-            {matchUpsCount}
-          </Typography>
-          <Grid container direction="row" justify="space-between">
+          <Grid container item justify="flex-start">
+            <PanelSelector tournamentId={selectedTournamentId} contextId={TAB_MATCHUPS} />
+          </Grid>
+          <NoticePaper className={'header'} style={{ marginTop: '1em' }}>
+            <Grid container spacing={2} direction="row" justify="flex-start">
+              <Grid item>{matchUpsCount}</Grid>
+              <Grid item style={{ flexGrow: 1 }}>
+                <Grid container direction="row" justify="flex-end">
+                  Actions
+                </Grid>
+              </Grid>
+            </Grid>
+          </NoticePaper>
+          <Grid container direction="row" justify="space-between" style={{ marginTop: '1em' }}>
             <Grid item>
               <Grid container spacing={2} direction="row" justify="flex-start">
                 <Grid item xs={12} sm="auto">

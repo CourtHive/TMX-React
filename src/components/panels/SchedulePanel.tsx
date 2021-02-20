@@ -5,13 +5,15 @@ import Grid from '@material-ui/core/Grid';
 
 import ScheduleContainer from 'containers/schedule/ScheduleContainer';
 import { VenuesNotice } from 'components/notices/VenuesNotice';
+import { PanelSelector } from 'components/selectors/PanelSelector';
 
 // import { DaySelector } from 'components/selectors/DaySelector';
 // import { DrawSelector } from 'components/selectors/DrawSelector';
 // import { RoundSelector } from 'components/selectors/RoundSelector';
 import { useStyles } from 'components/panels/styles';
+import { TAB_SCHEDULE } from 'stores/tmx/types/tabs';
 
-export const SchedulePanel = () => {
+export const SchedulePanel = ({ tournamentId }) => {
   // const editState = useSelector((state: any) => state.tmx.editState);
   const classes = useStyles();
 
@@ -50,6 +52,9 @@ export const SchedulePanel = () => {
 
   return (
     <>
+      <Grid container item justify="flex-start">
+        <PanelSelector tournamentId={tournamentId} contextId={TAB_SCHEDULE} />
+      </Grid>
       {!hasCourts ? null : <OptionsPanel />}
       {!hasCourts ? null : <ScheduleContainer />}
       {hasCourts ? null : <VenuesNotice />}
