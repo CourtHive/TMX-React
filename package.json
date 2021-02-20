@@ -58,7 +58,7 @@
     "tods-matchup-format-code": "1.0.8",
     "typeface-roboto": "1.1.13",
     "wolfy87-eventemitter": "5.2.9",
-    "yup": "0.32.8"
+    "yup": "0.32.9"
   },
   "devDependencies": {
     "@babel/core": "7.12.17",
