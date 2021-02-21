@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { useSelector } from 'react-redux';
 
 import { ListPicker } from 'components/dialogs/listPicker';
 import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
