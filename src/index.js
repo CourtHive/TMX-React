@@ -1,27 +1,29 @@
 import React from 'react';
-import { render } from "react-dom";
+import { render } from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
-import TMX from "./components/TMX.tsx";
+import TMX from './components/TMX.tsx';
 import { setupTMX } from './config/initialState';
 import { updateReady } from './services/notifications/statusMessages';
 
 if (window.attachEvent) {
-   window.attachEvent('onload', setupTMX);
+  window.attachEvent('onload', setupTMX);
 } else {
-   if (window.onload) {
-      var curronload = window.onload;
-      var newonload = function(evt) {
-         curronload(evt);
-         setupTMX();
-      };
-      window.onload = newonload;
-   } else {
-      window.onload = setupTMX;
-   }
+  if (window.onload) {
+    var curronload = window.onload;
+    var newonload = function (evt) {
+      curronload(evt);
+      setupTMX();
+    };
+    window.onload = newonload;
+  } else {
+    window.onload = setupTMX;
+  }
 }
 
-render ( <TMX />, document.getElementById("root"));
+render(<TMX />, document.getElementById('root'));
 
-function onUpdate(registration) { updateReady(); }
-serviceWorker.unregister({onUpdate});
+function onUpdate(/*registration*/) {
+  updateReady();
+}
+serviceWorker.unregister({ onUpdate });

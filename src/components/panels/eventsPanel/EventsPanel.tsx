@@ -147,7 +147,7 @@ const EventDetails = (props) => {
 const Toolbar = (props) => {
   const dispatch = useDispatch();
 
-  const { selectedEvent, selectedDraw, participants, tournamentRecord } = props;
+  const { selectedEvent, selectedDraw, tournamentRecord } = props;
   const drawView = useSelector((state: any) => state.tmx.visible.drawView);
   const drawsTabSelected = drawView === DTAB_DRAW;
 
@@ -196,9 +196,11 @@ const Toolbar = (props) => {
       </Grid>
       <Grid item style={{ flexGrow: 1 }}>
         <Grid container direction="row" item justify={'flex-end'}>
-          {selectedDraw ? <DrawOptions selectedDraw={selectedDraw} participants={participants} /> : null}
+          {selectedDraw ? <DrawOptions /> : null}
         </Grid>
       </Grid>
     </Grid>
   );
 };
+
+// {selectedDraw ? <DrawOptions selectedDraw={selectedDraw} participants={participants} /> : null}

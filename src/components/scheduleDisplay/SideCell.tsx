@@ -9,7 +9,7 @@ import { UMTableDataType } from 'components/scheduleDisplay/UpcomingMatchesCourt
 interface SideCellProps {
   isSide1?: boolean;
   rowItem: UMTableDataType;
-  handleCellClick?: Function;
+  handleCellClick?: any;
 }
 
 const SideCell: React.FC<SideCellProps> = ({ isSide1, rowItem, handleCellClick }) => {
@@ -17,7 +17,7 @@ const SideCell: React.FC<SideCellProps> = ({ isSide1, rowItem, handleCellClick }
   const { matchUpId } = rowItem;
   const participantId = isSide1 ? rowItem.side1Id : rowItem.side2Id;
   const checkedIn = rowItem.checkedInParticipantIds?.includes(participantId);
-  const onClick = () => handleCellClick && handleCellClick({matchUpId, participantId});
+  const onClick = () => handleCellClick && handleCellClick({ matchUpId, participantId });
 
   return (
     <Grid container spacing={2} onClick={onClick}>

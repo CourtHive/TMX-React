@@ -50,7 +50,7 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
   };
 
   const handleSide1Member1Change = (
-    event: React.ChangeEvent<{}>,
+    event: React.ChangeEvent<unknown>,
     value: string | ParticipantInterface | (string | ParticipantInterface)[]
   ) => {
     if (onChange) {
@@ -58,7 +58,7 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
     }
   };
   const handleSide1Member2Change = (
-    event: React.ChangeEvent<{}>,
+    event: React.ChangeEvent<unknown>,
     value: string | ParticipantInterface | (string | ParticipantInterface)[]
   ) => {
     if (onChange) {
@@ -66,7 +66,7 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
     }
   };
   const handleSide2Member1Change = (
-    event: React.ChangeEvent<{}>,
+    event: React.ChangeEvent<unknown>,
     value: string | ParticipantInterface | (string | ParticipantInterface)[]
   ) => {
     if (onChange) {
@@ -74,7 +74,7 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
     }
   };
   const handleSide2Member2Change = (
-    event: React.ChangeEvent<{}>,
+    event: React.ChangeEvent<unknown>,
     value: string | ParticipantInterface | (string | ParticipantInterface)[]
   ) => {
     if (onChange) {

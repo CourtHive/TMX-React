@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: '1em',
     marginBotton: '.5em'
   },
-    datePicker: {
+  datePicker: {
     marginTop: '1em',
     width: '100%'
   },

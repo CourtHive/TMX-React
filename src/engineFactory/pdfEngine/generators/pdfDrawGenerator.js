@@ -96,7 +96,7 @@ function treeDrawPDF({
   info,
   event,
   child,
-  download,
+  // download,
   logo
 }) {
   const width = 3000;

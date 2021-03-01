@@ -98,7 +98,7 @@ export const exportFx = (function () {
         exp.downloadJSON(`tournaments.json`, arr);
       } else {
         // eslint-disable-next-line
-            exp.downloadJSON(`tournaments.json`, arr);
+        exp.downloadJSON(`tournaments.json`, arr);
       }
     });
   };
@@ -333,7 +333,7 @@ export const exportFx = (function () {
    }
    */
 
-  exp.matchExportOptions = ({ container, tournament, env }) => {
+  exp.matchExportOptions = (/*{ container, tournament, env }*/) => {
     /*
       let { completed_matches } = tournamentEventMatches({ tournament, env });
       let buttons = [];

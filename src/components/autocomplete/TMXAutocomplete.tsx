@@ -7,12 +7,12 @@ import Autocomplete, {
 import { TextField } from '@material-ui/core';
 import { useStyles } from 'components/autocomplete/styles';
 
-type TMXAutocomplete<T> = Omit<
+type TMXAutocompleteInterface<T> = Omit<
   AutocompleteProps<T, boolean | undefined, boolean | undefined, boolean | undefined>,
   'renderInput'
 >;
 
-export interface TMXAutocompleteProps<T> extends TMXAutocomplete<T> {
+export interface TMXAutocompleteProps<T> extends TMXAutocompleteInterface<T> {
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
 }
 

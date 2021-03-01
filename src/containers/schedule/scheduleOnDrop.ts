@@ -8,7 +8,7 @@ export const scheduleOnDrop = (
   dropType: DropTypeEnum,
   dropRowId: string,
   endIndex: number,
-  dispatch: Function,
+  dispatch: any,
   dateSelected: string,
   umTableDataMatchUps?: MatchUpInterface[],
   uMScheduleData?: UMScheduleTableDataType[]

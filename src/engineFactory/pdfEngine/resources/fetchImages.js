@@ -1,5 +1,5 @@
 export function fetchImages(directive) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const { imagRefs } = directive;
     let images = {};
 

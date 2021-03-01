@@ -18,7 +18,7 @@ const { convertTime, DateHHMM } = utilities.dateTime;
 
 interface UpcomingMatchesTableResourceProps {
   courtId: string;
-  removeAssignment?: Function;
+  removeAssignment?: any;
   rowData: UMScheduleTableDataType;
 }
 

@@ -12,7 +12,7 @@ const UserTestsPage: React.FC = () => {
   const selectedUserTestingTab = parseInt(localStorage.getItem(userTestingTab)) || 0;
   const [value, setValue] = React.useState(selectedUserTestingTab);
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
     localStorage.setItem(userTestingTab, newValue.toString());
     setValue(newValue);
   };

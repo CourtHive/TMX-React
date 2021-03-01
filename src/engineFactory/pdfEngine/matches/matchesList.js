@@ -6,8 +6,8 @@ import { matchRow, completedMatchRow } from 'engines/pdfEngine/matches/matchPrim
 import { matchesListPageHeader } from 'engines/pdfEngine/headers/matchesListHeader';
 */
 
-export function matchesList({ tournament={}, team, type, pending_matches, completed_matches, logo }) {
-   /*
+export function matchesList() {
+  /*
   let page_header = matchesListPageHeader({ tournament, team, type, logo });
 
   let scheduled_header = [
@@ -83,4 +83,3 @@ export function matchesList({ tournament={}, team, type, pending_matches, comple
   return { docDefinition };
   */
 }
-
