@@ -61,8 +61,8 @@
     "yup": "0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "7.12.17",
-    "@babel/preset-env": "7.12.17",
+    "@babel/core": "7.13.8",
+    "@babel/preset-env": "7.13.8",
     "@types/jest": "26.0.20",
     "@types/node": "14.14.13",
     "@types/react": "17.0.0",
