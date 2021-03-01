@@ -1,7 +1,7 @@
-import { Directive } from "../types/directive";
-import { ImageRef } from "../types/directive/imageRef";
-import { ImageRefType } from "../types/directive/enums/imageRefType";
-import { getFromURL } from "./fetchImageURL";
+import { Directive } from '../types/directive';
+import { ImageRef } from '../types/directive/imageRef';
+import { ImageRefType } from '../types/directive/enums/imageRefType';
+import { getFromURL } from './fetchImageURL';
 
 export async function fetchImages(directive: Directive) {
   const { imageRefs } = directive;
@@ -27,12 +27,11 @@ async function resolveImageRef(imageRef: ImageRef): Promise<string> {
       imageB64Data = await getFromURL(imageRef.url);
       break;
     case ImageRefType.DB:
-      imageB64Data = "TODO";
+      imageB64Data = 'TODO';
       break;
   }
 
-  if (!imageB64Data)
-    throw new Error(`Could not resolve image data for: ${imageRef.name}`);
+  if (!imageB64Data) throw new Error(`Could not resolve image data for: ${imageRef.name}`);
 
   return imageB64Data;
 }

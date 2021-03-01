@@ -7,4 +7,4 @@ export const useStyles = makeStyles((theme) => ({
       borderColor: '#fff'
     }
   }
-}))
+}));

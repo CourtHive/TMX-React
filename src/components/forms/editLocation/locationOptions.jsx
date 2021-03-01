@@ -13,26 +13,20 @@ export function LocationOptions() {
   const handleOnChange = (_, newView) => {
     dispatch({ type: 'set location view', payload: newView });
   };
-  
+
   return (
-      <>
-        <ToggleButtonGroup
-          value={locationView}
-          exclusive
-          onChange={handleOnChange}
-          aria-label="text alignment"
-          style={{height: 36}}
-        >
-          <ToggleButton value={LTAB_OVERVIEW}>
-            Overview
-          </ToggleButton>
-          <ToggleButton value={LTAB_COURTS}>
-            Courts
-          </ToggleButton>
-          <ToggleButton value={LTAB_MEDIA}>
-            Media
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </>
+    <>
+      <ToggleButtonGroup
+        value={locationView}
+        exclusive
+        onChange={handleOnChange}
+        aria-label="text alignment"
+        style={{ height: 36 }}
+      >
+        <ToggleButton value={LTAB_OVERVIEW}>Overview</ToggleButton>
+        <ToggleButton value={LTAB_COURTS}>Courts</ToggleButton>
+        <ToggleButton value={LTAB_MEDIA}>Media</ToggleButton>
+      </ToggleButtonGroup>
+    </>
   );
 }

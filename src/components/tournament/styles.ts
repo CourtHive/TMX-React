@@ -40,7 +40,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: theme.spacing(2)
   },
   menuRightWrapper: {
-    height: '100%',
+    height: '100%'
     // padding: '10px 75px 10px 0'
   },
   menuRightSubWrapper: {
@@ -104,8 +104,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   tab: {
     minWidth: '40px!important',
     fontSize: '14px!important',
-    textTransform: 'none',
-//     padding: '0 12px'
+    textTransform: 'none'
+    //     padding: '0 12px'
   },
   tabSm: {
     minWidth: '40px!important',
@@ -120,6 +120,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: 'white'
   },
   navColumn: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
+    borderRight: `1px solid ${theme.palette.divider}`
+  }
 }));

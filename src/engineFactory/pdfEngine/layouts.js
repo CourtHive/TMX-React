@@ -12,4 +12,3 @@ export const noPadding = {
   paddingTop: () => 0,
   paddingBottom: () => 0
 };
-

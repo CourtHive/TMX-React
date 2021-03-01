@@ -5,11 +5,7 @@ export function LocationMedia(props) {
   const { locationView, selectedLocation } = props;
 
   if (locationView !== LTAB_MEDIA) return null;
-  console.log({selectedLocation});
+  console.log({ selectedLocation });
 
-  return (
-    <>
-      Media - Logo and Map
-    </>
-  )
+  return <>Media - Logo and Map</>;
 }

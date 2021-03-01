@@ -6,8 +6,8 @@
     "jest": true
   },
   "parser": "@typescript-eslint/parser",
-  "extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended", "eslint:recommended"],
-  "plugins": ["react-hooks"],
+  "extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended", "eslint:recommended", "prettier"],
+  "plugins": ["react-hooks", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "ecmaFeatures": {
@@ -21,6 +21,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-debugger": "warn",
     "no-unused-vars": "off",
+    "prettier/prettier": 2,
     "@typescript-eslint/no-useless-escape": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",

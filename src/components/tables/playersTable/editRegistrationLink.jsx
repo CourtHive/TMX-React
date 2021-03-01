@@ -1,10 +1,12 @@
-import i18n from "i18next";
+import i18n from 'i18next';
 import { defineLink } from 'components/forms/linkEntry/linkEntry';
 import { fetchGoogleSheet } from 'services/communications/Axios/fetch/fetchGoogleSheet';
 
 export const editRegistrationLink = (props) => {
   const { tournamentProfile } = props;
-  const callback = (url) => { fetchGoogleSheet({ url }); };
+  const callback = (url) => {
+    fetchGoogleSheet({ url });
+  };
   const { participantSource } = tournamentProfile || {};
   const { url: link } = participantSource || { url: '' };
   defineLink({

@@ -3,14 +3,14 @@ import { baseApi } from './baseApi';
 export async function login(emailAddress: string, password: string) {
   return baseApi.post('/auth/login', {
     email: emailAddress,
-    password,
+    password
   });
 }
 
 export async function setPassword(password: string, setPasswordToken: string) {
   return baseApi.post('/auth/set-password', {
     setPasswordToken,
-    password,
+    password
   });
 }
 

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const getWidth = () => window.innerWidth 
-  || document.documentElement.clientWidth 
-  || document.body.clientWidth;
+const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 export function useCurrentWidth(onWidthChange) {
   let [width, setWidth] = useState(getWidth());
@@ -17,7 +15,7 @@ export function useCurrentWidth(onWidthChange) {
 
     window.addEventListener('resize', resizeListener);
     return () => window.removeEventListener('resize', resizeListener);
-  }, [])
+  }, []);
 
   if (typeof onWidthChange === 'function') onWidthChange();
   return width;

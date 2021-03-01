@@ -11,27 +11,25 @@ export function TournamentNotes(props) {
   const classes = useStyles();
 
   const { tournamentRecord } = props;
-  const editState = useSelector(state => state.tmx.editState);
+  const editState = useSelector((state) => state.tmx.editState);
 
   let notes = tournamentRecord.notes || '';
 
   const handleSave = (value) => {
-      dispatch({
-        type: 'tournamentEngine',
-        payload: { methods: [
-            { method: 'setTournamentNotes', params: { notes: value }} ]
-        }
-      });
-  }
-  
+    dispatch({
+      type: 'tournamentEngine',
+      payload: { methods: [{ method: 'setTournamentNotes', params: { notes: value } }] }
+    });
+  };
+
   return (
     <>
-      <div style={{maxWidth: 1200}}>
+      <div style={{ maxWidth: 1200 }}>
         <Typography variant="h1" className={classes.sectionTitle}>
           Notes
         </Typography>
         <TMXEditor handleSave={handleSave} content={notes} readonly={!editState} />
       </div>
     </>
-  )
+  );
 }

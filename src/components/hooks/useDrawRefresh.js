@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-export function useDrawRefresh({drawId}) {
-    /*
+export function useDrawRefresh({ drawId }) {
+  /*
     const tournamentEvents = tournamentRecord.events || [];
     const tournamentDraws = tournamentEvents.map(event => event.drawDefinitions).flat().filter(f=>f);
     const drawExists = drawId && tournamentDraws.reduce((p, c) => c.drawId === drawId ? c : p, undefined);
@@ -10,7 +10,7 @@ export function useDrawRefresh({drawId}) {
     const drawDefinition = tournamentDraws.reduce((p, c) => c.drawId === targetDraw ? c : p, undefined) || {};
     */
 
-    const drawResize = useSelector(state => state.tmx.drawResize);
+  const drawResize = useSelector((state) => state.tmx.drawResize);
 
-    console.log('drawRefresh', {drawResize});
+  console.log('drawRefresh', { drawResize });
 }

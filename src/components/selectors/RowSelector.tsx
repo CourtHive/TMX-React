@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -13,10 +13,10 @@ export const RowSelector = (props) => {
   const { onChange } = props;
   const classes = useStyles();
   const { t } = useTranslation();
-  
+
   const autoDrawOptions = useSelector((state: any) => state.tmx.actionData.autoDraw);
   const rowOptions = (autoDrawOptions && autoDrawOptions.rowOptions) || [];
-  let lowestRow = (rowOptions[0] && rowOptions[0].value) || '';
+  const lowestRow = (rowOptions[0] && rowOptions[0].value) || '';
   const [row, changeRow] = useState(lowestRow);
 
   const ITEM_HEIGHT = 48;

@@ -5,5 +5,5 @@ export enum PersonRole {
   Coach,
   Guardian,
   Admin,
-  Trainer,
+  Trainer
 }

@@ -1,35 +1,35 @@
 import { makeStyles } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     margin: '1em',
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: 200,
-    },
+      width: 200
+    }
   },
   formTitle: {
     fontSize: '16px',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   formControl: {
     marginTop: '1em',
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   editPanel: {
     height: '100%',
-    margin: theme.spacing(3),
+    margin: theme.spacing(3)
   },
   ratingsSlider: {
     marginTop: theme.spacing(2),
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   editField: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   submitInvalid: {
     color: 'white',
@@ -54,9 +54,9 @@ export const useStyles = makeStyles(theme => ({
   },
   appBar: {
     top: 'auto',
-    bottom: 0,
+    bottom: 0
   },
   grow: {
-    flexGrow: 1,
-  },
+    flexGrow: 1
+  }
 }));

@@ -13,7 +13,9 @@ const CheckboxCell: React.FC<CheckboxCellProps> = ({ onChange, disabled, row }) 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     onChange(event, checked, row);
   };
-  return <Checkbox checked={row.checked} disabled={disabled} className={classes.EPCheckbox} onChange={handleOnChange} />;
+  return (
+    <Checkbox checked={row.checked} disabled={disabled} className={classes.EPCheckbox} onChange={handleOnChange} />
+  );
 };
 
 export default CheckboxCell;

@@ -67,7 +67,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: `${theme.spacing(2)}px 0!important`,
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   eventNameColumn: {
     padding: `${theme.spacing(2)}px 0!important`,
@@ -96,7 +96,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   TableIndexCell: {
     borderBottom: 'none',
     // textAlign: 'center',
-    width: '40px',
+    width: '40px'
   },
   EPFullNameCell: {
     minWidth: '100px'
@@ -147,7 +147,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   notSignedIn: {
     '& div': {
-      opacity: .6
+      opacity: 0.6
     }
   },
   availableParticipants: {
@@ -162,5 +162,5 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   dialogRootXS: {
     padding: '25px 20px'
-  },
+  }
 }));

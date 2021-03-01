@@ -1,4 +1,4 @@
-import { ImageRefType } from "./enums/imageRefType";
+import { ImageRefType } from './enums/imageRefType';
 
 export interface ImageRef {
   type: ImageRefType;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,8 +19,7 @@ export const RoundSelector = (props) => {
   // TODO: access tournamentMatchUps
   const matchUps = [];
 
-  const unscheduledMatchUps = matchUps
-    .filter((m) => m.winner === undefined)
+  const unscheduledMatchUps = matchUps.filter((m) => m.winner === undefined);
 
   const roundNames = unscheduledMatchUps.reduce((p, c) => (p.indexOf(c.roundName) < 0 ? p.concat(c.roundName) : p), []);
 

@@ -42,7 +42,7 @@ export function TournamentMedia(props) {
 
   function showTournamentQR() {
     // eslint-disable-next-line
-        const origin = location.origin;
+    const origin = location.origin;
     const tournamentURL = `${origin}/t/${tournamentId}`;
     qrFx.displayQRdialogue(tournamentURL);
   }

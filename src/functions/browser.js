@@ -1,5 +1,7 @@
 // eslint-disable-next-line
-export function clearHistory() { history.pushState('', document.title, getWindow().location.pathname); };
+export function clearHistory() {
+  history.pushState('', document.title, getWindow().location.pathname);
+}
 
 export function getWindow() {
   try {
