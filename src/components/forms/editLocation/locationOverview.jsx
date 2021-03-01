@@ -5,11 +5,7 @@ export function LocationOverview(props) {
   const { locationView, selectedLocation } = props;
 
   if (locationView !== LTAB_OVERVIEW) return null;
-  console.log({selectedLocation});
+  console.log({ selectedLocation });
 
-  return (
-    <>
-      Overview - Notes, Address, Capacity
-    </>
-  )
+  return <>Overview - Notes, Address, Capacity</>;
 }

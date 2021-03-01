@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     margin: '1em',
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: 200,
-    },
+      width: 200
+    }
   },
   paper: {
     display: 'flex',
@@ -16,14 +16,14 @@ export const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(3),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3)
   },
   submit: {
     margin: theme.spacing(2),
-    width: 200,
-  },
+    width: 200
+  }
 }));

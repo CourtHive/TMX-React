@@ -5,11 +5,7 @@ export function LocationCourts(props) {
   const { locationView, selectedLocation } = props;
 
   if (locationView !== LTAB_COURTS) return null;
-  console.log({selectedLocation});
+  console.log({ selectedLocation });
 
-  return (
-    <>
-      Courts - set court names, availability, gps
-    </>
-  )
+  return <>Courts - set court names, availability, gps</>;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -13,7 +13,7 @@ export const CourtSelector = (props) => {
   const { onChange } = props;
   const classes = useStyles();
   const { t } = useTranslation();
-  
+
   const [court, changeCourt] = useState('-');
   const autoDrawOptions = useSelector((state: any) => state.tmx.actionData.autoDraw);
   const courtOptions = (autoDrawOptions && autoDrawOptions.courtOptions) || [];

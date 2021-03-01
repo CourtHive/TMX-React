@@ -11,21 +11,23 @@ import { expandingStyles } from './style';
 import { BubbleEditor } from 'components/TMXEditor/bubbleEditor';
 
 export function TMXEditor(props) {
-  let { readonly, content, onChange, handleSave } = props;
+  const { readonly, content, onChange, handleSave } = props;
   const [expanded, setExpanded] = useState(false);
   const [editing, setEditing] = useState(false);
 
   const classes = expandingStyles();
 
-  let newsSplit = content && content.split('</p>');
-  let intro = newsSplit && newsSplit.slice(0,3).join('</p>');
+  const newsSplit = content && content.split('</p>');
+  const intro = newsSplit && newsSplit.slice(0, 3).join('</p>');
   const paragraphCount = (newsSplit && newsSplit.length) || 0;
   const displayExpand = paragraphCount > 3;
-  
+
   let quill;
   // function to set reference to editor
-  const setEditor = e => { quill = e; }
- 
+  const setEditor = (e) => {
+    quill = e;
+  };
+
   /*
   // example of inserting into existing content
   const insertText = () => {
@@ -46,53 +48,43 @@ export function TMXEditor(props) {
       setExpanded(true);
     }
     setEditing(!editing);
-  }
+  };
 
   const handleExpandClick = () => {
-     setExpanded(!expanded);
+    setExpanded(!expanded);
   };
 
   const ContextIcon = () => {
     return (
       <div className={classes.expand}>
-        {
-          !editing && paragraphCount > 3 ?
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          : null
-        }
-        {
-          !readonly ?
-            <IconButton
-              className={classes.expand}
-              onClick={handleEditMode}
-              aria-expanded={expanded}
-              aria-label="edit"
-            >
-              { editing ? <SaveIcon /> : <EditIcon /> }
-            </IconButton>
-          : null
-        }
+        {!editing && paragraphCount > 3 ? (
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        ) : null}
+        {!readonly ? (
+          <IconButton className={classes.expand} onClick={handleEditMode} aria-expanded={expanded} aria-label="edit">
+            {editing ? <SaveIcon /> : <EditIcon />}
+          </IconButton>
+        ) : null}
       </div>
-    )
-  }
+    );
+  };
 
-  const handleOnChange = newValue => {
+  const handleOnChange = (newValue) => {
     if (onChange) onChange(newValue);
-  }
+  };
   const DisplayCard = () => {
     return (
       <>
-        {
-          expanded ?
+        {expanded ? (
           <CardContent>
             <BubbleEditor
               readOnly={readonly || !editing}
@@ -102,21 +94,16 @@ export function TMXEditor(props) {
               placeholder={'Tournament Notes...'}
             />
           </CardContent>
-          :
+        ) : (
           <CardContent>
-            <BubbleEditor
-              readOnly={true}
-              initialValue={intro}
-            />
+            <BubbleEditor readOnly={true} initialValue={intro} />
           </CardContent>
-        }
-        <CardActions disableSpacing>
-          { displayExpand || !readonly ? <ContextIcon /> : '' }
-        </CardActions>
+        )}
+        <CardActions disableSpacing>{displayExpand || !readonly ? <ContextIcon /> : ''}</CardActions>
       </>
-    )
-  }
-  
+    );
+  };
+
   return (
     <Card className={classes.card}>
       <DisplayCard />

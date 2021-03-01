@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   primary: { color: 'blue' },
   icon: { minWidth: 30, flexShrink: 0 },
   list: { minWidth: 180, width: 'auto' },
-  fullList: { width: 'auto', },
+  fullList: { width: 'auto' },
   divider: { marginTop: '1em' },
   headerPrimary: {
     fontWeight: 'bold',
@@ -39,124 +39,147 @@ const useStyles = makeStyles({
 */
 
 export function MenuDrawer(props) {
-  const { anchor='left', menuItems: originalItems=[], open, onClose } = props || {};
+  const { anchor = 'left', menuItems: originalItems = [], open, onClose } = props || {};
   const [rootMenuItems, setRootMenuItems] = useState(originalItems);
   const [menuItems, setMenuItems] = useState(originalItems);
   const classes = useStyles();
 
-  function setSubMenu(subMenuItems) { setMenuItems(subMenuItems); }
-  function setRootMenu() { setMenuItems(rootMenuItems); }
-  const CustomDivider = ({menuItem, index})=> {
+  function setSubMenu(subMenuItems) {
+    setMenuItems(subMenuItems);
+  }
+  function setRootMenu() {
+    setMenuItems(rootMenuItems);
+  }
+  const CustomDivider = ({ menuItem, index }) => {
     const colorClass = menuItem.intent && classes[menuItem.intent];
     return (
       <div>
-        { index ? <Divider className={classes.divider} /> : null }
+        {index ? <Divider className={classes.divider} /> : null}
         <ListItem className={menuItem.className}>
-          {
-            !menuItem.icon ? null :
-            <ListItemIcon classes={{root: classes.icon}} className={colorClass}> { menuItem.icon } </ListItemIcon>
-          }
+          {!menuItem.icon ? null : (
+            <ListItemIcon classes={{ root: classes.icon }} className={colorClass}>
+              {' '}
+              {menuItem.icon}{' '}
+            </ListItemIcon>
+          )}
           <ListItemText
-            classes={{primary: classes.headerPrimary, secondary: classes.headerSecondary}}
+            classes={{ primary: classes.headerPrimary, secondary: classes.headerSecondary }}
             primary={menuItem.title}
           />
         </ListItem>
       </div>
-    )
-  }
+    );
+  };
 
-  const CustomInput = ({menuItem})=> {
+  const CustomInput = ({ menuItem }) => {
     const [value, setValue] = useState();
     const colorClass = menuItem.intent && classes[menuItem.intent];
-    const onChange = event => { setValue(event.target.value); }
+    const onChange = (event) => {
+      setValue(event.target.value);
+    };
 
-    const onKeyPress = e => {
+    const onKeyPress = (e) => {
       if (e.key === 'Enter') {
         if (menuItem.onSubmit && typeof menuItem.onSubmit === 'function') {
           menuItem.onSubmit(value);
         }
         onClose();
       }
-    }
+    };
 
     return (
       <ListItem dense={true} button className={menuItem.className} disabled={menuItem.disabled}>
-        {
-          !menuItem.icon ? null :
-          <ListItemIcon classes={{root: classes.icon}} className={colorClass}> { menuItem.icon } </ListItemIcon>
-        }
+        {!menuItem.icon ? null : (
+          <ListItemIcon classes={{ root: classes.icon }} className={colorClass}>
+            {' '}
+            {menuItem.icon}{' '}
+          </ListItemIcon>
+        )}
         <TextField onChange={onChange} onKeyPress={onKeyPress} />
       </ListItem>
-      
-    )
-  }
+    );
+  };
 
-  const CustomMenuItem = ({menuItem})=> {
+  const CustomMenuItem = ({ menuItem }) => {
     const colorClass = menuItem.intent && classes[menuItem.intent];
     const clickAction = () => {
       menuItem.onClick();
       onClose();
       setRootMenu();
-    }
+    };
     const subMenu = () => {
       if (typeof menuItem.subMenu === 'function') {
-        menuItem.subMenu().then(subMenuItems => setSubMenu(subMenuItems), err => console.log(err));
+        menuItem.subMenu().then(
+          (subMenuItems) => setSubMenu(subMenuItems),
+          (err) => console.log(err)
+        );
       } else if (Array.isArray(menuItem.subMenu)) {
         setSubMenu(menuItem.subMenu);
       }
-    }
+    };
 
     const newRootMenu = () => {
       if (menuItem.newRoot) {
         setRootMenuItems(menuItem.newRoot);
         setMenuItems(menuItem.newRoot);
       }
-    }
+    };
 
-    const onClick = (menuItem.onClick && clickAction)
-     || (menuItem.subMenu && subMenu)
-     || (menuItem.newRoot && newRootMenu)
-     || (menuItem.rootMenu && setRootMenu);
+    const onClick =
+      (menuItem.onClick && clickAction) ||
+      (menuItem.subMenu && subMenu) ||
+      (menuItem.newRoot && newRootMenu) ||
+      (menuItem.rootMenu && setRootMenu);
 
     return (
-      <ListItem id={menuItem.id} dense={true} button onClick={onClick} classes={{root: menuItem.className}} disabled={menuItem.disabled}>
-        {
-          !menuItem.icon ? null :
-          <ListItemIcon classes={{root: classes.icon}} className={colorClass}> { menuItem.icon } </ListItemIcon>
-        }
-        <ListItemText classes={{primary: colorClass}} primary={menuItem.title} />
+      <ListItem
+        id={menuItem.id}
+        dense={true}
+        button
+        onClick={onClick}
+        classes={{ root: menuItem.className }}
+        disabled={menuItem.disabled}
+      >
+        {!menuItem.icon ? null : (
+          <ListItemIcon classes={{ root: classes.icon }} className={colorClass}>
+            {' '}
+            {menuItem.icon}{' '}
+          </ListItemIcon>
+        )}
+        <ListItemText classes={{ primary: colorClass }} primary={menuItem.title} />
       </ListItem>
-      
-    )
-  }
+    );
+  };
 
   const itemList = (anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        [classes.fullList]: anchor === 'top' || anchor === 'bottom'
       })}
     >
       <List>
-        {menuItems.filter(menuItem => !menuItem.ignore).map((menuItem, i) => {
-          return (
-            <div key={`mainMenu${i}`}>
-              {
-                menuItem.divider ?
-                <CustomDivider menuItem={menuItem} index={i} /> :
-                menuItem.input ?
-                <CustomInput menuItem={menuItem} /> :
-                <CustomMenuItem menuItem={menuItem} />
-              }
-            </div>
-          );
-        })}
+        {menuItems
+          .filter((menuItem) => !menuItem.ignore)
+          .map((menuItem, i) => {
+            return (
+              <div key={`mainMenu${i}`}>
+                {menuItem.divider ? (
+                  <CustomDivider menuItem={menuItem} index={i} />
+                ) : menuItem.input ? (
+                  <CustomInput menuItem={menuItem} />
+                ) : (
+                  <CustomMenuItem menuItem={menuItem} />
+                )}
+              </div>
+            );
+          })}
       </List>
     </div>
   );
 
   return (
-      <Drawer anchor={anchor} open={open} onClose={onClose} >
-        {itemList(anchor)}
-      </Drawer>
+    <Drawer anchor={anchor} open={open} onClose={onClose}>
+      {itemList(anchor)}
+    </Drawer>
   );
 }

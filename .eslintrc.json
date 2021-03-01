@@ -6,13 +6,8 @@
     "jest": true
   },
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended",
-    "eslint:recommended"
-  ],
+  "extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended", "eslint:recommended", "prettier"],
+  "plugins": ["react-hooks", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "ecmaFeatures": {
@@ -23,13 +18,19 @@
   "rules": {
     "react/prop-types": 0,
     "react/display-name": 0,
-    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-debugger": "warn",
+    "no-unused-vars": "off",
+    "prettier/prettier": 2,
+    "@typescript-eslint/no-useless-escape": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/camelcase": "off"
+    "@typescript-eslint/no-unused-expressions": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "@typescript-eslint/no-empty-function": "warn"
   },
   "settings": {
     "react": {

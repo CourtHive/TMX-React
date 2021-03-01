@@ -60,7 +60,7 @@ export const RoundRobinStructure = (props) => {
     { action: 'END', icon: null, click: closeMenu, text: 'Set Match End Time' }
   ];
 
-  function actionMenu(node, coords, teamIndex) {
+  function actionMenu(node, coords /*, teamIndex*/) {
     const matchUp = node.matchUp;
     const {
       validActions,

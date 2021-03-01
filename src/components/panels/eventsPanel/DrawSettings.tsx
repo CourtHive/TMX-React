@@ -14,11 +14,11 @@ export const DrawSettings = (props) => {
   return (
     <>
       <Grid container spacing={2} direction="row" justify="flex-start">
-        <Grid container item justify={'flex-end'} style={{flexGrow: 1}}>
+        <Grid container item justify={'flex-end'} style={{ flexGrow: 1 }}>
           {remakeDrawVisible && <RemakeDrawAction drawId={drawId} />}
           {playerReps && <RepresentativesButton participants={participants} drawDefinition={drawDefinition} />}
         </Grid>
       </Grid>
     </>
   );
-}
+};

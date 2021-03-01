@@ -9,8 +9,8 @@ import {
 import { matchesListPageHeader } from 'engines/pdfEngine/headers/matchesListHeader';
 */
 
-export function matchesByCourt({ tournament={}, team, type, matches, logo }) {
-   /*
+export function matchesByCourt({ tournament = {}, team, type, matches, logo }) {
+  /*
   // MATCH FORMATS
   function byCourtRow(matchUp) {
      return [
@@ -92,4 +92,3 @@ export function matchesByCourt({ tournament={}, team, type, matches, logo }) {
   return { docDefinition };
   */
 }
-

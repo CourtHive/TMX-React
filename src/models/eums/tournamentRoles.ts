@@ -4,5 +4,5 @@ export enum TournamentRoles {
   HEAD_REFEREE = 'Head referee',
   LINE_UMPIRE = 'Line umpire',
   REVIEW_OFFICIAL = 'Review official',
-  HEAD_PLUS_LINE_UMPIRE = 'Head plus line umpire',
+  HEAD_PLUS_LINE_UMPIRE = 'Head plus line umpire'
 }

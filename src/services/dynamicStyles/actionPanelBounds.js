@@ -20,6 +20,6 @@ export function getActionPanelBounds(ref) {
       height: `${bounds?.height || 0}px`,
       width: `${bounds?.width || 0}px`
     }
-  }
+  };
   return values;
 }

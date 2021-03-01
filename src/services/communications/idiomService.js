@@ -11,7 +11,7 @@ export function idiomsAvailable({ ns = NAMESPACE } = {}) {
   return postAccess({ params: { ns }, subPath });
 }
 
-export function idiomsUpdated({ ns } = {}) {
+export function idiomsUpdated(/*{ ns } = {}*/) {
   const subPath = 'idioms/updated';
   return postAccess({ params: {}, subPath });
 }

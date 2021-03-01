@@ -1,4 +1,4 @@
 export enum ContactChannel {
   'Email',
-  'Phone',
+  'Phone'
 }

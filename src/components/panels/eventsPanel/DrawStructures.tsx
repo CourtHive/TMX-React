@@ -13,8 +13,8 @@ import NoticePaper from 'components/papers/notice/NoticePaper';
 import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
 
 import { drawEngine } from 'tods-competition-factory';
-import { EliminationStructure, generateRoundsDefinition, generateStandardElimination } from 'tods-react-draws';
-import { getActionsMenuData } from 'components/menus/actionsMenu';
+// import { EliminationStructure, generateRoundsDefinition, generateStandardElimination } from 'tods-react-draws';
+// import { getActionsMenuData } from 'components/menus/actionsMenu';
 
 export const DrawsPanel = (props) => {
   const { drawDefinition } = props;
@@ -42,13 +42,15 @@ export const DrawsPanel = (props) => {
     .setParticipants(participants)
     .allStructureMatchUps({ structureId });
   const { matchUps, roundMatchUps } = result;
+  /*
   const { roundsDefinition } = generateRoundsDefinition({
     roundMatchUps
   });
   const columns = generateStandardElimination({ height: 70, roundsDefinition });
+  */
 
-  const { roundPresentationProfile } = drawEngine.getRoundPresentationProfile({ matchUps });
-  console.log({ columns, roundsDefinition, roundPresentationProfile });
+  // const { roundPresentationProfile } = drawEngine.getRoundPresentationProfile({ matchUps });
+  //  console.log({ columns, roundsDefinition, roundPresentationProfile });
 
   const { nextUnfilledDrawPositions } = drawEngine.getNextUnfilledDrawPositions({ structureId });
 
@@ -86,6 +88,7 @@ export const DrawsPanel = (props) => {
     );
   };
 
+  /*
   const onScoreClick = ({ matchUp, sideIndex, e }) => {
     const menuData = getActionsMenuData({ matchUp, sideNumber: undefined });
     console.log('Scoring matchUp', { matchUp, sideIndex, e, menuData });
@@ -95,6 +98,7 @@ export const DrawsPanel = (props) => {
     console.log('Participant matchUp', { matchUp, sideNumber, e, menuData });
   };
   const args = { columns, roundMatchUps, onScoreClick, onParticipantClick };
+  */
 
   return (
     <>
@@ -109,9 +113,12 @@ export const DrawsPanel = (props) => {
         </Grid>
       </NoticePaper>
       <DrawStructure />
-      <div>
-        <EliminationStructure {...args} />
-      </div>
     </>
   );
 };
+
+/*
+      <div>
+        <EliminationStructure {...args} />
+      </div>
+      */

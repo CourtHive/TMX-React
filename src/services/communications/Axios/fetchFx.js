@@ -18,7 +18,7 @@ export const fetchFx = (function () {
   const fx = {};
 
   fx.fetchNewTournaments = fetchNewTournaments;
-  function fetchNewTournaments(merge) {
+  function fetchNewTournaments() {
     return new Promise((resolve, reject) => {
       db.findSetting('fetchNewTournaments').then(checkSettings, reject);
 
@@ -45,7 +45,7 @@ export const fetchFx = (function () {
       }
       */
 
-      function fetchNew(trnys, fetchobj) {
+      function fetchNew() {
         /*
         // for tournaments to be updated automatically they must have an .sid attribute equal to env.org.abbr
         let tids = trnys.filter((t) => t.sid && t.sid === env.org.abbr).map((t) => t.tournamentId.replace(t.sid, ''));
@@ -145,7 +145,7 @@ export const fetchFx = (function () {
         return resolve(players);
       }
 
-      function fetchNew(plyrz, fetchobj) {
+      function fetchNew() {
         /*
         // maximum player records determined by numeric ids; others excluded
         let max_id = Math.max(0, ...plyrz.map((p) => (!isNaN(+p.id) ? +p.id : 0)));
@@ -265,7 +265,7 @@ export const fetchFx = (function () {
   }
 
   fx.fetchRankList = fetchRankList;
-  function fetchRankList({ category, verification, force }) {
+  function fetchRankList({ category, force }) {
     return new Promise((resolve, reject) => {
       db.findRankings(category).then(checkRankings, (err) => reject({ error: err }));
 
@@ -292,7 +292,7 @@ export const fetchFx = (function () {
         fetchList(fetchobj);
       }
 
-      function fetchList(fetchobj) {
+      function fetchList() {
         /*
         let request_object = {
           [fetchobj.type]: fetchobj.url + category,
@@ -396,7 +396,7 @@ export const fetchFx = (function () {
         }
       }
 
-      function scrape(scraper) {
+      function scrape() {
         const iocCodes = countries.filter((c) => c.ioc);
         const ioc_map = Object.assign({}, ...iocCodes.map((c) => ({ [c.label.toUpperCase()]: c.ioc })));
         ioc_map['USA'] = ioc_map['UNITED STATES'];
@@ -424,7 +424,7 @@ export const fetchFx = (function () {
         */
       }
 
-      function remoteRequest(fetchobj, uuid) {
+      function remoteRequest() {
         /*
         let request_object = {
           [fetchobj.type]: fetchobj.url + uuid,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -18,13 +18,13 @@ export const LocationSelector = (props) => {
     const venueId = event.target.value;
     const payload = venueId !== '-' && { venueId };
     dispatch({ type: 'select venue', payload });
-  }
-  
+  };
+
   const options = venues.map((venue) => {
     // attempt to use abbreviation if venue name too long
     const abbreviation = venue.venueAbbreviation || venue.venueName;
     const text = venue.venueName.length > 12 ? abbreviation : venue.venueName;
-    return { text, value: venue.venueId }
+    return { text, value: venue.venueId };
   });
 
   return (

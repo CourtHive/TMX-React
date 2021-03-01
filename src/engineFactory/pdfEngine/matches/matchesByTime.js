@@ -9,8 +9,8 @@ import {
 import { matchesListPageHeader } from 'engines/pdfEngine/headers/matchesListHeader';
 */
 
-export function matchesByTime({ tournament={}, team, type, matches, logo }) {
-   /*
+export function matchesByTime({ tournament = {}, team, type, matches, logo }) {
+  /*
   // MATCH FORMATS
   function byTimeRow(matchUp) {
      return [

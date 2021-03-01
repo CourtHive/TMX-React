@@ -1,3 +1,3 @@
 export enum DirectiveType {
-  ITA_INVOICE = "itaInvoice",
+  ITA_INVOICE = 'itaInvoice'
 }

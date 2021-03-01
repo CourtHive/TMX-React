@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap'
   },
   sectionTitle: {
-    marginBottom: '1em',
+    marginBottom: '1em'
   },
   divider: {
     height: '20px',

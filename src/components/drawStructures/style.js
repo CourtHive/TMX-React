@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignContent: 'center',
+    alignContent: 'center'
     // alignItems: 'center'
   },
   drawMatchTitle: {

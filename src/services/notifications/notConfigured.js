@@ -1,3 +1,3 @@
 export function notConfigured() {
-  console.log('NOT CONFIGURED')
+  console.log('NOT CONFIGURED');
 }

@@ -32,24 +32,23 @@ const generators = Object.assign({}, ...generatorArray);
 
 const createEngine = (handlers) => (directive) => {
   return new Promise((resolve, reject) => {
+    function generateDocDefinition(images) {
+      Object.assign(directive, { images });
+      handlers[directive.type](directive).then(success, reject);
+    }
+
+    function success({ docDefinition }) {
+      if (!Object.keys(actions).includes(directive.action)) {
+        return resolve({ docDefinition });
+      }
+      Object.assign(directive, { docDefinition });
+      actions[directive.action](directive).then(resolve, reject);
+    }
     if (!Object.keys(handlers).includes(directive.type)) {
       reject();
     }
     try {
       fetchImages(directive).then(generateDocDefinition, reject);
-
-      function generateDocDefinition(images) {
-        Object.assign(directive, { images });
-        handlers[directive.type](directive).then(success, reject);
-      }
-
-      function success({ docDefinition }) {
-        if (!Object.keys(actions).includes(directive.action)) {
-          return resolve({ docDefinition });
-        }
-        Object.assign(directive, { docDefinition });
-        actions[directive.action](directive).then(resolve, reject);
-      }
     } catch (err) {
       reject(err);
     }

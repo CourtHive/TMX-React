@@ -1,10 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors';
 
-export const useStyles = makeStyles(theme => ({
-  rootContainer: {
-
-  },
+export const useStyles = makeStyles((theme) => ({
+  rootContainer: {},
   paper: {
     display: 'flex',
     flexDirection: 'column',
@@ -13,18 +11,17 @@ export const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(3),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   editField: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
-  form: {
-  },
+  form: {},
   submit: {
     color: 'white',
     backgroundColor: blue[500],
     margin: theme.spacing(2),
     width: 200,
     '&:hover': { backgroundColor: 'green' }
-  },
+  }
 }));

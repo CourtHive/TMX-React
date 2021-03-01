@@ -1,18 +1,20 @@
 // import { treeDraw } from 'components/drawDisplay/treeDraw';
 import { select as d3Select, selectAll as d3SelectAll } from 'd3';
 
-function cleanUp() { d3SelectAll('.hidden_render').remove(); }
-export function renderTreeDraw({ info, doubles, data, opponents, options, width, title, child, draw_positions }) {
+function cleanUp() {
+  d3SelectAll('.hidden_render').remove();
+}
+export function renderTreeDraw() {
   cleanUp();
 
   let render_id = `td_hidden_render`;
 
   d3Select('body')
-     .append('div')
-        .attr('class', 'hidden_render')
-     .append('div')
-        .attr('id', render_id)
-        .attr('class', 'offscreen');
+    .append('div')
+    .attr('class', 'hidden_render')
+    .append('div')
+    .attr('id', render_id)
+    .attr('class', 'offscreen');
 
   // TODO: set width and height here... and make font_size and other
   // calculations based on the width and height... because width and

@@ -7,11 +7,7 @@ import { useStyleScoringDialogActions } from 'components/dialogs/scoringDialog/s
 const ScoringDialogActions: React.FC = ({ children }) => {
   const classes = useStyleScoringDialogActions();
 
-  return (
-    <MuiDialogActions className={classes.root}>
-      {children}
-    </MuiDialogActions>
-  );
+  return <MuiDialogActions className={classes.root}>{children}</MuiDialogActions>;
 };
 
 export default ScoringDialogActions;

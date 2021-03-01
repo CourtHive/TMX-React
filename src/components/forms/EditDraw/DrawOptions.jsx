@@ -5,7 +5,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { DTAB_DRAW, DTAB_COMPETITORS, DTAB_SETTINGS } from 'stores/tmx/types/tabs';
 
-export function DrawOptions(props) {
+export function DrawOptions() {
   const dispatch = useDispatch();
   const drawView = useSelector((state) => state.tmx.visible.drawView);
 
