@@ -134,11 +134,11 @@ export const coms = (function () {
   };
 
   function comsDisconnect() {
-    console.log('%c Server disconnect', 'color: orange');
+    if (isDev()) console.log('%c Server disconnect', 'color: orange');
     connected = false;
   }
   function comsError(err) {
-    console.log('connect error', { err });
+    if (isDev()) console.log('connect error', { err });
   }
   fx.connectAction = () => {
     fx.sendQueuedKeys();
