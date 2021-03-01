@@ -1,7 +1,7 @@
 export interface SuspensionModel {
-  providerId: String;
-  suspensionType: String;
-  suspensionNotes: String;
+  providerId: string;
+  suspensionType: string;
+  suspensionNotes: string;
   suspendedFrom: Date;
   suspendedUntil: Date;
 }

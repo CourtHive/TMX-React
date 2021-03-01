@@ -57,7 +57,7 @@ export interface SideInterface {
 // TODO: this interface is outdated
 export interface ScoringDetailsInterface {
   matchUp?: MatchUpInterface;
-  callback: Function;
+  callback: any;
   flags?: string;
   delegation: boolean;
   existing_scores: Array<SetResultInterface>[];

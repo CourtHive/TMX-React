@@ -7,9 +7,9 @@ export async function fetchImages(directive: Directive) {
   const { imageRefs } = directive;
   if (!imageRefs) return;
 
-  let images = {};
+  const images = {};
 
-  for (let imageRef of imageRefs) {
+  for (const imageRef of imageRefs) {
     images[imageRef.name] = await resolveImageRef(imageRef);
   }
 

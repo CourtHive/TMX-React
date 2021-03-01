@@ -10,7 +10,7 @@ const tableBorderLayout = {
 };
 
 function formatBillingAddress(billingAddress) {
-  let addressSegments = [];
+  const addressSegments = [];
 
   addressSegments.push(billingAddress?.name || '');
   addressSegments.push(`${billingAddress?.streetNr || ''} ${billingAddress?.street || ''}`);
@@ -27,7 +27,7 @@ function formatBillingAddress(billingAddress) {
 function formatInvoiceItems(invoiceItems) {
   if (!invoiceItems || invoiceItems.length === 0) return ['', '', ''];
 
-  let invoiceItemTableRows = [];
+  const invoiceItemTableRows = [];
 
   invoiceItems.forEach((invItem) => {
     invoiceItemTableRows.push([
@@ -43,7 +43,7 @@ function formatInvoiceItems(invoiceItems) {
 export function itaInvoiceTemplate(directive: Directive) {
   const { billingAddress, invoiceDetails, invoiceItems } = directive.props;
 
-  var docDefinition = {
+  const docDefinition = {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     pageMargins: [40, 90, 40, 60],
