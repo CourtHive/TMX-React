@@ -47,8 +47,8 @@ export const DrawsPanel = (props) => {
   });
   const columns = generateStandardElimination({ height: 70, roundsDefinition });
 
-  const { roundPresentationProfile } = drawEngine.getRoundPresentationProfile({ matchUps });
-  console.log({ columns, roundsDefinition, roundPresentationProfile });
+  // const { roundPresentationProfile } = drawEngine.getRoundPresentationProfile({ matchUps });
+  // console.log({ columns, roundsDefinition, roundPresentationProfile });
 
   const { nextUnfilledDrawPositions } = drawEngine.getNextUnfilledDrawPositions({ structureId });
 
