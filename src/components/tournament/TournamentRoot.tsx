@@ -67,7 +67,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   }, [keyLoads]);
   */
 
-  const tournamentName = tournamentRecord.name || t('trn');
+  const tournamentName = tournamentRecord.tournamentName || t('trn');
   const tieFormat = scoringDetails?.matchUp?.tieFormat;
   const matchUp = !tieFormat && scoringDetails?.matchUp;
   const tieMatchUp = tieFormat && scoringDetails?.matchUp;
@@ -143,7 +143,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
           <Grid item xs={downXs ? 12 : 'auto'}>
             <Grid item className={classes.headerRootPaddingNoBottom}>
               <Grid container direction="row">
-                <Grid item>
+                <Grid item onClick={handleLogoClick}>
                   <Typography align="left" component="h2" className={classes.tournamentName}>
                     {tournamentName}
                     <AuthButton />

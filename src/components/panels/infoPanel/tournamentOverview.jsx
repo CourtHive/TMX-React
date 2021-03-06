@@ -78,7 +78,7 @@ export function TournamentOverview(props) {
   };
 
   const categoryOptions = categoryDefinitions.map((category) => ({ title: category.categoryName }));
-  const [tournamentName, setTournamentName] = useState(tournamentRecord.name);
+  const [tournamentName, setTournamentName] = useState(tournamentRecord.tournamentName);
   const handleTournamentNameKeyDown = (event) => {
     if (event.key === 'Enter') {
       checkTournamentName();
@@ -86,7 +86,7 @@ export function TournamentOverview(props) {
   };
   const handleTournamentNameChange = (event) => setTournamentName(event.target.value);
   const checkTournamentName = () => {
-    if (tournamentName !== tournamentRecord.name) {
+    if (tournamentName !== tournamentRecord.tournamentName) {
       dispatch({
         type: 'tournamentEngine',
         payload: { methods: [{ method: 'setTournamentName', params: { name: tournamentName } }] }
@@ -135,7 +135,7 @@ export function TournamentOverview(props) {
             autoFocus
             required={true}
             disabled={!editState}
-            defaultValue={tournamentRecord.name}
+            defaultValue={tournamentRecord.tournamentName}
             onChange={handleTournamentNameChange}
             onKeyDown={handleTournamentNameKeyDown}
             onBlur={checkTournamentName}

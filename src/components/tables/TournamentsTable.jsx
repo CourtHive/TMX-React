@@ -49,7 +49,7 @@ function trnyRecord(tournamentRecord) {
   return {
     categories,
     tournamentId,
-    name: tournamentName || tournamentRecord.name,
+    name: tournamentName,
     startDate: formatDate(startDate),
     endDate: formatDate(endDate),
     provider
