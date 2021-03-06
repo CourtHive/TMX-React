@@ -25,7 +25,7 @@ export function TournamentActions(props) {
 
   const { tournamentRecord } = props;
   const { unifiedTournamentId } = tournamentRecord || {};
-  const { tournamentId } = unifiedTournamentId || {};
+  const tournamentId = tournamentRecord?.tournamentId || unifiedTournamentId?.tournamentId;
 
   const editState = useSelector((state) => state.tmx.editState);
 
