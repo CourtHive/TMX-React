@@ -17,7 +17,7 @@ import { EliminationStructure, generateRoundsDefinition, generateStandardElimina
 import { getActionsMenuData } from 'components/menus/actionsMenu';
 
 export const DrawsPanel = (props) => {
-  const { drawDefinition } = props;
+  const { drawDefinition, event } = props;
 
   const scoringTieMatchUp = useSelector((state: any) => state.tmx.scoringTieMatchUp);
   const { matchUp: tieMatchUp } = scoringTieMatchUp || {};
@@ -40,12 +40,12 @@ export const DrawsPanel = (props) => {
   const result = drawEngine
     .setState(drawDefinition)
     .setParticipants(participants)
-    .allStructureMatchUps({ structureId });
+    .allStructureMatchUps({ structureId, context: { eventId: event?.eventId } });
   const { matchUps, roundMatchUps } = result;
   const { roundsDefinition } = generateRoundsDefinition({
     roundMatchUps
   });
-  const columns = generateStandardElimination({ height: 70, roundsDefinition });
+  const columns = generateStandardElimination({ drawDefinition, height: 70, roundsDefinition });
 
   // const { roundPresentationProfile } = drawEngine.getRoundPresentationProfile({ matchUps });
   // console.log({ columns, roundsDefinition, roundPresentationProfile });
