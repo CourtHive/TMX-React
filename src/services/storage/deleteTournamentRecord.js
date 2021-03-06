@@ -4,6 +4,7 @@ import { tmxStore } from 'stores/tmxStore';
 import { showCalendar } from 'services/screenSlaver';
 
 export function deleteTournamentRecord({ tournamentId, onDelete }) {
+  if (!tournamentId) return;
   db.findTournament(tournamentId).then(doIt, (err) => console.log({ err }));
   function doIt(tournament) {
     tmxStore.dispatch({

@@ -47,6 +47,7 @@ export const db = (function () {
 
   db.deleteTournament = (tournamentId) => {
     return new Promise((resolve, reject) => {
+      if (!tournamentId) return reject('Missing tournamentId');
       db.db.tournaments.where('tournamentId').equals(tournamentId).delete().then(resolve, reject);
     });
   };
