@@ -5686,10 +5686,10 @@ esrecurse@^4.1.0, esrecurse@^4.3.0:
   dependencies:
     estraverse "^5.2.0"
 
-esri-leaflet@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/esri-leaflet/-/esri-leaflet-3.0.0.tgz#45e58705af724e43db30fba6c6fb0b2409df021e"
-  integrity sha512-9Lls1x9FqJgl+0HDFSor2ugqCmkTLMJKzVRnns5W996EJsj8iTG5ftktEFU/OkiTC9iOxNSoS6nzNo9KT0fgIg==
+esri-leaflet@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/esri-leaflet/-/esri-leaflet-3.0.1.tgz#000dfc9f78e27f02c59daaa3fd87654ac94b4e94"
+  integrity sha512-pY/zI9VbZUfX5Do3ujD0LDDtWsn8dG2+tWRc9bKTvnou1p5XpHisvwxYM5w1xbKHANGkzYaCSrD1zxcWWocmhQ==
   dependencies:
     "@terraformer/arcgis" "^2.0.7"
     tiny-binary-search "^1.0.3"
@@ -12415,10 +12415,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tods-competition-factory@0.4.64:
-  version "0.4.64"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.4.64.tgz#561d8ecb4ba833ab54822d0ec787e3f101ee2b14"
-  integrity sha512-PBorZLpXunXoiDoVXOCyvA9OP9w5aW3ET3O1+hQIZqa5XYlmpkM0Dc070vYV1UmnVgYWmqZeprjq0HGPnfBeJQ==
+tods-competition-factory@0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.2.tgz#47603dfbee45aaa66bd6d3a643fe966cfcbd8a69"
+  integrity sha512-64JTBQztuN64mhFR7c4iYWGjCS7iKOZ67oV0CRq0Bpc8+wpOU4wSnTvWAo2vWjAatDah40nlfsyStsGWzW15ww==
   dependencies:
     tods-matchup-format-code "^1.0.7"
 
