@@ -143,12 +143,10 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
           <Grid item xs={downXs ? 12 : 'auto'}>
             <Grid item className={classes.headerRootPaddingNoBottom}>
               <Grid container direction="row">
-                <Grid item onClick={handleLogoClick}>
-                  <Typography align="left" component="h2" className={classes.tournamentName}>
-                    {tournamentName}
-                    <AuthButton />
-                  </Typography>
-                </Grid>
+                <Typography onClick={handleLogoClick} align="left" component="h2" className={classes.tournamentName}>
+                  {tournamentName}
+                </Typography>
+                <AuthButton />
               </Grid>
             </Grid>
           </Grid>
