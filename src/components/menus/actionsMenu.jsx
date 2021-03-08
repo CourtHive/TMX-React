@@ -20,23 +20,22 @@ const {
 
 const { END, NICKNAME, PENALTY, REFEREE, SCHEDULE, SCORE, START, STATUS } = matchUpActionConstants;
 
-export function getActionsMenuData({ matchUp, sideNumber }) {
-  const { drawId, matchUpId, structureId, sides /*, roundNumber, roundPosition*/ } = matchUp || {};
+export function getActionsMenuData({ scoringMatchUp, matchUp, sideNumber }) {
+  const { drawId, structureId, sides } = matchUp || {};
   // const isRoundRobin = roundNumber && !roundPosition;
 
   const side = sides?.find((side) => side.sideNumber === sideNumber);
-  const participantName = side?.participant?.participantName;
-  const participantNames = sides?.map((side) => side.participant?.participantName).filter((f) => f);
-  const drawPosition = side?.drawPosition;
+  const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp;
 
-  const matchUpActions = tournamentEngine.matchUpActions({ drawId, matchUpId });
+  const drawPosition = side?.drawPosition;
+  const participantName = side?.participant?.participantName;
+  const participantNames = sourceMatchUp?.sides?.map((side) => side.participant?.participantName).filter((f) => f);
+
+  const matchUpActions = tournamentEngine.matchUpActions(sourceMatchUp);
   const positionActions = tournamentEngine.positionActions({ drawId, structureId, drawPosition });
   const { isActiveDrawPosition, isByePosition, isDrawPosition } = positionActions || {};
   const { isByeMatchUp } = matchUpActions || {};
-  const validActions = [].concat(
-    ...(positionActions?.validActions || []),
-    ...((!drawPosition && matchUpActions?.validActions) || [])
-  );
+  const validActions = [].concat(...(positionActions?.validActions || []), ...(matchUpActions?.validActions || []));
   const actions = Object.assign(
     {},
     { validActions, isByeMatchUp, isActiveDrawPosition, isByePosition, isDrawPosition }
@@ -51,7 +50,7 @@ export function getActionsMenuData({ matchUp, sideNumber }) {
       ? { primary: `Draw Position ${drawPosition}: BYE` }
       : undefined;
 
-  console.log({ actions, menuHeader });
+  return { actions, menuHeader };
 }
 
 export const ActionsMenu = ({ actions, e }) => {

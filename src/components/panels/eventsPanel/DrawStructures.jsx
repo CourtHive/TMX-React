@@ -21,13 +21,13 @@ import { tournamentEngine } from 'tods-competition-factory';
 export const DrawsPanel = (props) => {
   const { drawDefinition, event } = props;
 
-  const scoringTieMatchUp = useSelector((state: any) => state.tmx.scoringTieMatchUp);
+  const scoringTieMatchUp = useSelector((state) => state.tmx.scoringTieMatchUp);
   const { matchUp: tieMatchUp } = scoringTieMatchUp || {};
 
-  const selectedStructureId = useSelector((state: any) => state.tmx.select.draws.structureId);
+  const selectedStructureId = useSelector((state) => state.tmx.select.draws.structureId);
 
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
+  const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
 
   const participants = tournamentRecord.participants || [];
   const structures = drawDefinition?.structures || [];
@@ -84,12 +84,12 @@ export const DrawsPanel = (props) => {
   };
 
   const onScoreClick = ({ matchUp, sideIndex, e }) => {
-    const menuData = getActionsMenuData({ matchUp, sideNumber: undefined });
+    const menuData = getActionsMenuData({ scoringMatchUp: matchUp });
     console.log('Scoring matchUp', { matchUp, sideIndex, e, menuData });
   };
   const onParticipantClick = ({ matchUp, sideNumber, e }) => {
     const menuData = getActionsMenuData({ matchUp, sideNumber });
-    console.log('Participant matchUp', { matchUp, sideNumber, e, menuData });
+    console.log('Participant matchUp', { e, menuData });
   };
   const args = { eventData, drawId, structureId, roundMatchUps, onScoreClick, onParticipantClick };
 
