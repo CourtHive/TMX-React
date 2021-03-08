@@ -13,8 +13,10 @@ import NoticePaper from 'components/papers/notice/NoticePaper';
 import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
 
 import { drawEngine } from 'tods-competition-factory';
-import { EliminationStructure, generateRoundsDefinition, generateStandardElimination } from 'tods-react-draws';
+import { EliminationStructure } from 'tods-react-draws';
 import { getActionsMenuData } from 'components/menus/actionsMenu';
+
+import { tournamentEngine } from 'tods-competition-factory';
 
 export const DrawsPanel = (props) => {
   const { drawDefinition, event } = props;
@@ -42,14 +44,9 @@ export const DrawsPanel = (props) => {
     .setParticipants(participants)
     .allStructureMatchUps({ structureId, context: { eventId: event?.eventId } });
   const { matchUps, roundMatchUps } = result;
-  const { roundsDefinition } = generateRoundsDefinition({
-    roundMatchUps
-  });
-  const columns = generateStandardElimination({ drawDefinition, height: 70, roundsDefinition });
+  const { eventData } = tournamentEngine.getEventData({ eventId: event.eventId }) || {};
 
-  // const { roundPresentationProfile } = drawEngine.getRoundPresentationProfile({ matchUps });
-  // console.log({ columns, roundsDefinition, roundPresentationProfile });
-
+  const { drawId } = drawDefinition || {};
   const { nextUnfilledDrawPositions } = drawEngine.getNextUnfilledDrawPositions({ structureId });
 
   const renderMatchUps = matchUps.filter((matchUp) => matchUp.drawPositions);
@@ -94,7 +91,7 @@ export const DrawsPanel = (props) => {
     const menuData = getActionsMenuData({ matchUp, sideNumber });
     console.log('Participant matchUp', { matchUp, sideNumber, e, menuData });
   };
-  const args = { columns, roundMatchUps, onScoreClick, onParticipantClick };
+  const args = { eventData, drawId, structureId, roundMatchUps, onScoreClick, onParticipantClick };
 
   return (
     <>
