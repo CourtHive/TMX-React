@@ -71,7 +71,7 @@
     "@types/react-redux": "7.1.16",
     "@types/react-router-dom": "5.1.7",
     "@types/react-window": "1.8.2",
-    "@types/socket.io-client": "1.4.35",
+    "@types/socket.io-client": "1.4.36",
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
