@@ -16,7 +16,6 @@ import CustomDialog from 'components/dialogs/CustomDialog';
 import MatchUpFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
 import KeyScoreEntry from 'components/inputs/keyScoreEntry/KeyScoreEntry';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
-import { MatchConfigurationInterface } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 
 export function ScoreEntry() {
   const classes = useStyles();
@@ -93,9 +92,7 @@ export function ScoreEntry() {
     <>
       <div className={classes.editFormatDialogContentWrapper}>
         <MatchUpFormatForm
-          matchUpFormatParsed={
-            matchUpFormatCode.parse(matchUpFormat || defaultMatchUpFormat) as MatchConfigurationInterface
-          }
+          matchUpFormatParsed={matchUpFormatCode.parse(matchUpFormat || defaultMatchUpFormat)}
           onChange={scoreFormatChange}
         />
       </div>
@@ -153,9 +150,6 @@ export function ScoreEntry() {
                 rowChange={handleRowChange}
                 data={values[0]}
                 updateData={updateData}
-                setRowSizes={() => {
-                  console.log('not implemented');
-                }}
               />
               <div style={{ paddingTop: '.5em' }}>{values[0].winningSide === 2 ? <WinIndicator /> : null}</div>
             </Grid>
@@ -172,9 +166,6 @@ export function ScoreEntry() {
                 rowChange={handleRowChange}
                 data={values[1]}
                 updateData={updateData}
-                setRowSizes={() => {
-                  console.log('not implemented');
-                }}
               />
               <div style={{ paddingTop: '.5em' }}>{values[1].winningSide === 2 ? <WinIndicator /> : null}</div>
             </Grid>
@@ -191,9 +182,6 @@ export function ScoreEntry() {
                 rowChange={handleRowChange}
                 data={values[2]}
                 updateData={updateData}
-                setRowSizes={() => {
-                  console.log('not implemented');
-                }}
               />
               <div style={{ paddingTop: '.5em' }}>{values[2].winningSide === 2 ? <WinIndicator /> : null}</div>
             </Grid>

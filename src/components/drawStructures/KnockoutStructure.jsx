@@ -1,85 +1,82 @@
-import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { env } from 'config/defaults';
-import { useStyles } from './style';
-
-import { ListPicker } from 'components/dialogs/listPicker';
+// import { ListPicker } from 'components/dialogs/listPicker';
 import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
-import { knockoutDraw } from './knockoutStructures/knockoutDraw';
 
-import { drawEngine } from 'tods-competition-factory';
+import { tournamentEngine, positionActionConstants, matchUpActionConstants } from 'tods-competition-factory';
+import { EliminationStructure } from 'tods-react-draws';
+import { MatchOutcomeContainer } from 'containers/matchUpOutcome/MatchUpOutcomeContainer';
+
+const {
+  // ALTERNATE_PARTICIPANT,
+  // WITHDRAW_PARTICIPANT,
+  ASSIGN_PARTICIPANT,
+  // LUCKY_PARTICIPANT,
+  REMOVE_ASSIGNMENT,
+  SWAP_PARTICIPANTS
+  // ADD_NICKNAME,
+  // ADD_PENALTY,
+  // ASSIGN_BYE,
+  // SEED_VALUE
+} = positionActionConstants;
+
+const { END, NICKNAME, PENALTY, REFEREE, SCHEDULE, SCORE, START, STATUS } = matchUpActionConstants;
 
 export function KnockoutStructure(props) {
-  const { drawData } = props;
-  const classes = useStyles();
   const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const [pickerData, setPickerData] = useState(undefined);
   const [menuData, setMenuData] = useState(undefined);
-
-  const editState = useSelector((state) => state.tmx.editState);
-  const drawResize = useSelector((state) => state.tmx.drawResize);
-
-  const isCompass = false;
-  const anchorId = 'knockoutDraw';
-  const drawWidth = document.getElementById('root').offsetWidth * 0.9;
-  const knockoutOptions = Object.assign({}, env.draws.tree_draw, {
-    width: drawWidth,
-    flags: { display: true, threshold: 0 },
-    names: { seed_number: true },
-    compass: { display: isCompass },
-    schedule: true,
-    details: {
-      seeding: true,
-      draw_entry: true,
-      draw_positions: true,
-      teams: env.draws.tree_draw.display.teams,
-      player_rankings: !env.players.ratings.display,
-      player_ratings: env.players.ratings.display
-    },
-    seeds: { color: 'red' }
-  });
+  const [targetMatchUp, setTargetMatchUp] = useState(undefined);
+  const { eventData, drawId, structureId } = props;
 
   const closeMenu = () => {
     setMenuData({});
   };
 
-  function scoreMatchUp({ matchUp }) {
-    if (matchUp.matchUpType === 'TEAM') {
-      dispatch({ type: 'scoring tieMatchUp', payload: { matchUp } });
-    } else {
-      dispatch({ type: 'scoring details', payload: { matchUp } });
-    }
-  }
+  function getActionsMenuData({ scoringMatchUp, matchUp, sideNumber, onCloseMenu }) {
+    const { drawId, structureId, sides } = matchUp || {};
+    // const isRoundRobin = roundNumber && !roundPosition;
 
-  function scoreAction(node) {
-    const data = node.data || node;
-    scoreMatchUp({ matchUp: data });
-  }
+    const side = sides?.find((side) => side.sideNumber === sideNumber);
+    const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp;
 
-  function removeAssignment(_, params) {
-    dispatch({
-      type: 'tournamentEngine',
-      payload: {
-        methods: [{ method: 'removeDrawPositionAssignment', params }]
+    const drawPosition = side?.drawPosition;
+    const participantName = side?.participant?.participantName;
+    const participantNames = sourceMatchUp?.sides?.map((side) => side.participant?.participantName).filter((f) => f);
+
+    const matchUpActions = tournamentEngine.matchUpActions(sourceMatchUp);
+    const positionActions = tournamentEngine.positionActions({ drawId, structureId, drawPosition });
+    const { /*isActiveDrawPosition,*/ isByePosition, isDrawPosition } = positionActions || {};
+    const validActions = [].concat(...(positionActions?.validActions || []), ...(matchUpActions?.validActions || []));
+
+    // const { isByeMatchUp } = matchUpActions || {};
+    // console.log({ validActions, isByeMatchUp, isActiveDrawPosition, isByePosition, isDrawPosition });
+
+    const menuHeader =
+      isDrawPosition && participantName
+        ? { primary: participantName }
+        : !isDrawPosition && !sideNumber && participantNames
+        ? { primary: 'Match Options', secondary: participantNames.join(' vs ') }
+        : isByePosition
+        ? { primary: `Draw Position ${drawPosition}: BYE` }
+        : undefined;
+
+    function scoreAction() {
+      const matchUp = sourceMatchUp;
+      if (matchUp.matchUpType === 'TEAM') {
+        dispatch({ type: 'scoring tieMatchUp', payload: { matchUp } });
+      } else {
+        setTargetMatchUp(matchUp);
+        // dispatch({ type: 'scoring details', payload: { matchUp } });
       }
-    });
-  }
+    }
 
-  function findParticipantName({ bye, participantId, unassignedByes }) {
-    const participant = drawData.participants.reduce((participant, candidate) => {
-      return candidate.participantId === participantId ? candidate : participant;
-    }, undefined);
-    const byeOption = bye && `BYE {${unassignedByes}}`;
-    return (participant && participant.participantName) || byeOption || 'Unknown';
-  }
-
-  function assignPosition(_, payload) {
+    function assignPosition(validAction) {
+      console.log({ validAction });
+      /*
     function doAssignment({ selection } = {}) {
       if (selection && selection.value) {
-        dispatch({
+        tmxStore.dispatch({
           type: 'tournamentEngine',
           payload: {
             methods: [
@@ -106,149 +103,102 @@ export function KnockoutStructure(props) {
         setPickerData({ options, callback });
       }
     }
-  }
+    */
+    }
+    const menuActions = [
+      {
+        type: SCORE,
+        id: 'scoreMatchUp',
+        icon: null,
+        click: scoreAction,
+        text: 'Match Score',
+        singleClickAction: true
+      },
+      {
+        type: ASSIGN_PARTICIPANT,
+        id: 'assignPosition',
+        icon: null,
+        click: assignPosition,
+        text: 'Assign Position',
+        singleClickAction: true
+      },
+      { type: REMOVE_ASSIGNMENT, id: 'removeParticipant', icon: null, text: 'Remove' },
+      { type: REFEREE, icon: null, text: 'Set Referee' },
+      { type: SCHEDULE, icon: null, text: 'Set Schedule' },
+      { type: STATUS, icon: null, text: 'Set Match Status' },
+      { type: PENALTY, icon: null, text: 'Assess Penalty' },
+      { type: NICKNAME, icon: null, text: 'Assign Nickname' },
+      { type: 'SUSPEND', icon: null, text: 'Suspend Match' },
+      { type: SWAP_PARTICIPANTS, icon: null, text: 'Swap Positions' },
+      { type: START, icon: null, text: 'Set Match Start Time' },
+      { type: END, icon: null, text: 'Set Match End Time' }
+    ];
 
-  // singleClickAction indicates that if an item is the only valid item no popover menu required
-  const menuActions = [
-    {
-      action: 'SCORE',
-      id: 'scoreMatchUp',
-      icon: null,
-      click: scoreAction,
-      text: 'Match Score',
-      singleClickAction: true
-    },
-    {
-      action: 'ASSIGNMENT',
-      id: 'assignPosition',
-      icon: null,
-      click: assignPosition,
-      text: 'Assign Position',
-      singleClickAction: true
-    },
-    { action: 'REMOVE', id: 'removePartivipant', icon: null, click: removeAssignment, text: 'Remove' },
-    { action: 'REFEREE', icon: null, click: closeMenu, text: 'Set Referee' },
-    { action: 'SCHEDULE', icon: null, click: closeMenu, text: 'Set Schedule' },
-    { action: 'STATUS', icon: null, click: closeMenu, text: 'Set Match Status' },
-    { action: 'PENALTY', icon: null, click: closeMenu, text: 'Assess Penalty' },
-    { action: 'NICKNAME', icon: null, click: closeMenu, text: 'Assign Nickname' },
-    { action: 'SUSPEND', icon: null, click: closeMenu, text: 'Suspend Match' },
-    { action: 'START', icon: null, click: closeMenu, text: 'Set Match Start Time' },
-    { action: 'END', icon: null, click: closeMenu, text: 'Set Match End Time' }
-  ];
-
-  function actionMenu(node, coords) {
-    const { validActions, isDrawPosition, isByePosition } = node.drawPosition
-      ? drawEngine.positionActions(node)
-      : drawEngine.matchUpActions(node);
+    let actionMenuData, action;
+    const closeMenu = () => typeof onCloseMenu === 'function' && onCloseMenu();
+    const takeAction = (type) => {
+      const action = menuActions.find((action) => action.type === type);
+      if (action?.click && typeof action.click === 'function') {
+        const validAction = validActions.find((action) => action.type === type);
+        action.click({ validAction });
+      }
+    };
 
     const validActionTypes = validActions?.map((action) => action.type);
-    const validActionPayloads =
-      validActions?.reduce((payloads, action) => {
-        return action.payload ? Object.assign(payloads, { [action.type]: action.payload }) : payloads;
-      }, {}) || {};
 
-    const participantName =
-      isDrawPosition &&
-      node &&
-      ((node.sides &&
-        node.sides
-          .filter((f) => f)
-          .reduce((name, side) => {
-            return (side.participant && side.participant.participantName) || name;
-          }, undefined)) ||
-        (node.participant && node.participant.participantName));
-
-    const participantNames =
-      node &&
-      node.sides &&
-      node.sides
-        .filter((f) => f)
-        .map((side) => {
-          if (!side.participant) return undefined;
-          const singleParticipantName = side.participant.person && side.participant.person.standardFamilyName;
-          const doublesParticipantName = side.participant.individualParticipants && side.participant.participantName;
-          return singleParticipantName || doublesParticipantName;
-        })
-        .filter((f) => f);
-
-    const menuHeader =
-      isDrawPosition && participantName
-        ? { primary: participantName }
-        : !isDrawPosition && participantNames && participantNames.length === 2
-        ? { primary: t('Match Options'), secondary: participantNames.join(' vs ') }
-        : isByePosition || node.bye
-        ? { primary: `Draw Position ${node.drawPosition}: BYE` }
-        : undefined;
-
-    if (coords && validActions?.length) {
-      const menuPosition = { left: coords.screen_x, top: coords.screen_y };
+    if (validActions?.length) {
       const menuItems = menuActions
         .filter((menuAction) => {
-          return validActionTypes?.includes(menuAction.action);
+          return validActionTypes?.includes(menuAction.type);
         })
         .map((menuAction) => {
           if (menuAction.click) {
             const onClick = () => {
-              menuAction.click(node, validActionPayloads[menuAction.action]);
+              closeMenu();
+              takeAction(menuAction.type);
             };
             Object.assign(menuAction, { onClick });
           }
           return menuAction;
         });
       if (menuItems.length === 1 && menuItems[0].singleClickAction) {
-        menuItems[0].onClick();
+        action = validActions.find((action) => action.type === menuItems[0].type);
       } else {
-        setMenuData({ menuPosition, menuItems, menuHeader, open: true });
+        actionMenuData = { menuItems, menuHeader };
       }
     }
+    return { actionMenuData, action };
   }
-
-  function scoreClick(node) {
-    const matchUp = node.data || node;
-    const { validActions } = node.drawPosition ? drawEngine.positionActions(node) : drawEngine.matchUpActions(matchUp);
-    const validActionTypes = validActions?.map((action) => action.type);
-    if (validActionTypes?.includes('SCORE')) {
-      scoreMatchUp({ matchUp });
+  const onScoreClick = ({ matchUp, sideIndex, e }) => {
+    const menuPosition = { left: e.clientX, top: e.clientY };
+    const { action, actionMenuData } = getActionsMenuData({ scoringMatchUp: matchUp });
+    if (action) {
+      console.log('Scoring matchUp', { sideIndex, action });
+    } else {
+      setMenuData({ menuPosition, ...actionMenuData, open: true });
     }
-  }
-
-  function positionClick(node, coords /*, teamIndex*/) {
-    // console.log({ node, teamIndex });
-    const data = node.data || node;
-    actionMenu(data, coords);
-  }
-
-  const events = {
-    position: { click: positionClick, contextmenu: scoreClick },
-    person: { click: positionClick, contextmenu: positionClick },
-    compass: { mouseover: null, mouseout: null, click: null },
-    score: { mouseover: null, mouseout: null, click: scoreClick },
-    umpire: { mouseover: null, mouseout: null, click: scoreClick },
-    matchdate: { mouseover: null, mouseout: null, click: scoreClick }
   };
-
-  const drawGenerator = knockoutDraw().options(knockoutOptions);
-  if (editState) {
-    drawGenerator.events(events);
-  }
-
-  useEffect(() => {
-    const selector = document.getElementById(anchorId);
-    if (selector) {
-      drawGenerator.selector(selector).data(drawData)();
+  const onParticipantClick = ({ matchUp, sideNumber, e }) => {
+    const menuPosition = { left: e.clientX, top: e.clientY };
+    const { action, actionMenuData } = getActionsMenuData({ matchUp, sideNumber });
+    if (action) {
+      console.log('take action', { action });
+    } else {
+      setMenuData({ menuPosition, ...actionMenuData, open: true });
     }
-  }, [drawGenerator, drawData, drawResize]);
+  };
+  const args = { eventData, drawId, structureId, onScoreClick, onParticipantClick };
 
-  if (!drawData || !Object.keys(drawData).length) return null;
+  const closeMatchUpOutcome = () => setTargetMatchUp(undefined);
 
-  // TODO: add properly designed button
   return (
     <>
-      {pickerData ? <ListPicker {...pickerData} /> : null}
+      <EliminationStructure {...args} />
       <TMXPopoverMenu {...menuData} closeMenu={closeMenu} />
-
-      <div id={anchorId} className={classes.tmxDraws} />
+      <MatchOutcomeContainer matchUp={targetMatchUp} closeDialog={closeMatchUpOutcome} />
     </>
   );
 }
+
+// {pickerData ? <ListPicker {...pickerData} /> : null}
+// <div id={anchorId} className={classes.tmxDraws} />

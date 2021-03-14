@@ -30,7 +30,6 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   hasFinalSet,
   onChange
 }) => {
-  console.log({ matchUpFormatParsed });
   const { t } = useTranslation();
   const setFormat = (isFinalSet
     ? matchUpFormatParsed?.finalSetFormat

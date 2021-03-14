@@ -1,7 +1,7 @@
 import { db } from './db';
 import { context } from '../context';
 import { env } from 'config/defaults';
-import { isLocalhost } from 'functions/isLocalhost';
+// import { isLocalhost } from 'functions/isLocalhost';
 import { coms } from 'services/communications/SocketIo/coms';
 
 import { getTournamentRecord } from 'stores/accessor';
@@ -24,10 +24,12 @@ export const save = (function () {
     const diff = new Date().getTime() - (lastCloudSave || 0);
     if (tournament && avoidBurst && diff > PUSH_PERIOD) {
       context.state.lastCloudSaveAttempt = new Date().getTime();
+      /*
       if (isLocalhost) {
         console.log('%c pushed to server', 'color: lightgreen');
       }
       fx.cloud({ tournament });
+      */
     }
 
     const cantsave = document.querySelector('.NOSAVE');

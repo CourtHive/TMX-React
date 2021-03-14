@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
+
+import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
 
 import { useOptimizedResize } from 'components/hooks/useOptimizedRefresh';
 
 import { resizeDraw } from 'components/drawDisplay/drawResizing';
-import { KnockoutStructure } from 'components/drawStructures/KnockoutStructure';
 import { RoundRobinStructure } from 'components/drawStructures/RoundRobinStructure';
 import { NoDrawsNotice } from 'components/notices/noDrawsNotice';
 import NoticePaper from 'components/papers/notice/NoticePaper';
@@ -13,13 +14,13 @@ import NoticePaper from 'components/papers/notice/NoticePaper';
 import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
 
 import { drawEngine } from 'tods-competition-factory';
-import { EliminationStructure } from 'tods-react-draws';
-import { getActionsMenuData } from 'components/menus/actionsMenu';
 
 import { tournamentEngine } from 'tods-competition-factory';
+import { KnockoutStructure } from 'components/drawStructures/KnockoutStructure';
 
 export const DrawsPanel = (props) => {
   const { drawDefinition, event } = props;
+  const [menuData, setMenuData] = useState(undefined);
 
   const scoringTieMatchUp = useSelector((state) => state.tmx.scoringTieMatchUp);
   const { matchUp: tieMatchUp } = scoringTieMatchUp || {};
@@ -64,6 +65,10 @@ export const DrawsPanel = (props) => {
 
   useOptimizedResize(() => resizeDraw({ structure }));
 
+  const knockoutArgs = { eventData, drawId, structureId };
+
+  const closeMenu = () => setMenuData({});
+
   const DrawStructure = () => {
     const props = { drawData, structureId };
     return (
@@ -75,27 +80,15 @@ export const DrawsPanel = (props) => {
         ) : drawIsRoundRobin ? (
           <RoundRobinStructure {...props} />
         ) : drawIsAdHoc ? null : (
-          <>
-            <KnockoutStructure {...props} />
-          </>
+          <KnockoutStructure {...knockoutArgs} />
         )}
       </>
     );
   };
 
-  const onScoreClick = ({ matchUp, sideIndex, e }) => {
-    const menuData = getActionsMenuData({ scoringMatchUp: matchUp });
-    console.log('Scoring matchUp', { matchUp, sideIndex, e, menuData });
-  };
-  const onParticipantClick = ({ matchUp, sideNumber, e }) => {
-    const menuData = getActionsMenuData({ matchUp, sideNumber });
-    console.log('Participant matchUp', { e, menuData });
-  };
-  const args = { eventData, drawId, structureId, roundMatchUps, onScoreClick, onParticipantClick };
-
   return (
     <>
-      <NoticePaper className={'header'} style={{ marginTop: '1em' }}>
+      <NoticePaper className={'header'} style={{ marginTop: '1em', marginBottom: '1em' }}>
         <Grid container spacing={2} direction="row" justify="flex-start">
           <Grid item>Draw Details:</Grid>
           <Grid item style={{ flexGrow: 1 }}>
@@ -106,9 +99,7 @@ export const DrawsPanel = (props) => {
         </Grid>
       </NoticePaper>
       <DrawStructure />
-      <div>
-        <EliminationStructure {...args} />
-      </div>
+      <TMXPopoverMenu {...menuData} closeMenu={closeMenu} />
     </>
   );
 };
