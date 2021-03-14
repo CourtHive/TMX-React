@@ -65,14 +65,6 @@ export const useStylesCommon = makeStyles((theme: Theme) => ({
     borderLeft: '3px solid black',
     height: '90%'
   },
-  UMTableDragHandleCell: {
-    height: '42px',
-    padding: '8px',
-    width: '100%',
-    '&:hover': {
-      cursor: 'grab'
-    }
-  },
   UMTableDragHandleCellAssigned: {
     color: 'grey'
   },

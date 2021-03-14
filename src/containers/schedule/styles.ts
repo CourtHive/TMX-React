@@ -22,13 +22,6 @@ export const useStyles = makeStyles(() => ({
     borderLeft: '2px solid black',
     padding: '2px'
   },
-  UMTableDragHandleCell: {
-    fontSize: '10px',
-    minWidth: '40px',
-    maxWidth: '40px',
-    padding: 0,
-    width: '40px'
-  },
   courtTitle: {
     borderLeft: 'none',
     borderRight: 'none',

@@ -55,9 +55,9 @@ export const SchedulePanel = ({ tournamentId }) => {
       <Grid container item justify="flex-start">
         <PanelSelector tournamentId={tournamentId} contextId={TAB_SCHEDULE} />
       </Grid>
-      {!hasCourts ? null : <OptionsPanel />}
-      {!hasCourts ? null : <ScheduleContainer />}
-      {hasCourts ? null : <VenuesNotice />}
+      {hasCourts && <OptionsPanel />}
+      {hasCourts && <ScheduleContainer />}
+      {!hasCourts && <VenuesNotice />}
     </>
   );
 };

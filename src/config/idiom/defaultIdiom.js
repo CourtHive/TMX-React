@@ -9,7 +9,6 @@ export const defaultIdiom = () => ({
       'End Date': 'End Date',
       'Start Date': 'Start Date',
 
-      'Show full schedule': 'Show full schedule',
       'Full Schedule View': 'Full Schedule View',
       'Latest View': 'Latest View',
       'On Now': 'On Now',

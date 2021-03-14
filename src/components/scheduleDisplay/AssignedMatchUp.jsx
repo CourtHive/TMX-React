@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { env } from 'config/defaults';
@@ -6,32 +6,17 @@ import Grid from '@material-ui/core/Grid';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
-import {
-  UMScheduleCourtType,
-  UMScheduleTableDataType,
-  UpcomingMatchUpType
-} from 'components/scheduleDisplay/UpcomingMatchesCourtSchedule';
 import { useStylesCommon } from 'components/scheduleDisplay/styles';
 
 import { utilities } from 'tods-competition-factory';
 const { convertTime, DateHHMM } = utilities.dateTime;
 
-interface UpcomingMatchesTableResourceProps {
-  courtId: string;
-  removeAssignment?: any;
-  rowData: UMScheduleTableDataType;
-}
-
-const UpcomingMatchesTableResource: React.FC<UpcomingMatchesTableResourceProps> = ({
-  courtId,
-  removeAssignment,
-  rowData
-}) => {
+const UpcomingMatchUpsActions = ({ courtId, removeAssignment, rowData }) => {
   const classes = useStylesCommon();
-  const editState = useSelector((state: any) => state.tmx.editState);
+  const editState = useSelector((state) => state.tmx.editState);
 
-  const court: UMScheduleCourtType = rowData?.courts?.find((currentCourt) => currentCourt.courtId === courtId);
-  const [cellMenuEl, setCellMenuEl] = React.useState<HTMLButtonElement | null>(null);
+  const court = rowData?.courts?.find((currentCourt) => currentCourt.courtId === courtId);
+  const [cellMenuEl, setCellMenuEl] = useState();
   const matchUp = court.matchUp;
   const { matchUpId } = matchUp || {};
 
@@ -52,7 +37,7 @@ const UpcomingMatchesTableResource: React.FC<UpcomingMatchesTableResourceProps> 
     <Grid className={classes.resourceWrapper} container>
       {!matchUp ? null : (
         <>
-          <AssignedMatch matchUp={matchUp} onClick={handleCellClick} />
+          <AssignedMatchUp matchUp={matchUp} onClick={handleCellClick} />
           <Popover
             id={matchUp.id}
             open={!!cellMenuEl}
@@ -82,12 +67,7 @@ const UpcomingMatchesTableResource: React.FC<UpcomingMatchesTableResourceProps> 
 //   return <div className={`${classes.emptyResourceWrapper} ${classes.lightGreenBackground}`}>Open Court</div>;
 // };
 
-interface AssignedMatchType {
-  className?: string;
-  matchUp: UpcomingMatchUpType;
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-}
-export const AssignedMatch: React.FC<AssignedMatchType> = ({ className, matchUp, onClick }) => {
+export const AssignedMatchUp = ({ className, matchUp, onClick }) => {
   const classes = useStylesCommon();
   const time = matchUp?.schedule?.time; // TODO: convert time string to e.g. 1h 54m ?
   const scheduledTime = convertTime(DateHHMM(matchUp.schedule.scheduledTime), env) || '';
@@ -115,4 +95,4 @@ export const AssignedMatch: React.FC<AssignedMatchType> = ({ className, matchUp,
   ) : null;
 };
 
-export default UpcomingMatchesTableResource;
+export default UpcomingMatchUpsActions;

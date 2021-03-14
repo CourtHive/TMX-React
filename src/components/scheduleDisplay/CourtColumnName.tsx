@@ -5,12 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { useStylesCommon } from 'components/scheduleDisplay/styles';
 
-interface UMCourtScheduleTitleProps {
-  subtitle?: string;
-  title: string;
-}
-
-const UMCourtScheduleTitle: React.FC<UMCourtScheduleTitleProps> = ({ subtitle, title }) => {
+const CourtColumnName = ({ subtitle, title }) => {
   const classes = useStylesCommon();
 
   return (
@@ -29,4 +24,4 @@ const UMCourtScheduleTitle: React.FC<UMCourtScheduleTitleProps> = ({ subtitle, t
   );
 };
 
-export default UMCourtScheduleTitle;
+export default CourtColumnName;

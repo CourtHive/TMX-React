@@ -1,17 +1,15 @@
-import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
-import { DragObjectItemInterface, DropTypeEnum } from 'components/tables/EndlessTable/typedefs';
-import { UMScheduleTableDataType, UMTableDataType } from 'components/scheduleDisplay/UpcomingMatchesCourtSchedule';
+import { DropTypeEnum } from 'components/tables/EndlessTable/typedefs';
 import { drawEngine } from 'tods-competition-factory';
 
 export const scheduleOnDrop = (
-  dragObject: DragObjectItemInterface<UMTableDataType | UMScheduleTableDataType>,
-  dropType: DropTypeEnum,
-  dropRowId: string,
-  endIndex: number,
-  dispatch: any,
-  dateSelected: string,
-  umTableDataMatchUps?: MatchUpInterface[],
-  uMScheduleData?: UMScheduleTableDataType[]
+  dragObject,
+  dropType,
+  dropRowId,
+  endIndex,
+  dispatch,
+  dateSelected,
+  umTableDataMatchUps,
+  uMScheduleData
 ) => {
   const startIndex = dragObject.startIndex;
   console.log({ dropType });
@@ -40,7 +38,7 @@ export const scheduleOnDrop = (
       break;
     }
     case DropTypeEnum.ADD_TO_CELL: {
-      const item = dragObject.item as UMTableDataType;
+      const item = dragObject.item;
       uMScheduleData?.forEach((data) => {
         data.courts.forEach((court, index) => {
           if (index === endIndex && data.id === dropRowId) {
@@ -73,7 +71,7 @@ export const scheduleOnDrop = (
     }
     case DropTypeEnum.REORDER_CELLS: {
       if (uMScheduleData) {
-        const item = dragObject.item as UMScheduleTableDataType;
+        const item = dragObject.item;
         const draggedData = {
           id: item.id,
           courts: item.courts.map((court) => ({ ...court }))

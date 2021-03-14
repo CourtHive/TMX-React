@@ -1,11 +1,10 @@
 import { env } from 'config/defaults';
 import { utilities, timeItemConstants } from 'tods-competition-factory';
-import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
 
 const { convertTime, DateHHMM } = utilities;
 const { SCHEDULED_TIME } = timeItemConstants;
 
-export const convertMatchUpsToRows = (umTableDataMatchUps: MatchUpInterface[]) =>
+export const convertMatchUpsToRows = (umTableDataMatchUps) =>
   umTableDataMatchUps
     ?.filter((matchUp) => matchUp.timeItems?.find((scheduleItem) => scheduleItem.itemSubject === SCHEDULED_TIME))
     ?.map(matchUpAsRow);
