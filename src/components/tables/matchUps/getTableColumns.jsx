@@ -1,28 +1,8 @@
-import React, { ReactNode } from 'react';
-import { TFunction } from 'i18next';
+import React from 'react';
 
 import Typography from '@material-ui/core/Typography';
 
-import { ColumnData, RowData } from 'components/tables/EndlessTable';
 import { reverseStringScore } from 'functions/scoring/reverseStringScore';
-
-export interface MatchUpsTableDataInterface extends RowData {
-  index: number;
-  roundName: string;
-  event: string;
-  format: string;
-  date: string;
-  court: string;
-  umpire: string;
-  scheduleTime: string;
-  startTime: string;
-  endTime: string;
-  player1: string;
-  player2: string;
-  status: string;
-  score: string;
-  readyToScore?: boolean;
-}
 
 const renderScore = (rowData) => {
   if (!rowData.score) return '';
@@ -30,13 +10,7 @@ const renderScore = (rowData) => {
 };
 
 export const isHidden = (name, hiddenColumns) => hiddenColumns.indexOf(name) >= 0;
-export const getScore = (
-  classes,
-  isInEditMode: boolean,
-  rowItem: { index: number; readyToScore?: boolean; score?: string },
-  selectedRowIndex: number,
-  getScoreComponent: (rowItem) => ReactNode
-) => {
+export const getScore = (classes, isInEditMode, rowItem, selectedRowIndex, getScoreComponent) => {
   // const renderScoreComponent = isInEditMode && (selectedRowIndex === rowItem.index || !selectedRowIndex);
   const renderScoreComponent = isInEditMode && (rowItem.readyToScore || rowItem.score);
   return renderScoreComponent
@@ -47,14 +21,7 @@ export const getScore = (
         node: <Typography className={classes.tableFontStyle}>{renderScore(rowItem)}</Typography>
       };
 };
-export const getTableColumns = (
-  classes,
-  getScoreComponent: (rowItem) => ReactNode,
-  hiddenColumns,
-  isInEditMode: boolean,
-  selectedRowIndex: number,
-  t: TFunction
-): ColumnData<MatchUpsTableDataInterface>[] => {
+export const getTableColumns = (classes, getScoreComponent, hiddenColumns, isInEditMode, selectedRowIndex, t) => {
   return [
     {
       key: 'roundName',

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,14 +15,10 @@ import NoticePaper from 'components/papers/notice/NoticePaper';
 import TMXInput from 'components/inputs/TMXInput';
 import EndlessTable from 'components/tables/EndlessTable';
 
-import {
-  getFilteredMatchUpsTableData,
-  MatchUpsTableDataInterface
-} from 'components/tables/matchUps/getFilteredTableData';
+import { getFilteredMatchUpsTableData } from 'components/tables/matchUps/getFilteredTableData';
 import { MatchUpTabMenu } from 'components/menus/matchUpsTabMenu';
 import { TeamSelector } from 'components/selectors/TeamSelector';
 import { getTableColumns } from 'components/tables/matchUps/getTableColumns';
-import { TableConfigInterface } from 'components/tables/EndlessTable/typedefs';
 import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
 import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
 import { useStyles } from 'components/tables/styles';
@@ -47,18 +43,18 @@ const { COMPETITOR } = participantRoles;
 //   return flag ? `${flag.trim()} ` : '';
 // };
 
-export const MatchUpsTable: React.FC = () => {
+export const MatchUpsTable = () => {
   const NONE = '-';
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const scoringTieMatchUp = useSelector((state: any) => state.tmx.scoringTieMatchUp);
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const selectedTeamId = useSelector((state: any) => state.tmx.select.matchUps.team);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
-  const editState = useSelector((state: any) => state.tmx.editState);
-  const hiddenColumns = useSelector((state: any) => state.tmx.hiddenColumns.matchUps) || [];
+  const scoringTieMatchUp = useSelector((state) => state.tmx.scoringTieMatchUp);
+  const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
+  const selectedTeamId = useSelector((state) => state.tmx.select.matchUps.team);
+  const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
+  const editState = useSelector((state) => state.tmx.editState);
+  const hiddenColumns = useSelector((state) => state.tmx.hiddenColumns.matchUps) || [];
   const matchUps = tournamentEngine.devContext(isDev()).setState(tournamentRecord).allTournamentMatchUps().matchUps;
 
   const { matchUp: tieMatchUp } = scoringTieMatchUp || {};
@@ -77,7 +73,7 @@ export const MatchUpsTable: React.FC = () => {
   const [matchUpData, setMatchUpData] = useState(undefined);
   const [matchUp, setMatchUp] = useState();
   const [targetMatchUp, setTargetMatchUp] = useState();
-  const [filterValue, setFilterValue] = useState<string>('');
+  const [filterValue, setFilterValue] = useState('');
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const selectedTeam =
@@ -85,7 +81,7 @@ export const MatchUpsTable: React.FC = () => {
   const teamIds = selectedTeam?.individualParticipantIds || [];
 
   const selectedDraw = undefined; // was useSelector
-  const filteredMatchUpsTableData: MatchUpsTableDataInterface[] = getFilteredMatchUpsTableData(
+  const filteredMatchUpsTableData = getFilteredMatchUpsTableData(
     classes,
     matchUps,
     selectedDraw,
@@ -93,7 +89,7 @@ export const MatchUpsTable: React.FC = () => {
     teamIds
   );
 
-  const hotDivEntry = (): ReactNode => <></>;
+  const hotDivEntry = () => <></>;
 
   const tableColumns = getTableColumns(classes, hotDivEntry, hiddenColumns, isInEditMode, selectedRowIndex, t);
 
@@ -156,7 +152,7 @@ export const MatchUpsTable: React.FC = () => {
     (menuItem) => !['checkbox', 'index', 'player1', 'player2'].includes(menuItem.id)
   );
 
-  const tableConfig: TableConfigInterface = {
+  const tableConfig = {
     className: classes.RTableConfig,
     tableHeight: window.innerHeight - 250
   };

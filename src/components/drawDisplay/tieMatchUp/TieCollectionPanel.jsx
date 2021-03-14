@@ -8,26 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import StandardPaper from 'components/papers/standard/StandardPaper';
 import { useStyles } from 'components/drawDisplay/tieMatchUp/styles';
 import TieCollectionItem from 'components/drawDisplay/tieMatchUp/TieCollectionItem';
-import { CollectionDefinitionInterface } from 'typedefs/drawTypes';
-import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
-import { ParticipantInterface } from 'typedefs/store/tmxTypes';
 
-interface TieCollectionPanelProps {
-  collectionDefinition: CollectionDefinitionInterface;
-  enterScore?: (matchUp: MatchUpInterface) => void;
-  filterOptions?: (matchUpType: string, options: ParticipantInterface[], side: number) => ParticipantInterface[];
-  onChange?: (
-    tieMatchUp: MatchUpInterface,
-    side: number,
-    participantId: string | ParticipantInterface | (string | ParticipantInterface)[],
-    sideMember: number
-  ) => void;
-  side1AvailableParticipants: ParticipantInterface[];
-  side2AvailableParticipants: ParticipantInterface[];
-  tieMatchUps: MatchUpInterface[];
-}
-
-const TieCollectionPanel: React.FC<TieCollectionPanelProps> = ({
+const TieCollectionPanel = ({
   collectionDefinition,
   enterScore,
   filterOptions,

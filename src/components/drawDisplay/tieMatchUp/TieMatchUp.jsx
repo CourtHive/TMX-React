@@ -7,31 +7,7 @@ import TieCollectionPanel from './TieCollectionPanel';
 import { Container, Grid, Typography } from '@material-ui/core';
 import StandardPaper from 'components/papers/standard/StandardPaper';
 
-import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
-import { ParticipantInterface } from 'typedefs/store/tmxTypes';
-
-export interface EditParticipantArgs {
-  tieMatchUp: MatchUpInterface;
-  sideNumber: number;
-  participantId: string;
-  sideMember: number;
-}
-
-interface DrawTieMatchUpsProps {
-  editParticipant?: ({ tieMatchUp, sideNumber, participantId, sideMember }: EditParticipantArgs) => void;
-  enterScore?: (matchUp: MatchUpInterface) => void;
-  tieFormat?: any;
-  importLineup?: () => void;
-  matchUp: MatchUpInterface;
-}
-
-const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
-  editParticipant,
-  tieFormat,
-  importLineup,
-  enterScore,
-  matchUp
-}) => {
+const DrawTieMatchUps = ({ editParticipant, tieFormat, importLineup, enterScore, matchUp }) => {
   const classes = useStyles();
   const mediaBreakpoints = useMediaQuery('(min-width:800px)');
   const { tieMatchUps } = matchUp || {};
@@ -48,22 +24,17 @@ const DrawTieMatchUps: React.FC<DrawTieMatchUpsProps> = ({
     const side = (matchUp.sides || [])[sideNumber - 1];
     const participant = side?.participant;
     const profiles = participant?.onlineProfiles || [];
-    const url = profiles.reduce<string | undefined>((url, candidate) => {
+    const url = profiles.reduce((url, candidate) => {
       return candidate.type === 'Logo' ? candidate.identifier : url;
     }, undefined);
     return url || null;
   };
-  const handleOnChange = (
-    tieMatchUp: MatchUpInterface,
-    sideNumber: number,
-    participant: string | ParticipantInterface | (string | ParticipantInterface)[],
-    sideMember: number
-  ) => {
-    const participantObject = participant as ParticipantInterface;
+  const handleOnChange = (tieMatchUp, sideNumber, participant, sideMember) => {
+    const participantObject = participant;
     const participantId = participantObject?.participantId;
     editParticipant({ tieMatchUp, sideNumber, participantId, sideMember });
   };
-  const handleFilterOptions = (matchUpType: string, options: ParticipantInterface[], side: number) => {
+  const handleFilterOptions = (matchUpType, options, side) => {
     const alreadySelected = tieMatchUps.flatMap((tieMatchUp) => {
       const matchUpSide = tieMatchUp.sides[side - 1];
 

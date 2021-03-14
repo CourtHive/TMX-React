@@ -6,29 +6,12 @@ import Box from '@material-ui/core/Box';
 
 import Typography from '@material-ui/core/Typography';
 
-import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
 import TMXAutocomplete from 'components/autocomplete/TMXAutocomplete';
-import { ParticipantInterface } from 'typedefs/store/tmxTypes';
 
 import { matchUpTypes } from 'tods-competition-factory';
 const { DOUBLES } = matchUpTypes;
 
-interface TieCollectionItemProps {
-  collectionMatchUp: MatchUpInterface;
-  enterScore?: (matchUp: MatchUpInterface) => void;
-  filterOptions?: (matchUpType: string, options: ParticipantInterface[], side: number) => ParticipantInterface[];
-  onChange?: (
-    tieMatchUp: MatchUpInterface,
-    side: number,
-    participantId: string | ParticipantInterface | (string | ParticipantInterface)[],
-    sideMember: number
-  ) => void;
-  pointsValue?: number;
-  side1AvailableParticipants: ParticipantInterface[];
-  side2AvailableParticipants: ParticipantInterface[];
-}
-
-const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
+const TieCollectionItem = ({
   collectionMatchUp,
   enterScore,
   filterOptions,
@@ -45,48 +28,34 @@ const TieCollectionItem: React.FC<TieCollectionItemProps> = ({
       enterScore(collectionMatchUp);
     }
   };
-  const handleGetOptionLabel = (option: ParticipantInterface) => {
+  const handleGetOptionLabel = (option) => {
     return option?.participantName || '';
   };
 
-  const handleSide1Member1Change = (
-    event: React.ChangeEvent<unknown>,
-    value: string | ParticipantInterface | (string | ParticipantInterface)[]
-  ) => {
+  const handleSide1Member1Change = (event, value) => {
     if (onChange) {
       onChange(collectionMatchUp, 1, value, 1);
     }
   };
-  const handleSide1Member2Change = (
-    event: React.ChangeEvent<unknown>,
-    value: string | ParticipantInterface | (string | ParticipantInterface)[]
-  ) => {
+  const handleSide1Member2Change = (event, value) => {
     if (onChange) {
       onChange(collectionMatchUp, 1, value, 2);
     }
   };
-  const handleSide2Member1Change = (
-    event: React.ChangeEvent<unknown>,
-    value: string | ParticipantInterface | (string | ParticipantInterface)[]
-  ) => {
+  const handleSide2Member1Change = (event, value) => {
     if (onChange) {
       onChange(collectionMatchUp, 2, value, 1);
     }
   };
-  const handleSide2Member2Change = (
-    event: React.ChangeEvent<unknown>,
-    value: string | ParticipantInterface | (string | ParticipantInterface)[]
-  ) => {
+  const handleSide2Member2Change = (event, value) => {
     if (onChange) {
       onChange(collectionMatchUp, 2, value, 2);
     }
   };
   const handleGetOptionSelected = (option, value) =>
     !option || value === '' || option.participantId === value.participantId;
-  const handleFilterOptionsSide1 = (options: ParticipantInterface[]) =>
-    filterOptions(collectionMatchUp.matchUpType, options, 1);
-  const handleFilterOptionsSide2 = (options: ParticipantInterface[]) =>
-    filterOptions(collectionMatchUp.matchUpType, options, 2);
+  const handleFilterOptionsSide1 = (options) => filterOptions(collectionMatchUp.matchUpType, options, 1);
+  const handleFilterOptionsSide2 = (options) => filterOptions(collectionMatchUp.matchUpType, options, 2);
 
   const side1Participant = collectionMatchUp.sides[0]?.participant;
   const side2Participant = collectionMatchUp.sides[1]?.participant;

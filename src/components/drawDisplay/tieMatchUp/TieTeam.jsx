@@ -2,19 +2,10 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { GridJustification } from '@material-ui/core/Grid/Grid';
 
 import { useStyles } from './styles';
 
-interface TieTeamProps {
-  importLineup?: () => void;
-  justifyContent?: GridJustification;
-  teamLogo: string;
-  teamName: string;
-  sideNumber: number;
-}
-
-const TieTeam: React.FC<TieTeamProps> = ({ /*importLineup,*/ justifyContent, teamLogo, teamName, sideNumber }) => {
+const TieTeam = ({ /*importLineup,*/ justifyContent, teamLogo, teamName, sideNumber }) => {
   const classes = useStyles();
   const textAlign = sideNumber === 1 ? 'right' : 'left';
 

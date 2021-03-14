@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from 'components/tables/actions/styles';
 
@@ -9,13 +9,7 @@ interface IconProps {
 }
 */
 
-interface ActionsProps {
-  dataImgSelector?: string;
-  actions?: ReactElement[]; // use IconProps
-  style?: CSSProperties;
-}
-
-const Actions: React.FC<ActionsProps> = ({ dataImgSelector, actions, style }) => {
+const Actions = ({ dataImgSelector, actions, style }) => {
   const classes = useStyles();
   return (
     <Grid
