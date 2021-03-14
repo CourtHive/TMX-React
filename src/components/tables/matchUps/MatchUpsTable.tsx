@@ -30,8 +30,8 @@ import { useStyles } from 'components/tables/styles';
 import { isDev } from 'functions/isDev';
 import { PanelSelector } from 'components/selectors/PanelSelector';
 import { TAB_MATCHUPS } from 'stores/tmx/types/tabs';
+import { MatchOutcomeContainer } from 'containers/matchUpOutcome/MatchUpOutcomeContainer';
 
-// import { tournamentEngine, participantRoles, participantTypes } from 'competitionFactory';
 import { tournamentEngine, participantRoles, participantTypes } from 'tods-competition-factory';
 const { TEAM } = participantTypes;
 const { COMPETITOR } = participantRoles;
@@ -76,6 +76,8 @@ export const MatchUpsTable: React.FC = () => {
 
   const [filteredData, setFilteredData] = useState([]);
   const [matchUpData, setMatchUpData] = useState(undefined);
+  const [matchUp, setMatchUp] = useState();
+  const [targetMatchUp, setTargetMatchUp] = useState();
   const [filterValue, setFilterValue] = useState<string>('');
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
@@ -122,6 +124,7 @@ export const MatchUpsTable: React.FC = () => {
     }, undefined);
 
     if (matchUp) {
+      setMatchUp(matchUp);
       setMatchUpData({ matchUp, coords });
     }
   };
@@ -181,6 +184,25 @@ export const MatchUpsTable: React.FC = () => {
     );
   }
 
+  const closeMatchUpOutcome = () => {
+    setMatchUp(undefined);
+    setTargetMatchUp(undefined);
+  };
+  function scoreAction() {
+    setTargetMatchUp(matchUp);
+  }
+
+  const menuActions = [
+    { action: 'SCORE', id: 'scoreMatchUp', icon: null, click: scoreAction, text: 'Match Score' },
+    { action: 'REFEREE', icon: null, click: closeMenu, text: 'Set Referee' },
+    { action: 'SCHEDULE', icon: null, click: closeMenu, text: 'Set Schedule' },
+    { action: 'PENALTY', icon: null, click: closeMenu, text: 'Assess Penalty' },
+    { action: 'NICKNAME', icon: null, click: closeMenu, text: 'Assign Nickname' },
+    { action: 'SUSPEND', icon: null, click: closeMenu, text: 'Suspend Match' },
+    { action: 'START', icon: null, click: closeMenu, text: 'Set Match Start Time' },
+    { action: 'END', icon: null, click: closeMenu, text: 'Set Match End Time' }
+  ];
+
   return (
     <>
       {tieMatchUp ? (
@@ -239,7 +261,6 @@ export const MatchUpsTable: React.FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          {!matchUpData ? null : <MatchUpTabMenu closeMenu={closeMenu} matchUpData={matchUpData} />}
           <EndlessTable
             columns={visibleColumns}
             data={dataForTable}
@@ -247,6 +268,8 @@ export const MatchUpsTable: React.FC = () => {
             onRowClick={handleOnRowClick}
             tableConfig={tableConfig}
           />
+          {matchUpData && <MatchUpTabMenu closeMenu={closeMenu} matchUpData={matchUpData} menuActions={menuActions} />}
+          <MatchOutcomeContainer matchUp={targetMatchUp} closeDialog={closeMatchUpOutcome} />
         </>
       )}
     </>

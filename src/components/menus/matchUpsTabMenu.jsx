@@ -1,12 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
-// import { tournamentEngine } from 'competitionFactory';
+
 import { tournamentEngine } from 'tods-competition-factory';
 
-export function MatchUpTabMenu({ matchUpData, closeMenu }) {
-  const dispatch = useDispatch();
+export function MatchUpTabMenu({ matchUpData, closeMenu, menuActions }) {
   const { t } = useTranslation();
 
   const { matchUp, coords } = matchUpData || {};
@@ -18,22 +16,6 @@ export function MatchUpTabMenu({ matchUpData, closeMenu }) {
 
   const { validActions, isDrawPosition } = tournamentEngine.matchUpActions(matchUp);
   const validActionTypes = validActions.map((action) => action.type);
-
-  function scoreAction({ matchUp }) {
-    closeMenu();
-    dispatch({ type: 'scoring details', payload: { matchUp } });
-  }
-
-  const menuActions = [
-    { action: 'SCORE', id: 'scoreMatchUp', icon: null, click: scoreAction, text: 'Match Score' },
-    { action: 'REFEREE', icon: null, click: closeMenu, text: 'Set Referee' },
-    { action: 'SCHEDULE', icon: null, click: closeMenu, text: 'Set Schedule' },
-    { action: 'PENALTY', icon: null, click: closeMenu, text: 'Assess Penalty' },
-    { action: 'NICKNAME', icon: null, click: closeMenu, text: 'Assign Nickname' },
-    { action: 'SUSPEND', icon: null, click: closeMenu, text: 'Suspend Match' },
-    { action: 'START', icon: null, click: closeMenu, text: 'Set Match Start Time' },
-    { action: 'END', icon: null, click: closeMenu, text: 'Set Match End Time' }
-  ];
 
   let menuData;
   const menuPosition = { left: coords.screen_x, top: coords.screen_y };
