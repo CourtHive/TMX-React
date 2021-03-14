@@ -5,10 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { useMediaQuery } from '@material-ui/core';
 
-import { useStylesCommon, useStylesMatchParticipant } from 'components/dialogs/scoringObjectDialog/styles';
+import { useStylesMatchParticipant } from './styles';
 
 const MatchUpSide = ({ sideNumber, matchUp }) => {
-  const classesCommon = useStylesCommon();
   const classes = useStylesMatchParticipant();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
@@ -32,16 +31,7 @@ const MatchUpSide = ({ sideNumber, matchUp }) => {
         ))}
       </Grid>
       <Grid item>
-        <Grid container direction="row" justify="flex-end" alignItems="center">
-          <Grid
-            item
-            className={
-              matches
-                ? `${classesCommon.setEntry} ${classes.moreHorizontalIconWrapper}`
-                : `${classesCommon.setEntryXS} ${classes.moreHorizontalIconWrapperXS}`
-            }
-          ></Grid>
-        </Grid>
+        <Grid container direction="row" justify="flex-end" alignItems="center"></Grid>
       </Grid>
     </Grid>
   );

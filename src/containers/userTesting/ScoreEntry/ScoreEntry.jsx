@@ -9,13 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import { green } from '@material-ui/core/colors';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-import ScoringDialogTitle from 'components/dialogs/scoringDialog/ScoringDialogTitle';
-import ScoringDialogActions from 'components/dialogs/scoringDialog/ScoringDialogActions';
 import CancelButton from 'components/buttons/cancel/CancelButton';
 import CustomDialog from 'components/dialogs/CustomDialog';
 import MatchUpFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
 import KeyScoreEntry from 'components/inputs/keyScoreEntry/KeyScoreEntry';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogActions from '@material-ui/core/DialogActions';
 
 export function ScoreEntry() {
   const classes = useStyles();
@@ -83,9 +83,9 @@ export function ScoreEntry() {
   const WinIndicator = () => <CheckCircleIcon style={{ color: green[500] }} />;
 
   const editFormatDialogTitle = (
-    <ScoringDialogTitle id="scoring-dialog-title" onClose={closeDialog}>
+    <MuiDialogTitle id="scoring-dialog-title" onClose={closeDialog}>
       Edit Score Format
-    </ScoringDialogTitle>
+    </MuiDialogTitle>
   );
 
   const editFormatDialogContent = (
@@ -100,7 +100,7 @@ export function ScoreEntry() {
   );
 
   const editFormatDialogActions = (
-    <ScoringDialogActions>
+    <MuiDialogActions>
       <Grid container direction="row-reverse" spacing={2} className={classes.editFormatDialogActionsWrapper}>
         <Grid item xs={12} sm="auto">
           <CancelButton id="close-edit-format-dialog" onClick={closeDialog} variant={'outlined'}>
@@ -108,7 +108,7 @@ export function ScoreEntry() {
           </CancelButton>
         </Grid>
       </Grid>
-    </ScoringDialogActions>
+    </MuiDialogActions>
   );
 
   const editMatchUpFormat = () => {

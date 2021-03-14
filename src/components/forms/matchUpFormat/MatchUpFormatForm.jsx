@@ -8,18 +8,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MuiMenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import MuiSelect from '@material-ui/core/Select';
-import { MatchConfigurationInterface } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 import SetFormatSelector from 'components/forms/matchUpFormat/SetFormatSelector';
 import { useStyles } from 'components/forms/matchUpFormat/style';
 import { matchUpFormats } from 'functions/scoring/matchUpFormats';
 
-export interface MatchUpFormatFormProps {
-  disabled?: string[];
-  matchUpFormatParsed: MatchConfigurationInterface;
-  onChange: (matchUpFormat: MatchConfigurationInterface) => void;
-}
-
-const MatchUpFormatForm: React.FC<MatchUpFormatFormProps> = ({ disabled, matchUpFormatParsed, onChange }) => {
+const MatchUpFormatForm = ({ disabled, matchUpFormatParsed, onChange }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -28,17 +21,17 @@ const MatchUpFormatForm: React.FC<MatchUpFormatFormProps> = ({ disabled, matchUp
   const isNotCustom = defaultMatchFormats.find((defaultMatchFormat) => defaultMatchFormat.format === matchFormatString);
   const [scoringMode, setScoringMode] = useState(isNotCustom ? 'standard' : 'custom');
 
-  const updateMatchUpFormat = (matchUpFormat: MatchConfigurationInterface) => {
+  const updateMatchUpFormat = (matchUpFormat) => {
     onChange && onChange(matchUpFormat);
   };
 
-  const setsUpdate = (matchUpFormat: MatchConfigurationInterface) => updateMatchUpFormat(matchUpFormat);
+  const setsUpdate = (matchUpFormat) => updateMatchUpFormat(matchUpFormat);
   const hasFinalSet = matchUpFormatParsed && !!matchUpFormatParsed.finalSetFormat;
 
   const scoringFormatChanged = (e) => {
     const key = e && e.target && e.target.value;
     const matchUpFormat = defaultMatchFormats.find((defaultMatchFormat) => defaultMatchFormat.key === key)?.format;
-    const matchUpFormatParsed = matchUpFormatCode.parse(matchUpFormat) as MatchConfigurationInterface;
+    const matchUpFormatParsed = matchUpFormatCode.parse(matchUpFormat);
     if (matchUpFormat) {
       setScoringMode('standard');
       updateMatchUpFormat(matchUpFormatParsed);
@@ -50,7 +43,7 @@ const MatchUpFormatForm: React.FC<MatchUpFormatFormProps> = ({ disabled, matchUp
   const activeMatchFormat = () => {
     if (scoringMode === 'custom') return 'custom';
     return (
-      defaultMatchFormats.reduce<string>(
+      defaultMatchFormats.reduce(
         (p, c) => (c.format === matchUpFormatCode.stringify(matchUpFormatParsed) ? c.key : p),
         undefined
       ) || 'standard'

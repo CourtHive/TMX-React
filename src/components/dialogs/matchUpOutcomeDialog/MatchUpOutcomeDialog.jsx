@@ -12,18 +12,24 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 
 import MatchUpSide from './MatchUpSide';
+import CancelButton from 'components/buttons/cancel/CancelButton';
 import TMXStandardButton from 'components/buttons/standard/TMXStandardButton';
 import KeyScoreEntry from 'components/inputs/keyScoreEntry/KeyScoreEntry';
-import { drawEngine } from 'tods-competition-factory';
+import MatchUpFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
+
+import { matchUpFormatCode } from 'tods-matchup-format-code';
 
 export const MatchOutcomeDialog = (props) => {
   const { matchUp, isOpen, closeDialog, setOutcome, acceptOutcome } = props;
   const classes = useStylesMatchUpOutcomeDialog();
+  const defaultMatchUpFormat = 'SET3-S:6/TB7';
+  const [matchUpFormat, setMatchUpFormat] = useState(defaultMatchUpFormat);
+  const [open, setOpen] = useState(false);
 
   const matchUpData = {
     updated: undefined,
     score: undefined,
-    sets: undefined,
+    sets: [],
     winningSide: undefined,
     matchUpId: undefined,
     matchUpStatus: undefined
@@ -37,7 +43,7 @@ export const MatchOutcomeDialog = (props) => {
     const matchUpData = {
       updated: undefined,
       score: undefined,
-      sets: undefined,
+      sets: [],
       winningSide: undefined,
       matchUpId: undefined,
       matchUpStatus: undefined
@@ -46,17 +52,55 @@ export const MatchOutcomeDialog = (props) => {
     handleSetOutcome(matchUpData);
   };
 
-  const handleMathcUpFormatSelect = () => {
-    console.log('matchUpFormat selector');
+  const editMatchUpFormat = () => {
+    setOpen(true);
   };
+  const handleCloseFormatDialog = () => {
+    setOpen(false);
+  };
+  const scoreFormatChange = (format) => {
+    if (format.timed && format.bestOf > 1) {
+      format = {
+        bestOf: format.bestOf,
+        setFormat: {
+          timed: true,
+          minutes: format.minutes
+        }
+      };
+    }
+    handleClearOutcome();
+    setMatchUpFormat(matchUpFormatCode.stringify(format));
+  };
+
+  const editFormatDialogTitle = (
+    <MuiDialogTitle id="edit-matchUpFormat-title" onClose={closeDialog}>
+      Edit Score Format
+    </MuiDialogTitle>
+  );
+
+  const editFormatDialogContent = (
+    <>
+      <div className={classes.editFormatDialogContentWrapper}>
+        <MatchUpFormatForm matchUpFormatParsed={matchUpFormatCode.parse(matchUpFormat)} onChange={scoreFormatChange} />
+      </div>
+    </>
+  );
+
+  const editFormatDialogActions = (
+    <MuiDialogActions>
+      <Grid container direction="row-reverse" spacing={2} className={classes.editFormatDialogActionsWrapper}>
+        <Grid item xs={12} sm="auto">
+          <CancelButton id="close-edit-matchUpFormat-dialog" onClick={() => setOpen(false)} variant={'outlined'}>
+            Close
+          </CancelButton>
+        </Grid>
+      </Grid>
+    </MuiDialogActions>
+  );
 
   const handleSetOutcome = (updatedData) => {
     const sets = updatedData.sets || [];
-    const score = {
-      sets,
-      scoreStringSide1: drawEngine.generateScoreString({ sets }),
-      scoreStringSide2: drawEngine.generateScoreString({ sets, reversed: true })
-    };
+    const score = { sets };
     const outcome = {
       score,
       matchUpStatus: updatedData.matchUpStatus,
@@ -65,8 +109,6 @@ export const MatchOutcomeDialog = (props) => {
     };
     setOutcome({ outcome });
   };
-
-  const matchUpFormat = matchUp?.matchUpFormat;
 
   const updateData = (updatedData) => {
     setData(updatedData);
@@ -104,7 +146,7 @@ export const MatchOutcomeDialog = (props) => {
                 <Typography
                   id="matchUpFormat-select"
                   className={classes.matchUpFormatTypography}
-                  onClick={handleMathcUpFormatSelect}
+                  onClick={editMatchUpFormat}
                 >
                   {matchUpFormat}
                 </Typography>
@@ -119,8 +161,8 @@ export const MatchOutcomeDialog = (props) => {
   const outcomeDialogContent = (
     <MuiDialogContent>
       <div className={classes.matchParticipantsWrapper}>
-        <MatchUpSide sideNumber={1} matchUp={matchUp} setOutcome={handleSetOutcome} />
-        <MatchUpSide sideNumber={2} matchUp={matchUp} setOutcome={handleSetOutcome} />
+        <MatchUpSide sideNumber={1} matchUp={matchUp} />
+        <MatchUpSide sideNumber={2} matchUp={matchUp} />
       </div>
     </MuiDialogContent>
   );
@@ -153,6 +195,7 @@ export const MatchOutcomeDialog = (props) => {
       matchUpId: matchUp?.matchUpId,
       matchUpStatus: matchUp?.matchUpStatus
     };
+    setMatchUpFormat(matchUp?.matchUpFormat);
     setData(matchUpData);
   };
 
@@ -169,6 +212,13 @@ export const MatchOutcomeDialog = (props) => {
           />
           {outcomeDialogContent}
           {outcomeDialogActions}
+        </div>
+      </CustomDialog>
+      <CustomDialog id="edit-format-dialog" open={open} fullScreen={false} handleOnClose={handleCloseFormatDialog}>
+        <div className={classes.rootXS}>
+          {editFormatDialogTitle}
+          {editFormatDialogContent}
+          {editFormatDialogActions}
         </div>
       </CustomDialog>
     </>

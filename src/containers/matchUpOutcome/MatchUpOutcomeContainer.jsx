@@ -13,7 +13,7 @@ export const MatchOutcomeContainer = (props) => {
   };
   const [outcome, setOutcome] = useState(initialOutcome);
 
-  const processScoringOutcome = ({ outcome, matchUp }) => {
+  const submitOutcome = ({ outcome, matchUp }) => {
     const { matchUpFormat } = outcome;
     const { drawId, matchUpId, matchUpTieId } = matchUp;
     dispatch({
@@ -29,7 +29,7 @@ export const MatchOutcomeContainer = (props) => {
     });
   };
   const handleAcceptOutcome = () => {
-    if (matchUp) processScoringOutcome({ outcome, matchUp });
+    if (matchUp) submitOutcome({ outcome, matchUp });
     closeDialog();
   };
 

@@ -1,5 +1,4 @@
 // TODO: add missing types
-import { MatchParticipantStatus } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
 
 export interface TmxInterface {
@@ -65,7 +64,7 @@ export interface ScoringDetailsInterface {
   muid: string;
   roundName: string;
   status: string;
-  statusObject: ScoreOutcomeStatusInterface;
+  statusObject: any;
   teams: Array<TeamInterface>[];
 }
 
@@ -76,11 +75,6 @@ export interface ActionDataInterface {
   swapDrawPosition?: any;
 }
 
-export interface ScoreOutcomeStatusInterface {
-  sideOne: MatchParticipantStatus;
-  sideTwo: MatchParticipantStatus;
-}
-
 export interface ScoreOutcomeInterface {
   complete: boolean;
   matchUpFormat: string;
@@ -89,7 +83,7 @@ export interface ScoreOutcomeInterface {
   positions: number[];
   score: string;
   set_scores: Array<SetResultInterface>[];
-  statusObject: ScoreOutcomeStatusInterface;
+  statusObject: any;
   teams: Array<TeamInterface>[];
   winner: number;
 }

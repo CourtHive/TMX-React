@@ -17,7 +17,6 @@ import { MainMenuButton } from 'components/buttons/MainMenuButton';
 import { useSaveTrigger } from 'components/hooks/useSaveTrigger';
 import { AuthButton } from 'components/buttons/authButton';
 import TournamentTabsContent from 'components/tournament/TournamentTabsContent';
-import ScoringDialogContainer from 'containers/scoringObjectDialog/ScoringDialogContainer';
 import { TournamentTabs } from 'components/tournament/TournamentTabs';
 import ProviderLogo from 'components/ProviderLogo';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -39,7 +38,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
 
   // const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
-  const scoringDetails = useSelector((state: any) => state.tmx.scoringDetails);
+  // const scoringDetails = useSelector((state: any) => state.tmx.scoringDetails);
 
   const tabState = useSelector((state: any) => state.tmx.visible.tabState);
 
@@ -68,10 +67,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   */
 
   const tournamentName = tournamentRecord.tournamentName || t('trn');
-  const tieFormat = scoringDetails?.matchUp?.tieFormat;
-  const matchUp = !tieFormat && scoringDetails?.matchUp;
-  const tieMatchUp = tieFormat && scoringDetails?.matchUp;
-  const matchUpFormat = scoringDetails?.matchUp?.matchUpFormat;
 
   const changeLoginState = () => {
     if (loggedIn) {
@@ -92,10 +87,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
       )}
     </div>
   );
-
-  const handleClose = () => {
-    dispatch({ type: 'scoring details', payload: undefined });
-  };
 
   const navGrow = downXs && tabState === 'text' ? 1 : 0;
   const NavColumn = () => (
@@ -119,14 +110,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
 
   return (
     <>
-      {!matchUp || tieMatchUp ? null : (
-        <ScoringDialogContainer
-          open={!!matchUp}
-          matchUp={matchUp}
-          handleClose={handleClose}
-          matchUpFormat={matchUpFormat}
-        />
-      )}
       {!loadingState ? '' : <LinearProgress />}
       <Grid
         container

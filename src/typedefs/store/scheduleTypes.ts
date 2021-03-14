@@ -1,6 +1,5 @@
 // TODO: move out of /store folder to the /typedefs folder
 import { SideInterface } from 'typedefs/store/tmxTypes';
-import { SetScoresInterface } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 import { TieFormatInterface } from 'typedefs/drawTypes';
 
 export interface BookingType {
@@ -124,7 +123,7 @@ export interface MatchUpInterface {
   roundPosition: number;
   schedule?: MatchUpSchedule;
   score?: any;
-  sets?: SetScoresInterface[];
+  sets?: any;
   structureId: string;
   structureName: string; // TODO: define enums of possible structure names
   tieMatchUps?: MatchUpInterface[];

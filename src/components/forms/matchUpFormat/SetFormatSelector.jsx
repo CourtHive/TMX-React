@@ -7,39 +7,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import {
-  MatchConfigurationInterface,
-  SetFormatInterface,
-  SetFormatSelectorStateInterface,
-  TiebreakFormatInterface
-} from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
 import { getTiebreakOptions, hasTiebreakObjectBuilder } from 'components/forms/matchUpFormat/matchUpFormatUtils';
 
-interface SetFormatSelectorProps {
-  disabled?: string[];
-  isFinalSet?: boolean;
-  matchUpFormatParsed: MatchConfigurationInterface;
-  hasFinalSet: boolean;
-  onChange: (matchUpFormat: MatchConfigurationInterface) => void;
-}
-
-const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
-  disabled,
-  matchUpFormatParsed,
-  isFinalSet,
-  hasFinalSet,
-  onChange
-}) => {
+const SetFormatSelector = ({ disabled, matchUpFormatParsed, isFinalSet, hasFinalSet, onChange }) => {
   const { t } = useTranslation();
-  const setFormat = (isFinalSet
-    ? matchUpFormatParsed?.finalSetFormat
-    : matchUpFormatParsed?.setFormat) as SetFormatInterface;
+  const setFormat = isFinalSet ? matchUpFormatParsed?.finalSetFormat : matchUpFormatParsed?.setFormat;
   const setsAreTiebreakSets = setFormat?.tiebreakSet;
   const setTiebreakTo = setFormat?.tiebreakFormat?.tiebreakTo || setFormat?.tiebreakSet?.tiebreakTo;
   const tiebreakExistsRegular = matchUpFormatParsed?.setFormat && matchUpFormatParsed?.setFormat?.noTiebreak;
   const tiebreakExistsFinal = matchUpFormatParsed?.finalSetFormat && matchUpFormatParsed?.finalSetFormat?.noTiebreak;
 
-  const [commonState, setCommonState] = useState<SetFormatSelectorStateInterface>({
+  const [commonState, setCommonState] = useState({
     exact: matchUpFormatParsed?.bestOf === 1 ? 'exact' : 'bestof',
     what: setsAreTiebreakSets
       ? 'TB'
@@ -110,50 +88,50 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
   // determines if set is noTiebreak
   const hasTiebreak = (event) => {
     const set = isFinalSet
-      ? { finalSetFormat: hasTiebreakObjectBuilder(event, setFormat, setTiebreakTo) as SetFormatInterface }
-      : { setFormat: hasTiebreakObjectBuilder(event, setFormat, setTiebreakTo) as SetFormatInterface };
+      ? { finalSetFormat: hasTiebreakObjectBuilder(event, setFormat, setTiebreakTo) }
+      : { setFormat: hasTiebreakObjectBuilder(event, setFormat, setTiebreakTo) };
 
     const updatedFormat = { ...matchUpFormatParsed, ...set };
     onChange(updatedFormat);
   };
-  const handleChangeExact = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    setCommonState({ ...commonState, exact: event.target.value as string });
+  const handleChangeExact = (event) => {
+    setCommonState({ ...commonState, exact: event.target.value });
   };
-  const handleChangeBestOf = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    onChange({ ...matchUpFormatParsed, bestOf: event.target.value as number });
+  const handleChangeBestOf = (event) => {
+    onChange({ ...matchUpFormatParsed, bestOf: event.target.value });
   };
-  const handleChangeDefaultAd = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+  const handleChangeDefaultAd = (event) => {
     onChange({
       ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
         ...setFormat,
-        NoAD: event.target.value as boolean
-      } as SetFormatInterface
+        NoAD: event.target.value
+      }
     });
   };
-  const handleChangeTiebreakTo = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+  const handleChangeTiebreakTo = (event) => {
     onChange({
       ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
         ...setFormat,
         [setFormat?.tiebreakFormat ? 'tiebreakFormat' : 'tiebreakSet']: {
           ...(setFormat?.tiebreakFormat ? setFormat?.tiebreakFormat : setFormat?.tiebreakSet),
-          tiebreakTo: event.target.value as number
-        } as TiebreakFormatInterface
-      } as SetFormatInterface
+          tiebreakTo: event.target.value
+        }
+      }
     });
   };
-  const handleChangeTiebreakAt = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+  const handleChangeTiebreakAt = (event) => {
     onChange({
       ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
         ...setFormat,
-        tiebreakAt: event.target.value as number
-      } as SetFormatInterface
+        tiebreakAt: event.target.value
+      }
     });
   };
-  const handleChangeTiebreakAd = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    const adNoAd = event.target.value === 1 ? true : (false as boolean);
+  const handleChangeTiebreakAd = (event) => {
+    const adNoAd = event.target.value === 1 ? true : false;
     onChange({
       ...matchUpFormatParsed,
       [isFinalSet ? 'finalSetFormat' : 'setFormat']: {
@@ -161,12 +139,12 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
         [setFormat?.tiebreakFormat ? 'tiebreakFormat' : 'tiebreakSet']: {
           ...(setFormat?.tiebreakFormat ? setFormat?.tiebreakFormat : setFormat?.tiebreakSet),
           NoAD: adNoAd
-        } as TiebreakFormatInterface
-      } as SetFormatInterface
+        }
+      }
     });
   };
-  const handleChangeWhatTo = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    const eventValue = event.target.value as number;
+  const handleChangeWhatTo = (event) => {
+    const eventValue = event.target.value;
     const tiebreakAt = getTiebreakOptions(eventValue).reverse()[0];
     if (matchUpFormatParsed?.timed) {
       onChange({
@@ -181,7 +159,7 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
         : { ...existingSetFormat, setTo: eventValue, tiebreakAt };
       onChange({
         ...matchUpFormatParsed,
-        finalSetFormat: finalSetFormat as SetFormatInterface
+        finalSetFormat: finalSetFormat
       });
     } else {
       const existingSetFormat = matchUpFormatParsed?.setFormat || {};
@@ -191,12 +169,12 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
         : { ...existingSetFormat, setTo: eventValue, tiebreakAt };
       onChange({
         ...matchUpFormatParsed,
-        setFormat: setFormat as SetFormatInterface
+        setFormat: setFormat
       });
     }
   };
-  const handleChangeBestOfWhat = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    const value = event.target.value as string;
+  const handleChangeBestOfWhat = (event) => {
+    const value = event.target.value;
     setCommonState({ ...commonState, what: value });
 
     if (value === 'T') {
@@ -216,8 +194,8 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
       const newFinalSetFormat = isFinalSet && { tiebreakSet: { tiebreakTo: setTiebreakTo || 7 } };
       onChange({
         bestOf: bestOfValue,
-        setFormat: newSetFormat as SetFormatInterface,
-        finalSetFormat: newFinalSetFormat as SetFormatInterface,
+        setFormat: newSetFormat,
+        finalSetFormat: newFinalSetFormat,
         timed: false,
         minutes: undefined
       });
@@ -228,15 +206,15 @@ const SetFormatSelector: React.FC<SetFormatSelectorProps> = ({
       const newFinalSetFormat = isFinalSet && { setTo: 6, tiebreakAt: 6, tiebreakFormat: { tiebreakTo: 7 } };
       onChange({
         bestOf: bestOfValue,
-        setFormat: newSetFormat as SetFormatInterface,
-        finalSetFormat: newFinalSetFormat as SetFormatInterface,
+        setFormat: newSetFormat,
+        finalSetFormat: newFinalSetFormat,
         timed: false,
         minutes: undefined
       });
     }
   };
 
-  const changeFinalSet = (event: { target: { checked: any } }) => {
+  const changeFinalSet = (event) => {
     onChange({
       ...matchUpFormatParsed,
       finalSetFormat: event.target.checked ? { ...setFormat } : undefined

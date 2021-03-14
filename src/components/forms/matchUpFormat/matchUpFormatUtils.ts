@@ -1,5 +1,3 @@
-import { SetFormatInterface } from 'components/dialogs/scoringDialog/typedefs/scoringTypes';
-
 /**
  * Provide description @Charles
  *
@@ -13,7 +11,7 @@ export const range = (start, end) => Array.from({ length: end + 1 - start }, (v,
  *
  * @param setTo Current set is played to this number
  */
-export const getTiebreakOptions = (setTo: number) => {
+export const getTiebreakOptions = (setTo) => {
   const tiebreakAtOptions = [setTo];
   if (setTo > 1) {
     tiebreakAtOptions.unshift(setTo - 1);
@@ -28,7 +26,7 @@ export const getTiebreakOptions = (setTo: number) => {
  * @param setFormat Could be setFormat or finalSetFormat (same type)
  * @param setTiebreakTo tiebreak in the set is played to this value
  */
-export const hasTiebreakObjectBuilder = (event: any, setFormat: SetFormatInterface, setTiebreakTo: number) => ({
+export const hasTiebreakObjectBuilder = (event, setFormat, setTiebreakTo) => ({
   setTo: setFormat.setTo,
   noTiebreak: !event.target.checked,
   tiebreakAt: event.target.checked && (setFormat.tiebreakAt || setFormat.setTo),
