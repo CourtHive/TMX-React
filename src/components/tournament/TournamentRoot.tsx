@@ -38,7 +38,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
 
   // const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
-  // const scoringDetails = useSelector((state: any) => state.tmx.scoringDetails);
 
   const tabState = useSelector((state: any) => state.tmx.visible.tabState);
 

@@ -8,7 +8,6 @@ import selectionProducer from './appState/selectionProducer';
 import visibilityProducer from './appState/visibilityProducer';
 import actionDataProducer from './appState/actionDataProducer';
 
-import matchesProducer from 'stores/tmx/competition/scoringProducer';
 import tournamentProducer from 'stores/tmx/competition/tournamentProducer';
 import competitionProducer from 'stores/tmx/competition/competitionProducer';
 
@@ -37,7 +36,6 @@ const producerArray = [
   visibilityProducer,
   actionDataProducer,
 
-  matchesProducer,
   tournamentProducer,
   competitionProducer
 ];

@@ -1,6 +1,3 @@
-// TODO: add missing types
-import { MatchUpInterface } from 'typedefs/store/scheduleTypes';
-
 export interface TmxInterface {
   actionData: ActionDataInterface;
 }
@@ -54,24 +51,10 @@ export interface SideInterface {
 }
 
 // TODO: this interface is outdated
-export interface ScoringDetailsInterface {
-  matchUp?: MatchUpInterface;
-  callback: any;
-  flags?: string;
-  delegation: boolean;
-  existing_scores: Array<SetResultInterface>[];
-  matchUpFormat: string;
-  muid: string;
-  roundName: string;
-  status: string;
-  statusObject: any;
-  teams: Array<TeamInterface>[];
-}
-
 // TODO: introduce proper types
 export interface ActionDataInterface {
   autoDraw?: any;
-  scoringDetails?: ScoringDetailsInterface;
+  scoringDetails?: any;
   swapDrawPosition?: any;
 }
 

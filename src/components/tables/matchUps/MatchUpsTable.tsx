@@ -25,7 +25,6 @@ import { getTableColumns } from 'components/tables/matchUps/getTableColumns';
 import { TableConfigInterface } from 'components/tables/EndlessTable/typedefs';
 import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
 import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
-// import { saveMatchUpResults } from 'components/tables/matchUps/saveMatchUpResults';
 import { useStyles } from 'components/tables/styles';
 import { isDev } from 'functions/isDev';
 import { PanelSelector } from 'components/selectors/PanelSelector';

@@ -23,7 +23,6 @@ export const storeInitialState = () => ({
   selectedTournamentId: null,
 
   // scoring
-  scoringDetails: null,
   scoringTieMatchUp: null,
 
   // calendar
@@ -59,7 +58,6 @@ export const storeInitialState = () => ({
   },
   actionData: {
     autoDraw: undefined,
-    scoringDetails: false,
     swapDrawPosition: undefined
   },
   hiddenColumns: {

@@ -9,6 +9,7 @@ import { isDev } from 'functions/isDev';
 import { tournamentEngine } from 'tods-competition-factory';
 
 /*
+  // EXAMPLE use pattern:
   dispatch({
       type: 'tournamentEngine',
       payload: { methods: [ { method: 'methodName', params: {}} ] }
@@ -95,8 +96,6 @@ const clearTournament = (state) =>
     draftState.records = {};
     draftState.saveCount = 0;
     draftState.selectedTournamentId = null;
-
-    draftState.scoringDetails = null;
   });
 
 export const tournamentProducer = {
