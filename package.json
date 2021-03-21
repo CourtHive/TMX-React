@@ -52,7 +52,7 @@
     "redux": "4.0.5",
     "socket.io": "2.4.1",
     "source-map-explorer": "2.5.0",
-    "tods-competition-factory": "0.5.16",
+    "tods-competition-factory": "0.5.30",
     "tods-matchup-format-code": "1.0.8",
     "tods-react-draws": "0.1.6",
     "tods-tournament-pdfs": "0.1.3",
