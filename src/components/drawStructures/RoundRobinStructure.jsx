@@ -68,8 +68,8 @@ export const RoundRobinStructure = (props) => {
       // isByePosition
     } = node.drawPosition ? drawEngine.positionActions(node) : drawEngine.matchUpActions(matchUp);
 
-    const validActionTypes = validActions.map((action) => action.type);
-    const validActionPayloads = validActions.reduce((payloads, action) => {
+    const validActionTypes = (validActions || []).map((action) => action.type);
+    const validActionPayloads = (validActions || []).reduce((payloads, action) => {
       return action.payload ? Object.assign(payloads, { [action.type]: action.payload }) : payloads;
     }, {});
 
@@ -92,7 +92,7 @@ export const RoundRobinStructure = (props) => {
         ? { primary: t('Match Options'), secondary: participantNames && participantNames.join(' vs ') }
         : undefined;
 
-    if (coords && validActions.length) {
+    if (coords && validActions?.length) {
       const menuPosition = { left: coords.screen_x, top: coords.screen_y };
       const menuItems = menuActions
         .filter((menuAction) => {
