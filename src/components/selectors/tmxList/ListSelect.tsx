@@ -35,7 +35,7 @@ const ListSelect: React.FC<ListSelectProps> = ({ items, onClick, onChange, selec
 
   return (
     <Grid item onClick={handleOnClick}>
-      <Typography className={classes.selectedTypography} variant="h1" onClick={openPopover}>
+      <Typography className={classes.listSelectTypography} variant="h1" onClick={openPopover}>
         {selectedItem?.itemName}{' '}
         {!anchorEl ? (
           <ExpandMoreIcon className={classes.expandIcon} />

@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles(() => ({
-  selectedTypography: {
-    fontSize: 20,
+  listSelectTypography: {
+    fontSize: 15,
     marginBottom: 0,
     paddingLeft: 10
   },
