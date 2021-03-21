@@ -33,12 +33,12 @@ export function KnockoutStructure(props) {
     setMenuData({});
   };
 
-  function getActionsMenuData({ scoringMatchUp, matchUp, sideNumber, onCloseMenu }) {
-    const { drawId, structureId, sides } = matchUp || {};
-    // const isRoundRobin = roundNumber && !roundPosition;
+  function getActionsMenuData({ scoringMatchUp, matchUp, sideIndex, onCloseMenu }) {
+    const { drawId, structureId } = matchUp || {};
 
-    const side = sides?.find((side) => side.sideNumber === sideNumber);
+    const side = matchUp?.sides && matchUp.sides[sideIndex];
     const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp;
+    const feedBottom = sourceMatchUp?.feedBottom;
 
     const drawPosition = side?.drawPosition;
     const participantName = side?.participant?.participantName;
@@ -48,14 +48,14 @@ export function KnockoutStructure(props) {
     const positionActions = tournamentEngine.positionActions({ drawId, structureId, drawPosition });
     const { /*isActiveDrawPosition,*/ isByePosition, isDrawPosition } = positionActions || {};
     const validActions = [].concat(...(positionActions?.validActions || []), ...(matchUpActions?.validActions || []));
-
-    // const { isByeMatchUp } = matchUpActions || {};
-    // console.log({ validActions, isByeMatchUp, isActiveDrawPosition, isByePosition, isDrawPosition });
+    if (feedBottom) {
+      participantNames.reverse();
+    }
 
     const menuHeader =
       isDrawPosition && participantName
         ? { primary: participantName }
-        : !isDrawPosition && !sideNumber && participantNames
+        : !isDrawPosition && participantNames
         ? { primary: 'Match Options', secondary: participantNames.join(' vs ') }
         : isByePosition
         ? { primary: `Draw Position ${drawPosition}: BYE` }
@@ -67,7 +67,6 @@ export function KnockoutStructure(props) {
         dispatch({ type: 'scoring tieMatchUp', payload: { matchUp } });
       } else {
         setTargetMatchUp(matchUp);
-        // dispatch({ type: 'scoring details', payload: { matchUp } });
       }
     }
 
@@ -178,9 +177,9 @@ export function KnockoutStructure(props) {
       setMenuData({ menuPosition, ...actionMenuData, open: true });
     }
   };
-  const onParticipantClick = ({ matchUp, sideNumber, e }) => {
+  const onParticipantClick = ({ matchUp, side, sideIndex, e }) => {
     const menuPosition = { left: e.clientX, top: e.clientY };
-    const { action, actionMenuData } = getActionsMenuData({ matchUp, sideNumber });
+    const { action, actionMenuData } = getActionsMenuData({ matchUp, side, sideIndex });
     if (action) {
       console.log('take action', { action });
     } else {

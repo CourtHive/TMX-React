@@ -3,6 +3,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 
 import { useStyles } from 'components/inputs/keyScoreEntry/styles';
 import { scoreGovernor } from 'tods-competition-factory';
+
 const { keyValueScore, keyValueConstants } = scoreGovernor;
 const { HOTKEYS, MODIFIERS, MOVEDOWN, MOVEUP, PROMPT, SIDE1KEYS, SIDE2KEYS } = keyValueConstants;
 

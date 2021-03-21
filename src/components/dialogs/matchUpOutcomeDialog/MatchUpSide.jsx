@@ -12,7 +12,9 @@ const MatchUpSide = ({ sideNumber, matchUp }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const side = matchUp?.sides?.find((side) => side.sideNumber === sideNumber);
+  // const displaySideNumber = matchUp.feedBottom ? 3 - sideNumber : sideNumber;
+  const displaySideNumber = sideNumber;
+  const side = matchUp?.sides?.find((side) => side.sideNumber === displaySideNumber);
   const participant = side?.participant;
   const participants = participant?.individualParticipants || [participant].filter((f) => f);
 
