@@ -37,7 +37,7 @@ export function KnockoutStructure(props) {
     const { drawId, structureId } = matchUp || {};
 
     const side = matchUp?.sides && matchUp.sides[sideIndex];
-    const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp;
+    const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp || (!sideIndex && matchUp);
     const feedBottom = sourceMatchUp?.feedBottom;
 
     const drawPosition = side?.drawPosition;
@@ -177,9 +177,9 @@ export function KnockoutStructure(props) {
       setMenuData({ menuPosition, ...actionMenuData, open: true });
     }
   };
-  const onParticipantClick = ({ matchUp, side, sideIndex, e }) => {
+  const onParticipantClick = ({ matchUp, sideIndex, e }) => {
     const menuPosition = { left: e.clientX, top: e.clientY };
-    const { action, actionMenuData } = getActionsMenuData({ matchUp, side, sideIndex });
+    const { action, actionMenuData } = getActionsMenuData({ matchUp, sideIndex });
     if (action) {
       console.log('take action', { action });
     } else {
