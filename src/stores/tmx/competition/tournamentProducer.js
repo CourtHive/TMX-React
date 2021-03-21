@@ -42,10 +42,12 @@ const invokeTournamentEngine = (state, action) =>
         if (method && availableMethods.includes(method)) {
           const result = tournamentEngine[method](params);
           if (result && result.success) {
+            /*
             context.ee.emit('emitTmx', {
               action: 'tournamentEngineMethod',
               payload: { tournamentId, method, params }
             });
+            */
 
             modifications++;
           } else if (result && result.error) {
