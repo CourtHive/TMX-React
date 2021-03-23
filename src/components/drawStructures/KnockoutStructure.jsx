@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
 
 import { tournamentEngine, positionActionConstants, matchUpActionConstants } from 'tods-competition-factory';
-import { EliminationStructure } from 'tods-react-draws';
 import { MatchOutcomeContainer } from 'containers/matchUpOutcome/MatchUpOutcomeContainer';
+import { DrawStructure } from 'tods-react-draws';
 
 const {
   // ALTERNATE_PARTICIPANT,
@@ -168,31 +168,33 @@ export function KnockoutStructure(props) {
     }
     return { actionMenuData, action };
   }
-  const onScoreClick = ({ matchUp, sideIndex, e }) => {
-    const menuPosition = { left: e.clientX, top: e.clientY };
-    const { action, actionMenuData } = getActionsMenuData({ scoringMatchUp: matchUp });
-    if (action) {
-      console.log('Scoring matchUp', { sideIndex, action });
-    } else {
-      setMenuData({ menuPosition, ...actionMenuData, open: true });
+  const eventHandlers = {
+    onScoreClick: ({ matchUp, sideIndex, e }) => {
+      const menuPosition = { left: e.clientX, top: e.clientY };
+      const { action, actionMenuData } = getActionsMenuData({ scoringMatchUp: matchUp });
+      if (action) {
+        console.log('Scoring matchUp', { sideIndex, action });
+      } else {
+        setMenuData({ menuPosition, ...actionMenuData, open: true });
+      }
+    },
+    onParticipantClick: ({ participant, matchUp, sideIndex, e }) => {
+      const menuPosition = { left: e.clientX, top: e.clientY };
+      const { action, actionMenuData } = getActionsMenuData({ participant, matchUp, sideIndex });
+      if (action) {
+        console.log('take action', { action });
+      } else {
+        setMenuData({ menuPosition, ...actionMenuData, open: true });
+      }
     }
   };
-  const onParticipantClick = ({ matchUp, sideIndex, e }) => {
-    const menuPosition = { left: e.clientX, top: e.clientY };
-    const { action, actionMenuData } = getActionsMenuData({ matchUp, sideIndex });
-    if (action) {
-      console.log('take action', { action });
-    } else {
-      setMenuData({ menuPosition, ...actionMenuData, open: true });
-    }
-  };
-  const args = { eventData, drawId, structureId, onScoreClick, onParticipantClick };
+  const args = { eventData, drawId, structureId, eventHandlers };
 
   const closeMatchUpOutcome = () => setTargetMatchUp(undefined);
 
   return (
     <>
-      <EliminationStructure {...args} />
+      <DrawStructure {...args} />
       <TMXPopoverMenu {...menuData} closeMenu={closeMenu} />
       <MatchOutcomeContainer matchUp={targetMatchUp} closeDialog={closeMatchUpOutcome} />
     </>
