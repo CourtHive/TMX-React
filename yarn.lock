@@ -12535,10 +12535,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tods-competition-factory@0.5.38:
-  version "0.5.38"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.38.tgz#b6b6ba6835938b2da206544666cea96b614597a0"
-  integrity sha512-j8YMzVt6Gcz2izdGeUDnie1oWmmKyAxNzaxDxLSLdL59EckkPS3kug8Wjx+TyhRetDcnNorawgwQbVU8/kmRaA==
+tods-competition-factory@0.5.39:
+  version "0.5.39"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.39.tgz#3491f1249ca10e368ee139b5fe59f0bc4c410d90"
+  integrity sha512-sCNYRxRSNczhtYOP8/F7OCs3MS9c64PjY/H3hdPzhD/Z3ZvNLjsAjrcvzYRnhy1XHaXOoxRC+G8ojWemel2Wng==
   dependencies:
     tods-matchup-format-code "^1.0.7"
 
