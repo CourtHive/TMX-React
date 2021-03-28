@@ -67,10 +67,6 @@ const setMyTournaments = (state, action) =>
     draftState.myTournaments = action.payload;
   });
 
-const drawResizeEvent = (state) =>
-  produce(state, (draftState) => {
-    draftState.drawResize++;
-  });
 const incrementKeyLoads = (state, action) =>
   produce(state, (draftState) => {
     const { payload } = action || {};
@@ -119,9 +115,7 @@ const rootProducer = {
 
   'set drawData': setDrawData,
   'set icon tabs': setIconTabs,
-  'set myTournaments': setMyTournaments,
-
-  'draw resize event': drawResizeEvent
+  'set myTournaments': setMyTournaments
 };
 
 export default rootProducer;

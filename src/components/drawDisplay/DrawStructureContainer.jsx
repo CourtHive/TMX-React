@@ -23,7 +23,7 @@ const {
 
 const { END, NICKNAME, PENALTY, REFEREE, SCHEDULE, SCORE, START, STATUS } = matchUpActionConstants;
 
-export function KnockoutStructure(props) {
+export function DrawStructureContainer(props) {
   const dispatch = useDispatch();
   const [menuData, setMenuData] = useState(undefined);
   const [targetMatchUp, setTargetMatchUp] = useState(undefined);

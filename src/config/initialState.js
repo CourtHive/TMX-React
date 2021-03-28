@@ -8,7 +8,6 @@ import { saveMyTournaments } from 'services/officiating/tournaments';
 
 import { parse as parseQueryString } from 'services/queryString';
 import { updateReady, popupsBlocked } from 'services/notifications/statusMessages';
-import { initOptimizedResizing } from 'components/hooks/useOptimizedRefresh';
 import { idiomSetup } from './idiom/idiomSetup';
 
 import { tournamentEngine } from 'tods-competition-factory';
@@ -39,7 +38,6 @@ function tmxReady() {
 }
 
 function setContext() {
-  initOptimizedResizing();
   context.ee = new EventEmitter();
 }
 

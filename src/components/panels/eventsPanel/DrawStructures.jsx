@@ -3,20 +3,15 @@ import { useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
 
 import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
-
-import { useOptimizedResize } from 'components/hooks/useOptimizedRefresh';
-
-import { resizeDraw } from 'components/drawDisplay/drawResizing';
-import { RoundRobinStructure } from 'components/drawStructures/RoundRobinStructure';
 import { NoDrawsNotice } from 'components/notices/noDrawsNotice';
 import NoticePaper from 'components/papers/notice/NoticePaper';
 
 import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
 
-import { drawEngine } from 'tods-competition-factory';
+// import { drawEngine } from 'tods-competition-factory';
 
 import { tournamentEngine } from 'tods-competition-factory';
-import { KnockoutStructure } from 'components/drawStructures/KnockoutStructure';
+import { DrawStructureContainer } from 'components/drawDisplay/DrawStructureContainer';
 
 export const DrawsPanel = (props) => {
   const { drawDefinition, event } = props;
@@ -27,10 +22,11 @@ export const DrawsPanel = (props) => {
 
   const selectedStructureId = useSelector((state) => state.tmx.select.draws.structureId);
 
+  /*
   const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
   const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
-
   const participants = tournamentRecord.participants || [];
+  */
   const structures = drawDefinition?.structures || [];
   const selectedIsValid = structures.map(({ structureId }) => structureId).includes(selectedStructureId);
   const { structureId: firstStructureId } = structures[0] || {};
@@ -40,14 +36,17 @@ export const DrawsPanel = (props) => {
     return candidate.structureId === structureId ? candidate : structure;
   }, undefined);
 
+  /*
   const result = drawEngine
     .setState(drawDefinition)
     .setParticipants(participants)
     .allStructureMatchUps({ structureId, context: { eventId: event?.eventId } });
   const { matchUps, roundMatchUps } = result;
+  */
   const { eventData } = tournamentEngine.getEventData({ eventId: event.eventId }) || {};
 
   const { drawId } = drawDefinition || {};
+  /*
   const { nextUnfilledDrawPositions } = drawEngine.getNextUnfilledDrawPositions({ structureId });
 
   const renderMatchUps = matchUps.filter((matchUp) => matchUp.drawPositions);
@@ -59,18 +58,15 @@ export const DrawsPanel = (props) => {
     participants,
     nextUnfilledDrawPositions
   };
+  */
 
   const drawIsAdHoc = false;
   const drawIsRoundRobin = structure && structure.structures;
 
-  useOptimizedResize(() => resizeDraw({ structure }));
-
   const knockoutArgs = { eventData, drawId, structureId };
-
   const closeMenu = () => setMenuData({});
 
   const DrawStructure = () => {
-    const props = { drawData, structureId };
     return (
       <>
         {!structure ? (
@@ -78,9 +74,9 @@ export const DrawsPanel = (props) => {
         ) : tieMatchUp ? (
           <TieMatchUpContainer tieFormat={drawDefinition.tieFormat} tieMatchUp={tieMatchUp} />
         ) : drawIsRoundRobin ? (
-          <RoundRobinStructure {...props} />
+          <DrawStructureContainer {...knockoutArgs} />
         ) : drawIsAdHoc ? null : (
-          <KnockoutStructure {...knockoutArgs} />
+          <DrawStructureContainer {...knockoutArgs} />
         )}
       </>
     );
