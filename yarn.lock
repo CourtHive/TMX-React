@@ -1723,7 +1723,7 @@
     react-is "^16.8.0 || ^17.0.0"
     react-transition-group "^4.4.0"
 
-"@material-ui/icons@4.11.2":
+"@material-ui/icons@4.11.2", "@material-ui/icons@^4.11.2":
   version "4.11.2"
   resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.11.2.tgz#b3a7353266519cd743b6461ae9fdfcb1b25eb4c5"
   integrity sha512-fQNsKX2TxBmqIGJCSi3tGTO/gZ+eJgWmMJkgDiOfyNaunNaxcklJQFaFogYcFl0qFuaEz1qaXYXboa/bUXVSOQ==
@@ -12738,7 +12738,7 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tods-competition-factory@0.5.39:
+tods-competition-factory@0.5.39, tods-competition-factory@^0.5.39:
   version "0.5.39"
   resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.39.tgz#3491f1249ca10e368ee139b5fe59f0bc4c410d90"
   integrity sha512-sCNYRxRSNczhtYOP8/F7OCs3MS9c64PjY/H3hdPzhD/Z3ZvNLjsAjrcvzYRnhy1XHaXOoxRC+G8ojWemel2Wng==
@@ -12752,26 +12752,20 @@ tods-competition-factory@^0.2.15:
   dependencies:
     tods-matchup-format-code "^1.0.7"
 
-tods-competition-factory@^0.5.31:
-  version "0.5.33"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.33.tgz#2f066422f69259699a618c5a9f3734fec0ef0f50"
-  integrity sha512-pmJ2saXPRol5Pb4ZCFj2Nd7Y8PdNkNTGPqri2n0fK9p3W4UHX5RFoIH/CCyoivTdqw4NoPiEaGGh5Cw/hMJLQg==
-  dependencies:
-    tods-matchup-format-code "^1.0.7"
-
 tods-matchup-format-code@1.0.8, tods-matchup-format-code@^1.0.7:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.0.8.tgz#10936bbbe6b4ec9ba74436268770aa4735eb8897"
   integrity sha512-pci163xZA6UwOTGfe9M2aL3Jd2KH1GRbKoSEDUE8mVXhi7x2YqGuW4nUxzx34UTiRO0aYMhwXL7ncKqdJDzXhw==
 
-tods-react-draws@0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.1.9.tgz#ea0fd3f504d65f0019afa4a3ac525b16de932ba6"
-  integrity sha512-yKxDS3A9tY8LE4dQrcCoVdCM9r/qC8pp3A4DR6rAvB1RLWKcA0zE7+cfqJnkqTa44GrvOPOsTSXZWhj/eLnSzA==
+tods-react-draws@0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.1.11.tgz#618be0f2b58435416f5c1444be08dcc62cea3b2b"
+  integrity sha512-Tr4SBrNPHWq4AB7eb+Wy2s7FwhUqPqz3bSSTU4536sZlFO0AQFTz09Igeo3PT4ejE4jl55W2AbvzaCRqfR90Vg==
   dependencies:
+    "@material-ui/icons" "^4.11.2"
     classnames "^2.2.6"
     react-virtuoso "^1.5.14"
-    tods-competition-factory "^0.5.31"
+    tods-competition-factory "^0.5.39"
 
 tods-tournament-pdfs@0.1.3:
   version "0.1.3"

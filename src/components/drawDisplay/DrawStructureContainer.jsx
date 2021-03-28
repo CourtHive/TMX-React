@@ -33,19 +33,18 @@ export function DrawStructureContainer(props) {
     setMenuData({});
   };
 
-  function getActionsMenuData({ scoringMatchUp, matchUp, sideIndex, onCloseMenu }) {
-    const { drawId, structureId } = matchUp || {};
+  function getActionsMenuData({ drawPosition, scoringMatchUp, matchUp, sideIndex, onCloseMenu }) {
+    const { drawId, eventId, structureId } = matchUp || {};
 
     const side = matchUp?.sides && matchUp.sides[sideIndex];
     const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp || (!sideIndex && matchUp);
     const feedBottom = sourceMatchUp?.feedBottom;
 
-    const drawPosition = side?.drawPosition;
     const participantName = side?.participant?.participantName;
     const participantNames = sourceMatchUp?.sides?.map((side) => side.participant?.participantName).filter((f) => f);
 
     const matchUpActions = tournamentEngine.matchUpActions(sourceMatchUp);
-    const positionActions = tournamentEngine.positionActions({ drawId, structureId, drawPosition });
+    const positionActions = tournamentEngine.positionActions({ eventId, drawId, structureId, drawPosition });
     const { /*isActiveDrawPosition,*/ isByePosition, isDrawPosition } = positionActions || {};
     const validActions = [].concat(...(positionActions?.validActions || []), ...(matchUpActions?.validActions || []));
     if (feedBottom) {
@@ -58,7 +57,7 @@ export function DrawStructureContainer(props) {
         : !isDrawPosition && participantNames
         ? { primary: 'Match Options', secondary: participantNames.join(' vs ') }
         : isByePosition
-        ? { primary: `Draw Position ${drawPosition}: BYE` }
+        ? { primary: `Draw Position ${drawPosition || side?.drawPosition}: BYE` }
         : undefined;
 
     function scoreAction() {
@@ -181,6 +180,7 @@ export function DrawStructureContainer(props) {
     onParticipantClick: ({ participant, matchUp, sideIndex, e }) => {
       const menuPosition = { left: e.clientX, top: e.clientY };
       const { action, actionMenuData } = getActionsMenuData({ participant, matchUp, sideIndex });
+      console.log({ participant, matchUp, sideIndex, e, action, actionMenuData });
       if (action) {
         console.log('take action', { action });
       } else {
