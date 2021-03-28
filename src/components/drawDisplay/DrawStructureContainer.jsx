@@ -45,6 +45,7 @@ export function DrawStructureContainer(props) {
 
     const matchUpActions = tournamentEngine.matchUpActions(sourceMatchUp);
     const positionActions = tournamentEngine.positionActions({ eventId, drawId, structureId, drawPosition });
+    console.log({ positionActions, drawPosition });
     const { /*isActiveDrawPosition,*/ isByePosition, isDrawPosition } = positionActions || {};
     const validActions = [].concat(...(positionActions?.validActions || []), ...(matchUpActions?.validActions || []));
     if (feedBottom) {
@@ -177,10 +178,9 @@ export function DrawStructureContainer(props) {
         setMenuData({ menuPosition, ...actionMenuData, open: true });
       }
     },
-    onParticipantClick: ({ participant, matchUp, sideIndex, e }) => {
+    onParticipantClick: ({ participant, matchUp, sideIndex, drawPosition, e }) => {
       const menuPosition = { left: e.clientX, top: e.clientY };
-      const { action, actionMenuData } = getActionsMenuData({ participant, matchUp, sideIndex });
-      console.log({ participant, matchUp, sideIndex, e, action, actionMenuData });
+      const { action, actionMenuData } = getActionsMenuData({ participant, matchUp, sideIndex, drawPosition });
       if (action) {
         console.log('take action', { action });
       } else {
