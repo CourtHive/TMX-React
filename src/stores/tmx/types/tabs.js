@@ -14,7 +14,6 @@ export const PTAB_OFFICIALS = 'officials';
 
 export const DTAB_DRAW = 'draw';
 export const DTAB_COMPETITORS = 'competitors';
-export const DTAB_SETTINGS = 'settings';
 
 export const LTAB_OVERVIEW = 'overview';
 export const LTAB_COURTS = 'courts';

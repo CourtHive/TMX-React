@@ -3,21 +3,16 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import RefreshIcon from '@material-ui/icons/Autorenew';
 import { Button, Dialog, DialogTitle, DialogActions, DialogContent, TextField } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
-import { useStyles } from './style';
-import TMXIconButton from 'components/buttons/TMXIconButton';
 
-export const RemakeDrawAction = (props) => {
-  const { drawId } = props;
+export const RemakeDrawModal = (props) => {
+  const { drawId, open, setOpen } = props;
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const classes = useStyles();
-  const [isOpen, setOpen] = React.useState(false);
   const defaultValues = { description: '' };
   const validationSchema = Yup.object().shape({ description: Yup.string().required() });
   const { register, setValue, handleSubmit, errors } = useForm({ validationSchema, defaultValues, mode: 'onBlur' });
@@ -32,14 +27,7 @@ export const RemakeDrawAction = (props) => {
 
   return (
     <>
-      <TMXIconButton
-        id="remakeDraw"
-        title={t('actions.remakedraw')}
-        onClick={() => setOpen(true)}
-        className={classes.iconMargin}
-        icon={<RefreshIcon />}
-      />
-      <Dialog disableBackdropClick={false} open={isOpen} maxWidth={'md'} onClose={() => setOpen(false)}>
+      <Dialog disableBackdropClick={false} open={open} maxWidth={'md'} onClose={() => setOpen(false)}>
         <DialogTitle>
           <div style={{ minWidth: 400 }}>Remake Draw?</div>
         </DialogTitle>

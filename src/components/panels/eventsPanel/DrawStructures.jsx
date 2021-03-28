@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid } from '@material-ui/core';
 
+import { Grid } from '@material-ui/core';
 import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
 import { NoDrawsNotice } from 'components/notices/noDrawsNotice';
 import NoticePaper from 'components/papers/notice/NoticePaper';
@@ -12,6 +12,7 @@ import { TieMatchUpContainer } from 'containers/tieMatchUp/tieMatchUpContainer';
 
 import { tournamentEngine } from 'tods-competition-factory';
 import { DrawStructureContainer } from 'components/drawDisplay/DrawStructureContainer';
+import { DrawActions } from './DrawActions';
 
 export const DrawsPanel = (props) => {
   const { drawDefinition, event } = props;
@@ -89,7 +90,7 @@ export const DrawsPanel = (props) => {
           <Grid item>Draw Details:</Grid>
           <Grid item style={{ flexGrow: 1 }}>
             <Grid container direction="row" justify="flex-end">
-              Actions
+              <DrawActions drawDefinition={drawDefinition} hasReps={drawIsRoundRobin} />
             </Grid>
           </Grid>
         </Grid>

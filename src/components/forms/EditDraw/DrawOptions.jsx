@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import { DTAB_DRAW, DTAB_COMPETITORS, DTAB_SETTINGS } from 'stores/tmx/types/tabs';
+import { DTAB_DRAW, DTAB_COMPETITORS } from 'stores/tmx/types/tabs';
 
 export function DrawOptions() {
   const dispatch = useDispatch();
@@ -33,9 +33,6 @@ export function DrawOptions() {
         </ToggleButton>
         <ToggleButton value={DTAB_COMPETITORS} aria-label="competitors">
           Competitors
-        </ToggleButton>
-        <ToggleButton value={DTAB_SETTINGS} aria-label="settings">
-          Settings
         </ToggleButton>
       </ToggleButtonGroup>
     </>

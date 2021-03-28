@@ -157,6 +157,7 @@ export const defaultIdiom = () => ({
       kwn: 'Known',
       ioc: 'IOC',
       act: 'Action',
+      'Draw Actions': 'Actions',
       agd: 'Assigned',
       igr: 'Ignore',
       igd: 'Ignored',
