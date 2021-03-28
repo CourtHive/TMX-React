@@ -61,10 +61,10 @@
     "yup": "0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "7.13.13",
-    "@babel/preset-env": "7.13.12",
     "@types/jest": "26.0.22",
     "@types/node": "14.14.37",
+    "@babel/core": "7.13.13",
+    "@babel/preset-env": "7.13.12",
     "@types/react": "17.0.3",
     "@types/react-beautiful-dnd": "13.0.0",
     "@types/react-dom": "17.0.3",
