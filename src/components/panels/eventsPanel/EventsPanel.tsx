@@ -19,12 +19,13 @@ import { EventDrawSelector } from 'components/selectors/EventDrawSelector';
 import { StructureSelector } from 'components/selectors/StructureSelector';
 
 import { DTAB_DRAW } from 'stores/tmx/types/tabs';
-import { tournamentEngine, fixtures } from 'tods-competition-factory';
+import { tournamentEngine, entryStatusConstants, fixtures } from 'tods-competition-factory';
 import { defaultTieFormat } from 'policies/defaultTieFormat';
 
 import { PanelSelector } from 'components/selectors/PanelSelector';
 import { TAB_EVENTS } from 'stores/tmx/types/tabs';
 
+const { STRUCTURE_ENTERED_TYPES } = entryStatusConstants;
 const { SEEDING_ITF, SCORING_POLICY } = fixtures;
 
 export const EventsPanel = ({ tournamentRecord, params }) => {
@@ -57,7 +58,10 @@ export const EventsPanel = ({ tournamentRecord, params }) => {
     if (values) {
       const matchUpType = selectedEvent.eventType;
       const policyDefinitions = [SCORING_POLICY, SEEDING_ITF];
-      Object.assign(values, { eventId: selectedEvent.eventId, matchUpType, policyDefinitions });
+      const drawEntries = selectedEvent?.entries
+        .filter(({ entryStatus }) => STRUCTURE_ENTERED_TYPES.includes(entryStatus))
+        .slice(0, values.drawSize);
+      Object.assign(values, { drawEntries, eventId: selectedEvent.eventId, matchUpType, policyDefinitions });
       const result = tournamentEngine.generateDrawDefinition(values);
       const { drawDefinition } = result;
       if (matchUpType === 'TEAM') {
