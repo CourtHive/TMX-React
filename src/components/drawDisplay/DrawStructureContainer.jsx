@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-// import { ListPicker } from 'components/dialogs/listPicker';
+import { ListPicker } from 'components/dialogs/listPicker';
 import { TMXPopoverMenu } from 'components/menus/TMXPopoverMenu';
 
 import { tournamentEngine, positionActionConstants, matchUpActionConstants } from 'tods-competition-factory';
@@ -26,6 +26,7 @@ const { END, NICKNAME, PENALTY, REFEREE, SCHEDULE, SCORE, START, STATUS } = matc
 export function DrawStructureContainer(props) {
   const dispatch = useDispatch();
   const [menuData, setMenuData] = useState(undefined);
+  const [pickerData, setPickerData] = useState(undefined);
   const [targetMatchUp, setTargetMatchUp] = useState(undefined);
   const { eventData, drawId, structureId } = props;
 
@@ -34,10 +35,10 @@ export function DrawStructureContainer(props) {
   };
 
   function getActionsMenuData({ drawPosition, scoringMatchUp, matchUp, sideIndex, onCloseMenu }) {
-    const { drawId, eventId, structureId } = matchUp || {};
+    const { eventId } = eventData?.eventInfo || {};
 
     const side = matchUp?.sides && matchUp.sides[sideIndex];
-    const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp || (!sideIndex && matchUp);
+    const sourceMatchUp = side?.sourceMatchUp || scoringMatchUp || ([0, 1].includes(sideIndex) && matchUp);
     const feedBottom = sourceMatchUp?.feedBottom;
 
     const participantName = side?.participant?.participantName;
@@ -45,7 +46,6 @@ export function DrawStructureContainer(props) {
 
     const matchUpActions = tournamentEngine.matchUpActions(sourceMatchUp);
     const positionActions = tournamentEngine.positionActions({ eventId, drawId, structureId, drawPosition });
-    console.log({ positionActions, drawPosition });
     const { /*isActiveDrawPosition,*/ isByePosition, isDrawPosition } = positionActions || {};
     const validActions = [].concat(...(positionActions?.validActions || []), ...(matchUpActions?.validActions || []));
     if (feedBottom) {
@@ -70,39 +70,36 @@ export function DrawStructureContainer(props) {
       }
     }
 
-    function assignPosition(validAction) {
-      console.log({ validAction });
-      /*
-    function doAssignment({ selection } = {}) {
-      if (selection && selection.value) {
-        tmxStore.dispatch({
-          type: 'tournamentEngine',
-          payload: {
-            methods: [
-              {
-                method: 'assignDrawPosition',
-                params: selection.value
-              }
-            ]
-          }
+    function assignPosition({ validAction }) {
+      function doAssignment({ selection } = {}) {
+        if (selection && selection.value) {
+          dispatch({
+            type: 'tournamentEngine',
+            payload: {
+              methods: [
+                {
+                  method: 'assignDrawPosition',
+                  params: selection.value
+                }
+              ]
+            }
+          });
+        }
+      }
+      if (validAction.participantsAvailable) {
+        const options = validAction.participantsAvailable.map((participant) => {
+          let label = participant.participantName;
+          // if (valid.seedValue) label += ` [${valid.seedValue}]`;
+          return { value: { drawId, drawPosition, structureId, participantId: participant.participantId }, label };
         });
+        const callback = (value) => {
+          if (value) doAssignment(value);
+          setPickerData();
+        };
+        if (options.length) {
+          setPickerData({ options, callback });
+        }
       }
-    }
-    if (payload.validToAssign) {
-      const options = payload.validToAssign.map((valid) => {
-        let label = findParticipantName(valid);
-        if (valid.seedValue) label += ` [${valid.seedValue}]`;
-        return { value: valid, label };
-      });
-      const callback = (value) => {
-        if (value) doAssignment(value);
-        setPickerData();
-      };
-      if (options.length) {
-        setPickerData({ options, callback });
-      }
-    }
-    */
     }
     const menuActions = [
       {
@@ -161,7 +158,10 @@ export function DrawStructureContainer(props) {
           return menuAction;
         });
       if (menuItems.length === 1 && menuItems[0].singleClickAction) {
-        action = validActions.find((action) => action.type === menuItems[0].type);
+        action = {
+          validAction: validActions.find((action) => action.type === menuItems[0].type),
+          menuItem: menuItems[0]
+        };
       } else {
         actionMenuData = { menuItems, menuHeader };
       }
@@ -181,8 +181,8 @@ export function DrawStructureContainer(props) {
     onParticipantClick: ({ participant, matchUp, sideIndex, drawPosition, e }) => {
       const menuPosition = { left: e.clientX, top: e.clientY };
       const { action, actionMenuData } = getActionsMenuData({ participant, matchUp, sideIndex, drawPosition });
-      if (action) {
-        console.log('take action', { action });
+      if (action?.menuItem) {
+        action.menuItem.onClick(action);
       } else {
         setMenuData({ menuPosition, ...actionMenuData, open: true });
       }
@@ -197,9 +197,7 @@ export function DrawStructureContainer(props) {
       <DrawStructure {...args} />
       <TMXPopoverMenu {...menuData} closeMenu={closeMenu} />
       <MatchOutcomeContainer matchUp={targetMatchUp} closeDialog={closeMatchUpOutcome} />
+      {pickerData ? <ListPicker {...pickerData} /> : null}
     </>
   );
 }
-
-// {pickerData ? <ListPicker {...pickerData} /> : null}
-// <div id={anchorId} className={classes.tmxDraws} />
