@@ -46,7 +46,7 @@ The default configuration for TMX is found in `'config/defaults.js'`. This file 
 
 ### development mode
 
-When TMX is launched via `npm start` and is running on `localhost` a `dev` object is available in the browser console which can be used to access functional modules which have been added to the dev context, including the **Redux** store.
+When TMX is launched via `yarn start` and is running on `localhost` a `dev` object is available in the browser console which can be used to access functional modules which have been added to the dev context, including the **Redux** store.
 
 ```js
 dev.env;
@@ -131,7 +131,4 @@ TMX defines a design pattern which makes use of [Immer](https://immerjs.github.i
 
 The TMX development environment makes extensive use of [Jest](https://jestjs.io/) for unit testing and [Cypress](https://www.cypress.io/) for end-to-end testing.
 
-To run all Jest tests: `npm test`
-To run all Cypress tests: `cypress run`
-
-Cypress may also be run interactively: `cypress open`
+To run all Jest tests: `yarn test`

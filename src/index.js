@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
-import TMX from './components/TMX.tsx';
+import TMX from './components/TMX.jsx';
 import { setupTMX } from './config/initialState';
 import { updateReady } from './services/notifications/statusMessages';
 
