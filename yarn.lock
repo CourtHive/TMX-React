@@ -12757,10 +12757,10 @@ tods-matchup-format-code@1.0.8, tods-matchup-format-code@^1.0.7:
   resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.0.8.tgz#10936bbbe6b4ec9ba74436268770aa4735eb8897"
   integrity sha512-pci163xZA6UwOTGfe9M2aL3Jd2KH1GRbKoSEDUE8mVXhi7x2YqGuW4nUxzx34UTiRO0aYMhwXL7ncKqdJDzXhw==
 
-tods-react-draws@0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.1.12.tgz#0d217bf9e0899d576bbdc2a0067f21958d22c6d8"
-  integrity sha512-dxv1bKppiIo29lDHFaWXs/7tQSKAcY0lgQGvGDAca65ZMF8zdvsMG5Lh0Ne8f51Dt0J1DNkr/orgR78vIDEl0w==
+tods-react-draws@0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.1.13.tgz#c2217386487a94d86299487e477cdfc85a1e9c3a"
+  integrity sha512-w8V1BD+IDtSGtGH/syMGAYyocsvtZts0IG6bby7sBXltCNbTKzpdgTuhUw4p6+3DwHlyUWtZ1mlDnkX8Scg8IQ==
   dependencies:
     "@material-ui/icons" "^4.11.2"
     classnames "^2.2.6"
