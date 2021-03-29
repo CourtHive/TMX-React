@@ -25,15 +25,18 @@ export const coms = (function () {
   const ackRequests = {};
   let connected = false;
 
-  function initListeners() {
-    context.ee.addListener('emitTmx', fx.emitTmx);
-    context.ee.addListener('sendKey', fx.sendKey);
-    context.ee.addListener('queueKey', fx.queueKey);
-    context.ee.addListener('logError', fx.logError);
-  }
+  /*
+  Socket.io is disabled for now; see config.js => coms.socketConnect();
+  */
+  // function initListeners() {
+  //   context.ee.addListener('emitTmx', fx.emitTmx);
+  //   context.ee.addListener('sendKey', fx.sendKey);
+  //   context.ee.addListener('queueKey', fx.queueKey);
+  //   context.ee.addListener('logError', fx.logError);
+  // }
 
   fx.init = () => {
-    initListeners();
+    // initListeners();
   };
 
   const oi = {

@@ -85,7 +85,7 @@ export const config = (function () {
     return new Promise((resolve, reject) => {
       initListeners();
       checkQueryString();
-      coms.connectSocket();
+      // coms.connectSocket();
 
       function getUserUUID() {
         function setUserUUID(result) {
