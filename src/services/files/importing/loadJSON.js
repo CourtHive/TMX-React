@@ -31,7 +31,7 @@ function identifyJSON(json) {
 }
 
 function loadTournaments(json, callback) {
-  let importJSON;
+  let importJSON = json;
   if (env.exports?.localStorage) {
     localStorage.removeItem('saveTournament');
     localStorage.setItem('tournamentRecord', JSON.stringify(importJSON));
