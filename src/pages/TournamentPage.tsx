@@ -34,7 +34,7 @@ const TournamentPage = (props) => {
         console.log('oops');
       });
     }
-  });
+  }, [dbLoaded, dispatch, tournamentId, tournamentRecord]);
 
   return tournamentRecord ? (
     <TournamentRoot tournamentRecord={tournamentRecord} tabIndex={tabIndex} params={match?.params} />

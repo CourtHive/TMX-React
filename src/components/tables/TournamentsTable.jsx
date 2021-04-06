@@ -75,7 +75,8 @@ export function TournamentsTable() {
 
   const handleRowClick = (_, rowItem) => {
     displayTournament(rowItem);
-    const nextRoute = tabRoute({ tournamentId: rowItem.tournamentId, tabIndex: TAB_EVENTS });
+    // const nextRoute = tabRoute({ tournamentId: rowItem.tournamentId, tabIndex: TAB_EVENTS });
+    const nextRoute = tabRoute(...rowItem);
     history.push(nextRoute);
   };
 
