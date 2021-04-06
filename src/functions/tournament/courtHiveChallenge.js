@@ -25,11 +25,8 @@ export function courtHiveChallenge() {
 
   const tournamentId = UUID();
   const tournament = {
-    org: {},
     events: [],
-    metadata: { formatVersion: 2 },
     startDate: futureDate(5).getTime(),
-    name: 'CourtHive Challenge',
     tournamentName: 'CourtHive Challenge',
     endDate: futureDate(7).getTime(),
     tournamentId,

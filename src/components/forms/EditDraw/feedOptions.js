@@ -1,7 +1,7 @@
 import { drawInfo } from 'engineFactory/pdfEngine/node_modules/functions/draws/querying/drawInfo';
 import { generateRange } from 'functions/arrays';
 
-export function getFeedOptions({ size, stageDraws, selectedStage }) {
+export function getFeedOptions({ stageDraws, selectedStage }) {
   const mainDraw = stageDraws && stageDraws.M[0];
   const mainDrawInfo = mainDraw && drawInfo(mainDraw.draw);
   const depth = (mainDrawInfo && mainDrawInfo.depth) || 1;

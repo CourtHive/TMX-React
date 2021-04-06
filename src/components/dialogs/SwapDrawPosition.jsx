@@ -9,7 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { drawInfo } from 'functions/draws/querying/drawInfo';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
-
+import { tournamentEngine } from 'tods-competition-factory';
 */
 
 export const SwapDrawPosition = () => {
@@ -18,10 +18,8 @@ export const SwapDrawPosition = () => {
     const { t } = useTranslation();
     const editState = useSelector(state => state.tmx.editState);
     const selectedDraw = useSelector(state => state.tmx.select.draws.draw);
-    
-    const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-    const tournament = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
  
+    const { tournamentRecord } = tournamentEngine.getState();
     const swapDrawPosition = useSelector(state => state.tmx.actionData.swapDrawPosition);
 
     const drawExists = selectedDraw && tournamentDraws.reduce((p, c) => c.euid === selectedDraw ? c : p, undefined);

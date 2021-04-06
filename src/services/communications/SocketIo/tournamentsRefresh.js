@@ -25,7 +25,7 @@ export function refreshTournaments({ merge, deleteReplace } = {}) {
   function fetchNew() {
     fetchFx.fetchNewTournaments(merge).then((tournaments) => updateCalendar({ tournaments, merge }), checkServer);
   }
-  function checkServer(err) {
+  function checkServer() {
     if (env.server.sync.tournaments) {
       // pull in tournaments from CourtHive Server
     } else {

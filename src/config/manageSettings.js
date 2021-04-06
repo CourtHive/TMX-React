@@ -112,32 +112,16 @@ export function envSettings() {
       const superUser = getKey('superUser');
       if (superUser) context.state.admin = superUser.auth;
 
-      const pt = getKey('pointsTable');
-      if (pt) env.points.points_table = pt.table;
-
       const cal = getKey('calendarSettings');
       if (cal && cal.settings) {
         boolAttrs(cal.settings);
         keyWalk(cal.settings, env.calendar);
       }
 
-      const points = getKey('pointsSettings');
-      if (points && points.settings) {
-        boolAttrs(points.settings);
-        fxAttrs(points.settings);
-        Object.assign(env.points, points.settings);
-      }
-
       const draws = getKey('drawSettings');
       if (draws && draws.settings) {
         boolAttrs(draws.settings);
         keyWalk(draws.settings, env.draws);
-      }
-
-      const publishing = getKey('publishingSettings');
-      if (publishing && publishing.settings) {
-        boolAttrs(publishing.settings);
-        keyWalk(publishing.settings, env.publishing);
       }
 
       const printing = getKey('printingSettings');
