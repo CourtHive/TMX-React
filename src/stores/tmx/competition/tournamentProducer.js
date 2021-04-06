@@ -59,9 +59,7 @@ const invokeTournamentEngine = (state, action) =>
       });
 
     if (modifications) {
-      // transition hack while tournamentEngine api normalized
-      const tournamentEngineState = tournamentEngine.getState();
-      const tournamentRecord = tournamentEngineState?.tournamentRecord || tournamentEngineState;
+      const { tournamentRecord } = tournamentEngine.getState();
       draftState.records[tournamentId] = tournamentRecord;
       ++draftState.saveCount;
     }
@@ -77,6 +75,7 @@ const addTournament = (state, action) =>
   produce(state, (draftState) => {
     const tournamentId = action?.payload?.unifiedTournamentId?.tournamentId || action?.payload?.tournamentId;
     if (tournamentId) {
+      tournamentEngine.setState(action.payload);
       draftState.records[tournamentId] = action.payload;
       draftState.selectedTournamentId = tournamentId;
     }
@@ -88,6 +87,7 @@ const changeTournament = (state, action) =>
     const initialState = storeInitialState();
     if (tournamentId) {
       Object.assign(draftState, initialState, { initialized: true });
+      tournamentEngine.setState(action.payload);
       draftState.records = { [tournamentId]: action.payload };
       draftState.selectedTournamentId = tournamentId;
     }
@@ -95,6 +95,7 @@ const changeTournament = (state, action) =>
 
 const clearTournament = (state) =>
   produce(state, (draftState) => {
+    tournamentEngine.reset();
     draftState.records = {};
     draftState.saveCount = 0;
     draftState.selectedTournamentId = null;

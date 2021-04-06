@@ -17,9 +17,7 @@ export const TieMatchUpContainer = (props) => {
   const classes = useStyles();
 
   const tab = useSelector((state: any) => state.tmx.visible.tabPanel);
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
-  const { matchUp } = tournamentEngine.setState(tournamentRecord).devContext(true).findMatchUp(tieMatchUp);
+  const { matchUp } = tournamentEngine.devContext(true).findMatchUp(tieMatchUp);
 
   const clearMatchUp = () => {
     dispatch({ type: 'scoring tieMatchUp' });

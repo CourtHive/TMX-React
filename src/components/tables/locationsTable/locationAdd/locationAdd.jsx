@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useStyles } from './style';
 
-import { generateRange } from 'functions/arrays';
 import { validationSchema } from './validation';
 import TextField from '@material-ui/core/TextField';
 import { Grid, Button, Typography } from '@material-ui/core';
@@ -19,7 +18,7 @@ export function LocationAdd(props) {
   const { register, handleSubmit, formState, errors } = useForm({ validationSchema, mode: 'onBlur' });
 
   const onSubmit = (data) => {
-    const courts = generateRange(0, data.courts).map((index) => {
+    const courts = utilities.generateRange(0, data.courts).map((index) => {
       const courtName = `${data.abbreviation} ${index + 1}`;
       const courtId = utilities.UUID();
       return { courtName, courtId };

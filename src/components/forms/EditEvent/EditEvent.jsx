@@ -9,7 +9,7 @@ import { useStyles } from './style';
 
 import { ControlledSelector } from 'components/selectors/ControlledSelector';
 
-import { utilities } from 'tods-competition-factory';
+import { utilities, tournamentEngine } from 'tods-competition-factory';
 const { offsetDate } = utilities.dateTime;
 
 export function EditEventDrawer() {
@@ -31,9 +31,7 @@ export function EditEvent(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
-
+  const { tournamentRecord } = tournamentEngine.getState();
   const startDate = tournamentRecord.startDate;
   const endDate = tournamentRecord.endDate;
 

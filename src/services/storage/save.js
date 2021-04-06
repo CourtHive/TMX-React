@@ -3,8 +3,7 @@ import { context } from '../context';
 import { env } from 'config/defaults';
 // import { isLocalhost } from 'functions/isLocalhost';
 import { coms } from 'services/communications/SocketIo/coms';
-
-import { getTournamentRecord } from 'stores/accessor';
+import { tournamentEngine } from 'tods-competition-factory';
 
 export const save = (function () {
   const fx = {};
@@ -53,7 +52,7 @@ export const save = (function () {
 
   fx.cloud = ({ tournament, callback } = {}) => {
     if (!tournament) {
-      tournament = getTournamentRecord();
+      ({ tournamentRecord: tournament } = tournamentEngine.getState());
     }
     if (!tournament) return;
 

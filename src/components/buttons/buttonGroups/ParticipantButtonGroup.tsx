@@ -6,11 +6,11 @@ import { useStyles } from 'components/buttons/buttonGroups/styles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-import { participantRoles, participantTypes } from 'tods-competition-factory';
-const { COMPETITOR } = participantRoles;
-const { INDIVIDUAL, TEAM, GROUP } = participantTypes;
-
+import { participantRoles, participantTypes, tournamentEngine } from 'tods-competition-factory';
 import { PTAB_PARTICIPANTS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS } from 'stores/tmx/types/tabs';
+
+const { INDIVIDUAL, TEAM, GROUP } = participantTypes;
+const { COMPETITOR } = participantRoles;
 
 export function ParticipantButtonGroup() {
   const dispatch = useDispatch();
@@ -18,10 +18,8 @@ export function ParticipantButtonGroup() {
   const classes = useStyles();
 
   const participantView = useSelector((state: any) => state.tmx.visible.participantView);
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
-  const tournamentParticipants = tournamentRecord.participants || [];
 
+  const { tournamentParticipants } = tournamentEngine.getTournamentParticipants();
   const playersCount = tournamentParticipants.filter((participant) => {
     const isPerson = participant.participantType === INDIVIDUAL || participant.person;
     const isCompetitor = participant.participantRole === COMPETITOR || !participant.participantRole;

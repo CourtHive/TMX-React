@@ -1,9 +1,10 @@
 import { env } from 'config/defaults';
-import { chunkArray } from 'functions/arrays';
 import { tieMatchUps } from 'functions/draws/drawMatches';
 import { opponentName } from 'components/options/opponents';
 import { drawSheetPageHeader } from 'engineFactory/pdfEngine/headers/drawSheetHeader';
 import { convertStringScore } from 'functions/scoring/convertStringScore';
+
+import { utilities } from 'tods-competition-factory';
 
 import i18n from 'i18next';
 
@@ -89,7 +90,7 @@ function TieMatchUpsTeams(dual_teams) {
 }
 
 function TieMatchUpsTable(scoreboxes) {
-  let groups = chunkArray(scoreboxes, 2);
+  let groups = utilities.chunkArray(scoreboxes, 2);
   let scoreRow = (group) => [group[0] || '', '', group[1] || ''];
   let body = groups.map(scoreRow);
 

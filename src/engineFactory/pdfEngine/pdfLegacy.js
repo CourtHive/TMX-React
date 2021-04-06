@@ -1,6 +1,5 @@
 import { env } from 'config/defaults';
 import { qrFx } from 'services/qrFx';
-import { chunkArray } from 'functions/arrays';
 import { drawInfo } from 'functions/draws/querying/drawInfo';
 
 import { tmxStore } from 'stores/tmxStore';
@@ -28,6 +27,7 @@ import { emitPDF, savePDF, openPDF } from 'services/files/pdf/pdfExport';
 import { scheduleDocDefinition } from 'engineFactory/pdfEngine/schedule/scheduleDocDefinition';
 
 import { SVGasURI } from 'engineFactory/pdfEngine/svgGeneration/svgUtilities';
+import { utilities } from 'tods-competition-factory';
 
 export const exportPDF = (function () {
   const exp = {};
@@ -49,7 +49,7 @@ export const exportPDF = (function () {
 
   exp.printSchedulePDF = ({ tournament, day, courts, matches, download }) => {
     getLogo().then((logo) => {
-      const chunks = chunkArray(courts, env.printing.schedule.courts_per_page || 8);
+      const chunks = utilities.chunkArray(courts, env.printing.schedule.courts_per_page || 8);
       const luids = chunks.map((chunk) => chunk.map((c) => c.luid));
       const court_matches = chunks.map((c, i) => matches.filter((f) => luids[i].indexOf(f.schedule.luid) >= 0));
       chunks.forEach((chunk, i) => {

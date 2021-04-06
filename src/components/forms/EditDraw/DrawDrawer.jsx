@@ -13,9 +13,10 @@ import { matchUpFormats } from 'functions/scoring/matchUpFormats';
 import { env } from 'config/defaults';
 import { nearestPow2 } from 'functions/draws';
 
-import { generateRange } from 'functions/arrays';
 import { getStatusGroup } from 'functions/events';
 import { validRoundRobinGroupSize } from 'functions/draws';
+
+import { utilities } from 'tods-competition-factory';
 
 export function EditDrawDrawer(props) {
   const { callback, selectedEvent } = props;
@@ -79,7 +80,7 @@ export function NewDraw(props) {
   const groupSize = watch('groupSize', 4);
   const minimumGroups = Math.ceil(approved.length / groupSize);
   const maximumGroups = Math.floor(approved.length / (groupSize - 1));
-  const groupsRange = generateRange(minimumGroups, maximumGroups + 1);
+  const groupsRange = utilities.generateRange(minimumGroups, maximumGroups + 1);
   const groupsOptions = groupsRange.map((o) => ({ text: o, value: o }));
 
   const seedsCount = getValues().seedsCount;
@@ -106,9 +107,9 @@ export function NewDraw(props) {
   const bracketSizes = env.draws.rr_draw.brackets;
   const lowerRange = bracketSizes.min_bracket_size;
   const upperRange = Math.min(bracketSizes.max_bracket_size, approved.length);
-  const groupSizeRange = generateRange(lowerRange, upperRange + 1).filter((v) =>
-    validRoundRobinGroupSize(approved.length, v)
-  );
+  const groupSizeRange = utilities
+    .generateRange(lowerRange, upperRange + 1)
+    .filter((v) => validRoundRobinGroupSize(approved.length, v));
   const groupSizeOptions = groupSizeRange.map((o) => ({ text: o, value: o }));
 
   function renderMatchFormat(f) {
@@ -287,7 +288,7 @@ export function NewDraw(props) {
 
 function getSeedRange({ drawSize, selectedStructure }) {
   if (selectedStructure === 'FEED IN') {
-    const validSeeds = generateRange(1, Math.ceil(drawSize / 2) + 1);
+    const validSeeds = utilities.generateRange(1, Math.ceil(drawSize / 2) + 1);
     return validSeeds;
   }
   const validSeeds = [0, 2, 4, 8, 16, 32, 64];

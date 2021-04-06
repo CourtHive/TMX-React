@@ -22,12 +22,6 @@ export const DrawsPanel = (props) => {
   const { matchUp: tieMatchUp } = scoringTieMatchUp || {};
 
   const selectedStructureId = useSelector((state) => state.tmx.select.draws.structureId);
-
-  /*
-  const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
-  const participants = tournamentRecord.participants || [];
-  */
   const structures = drawDefinition?.structures || [];
   const selectedIsValid = structures.map(({ structureId }) => structureId).includes(selectedStructureId);
   const { structureId: firstStructureId } = structures[0] || {};

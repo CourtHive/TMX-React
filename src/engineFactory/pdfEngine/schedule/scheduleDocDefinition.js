@@ -1,17 +1,18 @@
 import { env } from 'config/defaults';
-import { unique, generateRange } from 'functions/arrays';
 import { noPadding, noPaddingOrBorder } from 'engineFactory/pdfEngine/layouts';
 import { scheduleCell } from 'engineFactory/pdfEngine/schedule/scheduleCell';
 import { schedulePageHeader } from 'engineFactory/pdfEngine/headers/scheduleHeader';
 import { schedulePageFooter } from 'engineFactory/pdfEngine/footers/scheduleFooter';
+import { utilities } from 'tods-competition-factory';
 
 export function scheduleDocDefinition({ tournament, day, courts, matches, landscape, logo }) {
   let pageOrientation = courts.length < 5 && !landscape ? 'portrait' : 'landscape';
   let portrait = pageOrientation === 'portrait';
 
-  let rounds = unique(matches.map((m) => parseInt(m.schedule.oop_round)));
+  let rounds = utilities.unique(matches.map((m) => parseInt(m.schedule.oop_round)));
   let max_round = Math.max(2, ...rounds);
-  let row_matches = generateRange(1, max_round + 1)
+  let row_matches = utilities
+    .generateRange(1, max_round + 1)
     .map((oop_round) => matches.filter((m) => m.schedule.oop_round === oop_round))
     .filter((row) => row.length);
 

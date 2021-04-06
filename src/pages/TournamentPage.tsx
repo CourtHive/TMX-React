@@ -8,13 +8,14 @@ import Grid from '@material-ui/core/Grid';
 import { context } from 'services/context';
 import { env } from 'config/defaults';
 
+import { tournamentEngine } from 'tods-competition-factory';
+
 const TournamentPage = (props) => {
   const { tabIndex, match } = props;
   const dispatch = useDispatch();
 
   const dbLoaded = useSelector((state: any) => state.tmx.dbLoaded);
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const { tournamentRecord } = tournamentEngine.getState();
   const tournamentId = match?.params?.tournamentId;
 
   useEffect(() => {

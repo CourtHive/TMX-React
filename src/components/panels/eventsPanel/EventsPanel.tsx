@@ -44,8 +44,6 @@ export const EventsPanel = ({ tournamentRecord, params }) => {
     return eventIdMatch || drawIdFound ? event : selected;
   }, undefined);
 
-  tournamentEngine.setState(tournamentRecord);
-
   const tournamentDraws = tournamentEvents
     .map((event) => event.drawDefinitions)
     .flat()

@@ -35,8 +35,7 @@ export function DrawParticipants(props) {
 
   const editState = useSelector((state: any) => state.tmx.editState);
   const hiddenColumns = useSelector((state: any) => state.tmx.hiddenColumns.eventParticipants) || [];
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const { tournamentRecord } = tournamentEngine.getState();
 
   const [editMode, setEditMode] = useState(false);
   const [tableData, setTableData] = useState([]);
@@ -47,7 +46,7 @@ export function DrawParticipants(props) {
   const enteredInDraw = (selectedDraw && getEntries(selectedDraw).participantIds) || [];
   const enteredIds = enteredInDraw || [];
 
-  tournamentEngine.setState(tournamentRecord);
+  // tournamentEngine.setState(tournamentRecord);
   const participants = tournamentRecord.participants || [];
   const participantFilter = (participant) => (enteredIds || []).indexOf(participant.participantId) >= 0;
   const filteredEventParticipants = (participants || []).filter(participantFilter);

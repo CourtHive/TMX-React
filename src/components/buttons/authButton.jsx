@@ -15,7 +15,8 @@ import { green, red } from '@material-ui/core/colors';
 import { setUserAuth } from 'services/tournamentAuthorization';
 
 import { tmxStore } from 'stores/tmxStore';
-import { getTournamentRecord } from 'stores/accessor';
+
+import { tournamentEngine } from 'tods-competition-factory';
 
 export function AuthButton() {
   const { t } = useTranslation();
@@ -23,8 +24,7 @@ export function AuthButton() {
   const [menuData, setMenuData] = useState();
   const authState = useSelector((state) => state.tmx.authState);
 
-  const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
+  const { tournamentRecord } = tournamentEngine.getState();
 
   const checkSameOrg = () => {
     const organisationId = env.org?.ouid;
@@ -96,8 +96,7 @@ export function AuthButton() {
     });
 
     function revokeIt() {
-      const tournament = getTournamentRecord();
-      const { unifiedTournamentId } = tournament;
+      const { unifiedTournamentId } = tournamentRecord;
       const { tournamentId } = unifiedTournamentId; // TODO: Remove; update CHCS
       coms.emitTmx({ action: 'revokeAuthorization', payload: { tournamentId, unifiedTournamentId } });
       setUserAuth({ authorized: false });
@@ -107,8 +106,8 @@ export function AuthButton() {
 
 function authorizeUser() {
   const uidate = new Date().getTime();
-  const tournament = getTournamentRecord();
-  const { unifiedTournamentId } = tournament;
+  const { tournamentRecord } = tournamentEngine.getState();
+  const { unifiedTournamentId } = tournamentRecord;
   const { tournamentId } = unifiedTournamentId; // TODO: Remove; update CHCS
   const key_uuid = uidate.toString(36).slice(-6).toUpperCase();
 
@@ -121,7 +120,7 @@ function authorizeUser() {
         tournamentId, // TODO: Remove; update CHCS
         unifiedTournamentId,
         referee_key: env.org && env.org.keys && env.org.keys.referee,
-        tournament: JSON.stringify(tournament),
+        tournament: JSON.stringify(tournamentRecord),
         send_auth: context.state.authorized
       }
     },
@@ -144,8 +143,8 @@ function authorizeUser() {
 
 function authorizeAdmin() {
   const uidate = new Date().getTime();
-  const tournament = getTournamentRecord();
-  const { unifiedTournamentId } = tournament;
+  const { tournamentRecord } = tournamentEngine.getState();
+  const { unifiedTournamentId } = tournamentRecord;
   const { tournamentId } = unifiedTournamentId; // TODO: Remove; update CHCS
   const key_uuid = uidate.toString(36).slice(-6).toUpperCase();
   const payload = {
@@ -156,7 +155,7 @@ function authorizeAdmin() {
       content: {
         tournamentId,
         unifiedTournamentId,
-        tournament: JSON.stringify(tournament),
+        tournament: JSON.stringify(tournamentRecord),
         send_auth: context.state.authorized
       }
     },

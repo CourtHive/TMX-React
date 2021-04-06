@@ -1,3 +1,5 @@
+// import { tournamentEngine, utilities } from 'tods-competition-factory';
+
 export const printFx = (function () {
   const fx = {};
   /*
@@ -140,7 +142,7 @@ export const printFx = (function () {
    }
 
    function matchListPDF({ type } = {}) {
-      const tournament = getTournamentRecord();
+      const { tournamentRecord: tournament } = tournamentEngine.getState();
       let { total_matches, upcoming_matches, completed_matches, pending_matches } = tournamentEventMatches({ tournament, source: true, env });
       if (!total_matches) return;
 
@@ -275,7 +277,7 @@ export const printFx = (function () {
    }
 
    function printSchedule(target, mouse) {
-      const tournament = getTournamentRecord();
+      const { tournamentRecord: tournament } = tournamentEngine.getState();
       let selected_day = tmxStore.getState().tmx.select.schedule.day;
       let { completed_matches, pending_matches, upcoming_matches } = tournamentEventMatches({ tournament, source: true, env });
       let all_matches = completed_matches.concat(...pending_matches, ...upcoming_matches);
@@ -287,7 +289,7 @@ export const printFx = (function () {
       let courts = [];
       let day_matches = all_matches.filter(matchUp => sfx.scheduledFilter({selected_day, matchUp, context}));
 
-      let scheduled_courts = unique(day_matches.map(m=>`${m.schedule.luid}|${m.schedule.index}`));
+      let scheduled_courts = utilities.unique(day_matches.map(m=>`${m.schedule.luid}|${m.schedule.index}`));
       let filtered_courts = courts.filter(c=>scheduled_courts.indexOf(`${c.luid}|${c.index}`) >= 0);
 
       let disabled = !day_matches || !day_matches.length;
@@ -315,7 +317,7 @@ export const printFx = (function () {
 
    function printDrawOrder({ evt, download }) {
       let euid = context.displayed.draw_event && context.displayed.draw_event.euid;
-      const tournament = getTournamentRecord();
+      const { tournamentRecord: tournament } = tournamentEngine.getState();
       evt = evt || findDrawDefinitionById({drawId: euid});
 
       // if no event or no approved players or category undefined, abort
@@ -355,7 +357,7 @@ export const printFx = (function () {
 
    function signInPDF({alpha}={}) {
       let download = env.printing.save_pdfs;
-      const tournament = getTournamentRecord();
+      const { tournamentRecord: tournament } = tournamentEngine.getState();
       let tournament_date = tournament && tournament.startDate;
       let calc_date = offsetDate(tournament_date);
       let doubles = context.player_views.doubles_rankings;
@@ -382,7 +384,7 @@ export const printFx = (function () {
    }
 
    function doublesSignInPDF({ download }={}) {
-      const tournament = getTournamentRecord();
+      const { tournamentRecord: tournament } = tournamentEngine.getState();
       exportPDF.doublesSignInPDF({
          download,
          tournament,
@@ -392,7 +394,7 @@ export const printFx = (function () {
 
    function playersListPDF({alpha, onlySignedIn, download}={}) {
       download = download || env.printing.save_pdfs;
-      const tournament = getTournamentRecord();
+      const { tournamentRecord: tournament } = tournamentEngine.getState();
       let doubles = context.player_views.doubles_rankings;
 
       let selected_category = (container.category_filter && container.category_filter.ddlb && container.category_filter.ddlb.getValue()) || tournament.category;

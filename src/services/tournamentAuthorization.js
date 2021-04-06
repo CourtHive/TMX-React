@@ -3,11 +3,11 @@ import { context } from 'services/context';
 import { coms } from 'services/communications/SocketIo/coms';
 
 import { tmxStore } from 'stores/tmxStore';
-import { getTournamentRecord } from 'stores/accessor';
+import { tournamentEngine } from 'tods-competition-factory';
 
 export function setUserAuth({ authorized, initialize }) {
-  const tournament = getTournamentRecord();
-  const tournamentId = tournament?.unifiedTournamentId?.tournamentId || tournament?.tournamentId;
+  const { tournamentRecord } = tournamentEngine.getState();
+  const tournamentId = tournamentRecord?.unifiedTournamentId?.tournamentId || tournamentRecord?.tournamentId;
 
   const changed = (context.state.authorized && !authorized) || (!context.state.authorized && authorized);
   context.state.authorized = authorized || false;
@@ -25,8 +25,8 @@ function authorizeAndInitialize(result) {
 }
 
 export function receiveAuth(t) {
-  const tournament = getTournamentRecord();
-  const tournamentId = tournament?.unifiedTournamentId?.tournamentId || tournament?.tournamentId;
+  const { tournamentRecord } = tournamentEngine.getState();
+  const tournamentId = tournamentRecord?.unifiedTournamentId?.tournamentId || tournamentRecord?.tournamentId;
   const authTournamentId = t?.unifiedTournamentId?.tournamentId || t?.tournamentId;
   const authorized = tournamentId && authTournamentId === tournamentId;
   setUserAuth({ authorized });

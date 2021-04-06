@@ -70,10 +70,7 @@ export const PlayersTable = () => {
   const [editMode, setEditMode] = useState(false);
   const [actionPanelStyle, setActionPanelStyle] = useState({});
 
-  const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state) => state.tmx.records[selectedTournamentId]);
-  tournamentEngine.setState(tournamentRecord);
-
+  const { tournamentRecord } = tournamentEngine.getState();
   const tournamentParticipants = tournamentRecord.participants || [];
   const { tournamentProfile } = tournamentRecord;
 

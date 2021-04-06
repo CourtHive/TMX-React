@@ -27,7 +27,6 @@ import CheckboxCell from 'components/tables/common/CheckboxCell';
 import { TableConfigInterface } from 'components/tables/EndlessTable/typedefs';
 import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
 
-// import { tournamentEngine, participantConstants } from 'competitionFactory';
 import { tournamentEngine, participantConstants } from 'tods-competition-factory';
 const { RANKING, RATING } = participantConstants;
 
@@ -40,8 +39,7 @@ export function EventParticipants(props) {
 
   const editState = useSelector((state: any) => state.tmx.editState);
   const hiddenColumns = useSelector((state: any) => state.tmx.hiddenColumns.eventParticipants) || [];
-  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
-  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+  const { tournamentRecord } = tournamentEngine.getState();
 
   const [editMode, setEditMode] = useState(false);
   const [tableData, setTableData] = useState([]);
@@ -52,7 +50,6 @@ export function EventParticipants(props) {
   const enteredInEvent = (selectedEvent && getEntries(selectedEvent).participantIds) || [];
   const enteredIds = enteredInEvent || [];
 
-  tournamentEngine.setState(tournamentRecord);
   const participants = tournamentRecord.participants || [];
   const participantFilter = (participant) => (enteredIds || []).indexOf(participant.participantId) >= 0;
   const filteredEventParticipants = (participants || []).filter(participantFilter);

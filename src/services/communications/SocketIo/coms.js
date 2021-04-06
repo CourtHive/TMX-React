@@ -10,12 +10,12 @@ import i18n from 'i18next';
 import io from 'socket.io-client';
 
 import { getNavigator } from 'functions/browser';
-import { utilities } from 'tods-competition-factory';
 import { tmxStore } from 'stores/tmxStore';
-import { getTournamentRecord } from 'stores/accessor';
 import { receiveIdiomList } from 'services/idiomManager';
 import { processDirective, receiveTournaments } from 'services/communications/SocketIo/receiveDirective';
 import { receiveRegisteredPlayers, receiveTournamentCalendar } from 'services/communications/SocketIo/receiveLists';
+
+import { utilities, tournamentEngine } from 'tods-competition-factory';
 
 export const coms = (function () {
   const fx = {};
@@ -108,9 +108,9 @@ export const coms = (function () {
 
   function connectionEvent() {
     fx.connectAction();
-    const tournament = getTournamentRecord();
-    const tournamentId = tournament?.unifiedTournamentId?.tournamentId || tournament?.tournamentId;
-    if (contentEquals('tournament') && tournament) {
+    const { tournamentRecord } = tournamentEngine.getState();
+    const tournamentId = tournamentRecord?.unifiedTournamentId?.tournamentId || tournamentRecord?.tournamentId;
+    if (contentEquals('tournament') && tournamentRecord) {
       fx.joinTournament({ tournamentId });
     } else {
       if (tournamentId) fx.leaveTournament(tournamentId);

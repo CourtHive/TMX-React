@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 import { env } from 'config/defaults';
 import { tmxStore } from 'stores/tmxStore';
-import { getTournamentRecord } from 'stores/accessor';
 import { coms } from 'services/communications/SocketIo/coms';
 
 import SyncIcon from '@material-ui/icons/Sync';
@@ -20,10 +19,12 @@ import TMXIconButton from 'components/buttons/TMXIconButton';
 import { editRegistrationLink } from 'components/tables/playersTable/editRegistrationLink';
 import { synchronizePlayers } from 'components/tables/playersTable/synchronizePlayers';
 
+import { tournamentEngine } from 'tods-competition-factory';
+
 function setParticipantsRetrievalKey() {
   const uidate = new Date().getTime();
   const keyUUID = uidate.toString(36).slice(-6).toUpperCase();
-  const tournamentRecord = getTournamentRecord();
+  const { tournamentParticipants } = tournamentEngine.getTournamentParticipants();
   const payload = {
     key_uuid: keyUUID,
     content: {
@@ -31,7 +32,7 @@ function setParticipantsRetrievalKey() {
       onetime: false,
       directive: 'sendKey',
       content: {
-        data: JSON.stringify(tournamentRecord.participants)
+        data: JSON.stringify(tournamentParticipants)
       }
     }
   };

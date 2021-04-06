@@ -6,9 +6,9 @@ import { fetchGoogleSheet } from 'services/communications/Axios/fetch/fetchGoogl
 
 import i18n from 'i18next';
 import { tmxStore } from 'stores/tmxStore';
-import { getTournamentRecord } from 'stores/accessor';
 
 import { AppToaster } from 'services/notifications/toaster';
+import { tournamentEngine } from 'tods-competition-factory';
 
 export function receiveRegisteredPlayers(data) {
   const players = (data && data.registered && data.registered.map(playerAttributes)) || [];
@@ -48,7 +48,7 @@ function addRegistered(registeredPlayers) {
 
 export function updateRegisteredPlayers({ show_notice, onlyIfPopulated, renew, callback }) {
   if (!context.state.edit) return;
-  const tournament = getTournamentRecord();
+  const { tournamentRecord } = tournamentEngine.getState();
   const done = (result) => {
     const registeredPlayers = result && result.players;
     const teams = result && result.teams;
@@ -73,11 +73,11 @@ export function updateRegisteredPlayers({ show_notice, onlyIfPopulated, renew, c
       if (callback && typeof callback === 'function') callback(true);
     } else {
       if (registeredPlayers && !registeredPlayers.length) {
-        if (show_notice) tournament.players = [];
+        if (show_notice) tournamentRecord.players = [];
       }
     }
     context.ee.emit('mergeTeams', {
-      tournament,
+      tournament: tournamentRecord,
       teams,
       callback: () => {
         context.ee.emit('playersTab');
@@ -89,14 +89,15 @@ export function updateRegisteredPlayers({ show_notice, onlyIfPopulated, renew, c
     AppToaster.show({ icon: 'error', intent: 'error', message });
   };
 
-  const registered = (tournament.registration && tournament.registration.registered) || tournament.reg_link;
+  // TODO: legacy...
+  const registered = tournamentRecord?.registration?.registered || tournamentRecord.reg_link;
   if (registered) {
     fetchGoogleSheet(registered).then(done, invalidURLorNotShared);
   } else {
-    const tournamentId = tournament.unifiedTournamentId?.tournamentId || tournament.tournamentId;
+    const tournamentId = tournamentRecord.unifiedTournamentId?.tournamentId || tournamentRecord.tournamentId;
     // TODO: category needs to be updated...
     fetchFx
-      .fetchRegisteredPlayers({ tournamentId, category: tournament.category, show_notice })
+      .fetchRegisteredPlayers({ tournamentId, category: tournamentRecord.category, show_notice })
       .then(done, notConfigured);
   }
 }

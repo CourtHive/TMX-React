@@ -12,7 +12,6 @@ import TMXInput from 'components/inputs/TMXInput';
 import SyncIcon from '@material-ui/icons/Sync';
 
 import { env } from 'config/defaults';
-import { unique } from 'functions/arrays';
 import { populateCalendar } from 'functions/calendar';
 
 import { context } from 'services/context';
@@ -38,7 +37,7 @@ function trnyRecord(tournamentRecord) {
     .map((event) => event.category?.categoryName)
     .flat()
     .filter((f) => f);
-  const categories = unique(eventCategories);
+  const categories = utilities.unique(eventCategories);
 
   const { endDate, startDate, tournamentName, unifiedTournamentId } = tournamentRecord || {};
   let { tournamentId } = unifiedTournamentId || {};

@@ -11,7 +11,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { getTournamentRecord } from 'stores/accessor';
 import { tournamentEngine } from 'competitionFactory';
 
 export function participantMenu({ participantId, participants }) {
@@ -24,7 +23,7 @@ export function participantMenu({ participantId, participants }) {
 
   const enteredInEvent = false;
 
-  const tournamentRecord = getTournamentRecord();
+  const { tournamentRecord } = tournamentEngine.getState();
   const signedIn = tournamentEngine.setState(tournamentRecord).getParticipantSignInStatus(participant);
 
   const menuItems = [
