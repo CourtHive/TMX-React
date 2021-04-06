@@ -6,11 +6,10 @@ import { fetchFx } from 'services/communications/Axios/fetchFx';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
 import { JSONPath } from 'jsonpath-plus';
 
-import { UUID } from 'functions/UUID';
 import { isLocalhost } from 'functions/isLocalhost';
 
 import pdfEngine from 'engineFactory/pdfEngine';
-import { drawEngine, tournamentEngine, competitionEngine } from 'tods-competition-factory';
+import { drawEngine, tournamentEngine, competitionEngine, utilities } from 'tods-competition-factory';
 import { fetchURL } from 'services/communications/Axios/fetch/fetchURL';
 
 import { tmxStore } from 'stores/tmxStore';
@@ -40,7 +39,6 @@ export function setDev({ env }) {
   addDev({ db });
   addDev({ env });
   addDev({ coms });
-  addDev({ UUID });
   addDev({ context });
   addDev({ fetchFx });
   addDev({ JSONPath });
@@ -48,6 +46,7 @@ export function setDev({ env }) {
   addDev({ tmxStore });
   addDev({ fetchURL });
   addDev({ pdfEngine });
+  addDev({ utilities });
   addDev({ drawEngine });
   addDev({ matchUpFormatCode });
   addDev({ tournamentEngine });

@@ -9,9 +9,8 @@ import { isDev } from 'functions/isDev';
 import i18n from 'i18next';
 import io from 'socket.io-client';
 
-import { UUID } from 'functions/UUID';
 import { getNavigator } from 'functions/browser';
-
+import { utilities } from 'tods-competition-factory';
 import { tmxStore } from 'stores/tmxStore';
 import { getTournamentRecord } from 'stores/accessor';
 import { receiveIdiomList } from 'services/idiomManager';
@@ -68,7 +67,7 @@ export const coms = (function () {
     });
 
     if (ackCallback && typeof ackCallback === 'function') {
-      const ackId = UUID.new();
+      const ackId = utilities.UUID();
       Object.assign(data.payload, { ackId });
       fx.requestAcknowledgement({ ackId, callback: ackCallback });
     }

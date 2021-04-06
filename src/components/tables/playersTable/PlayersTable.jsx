@@ -32,15 +32,19 @@ import EndlessTable from 'components/tables/EndlessTable';
 import Actions from 'components/tables/actions/Actions';
 import PersonForm from 'components/forms/Person/personForm';
 
-import { UUID } from 'functions/UUID';
-
 import { generatePlayerTableData } from './playerTableData';
 import { ActionPanelMenu } from './ActionPanelMenu';
 import { IconButtonGroup } from './IconButtonGroup';
 import { AddToGrouping } from './AddToGrouping';
 import { getActionPanelBounds } from 'services/dynamicStyles/actionPanelBounds';
 
-import { tournamentEngine, participantRoles, participantTypes, participantConstants } from 'tods-competition-factory';
+import {
+  tournamentEngine,
+  participantRoles,
+  participantTypes,
+  participantConstants,
+  utilities
+} from 'tods-competition-factory';
 const { COMPETITOR } = participantRoles;
 const { INDIVIDUAL, TEAM, GROUP } = participantTypes;
 const { SIGNED_IN, SIGNED_OUT } = participantConstants;
@@ -392,7 +396,7 @@ export const PlayersTable = () => {
   const addParticipant = () => {
     const addToStore = ({ participantData, groupingParticipantId }) => {
       if (participantData) {
-        participantData.participantId = UUID.new();
+        participantData.participantId = utilities.UUID();
         dispatch({
           type: 'tournamentEngine',
           payload: {

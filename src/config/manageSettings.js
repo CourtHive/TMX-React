@@ -7,7 +7,7 @@ import { fxAttrs } from 'functions/objects';
 import { tmxStore } from 'stores/tmxStore';
 import { boolAttrs, keyWalk } from 'functions/objects';
 
-import { UUID } from 'functions/UUID';
+import { utilities } from 'tods-competition-factory';
 
 function resetOptions() {
   const original_env = {
@@ -175,7 +175,7 @@ export function envSettings() {
       const uuuid = getKey('userUUID');
       if (!uuuid || !uuuid.value) {
         env.firstTimeUser = true;
-        env.uuuid = UUID.generate();
+        env.uuuid = utilities.UUID();
         db.addSetting({ key: 'userUUID', value: env.uuuid, settings: env.uuuid });
         coms.emitTmx({ action: 'newClient', notice: 'New TMX Client' });
       } else {

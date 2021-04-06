@@ -2,13 +2,12 @@ import { db } from 'services/storage/db';
 import { populateCalendar } from 'functions/calendar';
 import { dropModal } from 'components/forms/dragDropModal';
 import { loadFile } from 'services/files/importing/loadFile';
-
-import { UUID } from 'functions/UUID';
+import { utilities } from 'tods-competition-factory';
 
 export function saveNewTournament(tournament) {
   if (!tournament || !Object.keys(tournament).length) return;
 
-  const tournamentId = UUID.new();
+  const tournamentId = utilities.UUID();
   tournament.tournamentId = tournamentId;
   tournament.unifiedTournamentId = { tournamentId };
 

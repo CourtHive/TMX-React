@@ -413,7 +413,7 @@ export const fetchFx = (function () {
                 player.first_name,
                 false
               )}`;
-              if (!player.id) player.id = hashId(player.full_name) || `pl${UUID.new()}`;
+              if (!player.id) player.id = hashId(player.full_name) || `pl${utilities.UUID()}`;
               if (!player.ioc && player.country) player.ioc = ioc_map[player.country.toUpperCase()];
             });
             tmxStore.dispatch({ type: 'loading state', payload: false });

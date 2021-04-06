@@ -7,7 +7,8 @@ import { generateRange } from 'functions/arrays';
 import { validationSchema } from './validation';
 import TextField from '@material-ui/core/TextField';
 import { Grid, Button, Typography } from '@material-ui/core';
-import { UUID } from 'functions/UUID';
+
+import { utilities } from 'tods-competition-factory';
 
 export function LocationAdd(props) {
   const classes = useStyles();
@@ -20,7 +21,7 @@ export function LocationAdd(props) {
   const onSubmit = (data) => {
     const courts = generateRange(0, data.courts).map((index) => {
       const courtName = `${data.abbreviation} ${index + 1}`;
-      const courtId = UUID.new();
+      const courtId = utilities.UUID();
       return { courtName, courtId };
     });
     const newLocation = {

@@ -28,9 +28,7 @@ import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
 import EndlessTable from 'components/tables/EndlessTable';
 import { TeamEdit } from 'components/tables/teamsTable/TeamEdit/teamEdit';
 
-import { UUID } from 'functions/UUID';
-
-import { participantRoles, participantTypes } from 'tods-competition-factory';
+import { participantRoles, participantTypes, utilities } from 'tods-competition-factory';
 const { COMPETITOR } = participantRoles;
 const { TEAM } = participantTypes;
 
@@ -296,7 +294,7 @@ export const TeamsTable = () => {
 
   const addParticipant = () => {
     const teamParticipant = {
-      participantId: UUID.new(),
+      participantId: utilities.UUID(),
       participantType: TEAM,
       participantRole: COMPETITOR,
       individualParticipantIds: []

@@ -1,6 +1,5 @@
+import { utilities } from 'tods-competition-factory';
 import { unique } from '../arrays';
-
-import { UUID } from '../UUID';
 import i18n from 'i18next';
 
 export function version2events(sourceEvents) {
@@ -49,7 +48,7 @@ export function version2events(sourceEvents) {
     return {
       key,
       entries,
-      eventId: UUID.generate(),
+      eventId: utilities.UUID(),
       name: key.split('|').join(' '),
       rank: firstEvent.rank,
       indoorOutdoor: firstEvent.indoorOutdoor,
