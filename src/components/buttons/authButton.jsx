@@ -28,7 +28,7 @@ export function AuthButton() {
 
   const checkSameOrg = () => {
     const organisationId = env.org?.ouid;
-    const tournamentOrgId = tournamentRecord.unifiedTournamentId?.organisation?.organisationId;
+    const tournamentOrgId = tournamentRecord?.unifiedTournamentId?.organisation?.organisationId;
     const isSameOrg = !tournamentOrgId || tournamentOrgId === organisationId;
     return isSameOrg;
   };
