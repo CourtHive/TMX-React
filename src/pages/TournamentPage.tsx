@@ -8,20 +8,20 @@ import Grid from '@material-ui/core/Grid';
 import { context } from 'services/context';
 import { env } from 'config/defaults';
 
-import { tournamentEngine } from 'tods-competition-factory';
-
 const TournamentPage = (props) => {
   const { tabIndex, match } = props;
   const dispatch = useDispatch();
 
   const dbLoaded = useSelector((state: any) => state.tmx.dbLoaded);
-  const { tournamentRecord } = tournamentEngine.getState();
+  const selectedTournamentId = useSelector((state: any) => state.tmx.selectedTournamentId);
+  const tournamentRecord = useSelector((state: any) => state.tmx.records[selectedTournamentId]);
+
   const tournamentId = match?.params?.tournamentId;
 
   useEffect(() => {
-    function go(tournament) {
-      dispatch({ type: 'change tournament', payload: tournament });
-      const org = tournament?.unifiedTournamentId?.organisation || tournament?.org?.abbr;
+    function go(tournamentRecord) {
+      dispatch({ type: 'change tournament', payload: tournamentRecord });
+      const org = tournamentRecord?.unifiedTournamentId?.organisation || tournamentRecord?.org?.abbr;
       const isTourneyOrg = org?.organisationAbbreviation === env.org.abbr;
       const editing = isTourneyOrg || !org?.organisationId;
       if (editing) {
@@ -29,12 +29,12 @@ const TournamentPage = (props) => {
         context.state.edit = true;
       }
     }
-    if (!tournamentRecord && tournamentId && dbLoaded) {
+    if (tournamentId && dbLoaded) {
       db.findTournament(tournamentId).then(go, () => {
         console.log('oops');
       });
     }
-  }, [dbLoaded, dispatch, tournamentId, tournamentRecord]);
+  }, [dbLoaded, dispatch, tournamentId]);
 
   return tournamentRecord ? (
     <TournamentRoot tournamentRecord={tournamentRecord} tabIndex={tabIndex} params={match?.params} />

@@ -3,7 +3,7 @@ import { db } from 'services/storage/db';
 import { context } from 'services/context';
 import { showContent } from 'services/screenSlaver';
 
-import { initAuth } from 'services/tournamentAuthorization';
+// import { initAuth } from 'services/tournamentAuthorization';
 import { tmxStore } from 'stores/tmxStore';
 
 export function displayTournament({ tournamentId, tournament, editing } = {}) {
@@ -41,7 +41,7 @@ export function displayTournament({ tournamentId, tournament, editing } = {}) {
     context.ee.emit('emitTmx', { action: 'joinTournament', payload: { tournamentId } });
     tmxStore.dispatch({ type: 'change tournament', payload: tournament });
 
-    initAuth({ tournament });
+    // initAuth({ tournament });
 
     if (editing) {
       tmxStore.dispatch({ type: 'edit state', payload: true });
