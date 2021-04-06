@@ -3,7 +3,6 @@ import { db } from 'services/storage/db';
 import { coms } from 'services/communications/SocketIo/coms';
 import { context } from 'services/context';
 import { contentEquals } from 'services/screenSlaver';
-import { fxAttrs } from 'functions/objects';
 import { tmxStore } from 'stores/tmxStore';
 import { boolAttrs, keyWalk } from 'functions/objects';
 
