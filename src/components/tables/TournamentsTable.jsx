@@ -28,7 +28,7 @@ import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
 
 import { utilities } from 'tods-competition-factory';
 import { tabRoute } from 'components/tournament/tabRoute';
-import { TAB_EVENTS } from 'stores/tmx/types/tabs';
+// import { TAB_EVENTS } from 'stores/tmx/types/tabs';
 
 const { formatDate } = utilities.dateTime;
 
