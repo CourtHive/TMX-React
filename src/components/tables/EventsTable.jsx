@@ -43,7 +43,7 @@ export function EventsTable(props) {
   const [editMode, setEditMode] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [actionPanelStyle, setActionPanelStyle] = useState[{}];
+  const [actionPanelStyle, setActionPanelStyle] = useState({});
 
   const approvedCount = (rowData) => {
     const entries = getEntries(rowData);
