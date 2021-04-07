@@ -26,4 +26,6 @@ render(<TMX />, document.getElementById('root'));
 function onUpdate(/*registration*/) {
   updateReady();
 }
+
 serviceWorker.unregister({ onUpdate });
+// serviceWorker.register({ onUpdate });
