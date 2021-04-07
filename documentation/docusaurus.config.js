@@ -2,8 +2,8 @@
 module.exports = {
   title: 'CourtHive TMX',
   tagline: 'Open Source Tournament Management',
-  url: 'https://github.com/CourtHive/TMX',
-  baseUrl: '/',
+  url: 'https://github.com/CourtHive',
+  baseUrl: '/TMX/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
