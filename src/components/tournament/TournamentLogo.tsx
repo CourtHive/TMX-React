@@ -9,10 +9,12 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import { useStyles } from 'components/tournament/styles';
 import { getLogo } from 'services/imageHandlers/getImage';
 
+import SPLASH from 'images/splash.png';
+
 const TournamentLogo = (props) => {
   const theme = useTheme();
   const classes = useStyles();
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(['']);
   const downSm = useMediaQuery(theme.breakpoints.down('sm'));
   const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
 
@@ -33,7 +35,7 @@ const TournamentLogo = (props) => {
         {images.map((src, index) => (
           <React.Fragment key={index}>
             <img
-              src={src}
+              src={src || SPLASH}
               alt="logo"
               className={!downSm ? classes.menuImage : classes.menuImageXs}
               onClick={handleOnClick}
