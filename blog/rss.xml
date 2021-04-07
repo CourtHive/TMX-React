@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>CourtHive TMX Blog</title>
+        <link>https://github.com/CourtHive/TMX/blog</link>
+        <description>CourtHive TMX Blog</description>
+        <lastBuildDate>Thu, 08 Apr 2021 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Introduction]]></title>
+            <link>https://github.com/CourtHive/TMX/blog/Introduction</link>
+            <guid>Introduction</guid>
+            <pubDate>Thu, 08 Apr 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[CourtHive/TMX 2.0 is an open source tournament management application which makes use of the ITF's Tennis Open Data Standards, hereafter referred to as TODS.]]></description>
+        </item>
+    </channel>
+</rss>
