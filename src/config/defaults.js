@@ -59,10 +59,6 @@ export const env = {
       logoImage: 'courthive.png'
     }
   },
-  locations: {
-    geolocate: true,
-    geoposition: undefined
-  },
   calendar: {
     addTournaments: true,
     syncTournament: false,

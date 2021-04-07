@@ -4,14 +4,12 @@ export const getFilteredMatchUpsTableData = (classes, matchUps, selectedDraw, se
   const filteredMatchUps = matchUps
     .filter((matchUp) => matchUpFilter(matchUp, teamIds, selectedDraw))
     .map((matchUp, index) => {
-      const score = typeof matchUp?.score === 'object' ? matchUp.score.scoreStringSide1 : matchUp.score;
-
       return {
         index: index,
         id: matchUp.matchUpId,
         matchUpId: matchUp.matchUpId,
         className: index === selectedRowIndex ? classes.selectedRow : undefined,
-        roundName: `${matchUp.roundNumber}`,
+        roundName: `${matchUp.roundNumber || ''}`,
         event: matchUp.eventName,
         format: matchUp.matchUpType,
         date: '',
@@ -24,8 +22,9 @@ export const getFilteredMatchUpsTableData = (classes, matchUps, selectedDraw, se
         player1: matchUp.sides && matchUp.sides[0]?.participant?.participantName,
         player2: matchUp.sides && matchUp.sides[1]?.participant?.participantName,
         status: matchUp.matchUpStatus,
-        score,
-        readyToScore: matchUp.readyToScore
+        score: matchUp.score,
+        readyToScore: matchUp.readyToScore,
+        winningSide: matchUp.winningSide
       };
     });
   return filteredMatchUps;

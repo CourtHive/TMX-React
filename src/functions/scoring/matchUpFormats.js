@@ -7,7 +7,6 @@ export function matchUpFormats() {
   const storeState = tmxStore.getState();
   const selectedTournamentId = storeState.tmx.selectedTournamentId;
   const tournamentRecord = storeState.tmx.records[selectedTournamentId];
-  // TODO: remove conditional
   const allowedMatchUpFormats =
     tournamentEngine.allowedMatchUpFormats && tournamentEngine.allowedMatchUpFormats({ tournamentRecord });
 

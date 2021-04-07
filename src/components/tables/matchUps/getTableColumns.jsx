@@ -2,16 +2,13 @@ import React from 'react';
 
 import Typography from '@material-ui/core/Typography';
 
-import { reverseStringScore } from 'functions/scoring/reverseStringScore';
-
 const renderScore = (rowData) => {
   if (!rowData.score) return '';
-  return rowData.winningSide === 2 ? reverseStringScore(rowData.score) : rowData.score;
+  return rowData.winningSide === 2 ? rowData.score?.scoreStringSide2 || '' : rowData.score.scoreStringSide1 || '';
 };
 
 export const isHidden = (name, hiddenColumns) => hiddenColumns.indexOf(name) >= 0;
 export const getScore = (classes, isInEditMode, rowItem, selectedRowIndex, getScoreComponent) => {
-  // const renderScoreComponent = isInEditMode && (selectedRowIndex === rowItem.index || !selectedRowIndex);
   const renderScoreComponent = isInEditMode && (rowItem.readyToScore || rowItem.score);
   return renderScoreComponent
     ? {
