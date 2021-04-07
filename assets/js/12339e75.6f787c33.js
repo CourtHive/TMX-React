@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{73:function(o){o.exports=JSON.parse('{"allTagsPath":"/TMX/blog/tags","slug":"open-source","name":"open source","count":1,"permalink":"/TMX/blog/tags/open-source"}')}}]);

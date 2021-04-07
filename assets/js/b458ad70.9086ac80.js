@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[12],{86:function(t){t.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Introduction","permalink":"/TMX/blog/Introduction"}]}')}}]);

@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{73:function(n){n.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"tournament-management","name":"tournament management","count":1,"permalink":"/blog/tags/tournament-management"}')}}]);
