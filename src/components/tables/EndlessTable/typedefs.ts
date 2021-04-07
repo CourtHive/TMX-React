@@ -1,0 +1,5 @@
+export enum DropTypeEnum {
+  ADD_TO_CELL = 'ADD_TO_CELL',
+  REORDER_CELLS = 'REORDER_CELLS',
+  REORDER_ROWS = 'REORDER_ROWS'
+}

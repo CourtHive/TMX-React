@@ -1,0 +1,25 @@
+export const DRAWS = 'draws';
+export const EVENTS = 'events';
+export const HOME = '/';
+export const LOCATIONS = 'locations';
+export const MATCHUPS = 'matchups';
+export const NOT_FOUND = '/404-not-found';
+export const PARTICIPANTS = 'participants';
+export const POINTS = 'points';
+export const SCHEDULE = 'schedule';
+export const SETTINGS = 'settings';
+export const TOURNAMENT = 'tournament';
+export const USER_TEST = '/test';
+
+export const TOURNAMENT_ID = `/${TOURNAMENT}/:tournamentId`;
+export const PARTICIPANTS_ROUTE = `${TOURNAMENT_ID}/${PARTICIPANTS}`;
+export const EVENTS_ROUTE = `${TOURNAMENT_ID}/${EVENTS}`;
+export const EVENT_ROUTE = `${TOURNAMENT_ID}/${EVENTS}/:eventId`;
+export const DRAWS_ROUTE = `${EVENTS_ROUTE}/${DRAWS}`;
+export const DRAW_ROUTE = `${TOURNAMENT_ID}/${DRAWS}/:drawId`;
+export const LOCATIONS_ROUTE = `${TOURNAMENT_ID}/${LOCATIONS}`;
+export const LOCATION_ROUTE = `${TOURNAMENT_ID}/${LOCATIONS}/:locationId`;
+export const SCHEDULE_ROUTE = `${TOURNAMENT_ID}/${SCHEDULE}`;
+export const MATCHUPS_ROUTE = `${TOURNAMENT_ID}/${MATCHUPS}`;
+export const SETTINGS_ROUTE = `${TOURNAMENT_ID}/${SETTINGS}`;
+export const POINTS_ROUTE = `${TOURNAMENT_ID}/points`;

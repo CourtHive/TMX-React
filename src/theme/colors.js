@@ -1,0 +1,14 @@
+export const MAIN = '#4b90d9';
+export const WHITE = '#ffffff';
+export const TEXT_MAIN = '#3e424e';
+export const ACTION_DISABLED = '#dadce0';
+export const BACKGROUND_GREY = '#f6f6f8';
+export const TEXT_GREY = '#9da1af';
+export const TEXT_GREY_DARK = '#737680';
+export const DIVIDER_GREY = '#eaecf1';
+export const BORDERS_GREY = '1px solid rgba(224, 224, 224, 1)';
+export const ERROR_MAIN = '#800000';
+export const TEXT_GREEN = '#169e8f';
+export const LIGHT_GREEN = 'rgba(129, 211, 248, 0.16078431372549)';
+export const LIGHT_RED = 'rgba(245, 154, 35, 0.16078431372549)';
+export const MAIN_BACKGROUND_COLOR = 'rgba(242, 242, 242, 1)';
