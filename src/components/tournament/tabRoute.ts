@@ -1,27 +1,9 @@
-import {
-  TAB_EVENTS,
-  TAB_LOCATIONS,
-  TAB_MATCHUPS,
-  TAB_PARTICIPANTS,
-  TAB_SCHEDULE,
-  TAB_SETTINGS
-} from 'stores/tmx/types/tabs';
+import { TAB_EVENTS, TAB_LOCATIONS, TAB_MATCHUPS, TAB_PARTICIPANTS, TAB_SCHEDULE } from 'stores/tmx/types/tabs';
 
-import {
-  DRAWS,
-  EVENTS,
-  LOCATIONS,
-  MATCHUPS,
-  PARTICIPANTS,
-  SCHEDULE,
-  SETTINGS,
-  TOURNAMENT
-} from 'config/router/constants';
+import { DRAWS, EVENTS, LOCATIONS, MATCHUPS, PARTICIPANTS, SCHEDULE, TOURNAMENT } from 'config/router/constants';
 
 export const tabRoute = ({ tournamentId, tabIndex }) => {
   switch (tabIndex) {
-    case TAB_SETTINGS:
-      return `/${TOURNAMENT}/${tournamentId}/${SETTINGS}`;
     case TAB_LOCATIONS:
       return `/${TOURNAMENT}/${tournamentId}/${LOCATIONS}`;
     case TAB_PARTICIPANTS:

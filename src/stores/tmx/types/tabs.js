@@ -4,7 +4,6 @@ export const TAB_EVENTS = 2;
 export const TAB_LOCATIONS = 3;
 export const TAB_SCHEDULE = 4;
 export const TAB_MATCHUPS = 5;
-export const TAB_SETTINGS = 6;
 export const TAB_POINTS = 0;
 
 export const PTAB_PARTICIPANTS = 'players';

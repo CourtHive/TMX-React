@@ -17,7 +17,6 @@ import {
   DRAWS_ROUTE,
   DRAW_ROUTE,
   LOCATIONS_ROUTE,
-  SETTINGS_ROUTE,
   LOCATION_ROUTE,
   SCHEDULE_ROUTE,
   MATCHUPS_ROUTE
@@ -28,7 +27,6 @@ import {
   TAB_MATCHUPS,
   TAB_PARTICIPANTS,
   TAB_SCHEDULE,
-  TAB_SETTINGS,
   TAB_TOURNAMENT
 } from 'stores/tmx/types/tabs';
 
@@ -51,7 +49,6 @@ const MainRouter = () => {
       <Route exact path={LOCATION_ROUTE} render={(props) => <TournamentPage tabIndex={TAB_LOCATIONS} {...props} />} />
       <Route exact path={SCHEDULE_ROUTE} render={(props) => <TournamentPage tabIndex={TAB_SCHEDULE} {...props} />} />
       <Route exact path={MATCHUPS_ROUTE} render={(props) => <TournamentPage tabIndex={TAB_MATCHUPS} {...props} />} />
-      <Route exact path={SETTINGS_ROUTE} render={(props) => <TournamentPage tabIndex={TAB_SETTINGS} {...props} />} />
       <Route path={TOURNAMENT_ID} render={(props) => <TournamentPage tabIndex={TAB_TOURNAMENT} {...props} />} />
       <Route path="*" render={() => <Redirect to={NOT_FOUND} />} />
     </Switch>

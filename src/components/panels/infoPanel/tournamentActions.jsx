@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { save } from 'services/storage/save';
 import { exportFx } from 'services/files/exportFx';
 
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -45,7 +44,7 @@ export function TournamentActions(props) {
   }
 
   function uploadTournamentRecord() {
-    save.cloud();
+    //
   }
 
   return (

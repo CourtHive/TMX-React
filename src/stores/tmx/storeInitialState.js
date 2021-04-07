@@ -6,7 +6,6 @@ import {
   TAB_LOCATIONS,
   TAB_SCHEDULE,
   TAB_MATCHUPS,
-  TAB_SETTINGS,
   PTAB_PARTICIPANTS,
   DTAB_DRAW,
   LTAB_OVERVIEW,
@@ -100,7 +99,7 @@ export const storeInitialState = () => ({
     }
   },
   visible: {
-    tabs: [TAB_TOURNAMENT, TAB_PARTICIPANTS, TAB_EVENTS, TAB_LOCATIONS, TAB_SCHEDULE, TAB_MATCHUPS, TAB_SETTINGS],
+    tabs: [TAB_TOURNAMENT, TAB_PARTICIPANTS, TAB_EVENTS, TAB_LOCATIONS, TAB_SCHEDULE, TAB_MATCHUPS],
     tabState: 'none',
     dialog: undefined,
     drawer: undefined,

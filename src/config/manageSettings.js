@@ -1,6 +1,5 @@
 import { env } from 'config/defaults';
 import { db } from 'services/storage/db';
-import { coms } from 'services/communications/SocketIo/coms';
 import { context } from 'services/context';
 import { contentEquals } from 'services/screenSlaver';
 import { tmxStore } from 'stores/tmxStore';
@@ -160,7 +159,6 @@ export function envSettings() {
         env.firstTimeUser = true;
         env.uuuid = utilities.UUID();
         db.addSetting({ key: 'userUUID', value: env.uuuid, settings: env.uuuid });
-        coms.emitTmx({ action: 'newClient', notice: 'New TMX Client' });
       } else {
         env.uuuid = uuuid.value;
       }

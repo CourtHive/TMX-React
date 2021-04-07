@@ -85,7 +85,6 @@ export const config = (function () {
     return new Promise((resolve, reject) => {
       initListeners();
       checkQueryString();
-      // coms.connectSocket();
 
       function getUserUUID() {
         function setUserUUID(result) {
@@ -97,8 +96,6 @@ export const config = (function () {
       function DBready() {
         coms.init();
         getUserUUID();
-
-        coms.emitTmx({ action: 'idiomRequest', notice: `TMX Loaded` });
 
         if (checkFirstTime()) courtHiveChallenge();
         tmxStore.dispatch({ type: 'db loaded', payload: true });

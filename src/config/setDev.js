@@ -1,14 +1,11 @@
 import { db } from 'services/storage/db';
 import { context } from 'services/context';
 import { exportFx } from 'services/files/exportFx';
-import { coms } from 'services/communications/SocketIo/coms';
 import { fetchFx } from 'services/communications/Axios/fetchFx';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
-import { JSONPath } from 'jsonpath-plus';
 
 import { isLocalhost } from 'functions/isLocalhost';
 
-import pdfEngine from 'engineFactory/pdfEngine';
 import { drawEngine, tournamentEngine, competitionEngine, utilities } from 'tods-competition-factory';
 import { fetchURL } from 'services/communications/Axios/fetch/fetchURL';
 
@@ -38,14 +35,11 @@ export function setDev({ env }) {
 
   addDev({ db });
   addDev({ env });
-  addDev({ coms });
   addDev({ context });
   addDev({ fetchFx });
-  addDev({ JSONPath });
   addDev({ exportFx });
   addDev({ tmxStore });
   addDev({ fetchURL });
-  addDev({ pdfEngine });
   addDev({ utilities });
   addDev({ drawEngine });
   addDev({ matchUpFormatCode });

@@ -9,8 +9,6 @@ import GroupIcon from '@material-ui/icons/Group';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import EventIcon from '@material-ui/icons/EmojiEvents';
-import SettingsIcon from '@material-ui/icons/Settings';
-// import DateRangeIcon from '@material-ui/icons/DateRange';
 
 import MatchUpsIcon from 'components/icons/MatchUpsIcon';
 
@@ -22,8 +20,7 @@ import {
   TAB_EVENTS,
   TAB_LOCATIONS,
   TAB_SCHEDULE,
-  TAB_MATCHUPS,
-  TAB_SETTINGS
+  TAB_MATCHUPS
 } from 'stores/tmx/types/tabs';
 import { useStyles } from 'components/tournament/styles';
 import { useHistory } from 'react-router-dom';
@@ -53,7 +50,6 @@ export function TournamentTabs({ tournament, tabIndex }) {
   const scheduleLabel = labelMaker(<ScheduleIcon />, 'Schedule');
   const matchUpsLabel = labelMaker(<MatchUpsIcon />, 'Matches');
   const eventsLabel = labelMaker(<EventIcon />, 'Events');
-  const settingsLabel = labelMaker(<SettingsIcon />, 'Settings');
 
   const tabValues = {
     [TAB_TOURNAMENT]: { label: infoLabel, id: 'tab-tournament' },
@@ -61,8 +57,7 @@ export function TournamentTabs({ tournament, tabIndex }) {
     [TAB_EVENTS]: { label: eventsLabel, id: 'tab-events' },
     [TAB_LOCATIONS]: { label: locationLabel, id: 'tab-locations' },
     [TAB_SCHEDULE]: { label: scheduleLabel, id: 'tab-schedule' },
-    [TAB_MATCHUPS]: { label: matchUpsLabel, id: 'tab-matchUps' },
-    [TAB_SETTINGS]: { label: settingsLabel, id: 'tab-settings' }
+    [TAB_MATCHUPS]: { label: matchUpsLabel, id: 'tab-matchUps' }
   };
 
   const visibleTabs = useSelector((state: any) => state.tmx.visible.tabs);

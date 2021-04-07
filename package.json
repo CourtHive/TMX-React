@@ -23,7 +23,6 @@
     "esri-leaflet": "3.0.1",
     "i18next": "20.1.0",
     "immer": "9.0.1",
-    "jsonpath-plus": "4.0.0",
     "jwt-decode": "3.1.2",
     "leaflet": "1.7.1",
     "node-forge": "0.10.0",
@@ -61,10 +60,10 @@
     "yup": "0.32.9"
   },
   "devDependencies": {
-    "@types/jest": "26.0.22",
-    "@types/node": "14.14.37",
     "@babel/core": "7.13.14",
     "@babel/preset-env": "7.13.12",
+    "@types/jest": "26.0.22",
+    "@types/node": "14.14.37",
     "@types/react": "17.0.3",
     "@types/react-beautiful-dnd": "13.0.0",
     "@types/react-dom": "17.0.3",

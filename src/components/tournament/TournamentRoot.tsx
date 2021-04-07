@@ -15,7 +15,6 @@ import { useStyles } from 'components/tournament/styles';
 
 import { MainMenuButton } from 'components/buttons/MainMenuButton';
 import { useSaveTrigger } from 'components/hooks/useSaveTrigger';
-import { AuthButton } from 'components/buttons/authButton';
 import TournamentTabsContent from 'components/tournament/TournamentTabsContent';
 import { TournamentTabs } from 'components/tournament/TournamentTabs';
 import ProviderLogo from 'components/ProviderLogo';
@@ -128,7 +127,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
                 <Typography onClick={handleLogoClick} align="left" component="h2" className={classes.tournamentName}>
                   {tournamentName}
                 </Typography>
-                <AuthButton />
               </Grid>
             </Grid>
           </Grid>
