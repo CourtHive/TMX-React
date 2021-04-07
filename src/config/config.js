@@ -2,7 +2,6 @@ import { env } from 'config/defaults';
 import { isDev } from 'functions/isDev';
 import { db } from 'services/storage/db';
 import { context } from 'services/context';
-import { envSettings } from 'config/manageSettings';
 import { courtHiveChallenge } from 'functions/tournament/courtHiveChallenge';
 
 import { showSplash } from 'services/screenSlaver';
@@ -10,10 +9,6 @@ import { tmxStore } from 'stores/tmxStore';
 
 export const config = (function () {
   const fx = {};
-
-  function dbUpgrade() {
-    console.log('db upgrade close browser and re-open');
-  }
 
   const catchAsync = (fn) => (...args) => {
     if (isDev()) {
@@ -24,7 +19,7 @@ export const config = (function () {
   };
   function initDB() {
     return new Promise((resolve, reject) => {
-      catchAsync(db.initDB)().then(envSettings, dbUpgrade).then(resolve, reject);
+      catchAsync(db.initDB)().then(resolve, reject);
     });
   }
 
