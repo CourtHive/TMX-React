@@ -63,7 +63,7 @@ export const storeInitialState = () => ({
     teams: [],
     groups: [],
     locations: [],
-    tournaments: [],
+    tournaments: ['provider'],
     draws: ['scheduled', 'completed'],
     events: ['rank', 'indoorOutdoor', 'surfaceCategory'],
     matchUps: ['event', 'format', 'scheduleTime', 'startTime', 'endTime', 'umpire'],

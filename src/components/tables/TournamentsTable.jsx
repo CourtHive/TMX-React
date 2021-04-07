@@ -36,9 +36,8 @@ function trnyRecord(tournamentRecord) {
 
   const { endDate, startDate, tournamentName, unifiedTournamentId } = tournamentRecord || {};
   let { tournamentId } = unifiedTournamentId || {};
-  const { organisation } = unifiedTournamentId || {};
   if (!tournamentId) tournamentId = tournamentRecord.tournamentId;
-  const provider = organisation?.organisationAbbreviation || tournamentRecord.org?.abbr || '';
+  const provider = unifiedTournamentId?.organisationAbbreviation || '';
 
   return {
     categories,
@@ -253,33 +252,6 @@ export function TournamentsTable() {
   };
 
   const dataForTable = filterValue ? filteredData : tableData;
-
-  /*
-  if (!tableData.length) {
-    return (
-      <NoticePaper className={'info'} style={{marginTop: '1em'}}>
-        <Grid container spacing={2} direction="row" justify="flex-start">
-          <Grid item>
-            <Grid container justify='flex-start'>
-              Prompt to add tournaments
-              <div className={classes.divider} />
-              Load by ID
-              <div className={classes.divider} />
-              Import Record
-              <div className={classes.divider} />
-              Synchronize
-            </Grid>
-          </Grid>
-          <Grid item style={{flexGrow: 1}}>
-            <Grid container direction="row" justify='flex-end'>
-              <AddTournamentButton onClick={addTournament} />
-            </Grid>
-          </Grid>
-        </Grid>
-      </NoticePaper>
-    )
-  }
-  */
 
   return (
     <div className={classes.pageWrapper}>
