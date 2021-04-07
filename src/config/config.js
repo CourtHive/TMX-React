@@ -7,12 +7,10 @@ import { context } from 'services/context';
 import { envSettings } from 'config/manageSettings';
 import { contentEquals } from 'services/screenSlaver';
 import { editTournament } from 'functions/tournament/tournamentDisplay';
-import { coms } from 'services/communications/SocketIo/coms';
 import { courtHiveChallenge } from 'functions/tournament/courtHiveChallenge';
 
 import { AppToaster } from 'services/notifications/toaster';
 import { showSplash } from 'services/screenSlaver';
-import { receiveAuth } from 'services/tournamentAuthorization';
 import { tmxStore } from 'stores/tmxStore';
 
 export const config = (function () {
@@ -36,9 +34,16 @@ export const config = (function () {
     console.log('db upgrade close browser and re-open');
   }
 
+  const catchAsync = (fn) => (...args) => {
+    if (isDev()) {
+      return fn(...args);
+    } else {
+      return fn(...args).catch((err) => fx.logError(err));
+    }
+  };
   function initDB() {
     return new Promise((resolve, reject) => {
-      coms.catchAsync(db.initDB)().then(envSettings, dbUpgrade).then(resolve, reject);
+      catchAsync(db.initDB)().then(envSettings, dbUpgrade).then(resolve, reject);
     });
   }
 
@@ -46,21 +51,6 @@ export const config = (function () {
     if (env.firstTimeUser) {
       env.firstTimeUser = false;
       return true;
-    }
-  }
-
-  function checkQueryString() {
-    if (context.queryString.actionKey) {
-      coms.queueKey(context.queryString.actionKey);
-    }
-  }
-
-  function tmxMessage(msg) {
-    if (msg.authorized && msg.tournamentId) {
-      fx.authMessage(msg);
-    } else {
-      msg.notice = msg.notice || msg.tournament;
-      if (msg.notice) fx.addMessage(msg);
     }
   }
 
@@ -74,9 +64,7 @@ export const config = (function () {
   }
 
   function initListeners() {
-    context.ee.addListener('tmxMessage', tmxMessage);
     context.ee.addListener('addMessage', fx.addMessage);
-
     context.ee.addListener('settingsLoaded', settingsLoaded);
     context.ee.addListener('receiveTournamentRecord', (data) => console.log('receiveTournamentRecord', data));
   }
@@ -84,7 +72,6 @@ export const config = (function () {
   fx.init = () => {
     return new Promise((resolve, reject) => {
       initListeners();
-      checkQueryString();
 
       function getUserUUID() {
         function setUserUUID(result) {
@@ -94,7 +81,6 @@ export const config = (function () {
       }
 
       function DBready() {
-        coms.init();
         getUserUUID();
 
         if (checkFirstTime()) courtHiveChallenge();
@@ -123,8 +109,6 @@ export const config = (function () {
 
   fx.authMessage = (msg) => {
     function pushMessage(tournament) {
-      receiveAuth(tournament);
-
       if (msg.referee_key) {
         context.ee.emit('sendKey', msg.referee_key);
       }

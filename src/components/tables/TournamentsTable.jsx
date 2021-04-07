@@ -9,17 +9,12 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
 import TMXIconButton from 'components/buttons/TMXIconButton';
 import TMXInput from 'components/inputs/TMXInput';
-import SyncIcon from '@material-ui/icons/Sync';
 
 import { env } from 'config/defaults';
 import { populateCalendar } from 'functions/calendar';
 
 import { context } from 'services/context';
 import { displayTournament } from 'functions/tournament/tournamentDisplay';
-import { fetchCalendar } from 'services/communications/Axios/fetch/fetchCalendar';
-import { updateCalendar } from 'services/storage/updateCalendar';
-// import NoticePaper from 'components/papers/notice/NoticePaper';
-// import { AddTournamentButton } from 'components/buttons/addTournament';
 
 import { useStyles } from 'components/tables/styles';
 import EndlessTable from 'components/tables/EndlessTable';
@@ -218,17 +213,6 @@ export function TournamentsTable() {
     (menuItem) => !['name', 'index'].includes(menuItem.id)
   );
 
-  const syncCalendar = () => {
-    dispatch({ type: 'loading state', payload: true });
-    function success(tournaments) {
-      if (tournaments) updateCalendar({ tournaments, merge: true });
-    }
-    function failure(data) {
-      console.log('failure:', data);
-    }
-    fetchCalendar().then(success, failure);
-  };
-
   const addTournament = () => dispatch({ type: 'visible drawer', payload: 'tournament' });
   const allowAdd = env?.calendar?.addTournaments;
 
@@ -241,13 +225,6 @@ export function TournamentsTable() {
           title={t('Show Columns')}
           menuItems={columnMenuItems}
           icon={<ViewColumnIcon />}
-        />
-        <TMXIconButton
-          className={classes.iconMargin}
-          id="syncCalendar"
-          title={t('requests.syncTournaments')}
-          onClick={syncCalendar}
-          icon={<SyncIcon />}
         />
         {!allowAdd ? null : (
           <TMXIconButton

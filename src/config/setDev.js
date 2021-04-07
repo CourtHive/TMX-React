@@ -1,13 +1,11 @@
 import { db } from 'services/storage/db';
 import { context } from 'services/context';
 import { exportFx } from 'services/files/exportFx';
-import { fetchFx } from 'services/communications/Axios/fetchFx';
 import { matchUpFormatCode } from 'tods-matchup-format-code';
 
 import { isLocalhost } from 'functions/isLocalhost';
 
 import { drawEngine, tournamentEngine, competitionEngine, utilities } from 'tods-competition-factory';
-import { fetchURL } from 'services/communications/Axios/fetch/fetchURL';
 
 import { tmxStore } from 'stores/tmxStore';
 
@@ -36,10 +34,8 @@ export function setDev({ env }) {
   addDev({ db });
   addDev({ env });
   addDev({ context });
-  addDev({ fetchFx });
   addDev({ exportFx });
   addDev({ tmxStore });
-  addDev({ fetchURL });
   addDev({ utilities });
   addDev({ drawEngine });
   addDev({ matchUpFormatCode });

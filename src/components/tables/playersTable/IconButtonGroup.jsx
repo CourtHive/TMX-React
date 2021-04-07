@@ -3,12 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useStyles } from 'components/tables/styles';
 import { useSelector } from 'react-redux';
 
-import { env } from 'config/defaults';
-import { tmxStore } from 'stores/tmxStore';
-import { coms } from 'services/communications/SocketIo/coms';
-
 import SyncIcon from '@material-ui/icons/Sync';
-import SendIcon from '@material-ui/icons/Send';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
@@ -16,39 +11,7 @@ import DoneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
 
 import TMXIconButton from 'components/buttons/TMXIconButton';
 
-import { editRegistrationLink } from 'components/tables/playersTable/editRegistrationLink';
 import { synchronizePlayers } from 'components/tables/playersTable/synchronizePlayers';
-
-import { tournamentEngine } from 'tods-competition-factory';
-
-function setParticipantsRetrievalKey() {
-  const uidate = new Date().getTime();
-  const keyUUID = uidate.toString(36).slice(-6).toUpperCase();
-  const { tournamentParticipants } = tournamentEngine.getTournamentParticipants();
-  const payload = {
-    key_uuid: keyUUID,
-    content: {
-      key: true,
-      onetime: false,
-      directive: 'sendKey',
-      content: {
-        data: JSON.stringify(tournamentParticipants)
-      }
-    }
-  };
-
-  coms.emitTmx({ action: 'pushKey', payload }, displayKey);
-
-  function displayKey() {
-    tmxStore.dispatch({
-      type: 'alert dialog',
-      payload: {
-        title: 'Retrieval Key',
-        content: keyUUID
-      }
-    });
-  }
-}
 
 export const IconButtonGroup = (props) => {
   const { editMode } = props;
@@ -92,15 +55,9 @@ export const EditingButtonGroup = (props) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const { editModeAction, tournamentProfile } = props;
+  const { editModeAction } = props;
 
   const syncMenuItems = [
-    {
-      id: 'regLink',
-      text: t('signin.reglink'),
-      onClick: () => editRegistrationLink({ tournamentProfile }),
-      className: 'regLink'
-    },
     {
       id: 'synchronizePlayers',
       text: t('requests.syncPlayers'),
@@ -111,15 +68,6 @@ export const EditingButtonGroup = (props) => {
 
   return (
     <>
-      {env.org?.abbr !== 'ITA' ? null : (
-        <TMXIconButton
-          id="setParticipantsRetrievalKey"
-          title={t('Send Participants')}
-          className={classes.iconMargin}
-          onClick={setParticipantsRetrievalKey}
-          icon={<SendIcon />}
-        />
-      )}
       <TMXIconButton
         id="syncParticipants"
         title={t('requests.syncPlayers')}

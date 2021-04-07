@@ -9,13 +9,10 @@ import { env } from 'config/defaults';
 import { useStyles } from './style';
 
 import { Tooltip, Toolbar, IconButton } from '@material-ui/core';
-import LoadById from '@material-ui/icons/Fingerprint';
 import LoadFile from '@material-ui/icons/Publish';
 
 import { importTournamentRecord, saveNewTournament } from 'functions/tournament/tournament';
 import { ControlledSelector } from 'components/selectors/ControlledSelector';
-
-import { fetchTournament } from 'services/communications/Axios/fetch/fetchTournament';
 
 import { utilities } from 'tods-competition-factory';
 const { formatDate } = utilities.dateTime;
@@ -83,10 +80,6 @@ export function EditTournament(props) {
     importTournamentRecord({ callback: () => console.log('fetched') });
     callback();
   };
-  const fetchTournamentById = () => {
-    fetchTournament();
-    callback();
-  };
 
   const inOutOptions = [
     { text: t('indoors'), value: 'i' },
@@ -107,11 +100,6 @@ export function EditTournament(props) {
           <Tooltip title={t('tournaments.import')}>
             <IconButton color="inherit" onClick={importTournament}>
               <LoadFile />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title={t('tournaments.loadbyid')}>
-            <IconButton edge="end" color="inherit" onClick={fetchTournamentById}>
-              <LoadById />
             </IconButton>
           </Tooltip>
         </Toolbar>
