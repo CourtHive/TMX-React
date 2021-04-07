@@ -126,9 +126,3 @@ Engine mutation methods should be designed to accept the minimum information req
 ### Redux Store
 
 TMX defines a design pattern which makes use of [Immer](https://immerjs.github.io/immer/docs/introduction) to modify the Redux Store. The core Reducer aggregates Immer "Producers" and catches errors (when not in dev mode) enabling any client-side errors to be sent to the CourtHive Server for proactive analysis / debugging.
-
-### Testing
-
-The TMX development environment makes extensive use of [Jest](https://jestjs.io/) for unit testing and [Cypress](https://www.cypress.io/) for end-to-end testing.
-
-To run all Jest tests: `yarn test`
