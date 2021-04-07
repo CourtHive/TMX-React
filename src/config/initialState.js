@@ -52,16 +52,6 @@ function setWindow() {
     false
   );
   window.packageEntry = { updateReady };
-  window.onerror = (msg, url, lineNo, columnNo, error) => {
-    const error_message = typeof msg === 'object' ? JSON.stringify(msg) : msg;
-    const eventError = { error_message, url, stack: { lineNo, columnNo, error } };
-    const message = {
-      title: 'warn',
-      notice: `Error Detected: Development has been notified!. Try CourtHive.com/tmx-`
-    };
-    context.ee.emit('addMessage', message);
-    context.ee.emit('emitTmx', { action: 'clientError', payload: { eventError } });
-  };
   window.onunhandledrejection = (event) => {
     event.preventDefault();
     const reason = event.reason;
