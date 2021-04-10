@@ -12773,7 +12773,12 @@ tods-competition-factory@^0.2.15:
   dependencies:
     tods-matchup-format-code "^1.0.7"
 
-tods-matchup-format-code@1.0.8, tods-matchup-format-code@^1.0.7:
+tods-matchup-format-code@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.1.0.tgz#dd69cf158d0ea55ada805f542102fb0b121c3a09"
+  integrity sha512-FIrWHemDfpGy7P86LE0wVjmR7acoe0joAtmAinuWKeSz4B5cC1hi+cozPjgqxOH9HzLD/149pZ12jrPVbLBRHA==
+
+tods-matchup-format-code@^1.0.7:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.0.8.tgz#10936bbbe6b4ec9ba74436268770aa4735eb8897"
   integrity sha512-pci163xZA6UwOTGfe9M2aL3Jd2KH1GRbKoSEDUE8mVXhi7x2YqGuW4nUxzx34UTiRO0aYMhwXL7ncKqdJDzXhw==
