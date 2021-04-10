@@ -1,4 +1,3 @@
-import { CSV2JSON } from './CSV2JSON';
 import { loadJSON } from './loadJSON';
 import i18n from 'i18next';
 
@@ -19,8 +18,6 @@ export function loadFile(file, callback) {
 
     if (meta.filetype.indexOf('xls') >= 0) {
       AppToaster.show({ icon: 'error', intent: 'warning', message: 'Excel Import Disabled' });
-    } else if (meta.filetype === 'csv') {
-      loadJSON({ json: CSV2JSON(file_content), callback });
     } else if (meta.filetype.indexOf('json') >= 0) {
       const json = JSON.parse(file_content);
       if (json) {
