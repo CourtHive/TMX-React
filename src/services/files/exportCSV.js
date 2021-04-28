@@ -105,7 +105,7 @@ export const exportCSV = (function () {
 
       MatchUpType: match_type,
       TournamentID: matchUp.tournament.tournamentId,
-      TournamentName: matchUp.tournament.name,
+      TournamentName: matchUp.tournament.name || matchUp.tournament.tournamentName,
 
       MatchStartDate: matchDate(matchUp, 'start'),
       MatchEndDate: matchDate(matchUp, 'end'),
@@ -269,7 +269,7 @@ export const exportCSV = (function () {
       'Draw Bracket Type': '',
       'Draw Bracket Value': category,
       'Draw Type': draw_type,
-      'Tournament Name': matchUp.tournament.name || '',
+      'Tournament Name': matchUp.tournament.name || matchUp.tournament.tournamentName || '',
       'Tournament URL': '',
       'Tournament Start Date': dateFormatUTR(new Date(matchUp.tournament.startDate).getTime()),
       'Tournament End Date': dateFormatUTR(new Date(matchUp.tournament.endDate).getTime()),

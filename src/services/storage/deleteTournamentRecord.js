@@ -11,7 +11,7 @@ export function deleteTournamentRecord({ tournamentId, onDelete }) {
       type: 'alert dialog',
       payload: {
         title: i18n.t('actions.delete_tournament'),
-        content: `Delete ${tournament.name}?`,
+        content: `Delete ${tournament.tournamentName}?`,
         cancel: true,
         okTitle: 'Delete',
         ok: okAction

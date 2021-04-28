@@ -36,7 +36,7 @@ export function EditTournament(props) {
   const { t } = useTranslation();
 
   const defaultValues = {
-    name: t('tournaments.new'),
+    tournamentName: t('tournaments.new'),
     indoorOutdoor: 'o',
     surfaceCategory: 'H',
     startDate: new Date(),
@@ -104,10 +104,10 @@ export function EditTournament(props) {
           </Tooltip>
         </Toolbar>
         <TextField
-          name="name"
+          name="tournamentName"
           required
           inputRef={register}
-          helperText={errors.name && 'Required'}
+          helperText={errors.tournamentName && 'Required'}
           label={t('nm')}
           className={classes.editField}
           id="customTournamentName"

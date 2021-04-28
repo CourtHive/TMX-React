@@ -153,7 +153,7 @@ export function TournamentsTable() {
     {
       key: 'name',
       getTitle: renderNameColumnTitle,
-      getValue: (row) => ({ node: row.name })
+      getValue: (row) => ({ node: row.name || row.tournamentName })
     },
     {
       key: 'provider',
