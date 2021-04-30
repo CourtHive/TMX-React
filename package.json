@@ -1,6 +1,6 @@
 {
   "name": "courthive-tmx",
-  "homepage": "",
+  "homepage": "/tmx",
   "version": "2.0.0",
   "keywords": [
     "TODS",
@@ -99,6 +99,7 @@
     "deployRoot": "./scripts/deployRoot",
     "deployTMX": "./scripts/deployTMX",
     "build": "react-scripts build",
+    "postbuild": "./addVersion $npm_package_version",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts",
