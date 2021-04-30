@@ -180,7 +180,13 @@ export function DrawStructureContainer(props) {
     },
     onParticipantClick: ({ participant, matchUp, sideIndex, drawPosition, e }) => {
       const menuPosition = { left: e.clientX, top: e.clientY };
-      const { action, actionMenuData } = getActionsMenuData({ participant, matchUp, sideIndex, drawPosition });
+      const { action, actionMenuData } = getActionsMenuData({
+        participant,
+        matchUp,
+        scoringMatchUp: matchUp,
+        sideIndex,
+        drawPosition
+      });
       if (action?.menuItem) {
         action.menuItem.onClick(action);
       } else {
