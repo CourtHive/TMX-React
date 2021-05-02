@@ -12851,12 +12851,12 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tods-competition-factory@0.5.81:
-  version "0.5.81"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.81.tgz#06cf16b9ee2b67ca67de5d61edcb2acc81e60003"
-  integrity sha512-WiNqp07LubpeaGLXiKncb6Y98FqIQqVd+c9weYgZX6/aEs6QVqhuf8G9y0NsYZZqUHNrr+nV+2JzbDUYfr4g6g==
+tods-competition-factory@0.5.82:
+  version "0.5.82"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.82.tgz#730bebd9f29be3d0a08ab65c89239cf128d1fa14"
+  integrity sha512-40k3nu7NGgUjXVKE5wx6uM+8hVUvtA3bpVJ9FWlXs7wk+5b3jdd7ibM8Kk1lFswqEa+BkD9QzOB++FnSV4NYVg==
   dependencies:
-    tods-matchup-format-code "^1.1.0"
+    tods-matchup-format-code "1.1.2"
 
 tods-competition-factory@^0.2.15:
   version "0.2.68"
@@ -12881,11 +12881,6 @@ tods-matchup-format-code@^1.0.7:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.0.8.tgz#10936bbbe6b4ec9ba74436268770aa4735eb8897"
   integrity sha512-pci163xZA6UwOTGfe9M2aL3Jd2KH1GRbKoSEDUE8mVXhi7x2YqGuW4nUxzx34UTiRO0aYMhwXL7ncKqdJDzXhw==
-
-tods-matchup-format-code@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.1.0.tgz#dd69cf158d0ea55ada805f542102fb0b121c3a09"
-  integrity sha512-FIrWHemDfpGy7P86LE0wVjmR7acoe0joAtmAinuWKeSz4B5cC1hi+cozPjgqxOH9HzLD/149pZ12jrPVbLBRHA==
 
 tods-react-draws@0.1.17:
   version "0.1.17"
