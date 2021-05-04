@@ -12858,12 +12858,12 @@ tods-competition-factory@0.5.82:
   dependencies:
     tods-matchup-format-code "1.1.2"
 
-tods-competition-factory@^0.2.15:
-  version "0.2.68"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.2.68.tgz#eff4f8a195ddff144e88818d995171b4859c86bb"
-  integrity sha512-mp+EQ0cBIBL8vG/a5TPqEeuD9klf3gBnKKd3XsRCccirE6PG5aWMuKs+Zm+ndoE0lsyPBct5K2b0KSGbhaglMw==
+tods-competition-factory@0.5.83:
+  version "0.5.83"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.83.tgz#9ccc0db2d4a970724f52d645a8de30e9a762ca23"
+  integrity sha512-lO4yXsLkF1MQb2pT2mscksfqepnuqRo2NO87xbf1n+m3LEpUwkowk9AaKRd5mkX3FjXe4jz2RLsZ9xeSgwp8Vw==
   dependencies:
-    tods-matchup-format-code "^1.0.7"
+    tods-matchup-format-code "1.1.2"
 
 tods-competition-factory@^0.5.45:
   version "0.5.48"
@@ -12893,15 +12893,15 @@ tods-react-draws@0.1.17:
     classnames "^2.2.6"
     tods-competition-factory "^0.5.45"
 
-tods-tournament-pdfs@0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/tods-tournament-pdfs/-/tods-tournament-pdfs-0.1.3.tgz#13f9ee707bf090dc0b330ab452612de6fc2a8c02"
-  integrity sha512-yIFVery1Y/LnZG+5mdvbTmWwI0mGeTijdrQ0zCJ72TpiQdQ7buw1uXlsNXt+eOJb9SKC5aqUUMRaIYZg+Wlydg==
+tods-tournament-pdfs@0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/tods-tournament-pdfs/-/tods-tournament-pdfs-0.1.5.tgz#bb1f1bf69cd0a406c36561cf24ccdd7378f3e219"
+  integrity sha512-G7HkCGrR/TXBcvvLeG3psIOOszWlz1Kzh+3JaDwhQtWOJ7YNv2IPx439k/cO4FNUEuIZ5Odu5bhQbIt5V9b3jA==
   dependencies:
     date-fns "^2.16.1"
     date-fns-timezone "^0.1.4"
     timezone-support "^2.0.2"
-    tods-competition-factory "^0.2.15"
+    tods-competition-factory "0.5.83"
 
 toidentifier@1.0.0:
   version "1.0.0"
