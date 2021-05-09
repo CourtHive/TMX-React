@@ -24,7 +24,7 @@
     "@types/yup": "0.29.11",
     "axios": "0.21.1",
     "classnames": "2.3.1",
-    "date-fns": "2.21.2",
+    "date-fns": "2.21.3",
     "dexie": "3.0.3",
     "esri-leaflet": "3.0.1",
     "i18next": "20.2.2",
