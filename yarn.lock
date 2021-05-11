@@ -33,11 +33,6 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.13.15.tgz#7e8eea42d0b64fda2b375b22d06c605222e848f4"
   integrity sha512-ltnibHKR1VnrU4ymHyQ/CXtNXI6yZC0oJThyW78Hft8XndANwi+9H+UIklBDraIjFEJzw8wmcM427oDd9KS5wA==
 
-"@babel/compat-data@^7.13.12":
-  version "7.13.12"
-  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.13.12.tgz#a8a5ccac19c200f9dd49624cac6e19d7be1236a1"
-  integrity sha512-3eJJ841uKxeV8dcN/2yGEUy+RfgQspPEgQat85umsE1rotuquQ2AbIub4S6j7c50a2d+4myc+zSlnXeIHrOnhQ==
-
 "@babel/compat-data@^7.14.0":
   version "7.14.0"
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.14.0.tgz#a901128bce2ad02565df95e6ecbf195cf9465919"
@@ -1378,81 +1373,6 @@
     "@babel/plugin-transform-unicode-regex" "^7.12.13"
     "@babel/preset-modules" "^0.1.4"
     "@babel/types" "^7.13.0"
-    babel-plugin-polyfill-corejs2 "^0.1.4"
-    babel-plugin-polyfill-corejs3 "^0.1.3"
-    babel-plugin-polyfill-regenerator "^0.1.2"
-    core-js-compat "^3.9.0"
-    semver "^6.3.0"
-
-"@babel/preset-env@^7.13.12":
-  version "7.13.12"
-  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.13.12.tgz#6dff470478290582ac282fb77780eadf32480237"
-  integrity sha512-JzElc6jk3Ko6zuZgBtjOd01pf9yYDEIH8BcqVuYIuOkzOwDesoa/Nz4gIo4lBG6K861KTV9TvIgmFuT6ytOaAA==
-  dependencies:
-    "@babel/compat-data" "^7.13.12"
-    "@babel/helper-compilation-targets" "^7.13.10"
-    "@babel/helper-plugin-utils" "^7.13.0"
-    "@babel/helper-validator-option" "^7.12.17"
-    "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining" "^7.13.12"
-    "@babel/plugin-proposal-async-generator-functions" "^7.13.8"
-    "@babel/plugin-proposal-class-properties" "^7.13.0"
-    "@babel/plugin-proposal-dynamic-import" "^7.13.8"
-    "@babel/plugin-proposal-export-namespace-from" "^7.12.13"
-    "@babel/plugin-proposal-json-strings" "^7.13.8"
-    "@babel/plugin-proposal-logical-assignment-operators" "^7.13.8"
-    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.13.8"
-    "@babel/plugin-proposal-numeric-separator" "^7.12.13"
-    "@babel/plugin-proposal-object-rest-spread" "^7.13.8"
-    "@babel/plugin-proposal-optional-catch-binding" "^7.13.8"
-    "@babel/plugin-proposal-optional-chaining" "^7.13.12"
-    "@babel/plugin-proposal-private-methods" "^7.13.0"
-    "@babel/plugin-proposal-unicode-property-regex" "^7.12.13"
-    "@babel/plugin-syntax-async-generators" "^7.8.4"
-    "@babel/plugin-syntax-class-properties" "^7.12.13"
-    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
-    "@babel/plugin-syntax-export-namespace-from" "^7.8.3"
-    "@babel/plugin-syntax-json-strings" "^7.8.3"
-    "@babel/plugin-syntax-logical-assignment-operators" "^7.10.4"
-    "@babel/plugin-syntax-nullish-coalescing-operator" "^7.8.3"
-    "@babel/plugin-syntax-numeric-separator" "^7.10.4"
-    "@babel/plugin-syntax-object-rest-spread" "^7.8.3"
-    "@babel/plugin-syntax-optional-catch-binding" "^7.8.3"
-    "@babel/plugin-syntax-optional-chaining" "^7.8.3"
-    "@babel/plugin-syntax-top-level-await" "^7.12.13"
-    "@babel/plugin-transform-arrow-functions" "^7.13.0"
-    "@babel/plugin-transform-async-to-generator" "^7.13.0"
-    "@babel/plugin-transform-block-scoped-functions" "^7.12.13"
-    "@babel/plugin-transform-block-scoping" "^7.12.13"
-    "@babel/plugin-transform-classes" "^7.13.0"
-    "@babel/plugin-transform-computed-properties" "^7.13.0"
-    "@babel/plugin-transform-destructuring" "^7.13.0"
-    "@babel/plugin-transform-dotall-regex" "^7.12.13"
-    "@babel/plugin-transform-duplicate-keys" "^7.12.13"
-    "@babel/plugin-transform-exponentiation-operator" "^7.12.13"
-    "@babel/plugin-transform-for-of" "^7.13.0"
-    "@babel/plugin-transform-function-name" "^7.12.13"
-    "@babel/plugin-transform-literals" "^7.12.13"
-    "@babel/plugin-transform-member-expression-literals" "^7.12.13"
-    "@babel/plugin-transform-modules-amd" "^7.13.0"
-    "@babel/plugin-transform-modules-commonjs" "^7.13.8"
-    "@babel/plugin-transform-modules-systemjs" "^7.13.8"
-    "@babel/plugin-transform-modules-umd" "^7.13.0"
-    "@babel/plugin-transform-named-capturing-groups-regex" "^7.12.13"
-    "@babel/plugin-transform-new-target" "^7.12.13"
-    "@babel/plugin-transform-object-super" "^7.12.13"
-    "@babel/plugin-transform-parameters" "^7.13.0"
-    "@babel/plugin-transform-property-literals" "^7.12.13"
-    "@babel/plugin-transform-regenerator" "^7.12.13"
-    "@babel/plugin-transform-reserved-words" "^7.12.13"
-    "@babel/plugin-transform-shorthand-properties" "^7.12.13"
-    "@babel/plugin-transform-spread" "^7.13.0"
-    "@babel/plugin-transform-sticky-regex" "^7.12.13"
-    "@babel/plugin-transform-template-literals" "^7.13.0"
-    "@babel/plugin-transform-typeof-symbol" "^7.12.13"
-    "@babel/plugin-transform-unicode-escapes" "^7.12.13"
-    "@babel/plugin-transform-unicode-regex" "^7.12.13"
-    "@babel/preset-modules" "^0.1.4"
-    "@babel/types" "^7.13.12"
     babel-plugin-polyfill-corejs2 "^0.1.4"
     babel-plugin-polyfill-corejs3 "^0.1.3"
     babel-plugin-polyfill-regenerator "^0.1.2"
@@ -2844,6 +2764,18 @@
   dependencies:
     "@typescript-eslint/types" "4.22.1"
     eslint-visitor-keys "^2.0.0"
+
+"@virtuoso.dev/react-urx@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@virtuoso.dev/react-urx/-/react-urx-0.2.5.tgz#41f1a8c7657a339276ecf1ff718b556010c80932"
+  integrity sha512-4C0HoPaZEqAKg3pzs3mS16kesCRvEU+TYVDxFsW+vGFi1nyPovhiQ7YVTOPBE55rjVv/rkNqL1eWqjwJM/SohA==
+  dependencies:
+    "@virtuoso.dev/urx" "^0.2.5"
+
+"@virtuoso.dev/urx@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@virtuoso.dev/urx/-/urx-0.2.5.tgz#8c88e9634df06e9f6b98bcd80490652347108c86"
+  integrity sha512-Vf3g+iAl5h8UuduSRTB1XK4G08xeV80tMP46P3xn5jIk1xV5IsdTInl58VU2thnCxRG9yJawR/QJwTFfMgkUww==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -4645,6 +4577,11 @@ core-js@^2.4.0:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
+
+core-js@^3.5.0:
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.12.1.tgz#6b5af4ff55616c08a44d386f1f510917ff204112"
+  integrity sha512-Ne9DKPHTObRuB09Dru5AjwKjY4cJHVGu+y5f7coGn1E9Grkc3p2iBwE9AI/nJzsE29mQF7oq+mhYYRqOMFN1Bw==
 
 core-js@^3.6.5:
   version "3.9.1"
@@ -10640,7 +10577,7 @@ promise-inflight@^1.0.1:
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
-promise@^8.1.0:
+promise@^8.0.3, promise@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/promise/-/promise-8.1.0.tgz#697c25c3dfe7435dd79fcd58c38a135888eaf05e"
   integrity sha512-W04AqnILOL/sPRXziNicCjSNRruLAuIHEOVBazepu0545DDNGYHz7ar9ZgZ1fMU8/MA4mVxp5rkBWRi6OXIy3Q==
@@ -10870,6 +10807,18 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+react-app-polyfill@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-1.0.6.tgz#890f8d7f2842ce6073f030b117de9130a5f385f0"
+  integrity sha512-OfBnObtnGgLGfweORmdZbyEz+3dgVePQBb3zipiaDsMHV1NpWm0rDFYIVXFV/AK+x4VIIfWHhrdMIeoTLyRr2g==
+  dependencies:
+    core-js "^3.5.0"
+    object-assign "^4.1.1"
+    promise "^8.0.3"
+    raf "^3.4.1"
+    regenerator-runtime "^0.13.3"
+    whatwg-fetch "^3.0.0"
 
 react-app-polyfill@^2.0.0:
   version "2.0.0"
@@ -11179,6 +11128,16 @@ react-transition-group@^4.0.0, react-transition-group@^4.3.0, react-transition-g
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-virtuoso@1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-1.8.6.tgz#dc7d79ee9e309c13700296ff65b04f6ebecdcbaa"
+  integrity sha512-WFSI4YzdyAFrr3CuZnQ8cmubGMJjgmgyuhx/OpWLls1uK9O43s+6DMr9oBXHAgvCDjS3Nd3vkIJAhsJBJzS1nQ==
+  dependencies:
+    "@virtuoso.dev/react-urx" "^0.2.5"
+    "@virtuoso.dev/urx" "^0.2.5"
+    react-app-polyfill "^1.0.6"
+    resize-observer-polyfill "^1.5.1"
+
 react-window@1.8.6:
   version "1.8.6"
   resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.6.tgz#d011950ac643a994118632665aad0c6382e2a112"
@@ -11308,7 +11267,7 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
+regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
   integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
@@ -11467,6 +11426,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
@@ -12866,40 +12830,28 @@ tods-competition-factory@0.5.83:
   dependencies:
     tods-matchup-format-code "1.1.2"
 
-tods-competition-factory@0.6.0:
+tods-competition-factory@0.6.0, tods-competition-factory@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.6.0.tgz#c8d6069aa8ea9d904877c45e37f6e341d4d3f9c0"
   integrity sha512-yws6mW/IoYH7pGKW51Fu5GL0wlTPUt1AkmR/JbLL/A1q4JTSWDlJ7eKEetHK5nsEOIf8dE/LFs8rb+iTrLYrmw==
   dependencies:
     tods-matchup-format-code "1.1.2"
 
-tods-competition-factory@^0.5.45:
-  version "0.5.48"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.48.tgz#5740a76f3917c853ef13196e5edd9faa9211fa38"
-  integrity sha512-vmPFKy0bG+DQNzUi4T9IjO6uZpuzzAbOwlkerq+jeOGrtXHM/5OXM0oWKEOzRx9gPav7BydNGe87jgHcZW9dqg==
-  dependencies:
-    tods-matchup-format-code "^1.0.7"
-
 tods-matchup-format-code@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.1.2.tgz#32c45b2bea6fc2aa5f7dd3ff362f27c02e31bb5b"
   integrity sha512-73VIP+WnSTvPnDwfFLNFvWIINu4VtJbjEZERL/kBMv17MO1i9gQlWiq4C14Ph+igMLwuolitXutsomCCsn9Q2A==
 
-tods-matchup-format-code@^1.0.7:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.0.8.tgz#10936bbbe6b4ec9ba74436268770aa4735eb8897"
-  integrity sha512-pci163xZA6UwOTGfe9M2aL3Jd2KH1GRbKoSEDUE8mVXhi7x2YqGuW4nUxzx34UTiRO0aYMhwXL7ncKqdJDzXhw==
-
-tods-react-draws@0.1.17:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.1.17.tgz#73d8b61f5431ef399d9e6c40231b1a69d87aae56"
-  integrity sha512-ofRkGVr7lUfCghlo9HT/J0TpYzI4YBl6zGaJP7XFAl67ftNBh6pG/QkuVCxQpX8do3zB7dyW+e/i5Q+5hEWiMg==
+tods-react-draws@0.1.18:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.1.18.tgz#b4d72bf49d4d4f21911853ad8d3c8c80692a8ac3"
+  integrity sha512-2foB6UA/2KHNACQvEOu4ypK1QBMV1cwX6CEeOCApn81LshZzVRZE6XzpSi8unoNvGZ6G2bgOdndf9rppLrWTdA==
   dependencies:
-    "@babel/preset-env" "^7.13.12"
+    "@material-ui/core" "4.11.4"
     "@material-ui/icons" "^4.11.2"
-    babel-jest "^26.6.3"
     classnames "^2.2.6"
-    tods-competition-factory "^0.5.45"
+    react-virtuoso "1.8.6"
+    tods-competition-factory "^0.6.0"
 
 tods-tournament-pdfs@0.1.5:
   version "0.1.5"
@@ -13581,7 +13533,7 @@ whatwg-encoding@^1.0.5:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@^3.4.1:
+whatwg-fetch@^3.0.0, whatwg-fetch@^3.4.1:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz#dced24f37f2624ed0281725d51d0e2e3fe677f8c"
   integrity sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==
