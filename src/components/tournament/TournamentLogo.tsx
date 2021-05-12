@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import { useMediaQuery } from '@material-ui/core';
 import useTheme from '@material-ui/core/styles/useTheme';
+import { useMediaQuery } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 
 import { useStyles } from 'components/tournament/styles';
 import { getLogo } from 'services/imageHandlers/getImage';
