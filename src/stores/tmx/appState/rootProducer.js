@@ -6,18 +6,6 @@ const setAuthState = (state, action) =>
   produce(state, (draftState) => {
     draftState.authState = action.payload;
   });
-const displayCalendar = (state) =>
-  produce(state, (draftState) => {
-    draftState.content = 'calendar';
-  });
-const displaySplash = (state) =>
-  produce(state, (draftState) => {
-    draftState.content = 'splash';
-  });
-const displayTournament = (state) =>
-  produce(state, (draftState) => {
-    draftState.content = 'tournament';
-  });
 
 const loginModal = (state, action) =>
   produce(state, (draftState) => {
@@ -95,10 +83,6 @@ const changeToasterState = (state, action) =>
   });
 
 const rootProducer = {
-  'display tournament': displayTournament,
-  'display calendar': displayCalendar,
-  'display splash': displaySplash,
-
   'db loaded': dbLoaded,
   'key loaded': incrementKeyLoads,
   'specify components': specifyEnabledComponents,

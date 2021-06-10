@@ -88,6 +88,7 @@ const changeTournament = (state, action) =>
     if (tournamentId) {
       Object.assign(draftState, initialState, { initialized: true });
       tournamentEngine.setState(action.payload);
+      console.log({ tournamentId, tournamentRecord: action.payload });
       draftState.records = { [tournamentId]: action.payload };
       draftState.selectedTournamentId = tournamentId;
     }

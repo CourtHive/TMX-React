@@ -1,7 +1,7 @@
 import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -13,6 +13,30 @@ import MainRouter from '../router/MainRouter';
 import { Login } from './forms/login/loginModal';
 import { tmxStore } from 'stores/tmxStore';
 import { theme } from 'theme/theme';
+import { useStyles } from 'components/styles';
+
+import SPLASH from 'images/splash.png';
+const SplashImage = <img src={SPLASH} style={{ width: '100%', maxWidth: '800px' }} alt="tmxLogo" />;
+
+const SplashInterceptor = () => {
+  const classes = useStyles();
+  const dbLoaded = useSelector((state) => state.tmx.dbLoaded);
+
+  return (
+    <>
+      {dbLoaded ? (
+        <>
+          <Login />
+          <MainRouter />
+        </>
+      ) : (
+        <div id="splash" className={classes.splash}>
+          {SplashImage}
+        </div>
+      )}
+    </>
+  );
+};
 
 const TMX = () => {
   const BASENAME = process.env.REACT_APP_ROUTER_BASENAME || '';
@@ -23,8 +47,7 @@ const TMX = () => {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <ThemeProvider theme={responsiveFontSizes(theme)}>
             <BrowserRouter basename={BASENAME}>
-              <Login />
-              <MainRouter />
+              <SplashInterceptor />
             </BrowserRouter>
           </ThemeProvider>
         </MuiPickersUtilsProvider>

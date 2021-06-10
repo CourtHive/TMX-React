@@ -1,7 +1,6 @@
 import { env } from 'config/defaults';
 import { db } from 'services/storage/db';
 import { context } from 'services/context';
-import { showContent } from 'services/screenSlaver';
 
 import { tmxStore } from 'stores/tmxStore';
 
@@ -45,7 +44,6 @@ export function displayTournament({ tournamentId, tournament, editing } = {}) {
       context.state.edit = true;
     }
 
-    showContent('tournament');
     context.currentTab = 'tournament';
   }
 

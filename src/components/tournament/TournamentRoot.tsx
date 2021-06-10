@@ -23,7 +23,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { populateCalendar } from 'functions/calendar';
 import { displayTournament } from 'functions/tournament/tournamentDisplay';
-import { showCalendar } from 'services/screenSlaver';
 import AlertDialog from 'components/dialogs/alertDialog';
 import { AppToaster } from 'components/dialogs/AppToaster';
 
@@ -34,6 +33,8 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
+
+  console.log({ tabIndex, tournamentRecord });
 
   // const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
@@ -64,7 +65,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   }, [keyLoads]);
   */
 
-  const tournamentName = tournamentRecord.tournamentName || t('trn');
+  const tournamentName = tournamentRecord?.tournamentName || t('trn');
 
   const changeLoginState = () => {
     if (loggedIn) {
@@ -102,9 +103,10 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   );
 
   const handleLogoClick = () => {
-    showCalendar();
     history.push('/');
   };
+
+  if (!tournamentRecord) return null;
 
   return (
     <>
