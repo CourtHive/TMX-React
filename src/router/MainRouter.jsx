@@ -1,10 +1,10 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
-import HomePage from 'pages/HomePage';
-import NotFoundPage from 'pages/NotFoundPage';
-import UserTestsPage from 'pages/UserTestsPage';
 import TournamentPage from 'pages/TournamentPage';
+import UserTestsPage from 'pages/UserTestsPage';
+import NotFoundPage from 'pages/NotFoundPage';
+import HomePage from 'pages/HomePage';
 
 import {
   HOME,

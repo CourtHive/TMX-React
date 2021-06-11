@@ -34,9 +34,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   const { t } = useTranslation();
   const history = useHistory();
 
-  console.log({ tabIndex, tournamentRecord });
-
-  // const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
 
   const tabState = useSelector((state: any) => state.tmx.visible.tabState);
@@ -58,12 +55,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   };
 
   useSaveTrigger();
-
-  /*
-  useEffect(() => {
-    console.log('key load');
-  }, [keyLoads]);
-  */
 
   const tournamentName = tournamentRecord?.tournamentName || t('trn');
 
