@@ -33,6 +33,7 @@ const invokeCompetitionEngine = (state, action) =>
           });
 
           draftState.records = competitionEngine.getState();
+          console.log('competitionEngine saveTrigger');
           ++draftState.saveCount;
         } else if (result.error) {
           const payload = { icon: 'error', severity: 'warning', message: result.error };

@@ -32,8 +32,8 @@ export const storeInitialState = () => ({
   keyLoads: 0,
   drawResize: 0,
 
-  authState: false,
-  editState: false,
+  authState: true,
+  editState: true,
   loginModal: false,
   loadingState: false,
   pubAction: undefined,

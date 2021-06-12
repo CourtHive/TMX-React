@@ -10,7 +10,6 @@ export const save = (function () {
       console.log('no tournament');
       return;
     }
-
     const cantsave = document.querySelector('.NOSAVE');
     if (cantsave) {
       console.log('cannot save');

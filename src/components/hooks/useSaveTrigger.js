@@ -16,7 +16,6 @@ export function useSaveTrigger() {
       tournamentRecord?.unifiedTournamentId?.tournamentId)
   ) {
     modifySaved(saveCount);
+    save.local({ tournament: tournamentRecord });
   }
-
-  save.local({ tournament: tournamentRecord });
 }

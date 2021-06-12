@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,6 @@ import CheckboxCell from 'components/tables/common/CheckboxCell';
 import EndlessTable from 'components/tables/EndlessTable';
 import { useStyles } from 'components/tables/styles';
 import { useStyles as useIconStyles } from 'components/tables/actions/styles';
-// import tournamentEngine from 'engines/tournamentEngine';
 import NoticePaper from 'components/papers/notice/NoticePaper';
 import { AddLocationButton } from 'components/buttons/addLocation';
 
@@ -38,7 +37,7 @@ export const LocationsTable = (props) => {
   const hiddenColumns = useSelector((state) => state.tmx.hiddenColumns.locations) || [];
 
   const [editMode, setEditMode] = useState(false);
-  const [actionPanelStyle, setActionPanelStyle] = useState < CSSProperties > {};
+  const [actionPanelStyle, setActionPanelStyle] = useState({});
   const [tableData, setTableData] = useState([]);
 
   const [locationData, setLocationData] = useState(undefined);

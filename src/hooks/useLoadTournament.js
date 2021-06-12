@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import { tmxStore } from 'stores/tmxStore';
 import { db } from 'services/storage/db';
 
-export const useLoadTournament = (tournamentId) => {
+export const useLoadTournament = (tournament, tournamentId) => {
+  /*
   const storeState = tmxStore.getState();
   const selectedTournamentId = storeState.selectedTournamentId;
   const selectedTournament = storeState.records && storeState.records[selectedTournamentId];
+  */
 
-  const [tournamentRecord, setTournamentRecord] = useState(selectedTournament);
+  const [tournamentRecord, setTournamentRecord] = useState(tournament);
 
   useEffect(() => {
     if (tournamentId && !tournamentRecord) {
