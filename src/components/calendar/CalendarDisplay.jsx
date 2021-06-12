@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Grid, Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { useStyles } from './style';
 
@@ -15,13 +14,7 @@ export function TMXcalendar() {
   const classes = useStyles();
   const theme = useTheme();
 
-  const keyLoads = useSelector((state) => state.tmx.keyLoads);
-  // const downSm = useMediaQuery(theme.breakpoints.down('sm'));
   const downXs = useMediaQuery(theme.breakpoints.down('xs'));
-
-  useEffect(() => {
-    // reload on keyLoad
-  }, [keyLoads]);
 
   return (
     <>
@@ -42,7 +35,7 @@ export function TMXcalendar() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={downXs ? 12 : 'auto'}>
+        <Grid item>
           <ProviderLogo />
         </Grid>
       </Grid>

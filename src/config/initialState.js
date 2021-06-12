@@ -1,14 +1,14 @@
-import { saveMyTournaments } from 'services/officiating/tournaments';
+//import { saveMyTournaments } from 'services/officiating/tournaments';
+import { updateReady, popupsBlocked } from 'services/notifications/statusMessages';
+import { getLoginState } from 'services/authentication/loginState';
+import { parse as parseQueryString } from 'services/queryString';
+import { initDB } from 'services/initialization/initDB';
 import { resetDB } from 'services/storage/resetDB';
+import { idiomSetup } from './idiom/idiomSetup';
 import { context } from 'services/context';
 import { tmxStore } from 'stores/tmxStore';
 import { setDev } from 'config/setDev';
 import { env } from 'config/defaults';
-
-import { updateReady, popupsBlocked } from 'services/notifications/statusMessages';
-import { parse as parseQueryString } from 'services/queryString';
-import { initDB } from 'services/initialization/initDB';
-import { idiomSetup } from './idiom/idiomSetup';
 
 import { tournamentEngine } from 'tods-competition-factory';
 
@@ -16,6 +16,7 @@ import 'styles/main.css';
 
 export function setupTMX() {
   setWindow();
+  getLoginState();
 
   env.device = getDevice();
   env.version_check = new Date().getTime();
@@ -34,7 +35,7 @@ export function setupTMX() {
 
 function tmxReady() {
   setDev({ env });
-  saveMyTournaments();
+  // saveMyTournaments();
   idiomSetup();
 
   const cfv = tournamentEngine.version();

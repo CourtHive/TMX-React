@@ -1,14 +1,15 @@
-import { baseApi } from 'services/authentication/baseApi';
-import { performTask } from 'functions/tasks';
-import { tmxStore } from 'stores/tmxStore';
-import { db } from 'services/storage/db';
+//import { baseApi } from 'services/authentication/baseApi';
+//import { performTask } from 'functions/tasks';
+//import { tmxStore } from 'stores/tmxStore';
+//import { db } from 'services/storage/db';
 
-import { getJwtTokenStorageKey } from 'config/localStorage';
-import { validateToken } from 'services/authentication/actions';
-import { isDev } from 'functions/isDev';
+//import { getJwtTokenStorageKey } from 'config/localStorage';
+//import { validateToken } from 'services/authentication/actions';
+//import { isDev } from 'functions/isDev';
 
-const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
+//const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
 
+/*
 export async function getMyTournamentsReq() {
   return baseApi.get(`/officiating/tournament-calendar/my-tournaments`);
 }
@@ -24,6 +25,7 @@ function addMissing(trnys) {
   );
 }
 
+// DEPRECATED: ??
 export async function saveMyTournaments() {
   const token = localStorage.getItem(JWT_TOKEN_STORAGE_NAME);
   const decodedToken = validateToken(token);
@@ -62,3 +64,4 @@ export async function saveMyTournaments() {
     if (isDev()) console.log('%c not logged in', 'color: pink');
   }
 }
+*/

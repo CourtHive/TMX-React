@@ -88,7 +88,7 @@ const rootProducer = {
   'specify components': specifyEnabledComponents,
 
   'login modal': loginModal,
-  'tournament auth state': setAuthState,
+  'auth state': setAuthState,
 
   'hide column': hideColumn,
 

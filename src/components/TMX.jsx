@@ -1,22 +1,21 @@
 import React from 'react';
-import { DndProvider } from 'react-dnd';
+
+import responsiveFontSizes from '@material-ui/core/styles/responsiveFontSizes';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { LoginModal } from './modals/login/LoginModal';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import DateFnsUtils from '@date-io/date-fns';
-
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import responsiveFontSizes from '@material-ui/core/styles/responsiveFontSizes';
-import { ThemeProvider } from '@material-ui/core/styles';
-
-import MainRouter from '../router/MainRouter';
-import { Login } from './forms/login/loginModal';
-import { tmxStore } from 'stores/tmxStore';
-import { theme } from 'theme/theme';
 import { useStyles } from 'components/styles';
+import MainRouter from '../router/MainRouter';
+import DateFnsUtils from '@date-io/date-fns';
+import { tmxStore } from 'stores/tmxStore';
+import { DndProvider } from 'react-dnd';
+import { theme } from 'theme/theme';
 
-import SPLASH from 'images/splash.png';
 const SplashImage = <img src={SPLASH} style={{ width: '100%', maxWidth: '800px' }} alt="tmxLogo" />;
+import SPLASH from 'images/splash.png';
 
 const SplashInterceptor = () => {
   const classes = useStyles();
@@ -26,7 +25,7 @@ const SplashInterceptor = () => {
     <>
       {dbLoaded ? (
         <>
-          <Login />
+          <LoginModal />
           <MainRouter />
         </>
       ) : (

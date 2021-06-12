@@ -14,7 +14,7 @@ import { AppToaster } from 'services/notifications/toaster';
 
 import { context } from 'services/context';
 import { populateCalendar } from 'functions/calendar';
-import { saveMyTournaments } from 'services/officiating/tournaments';
+// import { saveMyTournaments } from 'services/officiating/tournaments';
 import { displayTournament } from 'functions/tournament/tournamentDisplay';
 
 import { getJwtTokenStorageKey } from 'config/localStorage';
@@ -46,7 +46,7 @@ export const Login = () => {
     if (decodedToken) {
       localStorage.setItem(JWT_TOKEN_STORAGE_NAME, token);
       AppToaster.show({ icon: 'tick', intent: 'success', message: 'Login successful' });
-      saveMyTournaments();
+      // saveMyTournaments();
 
       setTimeout(() => {
         if (context.tournamentId) {
