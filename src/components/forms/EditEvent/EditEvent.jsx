@@ -57,7 +57,7 @@ export function EditEvent(props) {
     endDate: offsetDate(endDate)
   };
 
-  const { control, /*register,*/ handleSubmit, setValue, watch } = useForm({
+  const { control, handleSubmit, setValue, watch } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
@@ -175,7 +175,7 @@ export function EditEvent(props) {
           {t('actions.add_event')}
         </Typography>
         <Controller
-          name="eventtName"
+          name="eventName"
           control={control}
           defaultValue=""
           render={({ field: { onChange, value }, fieldState: { error } }) => (
