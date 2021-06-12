@@ -32,7 +32,7 @@ export function TeamEdit(props) {
     register,
     handleSubmit,
     getValues,
-    formState: { errors, dirty }
+    formState: { errors, isDirty }
   } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
@@ -143,7 +143,7 @@ export function TeamEdit(props) {
               onBlur={handleLogoBlur}
             />
             <Grid container justify="center" alignItems="center">
-              {dirty ? <Submit /> : <Close />}
+              {isDirty ? <Submit /> : <Close />}
             </Grid>
           </Grid>
         </Grid>

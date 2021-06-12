@@ -43,7 +43,6 @@ export const LocationsTable = (props) => {
   const [locationData, setLocationData] = useState(undefined);
 
   const addNewLocation = (newLocation) => {
-    console.log({ newLocation });
     setLocationData(undefined);
     dispatch({
       type: 'tournamentEngine',

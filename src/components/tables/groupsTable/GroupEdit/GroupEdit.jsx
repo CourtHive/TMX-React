@@ -134,7 +134,7 @@ export function GroupEdit(props) {
               onBlur={handleLogoBlur}
             />
             <Grid container justify="center" alignItems="center">
-              {formState.dirty ? <Submit /> : <Close />}
+              {formState.isDirty ? <Submit /> : <Close />}
             </Grid>
           </Grid>
         </Grid>
