@@ -90,7 +90,6 @@ const changeTournament = (state, action) =>
       tournamentEngine.setState(action.payload);
       draftState.records = { [tournamentId]: action.payload };
       draftState.selectedTournamentId = tournamentId;
-      console.log('changed tournament');
     }
   });
 

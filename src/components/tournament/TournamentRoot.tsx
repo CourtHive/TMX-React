@@ -34,6 +34,8 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   const { t } = useTranslation();
   const history = useHistory();
 
+  console.log('root', { tournamentRecord });
+
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
 
   const tabState = useSelector((state: any) => state.tmx.visible.tabState);
