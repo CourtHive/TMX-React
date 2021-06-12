@@ -158,13 +158,6 @@ export function NewDraw(props) {
     );
   };
 
-  /*
-  const setDrawSize = (evt) => {
-    const newDrawSize = evt.target.value;
-    setValue('drawSize', newDrawSize);
-  };
-  */
-
   const disableSizeOption = selectedStructure === 'ADHOC';
 
   return (
