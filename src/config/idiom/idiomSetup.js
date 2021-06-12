@@ -1,9 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { attemptJSONparse } from 'functions/attemptJSONparse';
 
 import { defaultIdiom } from 'config/idiom/defaultIdiom';
 import { IDIOM_STORAGE, IDIOM_SELECTED } from 'constants/localStorage';
-import { attemptJSONparse } from 'functions/attemptJSONparse';
 
 export function idiomSetup() {
   let idiomSelected = {};

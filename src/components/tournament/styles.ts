@@ -40,8 +40,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: theme.spacing(2)
   },
   menuRightWrapper: {
-    height: '100%'
-    // padding: '10px 75px 10px 0'
+    height: '100%',
+    padding: '10px 20px 10px 0'
   },
   menuRightSubWrapper: {
     alignSelf: 'center',

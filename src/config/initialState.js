@@ -1,48 +1,52 @@
-import { env } from 'config/defaults';
-import { setDev } from 'config/setDev';
-import { config } from 'config/config';
-import { tmxStore } from 'stores/tmxStore';
-import { context } from 'services/context';
-import { resetDB } from 'services/storage/resetDB';
-import { saveMyTournaments } from 'services/officiating/tournaments';
-
-import { parse as parseQueryString } from 'services/queryString';
+//import { saveMyTournaments } from 'services/officiating/tournaments';
 import { updateReady, popupsBlocked } from 'services/notifications/statusMessages';
+import { getLoginState } from 'services/authentication/loginState';
+import { parse as parseQueryString } from 'services/queryString';
+import { initDB } from 'services/initialization/initDB';
+import { resetDB } from 'services/storage/resetDB';
 import { idiomSetup } from './idiom/idiomSetup';
+import { context } from 'services/context';
+import { tmxStore } from 'stores/tmxStore';
+import { setDev } from 'config/setDev';
+import { env } from 'config/defaults';
 
 import { tournamentEngine } from 'tods-competition-factory';
 
-import EventEmitter from 'wolfy87-eventemitter';
-
 import 'styles/main.css';
 
-function initializationFailed(err) {
-  if (err && err.name === 'OpenFailedError') {
-    resetDB();
-  } else {
-    tmxStore.dispatch({
-      type: 'toaster state',
-      payload: { severity: 'error', message: 'Initialization Error' }
-    });
-  }
-}
+export function setupTMX() {
+  setWindow();
+  getLoginState();
 
-function tmxReady() {
-  setDev({ env });
-  saveMyTournaments();
+  env.device = getDevice();
+  env.version_check = new Date().getTime();
+
+  context.queryString = parseQueryString();
+
+  initOrientationChangeEvents();
+
   tmxStore.dispatch({
     type: 'set initial state',
     payload: { visibleTabs: env.visibleTabs, enabledComponents: env.enabledComponents }
   });
+
+  initDB().then(tmxReady, initializationFailed);
+}
+
+function tmxReady() {
+  setDev({ env });
+  // saveMyTournaments();
+  idiomSetup();
+
+  const cfv = tournamentEngine.version();
+  console.log(`%cversion: ${env.version}`, 'color: lightblue');
+  console.log(`%cfactory: ${cfv}`, 'color: lightblue');
+
   console.log('%c TMX Ready', 'color: lightgreen');
 }
 
-function setContext() {
-  context.ee = new EventEmitter();
-}
-
 function setWindow() {
-  // to disable context menu on the page
+  // disable context menu on the page
   document.oncontextmenu = () => false;
   window.addEventListener(
     'contextmenu',
@@ -65,14 +69,6 @@ function setWindow() {
   };
 }
 
-function getNavigator() {
-  try {
-    return navigator || window.navigator;
-  } catch (e) {
-    return undefined;
-  }
-}
-
 function getDevice() {
   const nav = getNavigator();
   const device = {
@@ -85,7 +81,15 @@ function getDevice() {
   return device;
 }
 
-function eventListeners() {
+function getNavigator() {
+  try {
+    return navigator || window.navigator;
+  } catch (e) {
+    return undefined;
+  }
+}
+
+function initOrientationChangeEvents() {
   const setOrientation = () => {
     env.orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
   };
@@ -106,22 +110,13 @@ function eventListeners() {
   setOrientation();
 }
 
-function setEnv() {
-  env.device = getDevice();
-  env.version_check = new Date().getTime();
-  const cfv = tournamentEngine.version();
-  console.log(`%cversion: ${env.version}`, 'color: lightblue');
-  console.log(`%cfactory: ${cfv}`, 'color: lightblue');
-
-  eventListeners();
-  context.queryString = parseQueryString();
-}
-
-export function setupTMX() {
-  setEnv();
-  setWindow();
-  setContext();
-  idiomSetup();
-
-  config.init().then(tmxReady, initializationFailed);
+function initializationFailed(err) {
+  if (err && err.name === 'OpenFailedError') {
+    resetDB();
+  } else {
+    tmxStore.dispatch({
+      type: 'toaster state',
+      payload: { severity: 'error', message: 'Initialization Error' }
+    });
+  }
 }

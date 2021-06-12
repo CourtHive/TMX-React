@@ -1,5 +1,6 @@
-import { env } from 'config/defaults';
+import { tmxStore } from 'stores/tmxStore';
 import { db } from 'services/storage/db';
+import { env } from 'config/defaults';
 
 export function getLogo() {
   let imageRoot = env.assets.imageRoot;
@@ -11,6 +12,12 @@ export function getName() {
   let imageRoot = env.assets.imageRoot;
   let imageFile = env.assets.pdf.nameImage || 'courthive.png';
   return getImage({ key: 'orgName', path: `${imageRoot}${imageFile}` });
+}
+
+export function setLogo() {
+  getImage({ key: 'orgLogo', path: './assets/org_logo.png' }).then((image) => {
+    tmxStore.dispatch({ type: 'set images', payload: [image] });
+  });
 }
 
 function getImage({ key, path }) {

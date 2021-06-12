@@ -2,11 +2,19 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { validationSchema } from './validation';
 import { TextField } from '@material-ui/core';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export function EditRanking(props) {
   const { ranking, onChange } = props;
   const defaultValues = { ranking };
-  const { register, errors } = useForm({ validationSchema, defaultValues, mode: 'onChange' });
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues,
+    mode: 'onChange'
+  });
   const rankingChange = (event) => {
     const value = event.target.value;
     if (onChange && typeof onChange === 'function' && !errors.ranking) {

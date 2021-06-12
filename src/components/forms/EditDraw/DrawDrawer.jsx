@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, MenuItem, Drawer, Grid, TextField, Typography } from '@material-ui/core';
 import { validationSchema } from './validation';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useStyles } from './style';
 
@@ -17,6 +17,7 @@ import { getStatusGroup } from 'functions/events';
 import { validRoundRobinGroupSize } from 'functions/draws';
 
 import { utilities } from 'tods-competition-factory';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export function EditDrawDrawer(props) {
   const { callback, selectedEvent } = props;
@@ -57,8 +58,8 @@ export function NewDraw(props) {
     groups: groupsDefault,
     groupSize: 4
   };
-  const { control, register, getValues, setValue, watch, handleSubmit } = useForm({
-    validationSchema,
+  const { control, /*register,*/ getValues, setValue, watch, handleSubmit } = useForm({
+    resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
   });
@@ -68,7 +69,8 @@ export function NewDraw(props) {
     { text: t('adr'), value: 'automated' }
   ];
 
-  const selectedStructure = watch('drawType', 'SINGLE_ELIMINATION');
+  // const selectedStructure = watch('drawType', 'SINGLE_ELIMINATION');
+  const { drawType: selectedStructure } = watch() || 'SINGLE_ELIMINATION';
   const defaultDrawSize = selectedStructure === 'DOUBLE_ELIMINATION' ? '12' : defaultValues.drawSize;
 
   const structureOptions = getStructureOptions();
@@ -77,7 +79,8 @@ export function NewDraw(props) {
     setValue('drawType', firstOption);
   }
 
-  const groupSize = watch('groupSize', 4);
+  // const groupSize = watch('groupSize', 4);
+  const { groupSize } = watch() || 4;
   const minimumGroups = Math.ceil(approved.length / groupSize);
   const maximumGroups = Math.floor(approved.length / (groupSize - 1));
   const groupsRange = utilities.generateRange(minimumGroups, maximumGroups + 1);
@@ -93,7 +96,8 @@ export function NewDraw(props) {
     }
   }
 
-  const drawSize = watch('drawSize', 32);
+  // const drawSize = watch('drawSize', 32);
+  const { drawSize } = watch() || 32;
   const seedRange = getSeedRange({ drawSize, selectedStructure });
   if (seedRange.indexOf(seedsCount) < 0) {
     setValue('seedsCount', seedRange[0]);
@@ -154,11 +158,6 @@ export function NewDraw(props) {
     );
   };
 
-  const setDrawSize = (evt) => {
-    const newDrawSize = evt.target.value;
-    setValue('drawSize', newDrawSize);
-  };
-
   const disableSizeOption = selectedStructure === 'ADHOC';
 
   return (
@@ -167,12 +166,20 @@ export function NewDraw(props) {
         <Typography align="left" component="h2" className={classes.formTitle}>
           {t('actions.add_draw') || 'Add Draw'}
         </Typography>
-        <TextField
+        <Controller
           name="customName"
-          inputRef={register}
-          label={t('events.customname')}
-          className={classes.editField}
-          id="customDrawName"
+          control={control}
+          defaultValue=""
+          render={({ field: { onChange, value } }) => (
+            <TextField
+              required
+              className={classes.editField}
+              id="customDrawName"
+              label={t('events.customname')}
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
         <ControlledSelector
           defaultValue={defaultValues.drawType}
@@ -186,13 +193,18 @@ export function NewDraw(props) {
         ) : (
           <Grid container direction="row" justify="space-between" alignItems="center" className={classes.grow}>
             {selectedStructure === 'FEED IN' ? (
-              <TextField
-                defaultValue={defaultDrawSize}
+              <Controller
                 name="drawSize"
-                inputRef={register}
-                onChange={setDrawSize}
-                label={t('events.draw_size')}
-                className={classes.editField}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextField
+                    className={classes.editField}
+                    id="drawSize"
+                    label={t('events.draw_size')}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
               />
             ) : (
               <ControlledSelector

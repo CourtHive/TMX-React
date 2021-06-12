@@ -1,10 +1,12 @@
 import React from 'react';
-import { render } from 'react-dom';
-import * as serviceWorker from './serviceWorker';
 
-import TMX from './components/TMX.jsx';
-import { setupTMX } from './config/initialState';
 import { updateReady } from './services/notifications/statusMessages';
+import { createEmitter } from 'services/initialization/createEmitter';
+import { setupTMX } from './config/initialState';
+
+import * as serviceWorker from './serviceWorker';
+import TMX from './components/TMX.jsx';
+import { render } from 'react-dom';
 
 if (window.attachEvent) {
   window.attachEvent('onload', setupTMX);
@@ -20,6 +22,8 @@ if (window.attachEvent) {
     window.onload = setupTMX;
   }
 }
+
+createEmitter();
 
 render(<TMX />, document.getElementById('root'));
 

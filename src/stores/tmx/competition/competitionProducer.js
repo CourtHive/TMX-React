@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-import { context } from 'services/context';
+// import { context } from 'services/context';
 import { setToasterState } from '../primitives/toasterState';
 import { isDev } from 'functions/isDev';
 
@@ -26,14 +26,15 @@ const invokeCompetitionEngine = (state, action) =>
 
       if (result) {
         if (result.success) {
+          /*
           const { tournamentIds } = Object.keys(tournamentRecords);
           context.ee.emit('emitTmx', {
             action: 'competitionEngineMethod',
             payload: { tournamentIds, method, payload: action.payload }
           });
+          */
 
           draftState.records = competitionEngine.getState();
-          ++draftState.saveCount;
         } else if (result.error) {
           const payload = { icon: 'error', severity: 'warning', message: result.error };
           setToasterState({ draftState, payload });

@@ -1,7 +1,6 @@
 import i18n from 'i18next';
 import { db } from 'services/storage/db';
 import { tmxStore } from 'stores/tmxStore';
-import { showCalendar } from 'services/screenSlaver';
 
 export function deleteTournamentRecord({ tournamentId, onDelete }) {
   if (!tournamentId) return;
@@ -31,6 +30,5 @@ function deleteTournament({ tournament, onDelete }) {
   db.deleteTournament(tournamentId).then(done, (err) => console.log({ err }));
   function done() {
     if (typeof onDelete === 'function') onDelete();
-    showCalendar();
   }
 }

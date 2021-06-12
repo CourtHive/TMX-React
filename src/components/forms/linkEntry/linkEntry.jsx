@@ -9,6 +9,7 @@ import { Button, Dialog, DialogTitle, DialogActions, DialogContent, TextField } 
 
 import { useForm } from 'react-hook-form';
 import { validationSchema as linkSchema } from './validation';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 let ANCHORID = 'dialogAnchor';
 
@@ -19,7 +20,16 @@ export const LinkEntry = ({ validate = true, onClose, onCancel, initialValues })
   const [isOpen, setOpen] = React.useState(true);
 
   const validationSchema = validate ? linkSchema : undefined;
-  const { register, setValue, handleSubmit, errors } = useForm({ validationSchema, defaultValues, mode: 'onBlur' });
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues,
+    mode: 'onBlur'
+  });
   const cancelAction = () => {
     setOpen(false);
     if (onCancel && typeof onCancel === 'function') onCancel();

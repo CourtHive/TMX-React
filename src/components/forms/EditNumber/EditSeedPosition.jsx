@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { validationSchema } from './validation';
 import { TextField } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export function EditSeedPosition(props) {
   // const { seedPosition, onChange } = props;
@@ -16,7 +17,14 @@ export function EditSeedPosition(props) {
   const participant = participants.reduce((p, c) => (c.participantId === participantId ? c : p), undefined);
   const seedPosition = participant && participant.manualSeeding && participant.manualSeeding[eventId];
   const defaultValues = { seedPosition };
-  const { register, errors } = useForm({ validationSchema, defaultValues, mode: 'onChange' });
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues,
+    mode: 'onChange'
+  });
   const seedPositionChange = (event) => {
     const value = event.target.value;
     if (onChange && typeof onChange === 'function' && !errors.seedPosition) {

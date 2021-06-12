@@ -681,6 +681,7 @@ export const defaultIdiom = () => ({
       },
 
       surfaces: {
+        artificial: 'Artificial',
         clay: 'Clay',
         hard: 'Hard',
         grass: 'Grass',

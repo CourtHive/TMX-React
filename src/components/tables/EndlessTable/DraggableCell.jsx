@@ -5,7 +5,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { TableCell } from '@material-ui/core';
 
 import { DropTypeEnum } from 'components/tables/EndlessTable/typedefs';
-import { useCombinedRefs } from 'components/hooks/useCombinedRefs';
+import { useCombinedRefs } from 'hooks/useCombinedRefs';
 import { useStyles } from 'components/tables/EndlessTable/styles';
 
 const DraggableCell = ({

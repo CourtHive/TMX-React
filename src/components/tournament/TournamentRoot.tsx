@@ -1,97 +1,40 @@
 import React /*useEffect*/ from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { context } from 'services/context';
 
-import { getJwtTokenStorageKey } from 'config/localStorage';
-import { getLoginState } from 'services/authentication/loginState';
-
-import { Grid, Tooltip, Typography, useMediaQuery } from '@material-ui/core';
+import { Grid, Typography, useMediaQuery } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import useTheme from '@material-ui/core/styles/useTheme';
 import { useStyles } from 'components/tournament/styles';
 
 import { MainMenuButton } from 'components/buttons/MainMenuButton';
-import { useSaveTrigger } from 'components/hooks/useSaveTrigger';
 import TournamentTabsContent from 'components/tournament/TournamentTabsContent';
 import { TournamentTabs } from 'components/tournament/TournamentTabs';
 import ProviderLogo from 'components/ProviderLogo';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import { populateCalendar } from 'functions/calendar';
-import { displayTournament } from 'functions/tournament/tournamentDisplay';
-import { showCalendar } from 'services/screenSlaver';
 import AlertDialog from 'components/dialogs/alertDialog';
 import { AppToaster } from 'components/dialogs/AppToaster';
 
-const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
-
 export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
 
-  // const keyLoads = useSelector((state: any) => state.tmx.keyLoads);
   const loadingState = useSelector((state: any) => state.tmx.loadingState);
 
   const tabState = useSelector((state: any) => state.tmx.visible.tabState);
 
   const theme = useTheme();
   const downXs = useMediaQuery(theme.breakpoints.down('xs'));
-  const loggedIn = getLoginState();
-  const loginModal = () => dispatch({ type: 'login modal', payload: true });
-  const logout = () => {
-    localStorage.removeItem(JWT_TOKEN_STORAGE_NAME);
-    dispatch({ type: 'set myTournaments' });
-    setTimeout(() => {
-      if (context.tournamentId) {
-        displayTournament({ tournamentId: context.tournamentId, tournament: undefined, editing: undefined });
-      } else {
-        populateCalendar();
-      }
-    }, 500);
-  };
 
-  useSaveTrigger();
-
-  /*
-  useEffect(() => {
-    console.log('key load');
-  }, [keyLoads]);
-  */
-
-  const tournamentName = tournamentRecord.tournamentName || t('trn');
-
-  const changeLoginState = () => {
-    if (loggedIn) {
-      logout();
-    } else {
-      loginModal();
-    }
-  };
-
-  const LoginIcon = () => (
-    <div className={classes.actionIcon} onClick={changeLoginState}>
-      {!tabState ? (
-        t('Login')
-      ) : (
-        <Tooltip title={t('Login')} aria-label={t('Login')}>
-          {loggedIn ? <ExitToAppIcon /> : <LockOpenIcon />}
-        </Tooltip>
-      )}
-    </div>
-  );
+  const tournamentName = tournamentRecord?.tournamentName || t('trn');
 
   const navGrow = downXs && tabState === 'text' ? 1 : 0;
   const NavColumn = () => (
     <Grid item className={classes.navColumn} style={{ flexGrow: navGrow }}>
-      <Grid container direction="column" justify="center" alignItems="center">
-        <LoginIcon />
-      </Grid>
+      <Grid container direction="column" justify="center" alignItems="center"></Grid>
       <Grid container direction="column" justify="flex-start">
         <TournamentTabs tournament={tournamentRecord} tabIndex={tabIndex} />
       </Grid>
@@ -102,9 +45,10 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
   );
 
   const handleLogoClick = () => {
-    showCalendar();
     history.push('/');
   };
+
+  if (!tournamentRecord) return null;
 
   return (
     <>
@@ -132,7 +76,7 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
           </Grid>
         </Grid>
 
-        <Grid item>
+        <Grid item style={{ width: 200 }}>
           <ProviderLogo onClick={handleLogoClick} />
         </Grid>
       </Grid>

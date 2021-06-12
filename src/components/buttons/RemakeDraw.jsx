@@ -1,12 +1,13 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, Dialog, DialogTitle, DialogActions, DialogContent, TextField } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export const RemakeDrawModal = (props) => {
   const { drawId, open, setOpen } = props;
@@ -15,7 +16,11 @@ export const RemakeDrawModal = (props) => {
   const dispatch = useDispatch();
   const defaultValues = { description: '' };
   const validationSchema = Yup.object().shape({ description: Yup.string().required() });
-  const { register, setValue, handleSubmit, errors } = useForm({ validationSchema, defaultValues, mode: 'onBlur' });
+  const { setValue, control, handleSubmit } = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues,
+    mode: 'onBlur'
+  });
 
   const onSubmit = (auditData) => {
     setOpen(false);
@@ -25,6 +30,8 @@ export const RemakeDrawModal = (props) => {
     });
   };
 
+  const onClickX = () => setValue('description', '');
+
   return (
     <>
       <Dialog disableBackdropClick={false} open={open} maxWidth={'md'} onClose={() => setOpen(false)}>
@@ -32,31 +39,32 @@ export const RemakeDrawModal = (props) => {
           <div style={{ minWidth: 400 }}>Remake Draw?</div>
         </DialogTitle>
         <DialogContent>
-          <TextField
-            required
-            fullWidth
-            autoFocus
-            name={'description'}
-            variant="outlined"
-            inputRef={register}
-            label={'Description'}
-            placeholder={'Reason for re-making draw...'}
-            helperText={errors.description && <span style={{ color: 'red' }}>Required</span>}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="clear input field"
-                    onClick={() => {
-                      setValue('description', '');
-                    }} // clear input field
-                    edge="end"
-                  >
-                    <ClearIcon />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
+          <Controller
+            name="description"
+            control={control}
+            render={({ field: { onChange, value }, formState: { errors } }) => (
+              <TextField
+                required
+                fullWidth
+                autoFocus
+                value={value}
+                id="description"
+                variant="outlined"
+                label={'Description'}
+                onChange={onChange}
+                placeholder={'Reason for re-making draw...'}
+                helperText={errors.description && <span style={{ color: 'red' }}>Required</span>}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton aria-label="clear input field" onClick={onClickX} edge="end">
+                        <ClearIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            )}
           />
         </DialogContent>
         <DialogActions style={{ marginBottom: '1em', paddingRight: '1em' }}>

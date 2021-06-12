@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import DraggableCell from 'components/tables/EndlessTable/DraggableCell';
 import { DropTypeEnum } from 'components/tables/EndlessTable/typedefs';
 import { useStyles } from 'components/tables/EndlessTable/styles';
-import { useCombinedRefs } from 'components/hooks/useCombinedRefs';
+import { useCombinedRefs } from 'hooks/useCombinedRefs';
 import { DEFAULT_ROW_SIZE } from 'components/tables/EndlessTable/constants';
 
 const DraggableRow = ({

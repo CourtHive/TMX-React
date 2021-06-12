@@ -18,7 +18,6 @@ export const storeInitialState = () => ({
 
   // tournament
   records: {},
-  saveCount: 0,
   selectedTournamentId: null,
 
   // scoring
@@ -32,9 +31,8 @@ export const storeInitialState = () => ({
   keyLoads: 0,
   drawResize: 0,
 
-  dbLoaded: false,
   authState: false,
-  editState: false,
+  editState: true,
   loginModal: false,
   loadingState: false,
   pubAction: undefined,

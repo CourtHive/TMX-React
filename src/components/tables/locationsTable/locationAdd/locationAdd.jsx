@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useStyles } from './style.js';
 
@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { Grid, Button, Typography } from '@material-ui/core';
 
 import { utilities } from 'tods-competition-factory';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export function LocationAdd(props) {
   const classes = useStyles();
@@ -15,7 +16,14 @@ export function LocationAdd(props) {
 
   const { addLocation, cancel } = props;
 
-  const { register, handleSubmit, formState, errors } = useForm({ validationSchema, mode: 'onBlur' });
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    mode: 'onBlur'
+  });
 
   const onSubmit = (data) => {
     const courts = utilities.generateRange(0, data.courts).map((index) => {
@@ -56,30 +64,59 @@ export function LocationAdd(props) {
             <Grid container direction="row" justify="space-between">
               <Typography variant="h5">{t('Location Details')}</Typography>
             </Grid>
-            <TextField
+            <Controller
               name="venueName"
-              required
-              inputRef={register}
-              error={Boolean(errors.venueName)}
-              helperText={errors.venueName && errors.venueName.message}
-              label={t('teams.name')}
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  required
+                  className={classes.editField}
+                  id="venueName"
+                  label={t('teams.name')}
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error?.message}
+                />
+              )}
             />
-            <TextField
+            <Controller
               name="abbreviation"
-              inputRef={register}
-              error={Boolean(errors.abbreviation)}
-              helperText={errors.abbreviation && errors.abbreviation.message}
-              label={t('teams.abbreviation')}
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  required
+                  className={classes.editField}
+                  id="abbreviation"
+                  label={t('teams.abbreviation')}
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error?.message}
+                />
+              )}
             />
-            <TextField
+            <Controller
               name="courts"
-              inputRef={register}
-              error={Boolean(errors.courts)}
-              helperText={errors.courts && errors.courts.message}
-              label={t('Courts')}
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextField
+                  required
+                  className={classes.editField}
+                  id="courts"
+                  label={t('Courts')}
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error && 'Must be number greater than 0'}
+                />
+              )}
             />
             <Grid container justify="center" alignItems="center">
-              {formState.dirty ? <Submit /> : <Close />}
+              {isDirty ? <Submit /> : <Close />}
             </Grid>
           </Grid>
         </Grid>
