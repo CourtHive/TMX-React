@@ -15,4 +15,6 @@ export const useLoadTournament = (tournament, tournamentId) => {
   if (tournamentRecord) {
     tmxStore.dispatch({ type: 'change tournament', payload: tournamentRecord });
   }
+
+  return tournament || tournamentRecord;
 };
