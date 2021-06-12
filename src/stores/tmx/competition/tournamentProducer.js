@@ -59,7 +59,6 @@ const invokeTournamentEngine = (state, action) =>
       });
 
     if (modifications) {
-      console.log('saveTrigger');
       const { tournamentRecord } = tournamentEngine.getState();
       draftState.records[tournamentId] = tournamentRecord;
       ++draftState.saveCount;

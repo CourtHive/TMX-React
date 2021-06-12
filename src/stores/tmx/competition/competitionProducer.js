@@ -26,14 +26,15 @@ const invokeCompetitionEngine = (state, action) =>
 
       if (result) {
         if (result.success) {
+          /*
           const { tournamentIds } = Object.keys(tournamentRecords);
           context.ee.emit('emitTmx', {
             action: 'competitionEngineMethod',
             payload: { tournamentIds, method, payload: action.payload }
           });
+          */
 
           draftState.records = competitionEngine.getState();
-          console.log('competitionEngine saveTrigger');
           ++draftState.saveCount;
         } else if (result.error) {
           const payload = { icon: 'error', severity: 'warning', message: result.error };
