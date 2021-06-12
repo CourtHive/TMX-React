@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useImage } from 'react-image';
+// import { useImage } from 'react-image';
 import { useStyles } from './style';
 
 import { useForm } from 'react-hook-form';
 import { validationSchema } from './validation';
-import TextField from '@material-ui/core/TextField';
 import { Grid, Button, Typography } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ControlledTextField } from 'components/ControlledTextField';
 
 const LOGO = 'Logo';
 
@@ -29,17 +29,17 @@ export function TeamEdit(props) {
   };
 
   const {
-    register,
+    control,
     handleSubmit,
-    getValues,
-    formState: { errors, isDirty }
+    //getValues,
+    formState: { isDirty }
   } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onBlur'
   });
 
-  const [logoLink, setLogoLink] = useState(teamLogoLink);
+  // const [logoLink, setLogoLink] = useState(teamLogoLink);
   const onSubmit = (data) => {
     const updatedParticipant = Object.assign({}, teamParticipant);
     updatedParticipant.participantName = data.participantName;
@@ -76,6 +76,7 @@ export function TeamEdit(props) {
     );
   };
 
+  /*
   const handleLogoKeyDown = (event) => {
     if (event.key === 'Enter') {
       handleLogoBlur();
@@ -96,6 +97,7 @@ export function TeamEdit(props) {
 
     return error ? null : <img width={imageWidth} height="auto" src={src} alt="teamLogo" />;
   }
+  */
 
   if (!teamParticipant) return null;
   return (
@@ -105,43 +107,11 @@ export function TeamEdit(props) {
           <Grid container justify="flex-start" direction="column">
             <Grid container direction="row" justify="space-between">
               <Typography variant="h5">{t('Team Details')}</Typography>
-              <TeamLogo srcList={logoLink} imageWidth={50} />
             </Grid>
-            <TextField
-              name="participantName"
-              required
-              inputRef={register}
-              error={Boolean(errors.participantName)}
-              helperText={errors.participantName && errors.participantName.message}
-              label={t('teams.name')}
-              defaultValue={defaultValues.participantName}
-            />
-            <TextField
-              name="abbreviation"
-              inputRef={register}
-              error={Boolean(errors.abbreviation)}
-              helperText={errors.abbreviation && errors.abbreviation.message}
-              label={t('teams.abbreviation')}
-              defaultValue={defaultValues.otherName}
-            />
-            <TextField
-              name="code"
-              inputRef={register}
-              error={Boolean(errors.code)}
-              helperText={errors.code && errors.code.message}
-              label={t('teams.code')}
-              defaultValue={defaultValues.code}
-            />
-            <TextField
-              name="logoLink"
-              inputRef={register}
-              error={Boolean(errors.logoLink)}
-              helperText={errors.logoLink && errors.logoLink.message}
-              label={t('Team Logo (URL)')}
-              defaultValue={defaultValues.logoLink}
-              onKeyDown={handleLogoKeyDown}
-              onBlur={handleLogoBlur}
-            />
+            <ControlledTextField control={control} name={'participantName'} label={t('teams.name')} />
+            <ControlledTextField control={control} name={'abbreviation'} label={t('teams.abbreviation')} />
+            <ControlledTextField control={control} name={'code'} label={t('teams.code')} />
+            <ControlledTextField control={control} name={'logoLink'} label={t('Team Logo (URL)')} />
             <Grid container justify="center" alignItems="center">
               {isDirty ? <Submit /> : <Close />}
             </Grid>
@@ -151,3 +121,15 @@ export function TeamEdit(props) {
     </div>
   );
 }
+// <TeamLogo srcList={logoLink} imageWidth={50} />
+/*
+            <TextField
+              name="logoLink"
+              inputRef={register}
+              error={Boolean(errors.logoLink)}
+              helperText={errors.logoLink && errors.logoLink.message}
+              label={t('Team Logo (URL)')}
+              defaultValue={defaultValues.logoLink}
+              onKeyDown={handleLogoKeyDown}
+              onBlur={handleLogoBlur}
+*/
