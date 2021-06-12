@@ -4,6 +4,9 @@ import { TournamentRoot } from 'components/tournament/TournamentRoot';
 import { useLoadTournament } from 'hooks/useLoadTournament';
 import { useSelector } from 'react-redux';
 
+import { CircularProgress } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+
 const TournamentPage = (props) => {
   const { tabIndex, match } = props;
 
@@ -17,7 +20,9 @@ const TournamentPage = (props) => {
   return dbLoaded && tournamentRecord ? (
     <TournamentRoot tournamentRecord={tournamentRecord} tabIndex={tabIndex} params={match?.params} />
   ) : (
-    <>No Tournament</>
+    <Grid alignItems="center" container justify="center">
+      <CircularProgress size={100} />
+    </Grid>
   );
 };
 
