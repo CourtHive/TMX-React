@@ -35,7 +35,6 @@ const invokeCompetitionEngine = (state, action) =>
           */
 
           draftState.records = competitionEngine.getState();
-          ++draftState.saveCount;
         } else if (result.error) {
           const payload = { icon: 'error', severity: 'warning', message: result.error };
           setToasterState({ draftState, payload });

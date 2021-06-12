@@ -7,6 +7,7 @@ import { setToasterState } from '../primitives/toasterState';
 import { isDev } from 'functions/isDev';
 
 import { tournamentEngine } from 'tods-competition-factory';
+import { save } from 'services/storage/save';
 
 /*
   // EXAMPLE use pattern:
@@ -61,8 +62,9 @@ const invokeTournamentEngine = (state, action) =>
     if (modifications) {
       const { tournamentRecord } = tournamentEngine.getState();
       draftState.records[tournamentId] = tournamentRecord;
-      ++draftState.saveCount;
+      save.local({ tournament: tournamentRecord });
     }
+    if (isDev()) console.log({ methods, modifications });
 
     if (errors.length) {
       console.log({ errors });
@@ -97,7 +99,6 @@ const clearTournament = (state) =>
   produce(state, (draftState) => {
     tournamentEngine.reset();
     draftState.records = {};
-    draftState.saveCount = 0;
     draftState.selectedTournamentId = null;
   });
 

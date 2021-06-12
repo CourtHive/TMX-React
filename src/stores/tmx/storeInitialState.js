@@ -18,7 +18,6 @@ export const storeInitialState = () => ({
 
   // tournament
   records: {},
-  saveCount: 0,
   selectedTournamentId: null,
 
   // scoring

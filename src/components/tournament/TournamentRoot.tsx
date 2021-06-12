@@ -14,7 +14,6 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import { useStyles } from 'components/tournament/styles';
 
 import { MainMenuButton } from 'components/buttons/MainMenuButton';
-import { useSaveTrigger } from 'components/hooks/useSaveTrigger';
 import TournamentTabsContent from 'components/tournament/TournamentTabsContent';
 import { TournamentTabs } from 'components/tournament/TournamentTabs';
 import ProviderLogo from 'components/ProviderLogo';
@@ -53,8 +52,6 @@ export function TournamentRoot({ tournamentRecord, tabIndex, params }) {
       }
     }, 500);
   };
-
-  useSaveTrigger();
 
   const tournamentName = tournamentRecord?.tournamentName || t('trn');
 

@@ -6,6 +6,7 @@ export const save = (function () {
   let timeoutId = null;
 
   fx.local = ({ tournament } = {}) => {
+    console.log('save !!');
     if (!tournament) {
       console.log('no tournament');
       return;

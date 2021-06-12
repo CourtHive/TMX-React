@@ -9,8 +9,11 @@ import { useSelector } from 'react-redux';
 const TournamentPage = (props) => {
   const { tabIndex, match } = props;
 
+  // optionally leave this to useLoadTournament and only pass tournamentId
   const selectedTournamentId = useSelector((state) => state.tmx.selectedTournamentId);
   const selectedTournament = useSelector((state) => state.tmx.records[selectedTournamentId]);
+
+  console.log({ selectedTournament });
 
   const tournamentId = match?.params?.tournamentId;
   const loadedTournament = useLoadTournament(selectedTournament, tournamentId);
