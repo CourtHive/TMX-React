@@ -14,8 +14,6 @@ const TournamentPage = (props) => {
 
   useLoadTournament(tournamentRecord, tournamentId);
 
-  console.log({ tournamentRecord });
-
   return dbLoaded && tournamentRecord ? (
     <TournamentRoot tournamentRecord={tournamentRecord} tabIndex={tabIndex} params={match?.params} />
   ) : (
