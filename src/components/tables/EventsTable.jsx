@@ -276,7 +276,7 @@ export function EventsTable(props) {
     },
     {
       key: 'participants',
-      getTitle: () => ({ node: t('pyr'), className: classes.countColumn }),
+      getTitle: () => ({ node: 'Participants', className: classes.countColumn }),
       getValue: (row) => ({ node: row.participants }),
       hidden: () => isHidden('participants')
     },
