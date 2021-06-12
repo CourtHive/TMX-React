@@ -11,12 +11,12 @@ import { Tooltip, Toolbar, IconButton } from '@material-ui/core';
 import LoadFile from '@material-ui/icons/Publish';
 
 import { importTournamentRecord, saveNewTournament } from 'functions/tournament/tournament';
-//import { ControlledSelector } from 'components/selectors/ControlledSelector';
+import { ControlledSelector } from 'components/selectors/ControlledSelector';
 
-import { utilities } from 'tods-competition-factory';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-//import { yupResolver } from '@hookform/resolvers/yup';
+
+import { utilities, surfaceConstants, venueConstants } from 'tods-competition-factory';
 const { formatDate } = utilities.dateTime;
 
 export function EditTournamentDrawer() {
@@ -39,34 +39,18 @@ export function EditTournament(props) {
 
   const defaultValues = {
     tournamentName: t('tournaments.new'),
-    indoorOutdoor: 'o',
-    surfaceCategory: 'H',
+    indoorOutdoor: venueConstants.OUTDOOR,
+    surfaceCategory: surfaceConstants.CLAY,
     startDate: new Date(),
     endDate: new Date()
   };
-  const {
-    // register,
-    handleSubmit,
-    control,
-    watch,
-    setValue,
-    formState: { errors }
-  } = useForm({
+  const { handleSubmit, control, watch, setValue } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
   });
   const { startDate: currentStart, endDate: currentEnd } = watch();
   if (currentEnd < currentStart) setValue('endDate', currentStart);
-
-  console.log({ errors, currentStart, currentEnd });
-
-  /*
-  useEffect(() => {
-    register({ name: 'indoorOutdoor' });
-    register({ name: 'surfaceCategory' });
-  }, [register]);
-  */
 
   const SubmitButton = (props) => {
     const { className, id } = props;
@@ -94,18 +78,17 @@ export function EditTournament(props) {
     callback();
   };
 
-  /*
   const inOutOptions = [
-    { text: t('indoors'), value: 'i' },
-    { text: t('outdoors'), value: 'o' }
+    { text: t('indoors'), value: venueConstants.INDOOR },
+    { text: t('outdoors'), value: venueConstants.OUTDOOR }
   ];
   const surfaceOptions = [
-    { text: t('surfaces.clay'), value: 'C' },
-    { text: t('surfaces.hard'), value: 'H' },
-    { text: t('surfaces.grass'), value: 'G' },
-    { text: t('surfaces.carpet'), value: 'R' }
+    { text: t('surfaces.clay'), value: surfaceConstants.CLAY },
+    { text: t('surfaces.hard'), value: surfaceConstants.HARD },
+    { text: t('surfaces.grass'), value: surfaceConstants.GRASS },
+    { text: t('surfaces.carpet'), value: surfaceConstants.CARPET },
+    { text: t('surfaces.artificial'), value: surfaceConstants.ARTIFICIAL }
   ];
-  */
 
   return (
     <div className={classes.editPanel}>
@@ -131,7 +114,7 @@ export function EditTournament(props) {
               value={value}
               onChange={onChange}
               error={!!error}
-              helperText={error ? error.message : null}
+              helperText={error ? 'Tournament Name is required' : null}
             />
           )}
         />
@@ -171,24 +154,7 @@ export function EditTournament(props) {
             />
           )}
         />
-        <Grid container direction="row">
-          <div className={classes.grow} />
-          <SubmitButton id="submitNewTournament" className={classes.submit} />
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
 
-/*
-        <ControlledSelector
-          defaultValue={defaultValues.indoorOutdoor}
-          name="indoorOutdoor"
-          control={control}
-          options={inOutOptions}
-          label={t('indoorOutdoor')}
-          id="tournamentInOut"
-        />
         <ControlledSelector
           defaultValue={defaultValues.surfaceCategory}
           name="surfaceCategory"
@@ -197,4 +163,21 @@ export function EditTournament(props) {
           label={t('events.surfaceCategory')}
           id="tournamentSurface"
         />
-        */
+
+        <ControlledSelector
+          defaultValue={defaultValues.indoorOutdoor}
+          name="indoorOutdoor"
+          control={control}
+          options={inOutOptions}
+          label={t('indoorOutdoor')}
+          id="tournamentInOut"
+        />
+
+        <Grid container direction="row">
+          <div className={classes.grow} />
+          <SubmitButton id="submitNewTournament" className={classes.submit} />
+        </Grid>
+      </Grid>
+    </div>
+  );
+}

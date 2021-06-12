@@ -1,5 +1,5 @@
 import React from 'react';
-//import { Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,7 +10,7 @@ import TMXSelect from 'components/selectors/tmxSelector/TMXSelect';
 
 export const ControlledSelector = (props) => {
   const classes = useStyles();
-  const { override = 'formControl', items, options, label, /*control, name,*/ onChange, id } = props;
+  const { override = 'formControl', items, options, label, control, name, id, defaultValue } = props;
   if (!items && (!options || !options.length)) return '';
   const menuItems =
     items ||
@@ -21,11 +21,23 @@ export const ControlledSelector = (props) => {
     ));
 
   return (
-    <FormControl variant="standard" className={classes[override]}>
-      <InputLabel> {label} </InputLabel>
-      <TMXSelect autoWidth={true} onChange={onChange} className={classes.selectEmpty} id={id}>
-        {menuItems}
-      </TMXSelect>
-    </FormControl>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field: { onChange } }) => (
+        <FormControl variant="standard" className={classes[override]}>
+          <InputLabel> {label} </InputLabel>
+          <TMXSelect
+            id={id}
+            autoWidth={true}
+            onChange={onChange}
+            defaultValue={defaultValue}
+            className={classes.selectEmpty}
+          >
+            {menuItems}
+          </TMXSelect>
+        </FormControl>
+      )}
+    />
   );
 };
