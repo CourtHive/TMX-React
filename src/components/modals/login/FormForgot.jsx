@@ -26,7 +26,7 @@ export const FormForgot = ({ formChange }) => {
     control,
     handleSubmit,
     watch,
-    triggerValidation,
+    trigger,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -99,7 +99,7 @@ export const FormForgot = ({ formChange }) => {
               label="Email"
               autoComplete={'email'}
               onChange={async () => {
-                await triggerValidation('email');
+                await trigger('email');
               }}
               helperText={errors.email && 'Must be valid email'}
               FormHelperTextProps={{ style: { color: 'red' } }}

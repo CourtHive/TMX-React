@@ -7,6 +7,7 @@ import { Button, Dialog, DialogTitle, DialogActions, DialogContent, TextField } 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export const RemakeDrawModal = (props) => {
   const { drawId, open, setOpen } = props;
@@ -15,7 +16,16 @@ export const RemakeDrawModal = (props) => {
   const dispatch = useDispatch();
   const defaultValues = { description: '' };
   const validationSchema = Yup.object().shape({ description: Yup.string().required() });
-  const { register, setValue, handleSubmit, errors } = useForm({ validationSchema, defaultValues, mode: 'onBlur' });
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues,
+    mode: 'onBlur'
+  });
 
   const onSubmit = (auditData) => {
     setOpen(false);
@@ -41,7 +51,7 @@ export const RemakeDrawModal = (props) => {
             inputRef={register}
             label={'Description'}
             placeholder={'Reason for re-making draw...'}
-            helperText={errors.description && <span style={{ color: 'red' }}>Required</span>}
+            helperText={errors?.description && <span style={{ color: 'red' }}>Required</span>}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

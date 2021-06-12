@@ -17,6 +17,7 @@ import { getStatusGroup } from 'functions/events';
 import { validRoundRobinGroupSize } from 'functions/draws';
 
 import { utilities } from 'tods-competition-factory';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export function EditDrawDrawer(props) {
   const { callback, selectedEvent } = props;
@@ -58,7 +59,7 @@ export function NewDraw(props) {
     groupSize: 4
   };
   const { control, register, getValues, setValue, watch, handleSubmit } = useForm({
-    validationSchema,
+    resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
   });
@@ -68,7 +69,8 @@ export function NewDraw(props) {
     { text: t('adr'), value: 'automated' }
   ];
 
-  const selectedStructure = watch('drawType', 'SINGLE_ELIMINATION');
+  // const selectedStructure = watch('drawType', 'SINGLE_ELIMINATION');
+  const { drawType: selectedStructure } = watch() || 'SINGLE_ELIMINATION';
   const defaultDrawSize = selectedStructure === 'DOUBLE_ELIMINATION' ? '12' : defaultValues.drawSize;
 
   const structureOptions = getStructureOptions();
@@ -77,7 +79,8 @@ export function NewDraw(props) {
     setValue('drawType', firstOption);
   }
 
-  const groupSize = watch('groupSize', 4);
+  // const groupSize = watch('groupSize', 4);
+  const { groupSize } = watch() || 4;
   const minimumGroups = Math.ceil(approved.length / groupSize);
   const maximumGroups = Math.floor(approved.length / (groupSize - 1));
   const groupsRange = utilities.generateRange(minimumGroups, maximumGroups + 1);
@@ -93,7 +96,8 @@ export function NewDraw(props) {
     }
   }
 
-  const drawSize = watch('drawSize', 32);
+  // const drawSize = watch('drawSize', 32);
+  const { drawSize } = watch() || 32;
   const seedRange = getSeedRange({ drawSize, selectedStructure });
   if (seedRange.indexOf(seedsCount) < 0) {
     setValue('seedsCount', seedRange[0]);

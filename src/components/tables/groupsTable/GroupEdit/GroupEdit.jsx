@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { validationSchema } from './validation';
 import TextField from '@material-ui/core/TextField';
 import { Grid, Button, Typography } from '@material-ui/core';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const LOGO = 'Logo';
 
@@ -26,8 +27,14 @@ export function GroupEdit(props) {
     logoLink: groupLogoLink
   };
 
-  const { register, handleSubmit, formState, getValues, errors } = useForm({
-    validationSchema,
+  const {
+    register,
+    handleSubmit,
+    formState,
+    getValues,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onBlur'
   });

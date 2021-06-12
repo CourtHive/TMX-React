@@ -43,7 +43,9 @@ export const SwapDrawPosition = () => {
             return Yup.mixed().notRequired();
         })
     });
-    const { register, setValue, handleSubmit, errors } = useForm({ validationSchema, defaultValues, mode: 'onChange' });
+    const { register, setValue, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(validationSchema),
+        defaultValues, mode: 'onChange' });
 
     const onSubmit = data => {
         const { new_position } = data;

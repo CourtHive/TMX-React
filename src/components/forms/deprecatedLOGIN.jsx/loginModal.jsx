@@ -19,6 +19,7 @@ import { displayTournament } from 'functions/tournament/tournamentDisplay';
 
 import { getJwtTokenStorageKey } from 'config/localStorage';
 import { validateToken } from 'services/authentication/actions';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const JWT_TOKEN_STORAGE_NAME = getJwtTokenStorageKey();
 
@@ -29,11 +30,12 @@ export const Login = () => {
   const defaultValues = { emailAddress: '', paassword: '', remember: '' };
   const loginModal = useSelector((state) => state.tmx.loginModal);
 
-  const { register, handleSubmit, watch, errors, formState } = useForm({
-    validationSchema,
+  const { register, handleSubmit, watch, formState } = useForm({
+    resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onBlur'
   });
+  const { errors } = formState || {};
   const cancelAction = () => {
     dispatch({ type: 'login modal', payload: false });
   };
@@ -69,7 +71,7 @@ export const Login = () => {
       AppToaster.show({ icon: 'error', intent: 'error', message: error });
     }
   };
-  const password = watch('password');
+  const { password } = watch();
   // const validToSubmit = Boolean(!formState.dirty || errors.emailAddress || errors.password || !password || password.length < 8);
   const validToSubmit = Boolean(
     !formState.dirty || errors.emailAddress || errors.password || !password || password.length < 1

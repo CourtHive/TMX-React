@@ -10,6 +10,7 @@ import { useStyles } from './style';
 import { ControlledSelector } from 'components/selectors/ControlledSelector';
 
 import { utilities, tournamentEngine } from 'tods-competition-factory';
+import { yupResolver } from '@hookform/resolvers/yup';
 const { offsetDate } = utilities.dateTime;
 
 export function EditEventDrawer() {
@@ -55,12 +56,11 @@ export function EditEvent(props) {
   };
 
   const { control, register, handleSubmit, setValue, watch } = useForm({
-    validationSchema,
+    resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
   });
-  const currentStart = watch('startDate');
-  const currentEnd = watch('endDate');
+  const { startDate: currentStart, endDate: currentEnd } = watch();
   if (currentEnd < currentStart) setValue('endDate', currentStart);
 
   // let ratingRange = [0, 40];

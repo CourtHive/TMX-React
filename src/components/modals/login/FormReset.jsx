@@ -27,7 +27,7 @@ export const FormReset = ({ formChange, email }) => {
     control,
     handleSubmit,
     watch,
-    triggerValidation,
+    trigger,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -97,7 +97,7 @@ export const FormReset = ({ formChange, email }) => {
               variant="outlined"
               label="Code"
               onChange={async () => {
-                await triggerValidation('code');
+                await trigger('code');
               }}
               helperText={errors.code && 'Must be valid code'}
               FormHelperTextProps={{ style: { color: 'red' } }}
@@ -118,7 +118,7 @@ export const FormReset = ({ formChange, email }) => {
               variant="outlined"
               label="New Password"
               onChange={async () => {
-                await triggerValidation('newpassword');
+                await trigger('newpassword');
               }}
               helperText={errors.newpassword && '8 Characters Minimum'}
               FormHelperTextProps={{ style: { color: 'red' } }}

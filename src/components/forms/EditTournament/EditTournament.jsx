@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useForm, Controller } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { Drawer, Grid, Button, TextField } from '@material-ui/core';
 import { DatePicker } from '@material-ui/pickers';
@@ -12,9 +11,12 @@ import { Tooltip, Toolbar, IconButton } from '@material-ui/core';
 import LoadFile from '@material-ui/icons/Publish';
 
 import { importTournamentRecord, saveNewTournament } from 'functions/tournament/tournament';
-import { ControlledSelector } from 'components/selectors/ControlledSelector';
+//import { ControlledSelector } from 'components/selectors/ControlledSelector';
 
 import { utilities } from 'tods-competition-factory';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+//import { yupResolver } from '@hookform/resolvers/yup';
 const { formatDate } = utilities.dateTime;
 
 export function EditTournamentDrawer() {
@@ -42,18 +44,29 @@ export function EditTournament(props) {
     startDate: new Date(),
     endDate: new Date()
   };
-  const { control, register, handleSubmit, watch, setValue, errors } = useForm({
-    validationSchema,
+  const {
+    // register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
   });
-  const currentStart = watch('startDate');
-  const currentEnd = watch('endDate');
+  const { startDate: currentStart, endDate: currentEnd } = watch();
   if (currentEnd < currentStart) setValue('endDate', currentStart);
+
+  console.log({ errors, currentStart, currentEnd });
+
+  /*
   useEffect(() => {
     register({ name: 'indoorOutdoor' });
     register({ name: 'surfaceCategory' });
   }, [register]);
+  */
 
   const SubmitButton = (props) => {
     const { className, id } = props;
@@ -81,6 +94,7 @@ export function EditTournament(props) {
     callback();
   };
 
+  /*
   const inOutOptions = [
     { text: t('indoors'), value: 'i' },
     { text: t('outdoors'), value: 'o' }
@@ -91,6 +105,7 @@ export function EditTournament(props) {
     { text: t('surfaces.grass'), value: 'G' },
     { text: t('surfaces.carpet'), value: 'R' }
   ];
+  */
 
   return (
     <div className={classes.editPanel}>
@@ -103,38 +118,69 @@ export function EditTournament(props) {
             </IconButton>
           </Tooltip>
         </Toolbar>
-        <TextField
+        <Controller
           name="tournamentName"
-          required
-          inputRef={register}
-          helperText={errors.tournamentName && 'Required'}
-          label={t('nm')}
-          className={classes.editField}
-          id="customTournamentName"
+          control={control}
+          defaultValue=""
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <TextField
+              required
+              className={classes.editField}
+              id="customTournamentName"
+              label={t('nm')}
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={error ? error.message : null}
+            />
+          )}
         />
         <Controller
-          autoOk
           name="startDate"
           control={control}
-          variant="inline"
-          format="yyyy-MM-dd"
-          label={t('start')}
-          className={classes.editField}
-          id="tournamentStartDate"
-          as={<DatePicker />}
+          defaultValue=""
+          rules={{ required: 'Date is required' }}
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              autoOk
+              variant="inline"
+              format="yyyy-MM-dd"
+              label={t('start')}
+              className={classes.editField}
+              id="tournamentStartDate"
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
         <Controller
-          autoOk
           name="endDate"
           control={control}
-          variant="inline"
-          format="yyyy-MM-dd"
-          label={t('end')}
-          className={classes.editField}
-          id="tournamentEndDate"
-          minDate={currentStart}
-          as={<DatePicker />}
+          defaultValue=""
+          rules={{ required: 'Date is required' }}
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              autoOk
+              variant="inline"
+              format="yyyy-MM-dd"
+              label={t('end')}
+              className={classes.editField}
+              id="tournamentEndDate"
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
+        <Grid container direction="row">
+          <div className={classes.grow} />
+          <SubmitButton id="submitNewTournament" className={classes.submit} />
+        </Grid>
+      </Grid>
+    </div>
+  );
+}
+
+/*
         <ControlledSelector
           defaultValue={defaultValues.indoorOutdoor}
           name="indoorOutdoor"
@@ -151,11 +197,4 @@ export function EditTournament(props) {
           label={t('events.surfaceCategory')}
           id="tournamentSurface"
         />
-        <Grid container direction="row">
-          <div className={classes.grow} />
-          <SubmitButton id="submitNewTournament" className={classes.submit} />
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
+        */

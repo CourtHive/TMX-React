@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { validationSchema } from './validation';
 import TextField from '@material-ui/core/TextField';
 import { Grid, Button, Typography } from '@material-ui/core';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const LOGO = 'Logo';
 
@@ -27,8 +28,13 @@ export function TeamEdit(props) {
     logoLink: teamLogoLink
   };
 
-  const { register, handleSubmit, formState, getValues, errors } = useForm({
-    validationSchema,
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, dirty }
+  } = useForm({
+    resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onBlur'
   });
@@ -137,7 +143,7 @@ export function TeamEdit(props) {
               onBlur={handleLogoBlur}
             />
             <Grid container justify="center" alignItems="center">
-              {formState.dirty ? <Submit /> : <Close />}
+              {dirty ? <Submit /> : <Close />}
             </Grid>
           </Grid>
         </Grid>

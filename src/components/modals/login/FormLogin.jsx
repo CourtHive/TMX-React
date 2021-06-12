@@ -43,7 +43,7 @@ export const FormLogin = ({ enableKeys, rememberMe, providers, formChange }) => 
     control,
     handleSubmit,
     watch,
-    triggerValidation,
+    trigger,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -163,7 +163,7 @@ export const FormLogin = ({ enableKeys, rememberMe, providers, formChange }) => 
               label="Email"
               autoComplete={'email'}
               onChange={async () => {
-                await triggerValidation('email');
+                await trigger('email');
               }}
               helperText={errors.email && 'Must be valid email'}
               FormHelperTextProps={{ style: { color: 'red' } }}
@@ -185,7 +185,7 @@ export const FormLogin = ({ enableKeys, rememberMe, providers, formChange }) => 
               variant="outlined"
               label="Password"
               onChange={async () => {
-                await triggerValidation('password');
+                await trigger('password');
               }}
               autoComplete={'current-password'}
               helperText={errors.password && '8 Characters Minimum'}
