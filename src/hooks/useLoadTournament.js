@@ -5,13 +5,12 @@ import { tmxStore } from 'stores/tmxStore';
 
 export const useLoadTournament = (tournament, tournamentId) => {
   const [tournamentRecord, setTournamentRecord] = useState();
-  const dbLoaded = tmxStore.getState().tmx.dbLoaded;
   useEffect(() => {
-    if (tournamentId && dbLoaded && !tournament) {
+    if (tournamentId && !tournament) {
       const error = () => console.log('oops');
       db.findTournament(tournamentId).then(setTournamentRecord, error);
     }
-  }, [tournament, tournamentId, dbLoaded]);
+  }, [tournament, tournamentId]);
 
   if (tournamentRecord) {
     tmxStore.dispatch({ type: 'change tournament', payload: tournamentRecord });
