@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useImage } from 'react-image';
+//import { useImage } from 'react-image';
 import { useStyles } from './style';
 
 import { useForm } from 'react-hook-form';
 import { validationSchema } from './validation';
-import TextField from '@material-ui/core/TextField';
+//import TextField from '@material-ui/core/TextField';
 import { Grid, Button, Typography } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ControlledTextField } from 'components/ControlledTextField';
 
 const LOGO = 'Logo';
 
@@ -28,18 +29,17 @@ export function GroupEdit(props) {
   };
 
   const {
-    register,
+    control,
     handleSubmit,
-    formState,
-    getValues,
-    formState: { errors }
+    formState
+    //    getValues,
   } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onBlur'
   });
 
-  const [logoLink, setLogoLink] = useState(groupLogoLink);
+  //  const [logoLink, setLogoLink] = useState(groupLogoLink);
   const onSubmit = (data) => {
     const updatedParticipant = Object.assign({}, groupParticipant);
     updatedParticipant.name = data.name;
@@ -75,6 +75,7 @@ export function GroupEdit(props) {
     );
   };
 
+  /*
   const handleLogoKeyDown = (event) => {
     if (event.key === 'Enter') {
       handleLogoBlur();
@@ -95,6 +96,7 @@ export function GroupEdit(props) {
 
     return error ? null : <img width={imageWidth} height="auto" src={src} alt="GroupLogo" />;
   }
+  */
 
   if (!groupParticipant) return null;
   return (
@@ -104,25 +106,21 @@ export function GroupEdit(props) {
           <Grid container justify="flex-start" direction="column">
             <Grid container direction="row" justify="space-between">
               <Typography variant="h5">{t('Group Details')}</Typography>
-              <GroupLogo srcList={logoLink} imageWidth={50} />
             </Grid>
-            <TextField
-              name="name"
-              required
-              inputRef={register}
-              error={Boolean(errors.name)}
-              helperText={errors.name && errors.name.message}
-              label={t('teams.name')}
-              defaultValue={defaultValues.name}
-            />
-            <TextField
-              name="abbreviation"
-              inputRef={register}
-              error={Boolean(errors.abbreviation)}
-              helperText={errors.abbreviation && errors.abbreviation.message}
-              label={t('teams.abbreviation')}
-              defaultValue={defaultValues.otherName}
-            />
+            <ControlledTextField control={control} name={'name'} label={t('teams.name')} />
+            <ControlledTextField control={control} name={'abbreviation'} label={t('teams.name')} />
+            <ControlledTextField control={control} name={'logoLink'} label={t('Team Logo (URL)')} />
+            <Grid container justify="center" alignItems="center">
+              {formState.isDirty ? <Submit /> : <Close />}
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}
+/*
+              <GroupLogo srcList={logoLink} imageWidth={50} />
             <TextField
               name="logoLink"
               inputRef={register}
@@ -133,12 +131,4 @@ export function GroupEdit(props) {
               onKeyDown={handleLogoKeyDown}
               onBlur={handleLogoBlur}
             />
-            <Grid container justify="center" alignItems="center">
-              {formState.isDirty ? <Submit /> : <Close />}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
+*/
