@@ -9,7 +9,7 @@ import { useStyles } from './style';
 
 import { ControlledSelector } from 'components/selectors/ControlledSelector';
 
-import { utilities, tournamentEngine } from 'tods-competition-factory';
+import { utilities, tournamentEngine, surfaceConstants, venueConstants } from 'tods-competition-factory';
 import { yupResolver } from '@hookform/resolvers/yup';
 const { offsetDate } = utilities.dateTime;
 
@@ -42,20 +42,22 @@ export function EditEvent(props) {
   const defaultCategory = tournamentCategories[0];
   const categoryOptions = tournamentCategoryNames.map((c) => ({ text: c, value: c }));
 
-  const surfaceCategory = (tournamentRecord.surfaceCategory || 'H')[0];
+  const surfaceCategory = tournamentRecord.surfaceCategory || surfaceConstants.CLAY;
   const defaultValues = {
     eventName: '',
     eventLevel: '',
     gender: 'X',
+    // category: { ratingMin: 20, ratingMax: 30 },
+    category: defaultCategory,
     eventType: 'SINGLES',
-    indoorOutdoor: tournamentRecord.indoorOutdoor || 'o',
+    indoorOutdoor: tournamentRecord.indoorOutdoor || venueConstants.OUTDOOR,
     categoryName: defaultCategory?.categoryName,
     surfaceCategory,
     startDate: offsetDate(startDate),
     endDate: offsetDate(endDate)
   };
 
-  const { control, register, handleSubmit, setValue, watch } = useForm({
+  const { control, /*register,*/ handleSubmit, setValue, watch } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
@@ -82,17 +84,15 @@ export function EditEvent(props) {
   ];
 
   const inOutOptions = [
-    { text: '', value: '' },
-    { text: t('indoors'), value: 'i' },
-    { text: t('outdoors'), value: 'o' }
+    { text: t('indoors'), value: venueConstants.INDOOR },
+    { text: t('outdoors'), value: venueConstants.OUTDOOR }
   ];
-
   const surfaceOptions = [
-    { text: '', value: '' },
-    { text: t('surfaces.clay'), value: 'C' },
-    { text: t('surfaces.hard'), value: 'H' },
-    { text: t('surfaces.grass'), value: 'G' },
-    { text: t('surfaces.carpet'), value: 'R' }
+    { text: t('surfaces.clay'), value: surfaceConstants.CLAY },
+    { text: t('surfaces.hard'), value: surfaceConstants.HARD },
+    { text: t('surfaces.grass'), value: surfaceConstants.GRASS },
+    { text: t('surfaces.carpet'), value: surfaceConstants.CARPET },
+    { text: t('surfaces.artificial'), value: surfaceConstants.ARTIFICIAL }
   ];
 
   const eventLevels = {};
@@ -174,12 +174,22 @@ export function EditEvent(props) {
         <Typography align="left" component="h2" className={classes.formTitle}>
           {t('actions.add_event')}
         </Typography>
-        <TextField
-          id="eventName"
-          name="eventName"
-          inputRef={register}
-          label={t('events.customname')}
-          className={classes.editField}
+        <Controller
+          name="eventtName"
+          control={control}
+          defaultValue=""
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <TextField
+              required
+              className={classes.editField}
+              id="eventName"
+              label={t('events.customname')}
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={error ? 'Event Name is required' : null}
+            />
+          )}
         />
         <ControlledSelector
           defaultValue={defaultValues.gender}
@@ -226,30 +236,44 @@ export function EditEvent(props) {
           label={t('events.surfaceCategory')}
         />
         <Controller
-          autoOk
-          id="eventStartDate"
           name="startDate"
           control={control}
-          variant="inline"
-          format="yyyy-MM-dd"
-          label={t('start')}
-          className={classes.editField}
-          minDate={new Date(startDate)}
-          maxDate={new Date(endDate)}
-          as={<DatePicker />}
+          defaultValue=""
+          rules={{ required: 'Date is required' }}
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              autoOk
+              variant="inline"
+              format="yyyy-MM-dd"
+              label={t('start')}
+              className={classes.editField}
+              minDate={new Date(startDate)}
+              maxDate={new Date(endDate)}
+              id="eventStartDate"
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
         <Controller
-          autoOk
-          id="eventEndDate"
           name="endDate"
           control={control}
-          variant="inline"
-          format="yyyy-MM-dd"
-          label={t('end')}
-          className={classes.editField}
-          minDate={currentStart}
-          maxDate={new Date(endDate)}
-          as={<DatePicker />}
+          defaultValue=""
+          rules={{ required: 'Date is required' }}
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              autoOk
+              variant="inline"
+              format="yyyy-MM-dd"
+              label={t('start')}
+              className={classes.editField}
+              minDate={new Date(startDate)}
+              maxDate={new Date(endDate)}
+              id="eventEndDate"
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
         <Grid container direction="row">
           <div className={classes.grow} />
@@ -259,3 +283,6 @@ export function EditEvent(props) {
     </div>
   );
 }
+/*
+
+*/
