@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, MenuItem, Drawer, Grid, TextField, Typography } from '@material-ui/core';
 import { validationSchema } from './validation';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useStyles } from './style';
 
@@ -58,7 +58,7 @@ export function NewDraw(props) {
     groups: groupsDefault,
     groupSize: 4
   };
-  const { control, register, getValues, setValue, watch, handleSubmit } = useForm({
+  const { control, /*register,*/ getValues, setValue, watch, handleSubmit } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
     mode: 'onChange'
@@ -158,10 +158,12 @@ export function NewDraw(props) {
     );
   };
 
+  /*
   const setDrawSize = (evt) => {
     const newDrawSize = evt.target.value;
     setValue('drawSize', newDrawSize);
   };
+  */
 
   const disableSizeOption = selectedStructure === 'ADHOC';
 
@@ -171,12 +173,20 @@ export function NewDraw(props) {
         <Typography align="left" component="h2" className={classes.formTitle}>
           {t('actions.add_draw') || 'Add Draw'}
         </Typography>
-        <TextField
+        <Controller
           name="customName"
-          inputRef={register}
-          label={t('events.customname')}
-          className={classes.editField}
-          id="customDrawName"
+          control={control}
+          defaultValue=""
+          render={({ field: { onChange, value } }) => (
+            <TextField
+              required
+              className={classes.editField}
+              id="customDrawName"
+              label={t('events.customname')}
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
         <ControlledSelector
           defaultValue={defaultValues.drawType}
@@ -190,13 +200,18 @@ export function NewDraw(props) {
         ) : (
           <Grid container direction="row" justify="space-between" alignItems="center" className={classes.grow}>
             {selectedStructure === 'FEED IN' ? (
-              <TextField
-                defaultValue={defaultDrawSize}
+              <Controller
                 name="drawSize"
-                inputRef={register}
-                onChange={setDrawSize}
-                label={t('events.draw_size')}
-                className={classes.editField}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextField
+                    className={classes.editField}
+                    id="drawSize"
+                    label={t('events.draw_size')}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
               />
             ) : (
               <ControlledSelector
