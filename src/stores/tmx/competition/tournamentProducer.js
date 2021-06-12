@@ -64,7 +64,6 @@ const invokeTournamentEngine = (state, action) =>
       draftState.records[tournamentId] = tournamentRecord;
       save.local({ tournament: tournamentRecord });
     }
-    if (isDev()) console.log({ methods, modifications });
 
     if (errors.length) {
       console.log({ errors });
