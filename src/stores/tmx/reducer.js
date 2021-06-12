@@ -13,20 +13,22 @@ import competitionProducer from 'stores/tmx/competition/competitionProducer';
 
 const initialState = storeInitialState();
 
-const createReducer = (handlers) => (state = initialState, action) => {
-  if (!Object.keys(handlers).includes(action.type)) {
-    return state;
-  }
-  if (isDev()) {
-    return handlers[action.type](state, action);
-  } else {
-    try {
-      return handlers[action.type](state, action);
-    } catch (err) {
-      console.log('%c ERROR', 'color: orange', { err });
+const createReducer =
+  (handlers) =>
+  (state = initialState, action) => {
+    if (!Object.keys(handlers).includes(action.type)) {
+      return state;
     }
-  }
-};
+    if (isDev()) {
+      return handlers[action.type](state, action);
+    } else {
+      try {
+        return handlers[action.type](state, action);
+      } catch (err) {
+        console.log('%c ERROR', 'color: orange', { err });
+      }
+    }
+  };
 
 const producerArray = [
   rootProducer,
