@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react';
 
-import { db } from 'services/storage/db';
 import { tmxStore } from 'stores/tmxStore';
+import { db } from 'services/storage/db';
 
-export const useLoadTournament = (tournament, tournamentId) => {
-  const [tournamentRecord, setTournamentRecord] = useState();
+export const useLoadTournament = (tournamentId) => {
+  const storeState = tmxStore.getState();
+  const selectedTournamentId = storeState.selectedTournamentId;
+  const selectedTournament = storeState.records && storeState.records[selectedTournamentId];
+
+  const [tournamentRecord, setTournamentRecord] = useState(selectedTournament);
+
   useEffect(() => {
-    if (tournamentId && !tournament) {
+    if (tournamentId && !tournamentRecord) {
       const error = () => console.log('oops');
       db.findTournament(tournamentId).then(setTournamentRecord, error);
     }
-  }, [tournament, tournamentId]);
+  }, [tournamentRecord, tournamentId]);
 
   if (tournamentRecord) {
     tmxStore.dispatch({ type: 'change tournament', payload: tournamentRecord });
   }
 
-  return tournament || tournamentRecord;
+  return tournamentRecord;
 };
