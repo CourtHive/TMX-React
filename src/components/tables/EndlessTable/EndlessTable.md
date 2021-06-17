@@ -104,7 +104,7 @@ passed. That means a single table can either have draggable / droppable rows or 
 row from the 1st table to the 2nd table cell!!_
 _TODO: think about this approach:_
 
-###### onDrop
+##### onDrop
 
 If the table has either draggable rows or cells, this callback should be provided to capture what happens on a drop.
 The user can distinguish if the _onDrop_ happened on cell or on row based on `dropType: DropTypeEnum` property. There
