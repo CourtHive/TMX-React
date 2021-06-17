@@ -17,16 +17,15 @@ import { DrawDetails } from 'components/panels/eventsPanel/DrawDetails';
 import { EventSelector } from 'components/selectors/EventSelector';
 import { EventDrawSelector } from 'components/selectors/EventDrawSelector';
 import { StructureSelector } from 'components/selectors/StructureSelector';
-
-import { DTAB_DRAW } from 'stores/tmx/types/tabs';
-import { tournamentEngine, entryStatusConstants, fixtures } from 'tods-competition-factory';
 import { defaultTieFormat } from 'policies/defaultTieFormat';
-
 import { PanelSelector } from 'components/selectors/PanelSelector';
-import { TAB_EVENTS } from 'stores/tmx/types/tabs';
 
+import { tournamentEngine, entryStatusConstants, fixtures } from 'tods-competition-factory';
 const { STRUCTURE_ENTERED_TYPES } = entryStatusConstants;
 const { SEEDING_ITF, SCORING_POLICY } = fixtures;
+
+import { TAB_EVENTS } from 'stores/tmx/types/tabs';
+import { DTAB_DRAW } from 'stores/tmx/types/tabs';
 
 export const EventsPanel = ({ tournamentRecord, params }) => {
   const dispatch = useDispatch();

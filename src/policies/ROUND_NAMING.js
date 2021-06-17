@@ -7,9 +7,9 @@ export const ROUND_NAMING_DEFAULT = {
   [POLICY_TYPE_ROUND_NAMING]: {
     policyName: 'Round Naming Default',
     roundNamingMap: {
-      '1': 'Final',
-      '2': 'Semifinals',
-      '4': 'Quarterfinals'
+      1: 'Final',
+      2: 'Semifinals',
+      4: 'Quarterfinals'
     },
     affixes: {
       roundNumber: 'R',

@@ -13656,10 +13656,10 @@ tods-competition-factory@0.5.83:
   dependencies:
     tods-matchup-format-code "1.1.2"
 
-tods-competition-factory@0.6.58:
-  version "0.6.58"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.6.58.tgz#7e718d0efd9c4787b829fffd3df1be3ee59e0023"
-  integrity sha512-/O3BTdfEoPPfG+fGxnq7yQFDJJG5KfyIDCgL5zLBS+VPCjtwdkPdDUaS6hMzjbKR6+WirkDZw7j6I9vmQ3VWIQ==
+tods-competition-factory@0.6.66:
+  version "0.6.66"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.6.66.tgz#f0b0df906f3dae9cd0ab6ffe37b8bfba8f58da03"
+  integrity sha512-F0nD28ZHy3X5FeIQknoFbMSvmHi40iUUsMgDeRHkLKUl57zGxl2oZ5mem3V6X/tMNa3RVaK38Xm5zkX9qfq3tA==
   dependencies:
     tods-matchup-format-code "1.1.4"
 

@@ -42,7 +42,14 @@ export function EditEvent(props) {
   const defaultCategory = tournamentCategories[0];
   const categoryOptions = tournamentCategoryNames.map((c) => ({ text: c, value: c }));
 
-  const surfaceCategory = tournamentRecord.surfaceCategory || surfaceConstants.CLAY;
+  const surfaceCategory = Object.values(surfaceConstants).includes(tournamentRecord.surfaceCategory)
+    ? tournamentRecord.surfaceCategory
+    : surfaceConstants.CLAY;
+
+  const indoorOutdoor = Object.values(venueConstants).includes(tournamentRecord.indoorOutdoor)
+    ? tournamentRecord.indoorOutdoor
+    : venueConstants.OUTDOOR;
+
   const defaultValues = {
     eventName: '',
     eventLevel: '',
@@ -50,7 +57,7 @@ export function EditEvent(props) {
     // category: { ratingMin: 20, ratingMax: 30 },
     category: defaultCategory,
     eventType: 'SINGLES',
-    indoorOutdoor: tournamentRecord.indoorOutdoor || venueConstants.OUTDOOR,
+    indoorOutdoor,
     categoryName: defaultCategory?.categoryName,
     surfaceCategory,
     startDate: offsetDate(startDate),

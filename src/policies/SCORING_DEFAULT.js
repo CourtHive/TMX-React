@@ -16,7 +16,7 @@ const scoreFormatTypes = {
  * Follows the format for Competition Factory scoring policies.
  */
 export const SCORING_DEFAULT = {
-  [POLICY_TYPE_SCORING as string]: {
+  [POLICY_TYPE_SCORING]: {
     requireAllPositionsAssigned: false,
     stage: {
       [MAIN]: {
