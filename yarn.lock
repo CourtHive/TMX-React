@@ -13557,17 +13557,17 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tods-competition-factory@0.5.83:
-  version "0.5.83"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.83.tgz#9ccc0db2d4a970724f52d645a8de30e9a762ca23"
-  integrity sha512-lO4yXsLkF1MQb2pT2mscksfqepnuqRo2NO87xbf1n+m3LEpUwkowk9AaKRd5mkX3FjXe4jz2RLsZ9xeSgwp8Vw==
-  dependencies:
-    tods-matchup-format-code "1.1.2"
-
 tods-competition-factory@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.7.1.tgz#e19cf62af2578e840329d1c04ae11a1134a0f17e"
   integrity sha512-UTNXlIM3yxkNCCFjPsQ9u1r6tROzD/05jMsr2H6wuTVUxS8a8haLqe0pstB/zlEI90G7AvlxuwRfBiFzjfgPiA==
+  dependencies:
+    tods-matchup-format-code "1.1.4"
+
+tods-competition-factory@0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.7.4.tgz#dc3caa36dd2e99d0b405e90c7eabfce061329587"
+  integrity sha512-4WDIyS+pctqZ2RZ3s37WqgBIsBVw7yt2SW+uSATij4UuEzsdfD7P4pgX7BdzOE1UiReG19nXKGqfrFIlqaf9DQ==
   dependencies:
     tods-matchup-format-code "1.1.4"
 
@@ -13599,15 +13599,15 @@ tods-react-draws@0.1.19:
     react-virtuoso "1.9.1"
     tods-competition-factory "^0.6.0"
 
-tods-tournament-pdfs@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/tods-tournament-pdfs/-/tods-tournament-pdfs-0.1.5.tgz#bb1f1bf69cd0a406c36561cf24ccdd7378f3e219"
-  integrity sha512-G7HkCGrR/TXBcvvLeG3psIOOszWlz1Kzh+3JaDwhQtWOJ7YNv2IPx439k/cO4FNUEuIZ5Odu5bhQbIt5V9b3jA==
+tods-tournament-pdfs@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/tods-tournament-pdfs/-/tods-tournament-pdfs-0.1.6.tgz#0856e9dfc15a35b1cc244fdacf1eb4b917b07856"
+  integrity sha512-1yMP0ELWUqyq7FnzR0O9FSaVwq7uasm0fQMka3hcJogc6UeIi2qbR8qrFrqtG05DLsjBoyKBhhV1K7e7NaDEdg==
   dependencies:
     date-fns "^2.16.1"
     date-fns-timezone "^0.1.4"
     timezone-support "^2.0.2"
-    tods-competition-factory "0.5.83"
+    tods-competition-factory "0.7.4"
 
 toidentifier@1.0.0:
   version "1.0.0"
