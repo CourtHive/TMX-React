@@ -12,7 +12,7 @@ import { env } from 'config/defaults';
 
 import { tournamentEngine } from 'tods-competition-factory';
 
-import 'styles/main.css';
+import 'styles/css/main.css';
 
 export function setupTMX() {
   setWindow();

@@ -17,13 +17,18 @@ import { context } from 'services/context';
 import { displayTournament } from 'functions/tournament/tournamentDisplay';
 
 import { useStyles } from 'components/tables/styles';
-import EndlessTable from 'components/tables/EndlessTable';
+// import EndlessTable from 'components/tables/EndlessTable';
 import { Grid, IconButton, InputAdornment, Tooltip } from '@material-ui/core/';
 import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
 
 import { utilities } from 'tods-competition-factory';
 import { tabRoute } from 'components/tournament/tabRoute';
 import { TAB_EVENTS } from 'stores/tmx/types/tabs';
+
+import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 const { formatDate } = utilities.dateTime;
 
@@ -49,7 +54,7 @@ function trnyRecord(tournamentRecord) {
   };
 }
 
-const rowHeight = 48;
+// const rowHeight = 48;
 
 export function TournamentsTable() {
   const dispatch = useDispatch();
@@ -65,6 +70,7 @@ export function TournamentsTable() {
     selectedRow: null
   };
   const [values, setValues] = useState(defaultValues);
+  /*
   const [initialScrollOffset, setInitialScrollOffset] = useState(0);
 
   const handleRowClick = (_, rowItem) => {
@@ -72,6 +78,7 @@ export function TournamentsTable() {
     const nextRoute = tabRoute({ tournamentId: rowItem.tournamentId, tabIndex: TAB_EVENTS });
     history.push(nextRoute);
   };
+  */
 
   useEffect(() => {
     function handleTournamentUpdate(data) {
@@ -96,10 +103,10 @@ export function TournamentsTable() {
         .map(trnyRecord)
         .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
 
-      const todaysDate = new Date();
-      const todayOrAfterIndex = tournaments.findIndex((tournament) => new Date(tournament.startDate) >= todaysDate);
-      const scrollOffset = todayOrAfterIndex > 1 ? todayOrAfterIndex * rowHeight : 0;
-      setInitialScrollOffset(scrollOffset);
+      // const todaysDate = new Date();
+      // const todayOrAfterIndex = tournaments.findIndex((tournament) => new Date(tournament.startDate) >= todaysDate);
+      // const scrollOffset = todayOrAfterIndex > 1 ? todayOrAfterIndex * rowHeight : 0;
+      // setInitialScrollOffset(scrollOffset);
       setValues({ ...values, tournaments });
     }
 
@@ -181,6 +188,7 @@ export function TournamentsTable() {
     }
   ];
 
+  /*
   const cellConfig = {
     className: classes.EPCellConfig
   };
@@ -192,8 +200,10 @@ export function TournamentsTable() {
   };
   const tableConfig = {
     className: classes.EPTableConfig,
-    tableHeight: window.innerHeight - 200
+    // tableHeight: window.innerHeight - 200
+    tableHeight: 400
   };
+  */
 
   const tableData = values.tournaments.map((tournament, i) => ({ ...tournament, index: i + 1 }));
 
@@ -253,6 +263,59 @@ export function TournamentsTable() {
 
   const dataForTable = filterValue ? filteredData : tableData;
 
+  const AGGrid = () => {
+    const [gridApi, setGridApi] = useState(null);
+
+    const columnTypes = {
+      nonEditableColumn: { editable: false },
+      indexColumn: {
+        width: 55,
+        resizable: false,
+        sortable: false,
+        filter: false
+        // cellStyle: { textAlign: 'center' }
+      }
+    };
+
+    const onGridReady = (params) => {
+      setGridApi(params.api);
+    };
+    const onSelectionChanged = () => {
+      const selectedRows = gridApi.getSelectedRows();
+      const selectedRow = selectedRows.length && selectedRows[0];
+      if (selectedRow.tournamentId) {
+        displayTournament(selectedRow);
+        const nextRoute = tabRoute({ tournamentId: selectedRow.tournamentId, tabIndex: TAB_EVENTS });
+        history.push(nextRoute);
+      }
+    };
+
+    return (
+      <div className="ag-theme-alpine" style={{ height: window.innerHeight - 200, width: '100%' }}>
+        <AgGridReact
+          rowData={dataForTable}
+          columnTypes={columnTypes}
+          defaultColDef={{
+            autoHeight: true,
+            sortable: true,
+            resizable: true,
+            filter: true,
+            cellStyle: { paddingRight: '5px' }
+          }}
+          rowSelection={'single'}
+          onGridReady={onGridReady}
+          onSelectionChanged={onSelectionChanged}
+        >
+          <AgGridColumn headerName="#" field="index" type="indexColumn"></AgGridColumn>
+          <AgGridColumn headerName="Tournament Name" field="name" flex={2} wrapText={true}></AgGridColumn>
+          <AgGridColumn headerName="Start Date" field="startDate"></AgGridColumn>
+          <AgGridColumn headerName="End Date" field="endDate"></AgGridColumn>
+          <AgGridColumn headerName="Categories" field="categories"></AgGridColumn>
+        </AgGridReact>
+      </div>
+    );
+  };
+
   return (
     <div className={classes.pageWrapper}>
       <Grid container direction="row" alignItems="stretch">
@@ -279,6 +342,12 @@ export function TournamentsTable() {
         </Grid>
       </Grid>
 
+      <AGGrid />
+    </div>
+  );
+}
+
+/*
       <EndlessTable
         data={dataForTable}
         id={'tournamentsTable'}
@@ -289,6 +358,4 @@ export function TournamentsTable() {
         tableConfig={tableConfig}
         initialScrollOffset={initialScrollOffset}
       />
-    </div>
-  );
-}
+      */
