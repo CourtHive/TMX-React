@@ -2924,10 +2924,10 @@
   dependencies:
     parchment "^1.1.2"
 
-"@types/react-beautiful-dnd@13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@types/react-beautiful-dnd/-/react-beautiful-dnd-13.0.0.tgz#e60d3d965312fcf1516894af92dc3e9249587db4"
-  integrity sha512-by80tJ8aTTDXT256Gl+RfLRtFjYbUWOnZuEigJgNsJrSEGxvFe5eY6k3g4VIvf0M/6+xoLgfYWoWonlOo6Wqdg==
+"@types/react-beautiful-dnd@13.1.0":
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-beautiful-dnd/-/react-beautiful-dnd-13.1.0.tgz#8a256efe7b457c0eb9c508e600e53090b9547aac"
+  integrity sha512-RZUwL3gSkA1m3m553ZZkDk89KBRABMWVE3LK7AoSohmx/APGt8U2GApCNj4pHdPwL/vxzZjwuqf3NtlWquuhVw==
   dependencies:
     "@types/react" "*"
 
@@ -3043,10 +3043,10 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/uuid@8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
-  integrity sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
+"@types/uuid@8.3.1":
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.1.tgz#1a32969cf8f0364b3d8c8af9cc3555b7805df14f"
+  integrity sha512-Y2mHTRAbqfFkpjldbkHGY8JIzRN6XqYRliG8/24FcHm2D2PwW24fl5xMRTVGdrb7iMrwCaIEbLWerGIkXuFWVg==
 
 "@types/webpack-sources@*":
   version "2.1.0"
@@ -3088,10 +3088,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@types/yup@0.29.11":
-  version "0.29.11"
-  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.11.tgz#d654a112973f5e004bf8438122bd7e56a8e5cd7e"
-  integrity sha512-9cwk3c87qQKZrT251EDoibiYRILjCmxBvvcb4meofCmx1vdnNcR9gyildy5vOHASpOKMsn42CugxUvcwK5eu1g==
+"@types/yup@0.29.12":
+  version "0.29.12"
+  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.12.tgz#59c9577bea11d2b3d78717ea7591caacad6dfa1b"
+  integrity sha512-fA7bXyBzWEAgOwX2SD/5/iaZY/4In0EvJEzFmBWzaGNF4vxr8d5iOFUMFBpL4cMEmlSx2wW9ginJNnoZjE/vOg==
 
 "@typescript-eslint/eslint-plugin@4.28.1":
   version "4.28.1"
@@ -11654,10 +11654,10 @@ react-error-overlay@^6.0.9:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
-react-hook-form@7.9.0:
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.9.0.tgz#0b5ed2f262a1e3cc64cfcf855f09a6e236d46ac3"
-  integrity sha512-1SazsTvsC5A4jLxc8fIf0bB92kEp4MGjP69k8s+2nI1spHPha5UkLwaebOXhO9vY95aGqcyBU67pRiv+6T5KZQ==
+react-hook-form@7.10.0:
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.10.0.tgz#665c9897957a2a8bbf720cef9e913ba1b22b0e86"
+  integrity sha512-J6jJDw61TDNG0cEyLlYKUTPTwJH1Gfp8S8+m5Dt3mLY5vEy7UwKr60rl11ESofKmliFH8DconTVFnZgblhGvyg==
 
 react-hotkeys-hook@3.3.2:
   version "3.3.2"
@@ -13557,12 +13557,13 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tods-competition-factory@0.5.83:
-  version "0.5.83"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.5.83.tgz#9ccc0db2d4a970724f52d645a8de30e9a762ca23"
-  integrity sha512-lO4yXsLkF1MQb2pT2mscksfqepnuqRo2NO87xbf1n+m3LEpUwkowk9AaKRd5mkX3FjXe4jz2RLsZ9xeSgwp8Vw==
+
+tods-competition-factory@0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.7.4.tgz#dc3caa36dd2e99d0b405e90c7eabfce061329587"
+  integrity sha512-4WDIyS+pctqZ2RZ3s37WqgBIsBVw7yt2SW+uSATij4UuEzsdfD7P4pgX7BdzOE1UiReG19nXKGqfrFIlqaf9DQ==
   dependencies:
-    tods-matchup-format-code "1.1.2"
+    tods-matchup-format-code "1.1.4"
 
 tods-competition-factory@0.7.4:
   version "0.7.4"
@@ -13599,15 +13600,15 @@ tods-react-draws@0.1.19:
     react-virtuoso "1.9.1"
     tods-competition-factory "^0.6.0"
 
-tods-tournament-pdfs@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/tods-tournament-pdfs/-/tods-tournament-pdfs-0.1.5.tgz#bb1f1bf69cd0a406c36561cf24ccdd7378f3e219"
-  integrity sha512-G7HkCGrR/TXBcvvLeG3psIOOszWlz1Kzh+3JaDwhQtWOJ7YNv2IPx439k/cO4FNUEuIZ5Odu5bhQbIt5V9b3jA==
+tods-tournament-pdfs@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/tods-tournament-pdfs/-/tods-tournament-pdfs-0.1.6.tgz#0856e9dfc15a35b1cc244fdacf1eb4b917b07856"
+  integrity sha512-1yMP0ELWUqyq7FnzR0O9FSaVwq7uasm0fQMka3hcJogc6UeIi2qbR8qrFrqtG05DLsjBoyKBhhV1K7e7NaDEdg==
   dependencies:
     date-fns "^2.16.1"
     date-fns-timezone "^0.1.4"
     timezone-support "^2.0.2"
-    tods-competition-factory "0.5.83"
+    tods-competition-factory "0.7.4"
 
 toidentifier@1.0.0:
   version "1.0.0"
