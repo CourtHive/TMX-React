@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { useStyles } from 'components/inputs/keyScoreEntry/styles';
-import { scoreGovernor } from 'tods-competition-factory';
+import { scoreGovernor, keyValueConstants } from 'tods-competition-factory';
 
-const { keyValueScore, keyValueConstants } = scoreGovernor;
+const { keyValueScore } = scoreGovernor;
 const { HOTKEYS, MODIFIERS, MOVEDOWN, MOVEUP, PROMPT, SIDE1KEYS, SIDE2KEYS } = keyValueConstants;
 
 const KeyScoreEntry = ({ data, currentMatchUpId, matchUpFormat, rowChange, updateData }) => {
