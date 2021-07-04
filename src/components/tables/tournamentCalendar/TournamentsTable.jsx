@@ -33,7 +33,7 @@ import { useColumnToggle } from 'hooks/useColumnToggle';
 
 export function TournamentsTable() {
   const {
-    state: { calendar: hiddenColumns },
+    state: { calendar: hiddenColumns = [] },
     dispatch: columnDispatch
   } = useColumnToggle();
 

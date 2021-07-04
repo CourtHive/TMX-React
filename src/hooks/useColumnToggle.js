@@ -3,15 +3,16 @@ import * as React from 'react';
 const ColumnContext = React.createContext();
 
 function columnReducer(state, action) {
-  if (!action.table || !state[action.table]) throw new Error(`Invalid Table`);
-  if (!action.columnName) throw new Error(`Missing Colunn Value`);
+  if (!action.table) throw new Error(`Invalid Table`);
   if (typeof action.columnName !== 'string') throw new Error(`Invalid Value: ${action.columnName}`);
 
-  if (state[action.table].includes(action.columnName)) {
-    const hiddenColumns = state[action.table].filter((columnName) => columnName !== action.columnName);
+  const currentTable = state[action.table] || [];
+
+  if (currentTable.includes(action.columnName)) {
+    const hiddenColumns = currentTable.filter((columnName) => columnName !== action.columnName);
     return { ...state, [action.table]: hiddenColumns };
   } else {
-    return { ...state, [action.table]: state[action.table].concat(action.columnName) };
+    return { ...state, [action.table]: currentTable.concat(action.columnName) };
   }
 }
 function ColumnProvider({ children }) {
