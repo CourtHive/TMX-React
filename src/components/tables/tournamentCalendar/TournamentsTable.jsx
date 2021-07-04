@@ -241,8 +241,14 @@ export function TournamentsTable() {
   // ACTION_BUTTON_ROW
   const toggleColumnHiddenState = ({ key }) => {
     columnDispatch({ table: 'calendar', columnName: key });
-    setTimeout(() => gridApi.resetRowHeights(), 50);
+    setTimeout(() => gridApi?.resetRowHeights(), 50);
   };
+
+  useEffect(() => {
+    const resetRowHeights = () => setTimeout(() => gridApi?.resetRowHeights(), 50);
+    window.addEventListener('resize', resetRowHeights, false);
+    return () => window.removeEventListener('resize', resetRowHeights, false);
+  });
 
   const columnMenuItems = columnDefs
     .filter((col) => !['name', 'index', 'actions'].includes(col.field))
