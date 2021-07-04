@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { useStyles } from './style';
 
-import { TournamentsTable } from 'components/tables/TournamentsTable';
+import { TournamentsTable } from 'components/tables/tournamentCalendar/TournamentsTable';
 import useTheme from '@material-ui/core/styles/useTheme';
 
 import { EditTournamentDrawer } from 'components/forms/EditTournament/EditTournament';

@@ -109,7 +109,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "sass": "sass src/Sass:src/Css --watch --no-source-map"
+    "sass": "sass src/styles/sass:src/styles/css --watch --no-source-map"
   },
   "browserslist": {
     "production": [

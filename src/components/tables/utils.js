@@ -1,8 +1,8 @@
 export const filterTableRows = (tableData, visibleColumns, targetValue) => {
-  const keys = visibleColumns.map((column) => column.key);
+  const keys = visibleColumns?.map((column) => column.key);
   return tableData.filter((data) => {
     const cellValuesArray = Object.entries(data)
-      .filter(([key, value]) => keys.includes(key) && !!value)
+      .filter(([key, value]) => !keys || (keys?.includes(key) && !!value))
       .map(([, value]) => value.toString())
       .filter((value) => value.toLowerCase().includes(targetValue.toLowerCase()));
     return cellValuesArray.length > 0;
@@ -36,8 +36,4 @@ export const getColumnMenuItems = (tableColumns, onClick) => {
     checked: !(column.hidden && column.hidden()),
     onClick: onClick
   }));
-};
-
-export const getMouse = (event) => {
-  return { x: event.clientX, y: event.clientY, pageX: event.pageX, pageY: event.pageY };
 };

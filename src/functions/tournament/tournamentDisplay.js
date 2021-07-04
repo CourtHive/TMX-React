@@ -1,11 +1,17 @@
-import { env } from 'config/defaults';
-import { db } from 'services/storage/db';
+import { tabRoute } from 'components/tournament/tabRoute';
 import { context } from 'services/context';
-
 import { tmxStore } from 'stores/tmxStore';
+import { db } from 'services/storage/db';
+import { env } from 'config/defaults';
 
-export function displayTournament({ tournamentId, tournament, editing } = {}) {
-  if (context.tournamentId && context.tournamentId !== tournamentId) {
+import { TAB_EVENTS } from 'stores/tmx/types/tabs';
+
+export function displayTournament({ tournamentId, tournament, editing, history } = {}) {
+  if (tournamentId) {
+    if (history) {
+      const nextRoute = tabRoute({ tournamentId, tabIndex: TAB_EVENTS });
+      history.push(nextRoute);
+    }
     context.ee.emit('emitTmx', {
       action: 'leaveTournament',
       payload: { tournamentId: context.tournamentId }
