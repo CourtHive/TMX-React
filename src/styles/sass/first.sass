@@ -1,6 +1,12 @@
 @import "../../../node_modules/ag-grid-community/src/styles/ag-grid.scss"
 @import "../../../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin"
 
-.ag-theme-alpine 
-    --ag-foreground-color: deeppink
+.ag-theme-alpine {
+    @include ag-theme-material((
+        alpine-active-color: deeppink
+    ));
 
+    .ag-header {
+        text-style: italic;
+    }
+}

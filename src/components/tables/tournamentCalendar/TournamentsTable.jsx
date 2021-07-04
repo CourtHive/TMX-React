@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
@@ -25,9 +25,6 @@ import TMXButton from 'components/buttons/TMXButton';
 
 import { AgGridReact } from 'ag-grid-react';
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { calendarRecord } from 'data/mappings/calendarRecord';
 import { useColumnToggle } from 'hooks/useColumnToggle';
 
@@ -36,6 +33,7 @@ export function TournamentsTable() {
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
+  const tableRef = useRef(null);
 
   const [checkboxSelection, setCheckBoxSelection] = useState(false);
   const [calendarEntries, setCalendarEntries] = useState([]);
@@ -230,6 +228,9 @@ export function TournamentsTable() {
   const onRowClicked = (rowData) => {
     if (!rowData) console.log('row Clicked', { rowData });
   };
+  const onCellClicked = (rowData) => {
+    if (!rowData) console.log('cell click', { rowData });
+  };
   const onRowSelected = (rowData) => {
     if (!rowData) console.log('row selected', { rowData });
   };
@@ -320,7 +321,7 @@ export function TournamentsTable() {
         </Grid>
       </Grid>
 
-      <div className="ag-theme-material" style={{ width: '100%' }}>
+      <div className="ag-theme-material" style={{ width: '100%' }} ref={tableRef}>
         <AgGridReact
           pagination={pagination}
           rowData={dataForTable}
@@ -336,6 +337,7 @@ export function TournamentsTable() {
           onRowClicked={onRowClicked}
           onRowSelected={onRowSelected}
           domLayout={'autoHeight'}
+          onCellClicked={onCellClicked}
         ></AgGridReact>
       </div>
     </div>

@@ -3,8 +3,8 @@ export const filterTableRows = (tableData, visibleColumns, targetValue) => {
   return tableData.filter((data) => {
     const cellValuesArray = Object.entries(data)
       .filter(([key, value]) => !keys || (keys?.includes(key) && !!value))
-      .map(([, value]) => value.toString())
-      .filter((value) => value.toLowerCase().includes(targetValue.toLowerCase()));
+      .map(([, value]) => value?.toString())
+      .filter((value) => value?.toLowerCase().includes(targetValue?.toLowerCase()));
     return cellValuesArray.length > 0;
   });
 };

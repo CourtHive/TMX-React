@@ -12,6 +12,10 @@ import { env } from 'config/defaults';
 
 import { tournamentEngine } from 'tods-competition-factory';
 
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import 'styles/css/main.css';
 
 export function setupTMX() {

@@ -24,7 +24,7 @@ import { TeamSelector } from 'components/selectors/TeamSelector';
 
 import { Drawer, Grid, IconButton, InputAdornment, Tooltip, Typography } from '@material-ui/core/';
 
-import { filterTableRows, getColumnMenuItems } from 'components/tables/utils';
+import { filterTableRows } from 'components/tables/utils';
 
 import TMXInput from 'components/inputs/TMXInput';
 import CheckboxCell from 'components/tables/common/CheckboxCell';
@@ -37,6 +37,9 @@ import { ActionPanelMenu } from './ActionPanelMenu';
 import { IconButtonGroup } from './IconButtonGroup';
 import { AddToGrouping } from './AddToGrouping';
 import { getActionPanelBounds } from 'services/dynamicStyles/actionPanelBounds';
+
+import { AgGridReact } from 'ag-grid-react';
+import { useColumnToggle } from 'hooks/useColumnToggle';
 
 import {
   tournamentEngine,
@@ -55,8 +58,13 @@ export const ParticipantsTable = () => {
   const classes = useStyles();
   const iconClasses = useIconStyles();
 
+  const {
+    state: { participants: hiddenColumns = [] },
+    dispatch: columnDispatch
+  } = useColumnToggle();
+
   const NONE = '-';
-  const editState = useSelector((state) => state.tmx.editState);
+  // const editState = useSelector((state) => state.tmx.editState);
 
   const searchInput = useRef(null);
   const actionBoundsRef = useRef(null);
@@ -69,6 +77,11 @@ export const ParticipantsTable = () => {
   const [groupingOpen, setGroupingOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [actionPanelStyle, setActionPanelStyle] = useState({});
+
+  const [gridApi, setGridApi] = useState(null);
+  const onGridReady = (params) => {
+    setGridApi(params.api);
+  };
 
   const { tournamentRecord } = tournamentEngine.getState();
   const tournamentParticipants = tournamentRecord.participants || [];
@@ -93,7 +106,6 @@ export const ParticipantsTable = () => {
   });
 
   const selectedTeamId = useSelector((state) => state.tmx.select.players.team);
-  const hiddenColumns = useSelector((state) => state.tmx.hiddenColumns.participants) || [];
   const selectedGender = useSelector((state) => state.tmx.select.participants.sex);
   const selectedSignInStatus = useSelector((state) => state.tmx.select.participants.signedIn);
   const signInOutcome = selectedSignInStatus === 'false' || selectedSignInStatus === '-';
@@ -262,63 +274,11 @@ export const ParticipantsTable = () => {
     />
   ];
 
-  /*
-  const handleOnClickDelete = () => {
-    const participantId = hoverActions?.participantId;
-    deleteAction({ participantId });
-  };
-
-  if (!hoverActions?.inEvent) {
-    actionIcons.push(
-      <DeleteIcon
-        key={3}
-        className={iconClasses.actionIcon}
-        data-img-selector="actions-wrapper"
-        onClick={handleOnClickDelete}
-      />
-    );
-  }
-  */
-
-  const handleOnRowMouseOver = (event, rowItem, rowIndex) => {
-    if (editMode || !editState) return;
-    const inEvent = participantsInEvents.includes(rowItem.participantId);
-    if (
-      rowIndex !== hoverActions?.index &&
-      event?.relatedTarget?.getAttribute('data-img-selector') !== 'actions-wrapper'
-    ) {
-      const width = tableRef?.current?.getBoundingClientRect().width;
-      setHoverActions({
-        inEvent,
-        index: rowIndex,
-        elementDimensions: {
-          top: event.currentTarget.parentElement.getBoundingClientRect().top + window.scrollY,
-          height: event.currentTarget.getBoundingClientRect().height,
-          width
-        },
-        participantId: rowItem.participantId
-      });
-    }
-  };
-  const handleOnMouseOut = (event, _, rowIndex) => {
-    const canGetAttribute = event?.relatedTarget?.getAttribute;
-    if (
-      rowIndex === hoverActions?.index &&
-      canGetAttribute &&
-      event.relatedTarget.getAttribute('data-img-selector') !== 'actions-wrapper'
-    ) {
-      setHoverActions(null);
-    }
-  };
-
   const actionStyles = hoverActions?.elementDimensions
     ? {
-        // left: `${hoverActions?.elementDimensions.width - (20 + (actionIcons.length - 1) * 28)}px`,
         left: `${window.innerWidth < 750 ? window.innerWidth - 20 : window.innerWidth - 40}px`,
         position: 'absolute',
-        top: `${
-          hoverActions?.elementDimensions.top + hoverActions?.index * hoverActions?.elementDimensions.height + 2
-        }px`
+        top: `${hoverActions?.elementDimensions.top}px`
       }
     : undefined;
 
@@ -413,6 +373,10 @@ export const ParticipantsTable = () => {
 
   const editModeAction = () => setEditMode(!editMode);
   const isHidden = (name) => hiddenColumns.includes(name);
+  const toggleColumnHiddenState = ({ key }) => {
+    columnDispatch({ table: 'participants', columnName: key });
+    setTimeout(() => gridApi?.resetRowHeights(), 50);
+  };
 
   const triggerActionPanelStyle = () => {
     const { style: actionStyle } = getActionPanelBounds(actionBoundsRef);
@@ -422,6 +386,7 @@ export const ParticipantsTable = () => {
   useEffect(() => {
     const handleResize = () => {
       triggerActionPanelStyle();
+      setTimeout(() => gridApi?.resetRowHeights(), 50);
     };
 
     window.addEventListener('resize', handleResize, false);
@@ -517,6 +482,128 @@ export const ParticipantsTable = () => {
       className: classes.signedInColumn
     };
   };
+  function contains(target, lookingFor) {
+    return target && target.indexOf(lookingFor) >= 0;
+  }
+  var countryFilterParams = {
+    buttons: ['clear'],
+    filterOptions: ['contains'],
+    suppressAndOrCondition: true,
+    textCustomComparator: function (_, value, filterText) {
+      const filterTextLowerCase = filterText.toLowerCase();
+      const valueLowerCase = value.toString().toLowerCase();
+      const aliases = {
+        usa: 'united states',
+        holland: 'netherlands',
+        england: 'united kingdom',
+        oz: 'australia',
+        xi: 'china'
+      };
+      const literalMatch = contains(valueLowerCase, filterTextLowerCase);
+      return literalMatch || contains(valueLowerCase, aliases[filterTextLowerCase]);
+    },
+    trimInput: true,
+    debounceMs: 1000
+  };
+
+  const SignInStateRenderer = (params) => {
+    const status = params.data?.signedIn ? <CheckCircleIcon style={{ color: green[500] }} /> : <NotInterestedIcon />;
+    return <div onClick={() => clickSignIn(params.data)}>{status}</div>;
+  };
+  const PaidStatusRenderer = (params) => {
+    const status = params.data?.paid ? (
+      <AccountBalanceIcon style={{ color: green[500] }} />
+    ) : (
+      <ErrorOutlineIcon style={{ color: red[500] }} />
+    );
+    return <div onClick={() => clickPaid(params.data)}>{status}</div>;
+  };
+  const frameworkComponents = {
+    signInStateRenderer: SignInStateRenderer,
+    paidStatusRenderer: PaidStatusRenderer
+  };
+  const defaultColDef = {
+    autoHeight: true,
+    sortable: true,
+    resizable: true,
+    filter: true,
+    lockVisible: true,
+    floatingFilter: false
+  };
+  const columnDefs = [
+    {
+      field: 'checkbox',
+      width: 40,
+      suppressMenu: true,
+      hide: !editMode,
+      checkboxSelection: () => true,
+      headerCheckboxSelection: () => true,
+      headerCheckboxSelectionFilteredOnly: true
+    },
+    {
+      width: 40,
+      field: 'signIn',
+      suppressMenu: true,
+      headerName: '',
+      cellStyle: { paddingTop: '5px', paddingLeft: '10px' },
+      cellRenderer: 'signInStateRenderer'
+    },
+    {
+      headerName: 'Name',
+      field: 'name',
+      wrapText: true,
+      minWidth: 150,
+      initialFlex: 1,
+      cellStyle: { paddingRight: '5px' },
+      headerCheckboxSelectionFilteredOnly: true
+    },
+    {
+      field: 'firstName',
+      headerName: 'First Name',
+      hide: isHidden('firstName')
+    },
+    {
+      field: 'lastName',
+      headerName: 'Last Name',
+      hide: isHidden('lastName')
+    },
+    {
+      field: 'otherName',
+      headerName: 'Other Name',
+      hide: isHidden('otherName')
+    },
+    {
+      field: 'sex',
+      maxWidth: 120,
+      headerName: 'Gender',
+      hide: isHidden('sex')
+    },
+    {
+      field: 'teamName',
+      headerName: 'Team Name',
+      hide: isHidden('teamName')
+    },
+    {
+      field: 'groups',
+      headerName: 'Groups',
+      hide: isHidden('groups')
+    },
+    {
+      field: 'nationality',
+      headerName: 'Nationality',
+      hide: isHidden('nationality'),
+      filter: 'agTextColumnFilter',
+      filterParams: countryFilterParams
+    },
+    {
+      width: 100,
+      field: 'paid',
+      headerName: 'Paid',
+      hide: isHidden('paid'),
+      cellStyle: { paddingTop: '5px' },
+      cellRenderer: 'paidStatusRenderer'
+    }
+  ];
 
   const columns = [
     {
@@ -592,23 +679,23 @@ export const ParticipantsTable = () => {
   ];
 
   const visibleColumns = columns.filter((column) => (column.hidden ? !column.hidden() : true));
-  const setColumnHiddenState = ({ key }) => {
-    dispatch({
-      type: 'hide column',
-      payload: { table: 'participants', field: key, hidden: !isHidden(key) }
-    });
-  };
 
   const columnsToFilter = ['checkbox', 'index', 'name'];
   if (selectedSignInStatus !== '-') columnsToFilter.push('signedIn');
-  const columnMenuItems = getColumnMenuItems(columns, setColumnHiddenState).filter(
-    (menuItem) => !columnsToFilter.includes(menuItem.id)
-  );
+  const columnMenuItems = columnDefs
+    .filter((col) => !['checkbox', 'index', 'name'].includes(col.field))
+    .map((col) => ({
+      id: col.field,
+      key: col.field,
+      text: col.headerName,
+      checked: !isHidden(col.field),
+      onClick: toggleColumnHiddenState
+    }));
 
   const handleOnChangeFilter = (event) => {
     const targetValue = event?.target?.value;
     setFilterValue(targetValue);
-    setFilteredData(filterTableRows(data, visibleColumns, targetValue));
+    setFilteredData(filterTableRows(data, undefined, targetValue));
   };
 
   const cellConfig = {
@@ -622,7 +709,8 @@ export const ParticipantsTable = () => {
   };
   const tableConfig = {
     className: classes.EPTableConfig,
-    tableHeight: window.innerHeight - 330
+    tableHeight: 200
+    // tableHeight: window.innerHeight - 330
   };
 
   const filteredRowIds = filteredData.map((row) => row.id);
@@ -668,6 +756,71 @@ export const ParticipantsTable = () => {
       </NoticePaper>
     );
   }
+
+  /*
+  const handleOnRowMouseOver = (event, rowItem, rowIndex) => {
+    if (editMode || !editState) return;
+    const inEvent = participantsInEvents.includes(rowItem.participantId);
+    if (
+      rowIndex !== hoverActions?.index &&
+      event?.relatedTarget?.getAttribute('data-img-selector') !== 'actions-wrapper'
+    ) {
+      const width = tableRef?.current?.getBoundingClientRect().width;
+      setHoverActions({
+        inEvent,
+        index: rowIndex,
+        elementDimensions: {
+          top: event.currentTarget.parentElement.getBoundingClientRect().top + window.scrollY,
+          height: event.currentTarget.getBoundingClientRect().height,
+          width
+        },
+        participantId: rowItem.participantId
+      });
+    }
+  };
+  const handleOnMouseOut = (event, _, rowIndex) => {
+    const canGetAttribute = event?.relatedTarget?.getAttribute;
+    if (
+      rowIndex === hoverActions?.index &&
+      canGetAttribute &&
+      event.relatedTarget.getAttribute('data-img-selector') !== 'actions-wrapper'
+    ) {
+      setHoverActions(null);
+    }
+  };
+    */
+  const onCellMouseOver = (rowData) => {
+    const inEvent = participantsInEvents.includes(rowData.participantId);
+    const { rowIndex, event } = rowData;
+    if (
+      rowIndex !== hoverActions?.index &&
+      event?.relatedTarget?.getAttribute('data-img-selector') !== 'actions-wrapper'
+    ) {
+      const width = tableRef?.current?.getBoundingClientRect().width;
+      const elementDimensions = {
+        top: rowData.event.srcElement.parentElement.getBoundingClientRect().top + window.scrollY,
+        height: rowData.event.srcElement.getBoundingClientRect().height,
+        width
+      };
+      setHoverActions({
+        inEvent,
+        index: rowIndex,
+        elementDimensions,
+        participantId: rowData.data.participantId
+      });
+    }
+  };
+  const onCellMouseOut = (rowData) => {
+    const { rowIndex, event } = rowData;
+    const canGetAttribute = event?.relatedTarget?.getAttribute;
+    if (
+      rowIndex === hoverActions?.index &&
+      canGetAttribute &&
+      event.relatedTarget.getAttribute('data-img-selector') !== 'actions-wrapper'
+    ) {
+      setHoverActions(null);
+    }
+  };
 
   return (
     <>
@@ -738,13 +891,30 @@ export const ParticipantsTable = () => {
           columns={visibleColumns}
           data={dataForTable}
           id={'participantsTable'}
-          onRowMouseOver={handleOnRowMouseOver}
-          onRowMouseOut={handleOnMouseOut}
           rowConfig={rowConfig}
           tableConfig={tableConfig}
         />
+      </div>
+      <div className="ag-theme-material" style={{ height: '200px', width: '100%' }} ref={tableRef}>
+        <AgGridReact
+          rowData={dataForTable}
+          columnDefs={columnDefs}
+          frameworkComponents={frameworkComponents}
+          defaultColDef={defaultColDef}
+          rowSelection={'multiple'}
+          onGridReady={onGridReady}
+          onCellMouseOver={onCellMouseOver}
+          onCellMouseOut={onCellMouseOut}
+          suppressCellSelection={true}
+          suppressRowClickSelection={true}
+        ></AgGridReact>
         {hoverActions ? <Actions actions={actionIcons} dataImgSelector="actions-wrapper" style={actionStyles} /> : null}
       </div>
     </>
   );
 };
+
+/*
+          onRowMouseOver={handleOnRowMouseOver}
+          onRowMouseOut={handleOnMouseOut}
+          */
