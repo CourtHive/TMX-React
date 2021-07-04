@@ -11,7 +11,7 @@ import DoneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
 
 import TMXIconButton from 'components/buttons/TMXIconButton';
 
-import { synchronizePlayers } from 'components/tables/playersTable/synchronizePlayers';
+import { synchronizePlayers } from 'components/tables/participantsTable/synchronizePlayers';
 
 export const IconButtonGroup = (props) => {
   const { editMode } = props;

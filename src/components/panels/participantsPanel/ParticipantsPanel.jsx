@@ -6,11 +6,11 @@ import { Breadcrumbs, Grid } from '@material-ui/core';
 import { SignedInSelector } from 'components/selectors/SignedInSelector';
 import { ParticipantView } from 'components/selectors/ParticipantView';
 
-import { PlayersTable } from 'components/tables/playersTable/PlayersTable';
 import { TeamsTable } from 'components/tables/teamsTable/TeamsTable';
 import { GroupsTable } from 'components/tables/groupsTable/GroupsTable';
 import NoticePaper from 'components/papers/notice/NoticePaper';
 import { PanelSelector } from 'components/selectors/PanelSelector';
+import { ParticipantsTable } from 'components/tables/participantsTable/ParticipantsTable';
 
 import { PTAB_PARTICIPANTS, PTAB_TEAMS, PTAB_GROUPS, PTAB_OFFICIALS, TAB_PARTICIPANTS } from 'stores/tmx/types/tabs';
 
@@ -45,7 +45,7 @@ export const PlayersPanel = ({ tournamentId }) => {
       </NoticePaper>
       <div className={classes.divider} />
       <div style={{ backgroundColor: 'white', width: '100%' }}>
-        {participantView !== PTAB_PARTICIPANTS ? null : <PlayersTable />}
+        {participantView !== PTAB_PARTICIPANTS ? null : <ParticipantsTable />}
         {participantView !== PTAB_TEAMS ? null : <TeamsTable />}
         {participantView !== PTAB_GROUPS ? null : <GroupsTable />}
         {participantView !== PTAB_OFFICIALS ? null : 'Officials'}

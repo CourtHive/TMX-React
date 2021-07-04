@@ -195,7 +195,7 @@ export const GroupsTable = () => {
       }
     : undefined;
 
-  // TODO: combine delete methods similar to how combined in PlayersTable
+  // TODO: combine delete methods similar to how combined in ParticipantsTable
   const deleteSelectedParticipants = () => {
     const checkedParticipants = tableData.filter((row) => row.checked);
     const participantIds = checkedParticipants.map((row) => row.id);

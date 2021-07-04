@@ -32,7 +32,7 @@ import EndlessTable from 'components/tables/EndlessTable';
 import Actions from 'components/tables/actions/Actions';
 import PersonForm from 'components/forms/Person/personForm';
 
-import { generatePlayerTableData } from './playerTableData';
+import { generatePlayerTableData } from './participantTableData';
 import { ActionPanelMenu } from './ActionPanelMenu';
 import { IconButtonGroup } from './IconButtonGroup';
 import { AddToGrouping } from './AddToGrouping';
@@ -49,7 +49,7 @@ const { COMPETITOR } = participantRoles;
 const { INDIVIDUAL, TEAM, GROUP } = participantTypes;
 const { SIGNED_IN, SIGNED_OUT } = participantConstants;
 
-export const PlayersTable = () => {
+export const ParticipantsTable = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const classes = useStyles();
