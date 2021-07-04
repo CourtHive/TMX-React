@@ -11,11 +11,6 @@ const loginModal = (state, action) =>
   produce(state, (draftState) => {
     draftState.loginModal = action && action.payload;
   });
-const specifyEnabledComponents = (state, action) =>
-  produce(state, (draftState) => {
-    draftState.enabled.components = action.paylod;
-  });
-
 const hideColumn = (state, action) =>
   produce(state, (draftState) => {
     if (action.payload.hidden) {
@@ -85,7 +80,6 @@ const changeToasterState = (state, action) =>
 const rootProducer = {
   'db loaded': dbLoaded,
   'key loaded': incrementKeyLoads,
-  'specify components': specifyEnabledComponents,
 
   'login modal': loginModal,
   'auth state': setAuthState,

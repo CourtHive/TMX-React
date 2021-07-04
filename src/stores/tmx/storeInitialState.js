@@ -1,4 +1,3 @@
-import { COMPONENT_SPLASH, COMPONENT_CALENDAR, COMPONENT_TOURNAMENT } from './types/components';
 import {
   TAB_TOURNAMENT,
   TAB_PARTICIPANTS,
@@ -29,14 +28,12 @@ export const storeInitialState = () => ({
 
   // refresh
   keyLoads: 0,
-  drawResize: 0,
 
   authState: false,
   editState: true,
   loginModal: false,
   loadingState: false,
   pubAction: undefined,
-  content: COMPONENT_SPLASH,
   toasterState: {
     visible: null,
     anchorOrigin: {
@@ -87,13 +84,6 @@ export const storeInitialState = () => ({
       sex: 'X',
       category: '-',
       signedIn: '-'
-    }
-  },
-  enabled: {
-    components: {
-      [COMPONENT_SPLASH]: true,
-      [COMPONENT_CALENDAR]: true,
-      [COMPONENT_TOURNAMENT]: true
     }
   },
   visible: {

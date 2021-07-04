@@ -17,8 +17,7 @@ function columnReducer(state, action) {
 }
 function ColumnProvider({ children }) {
   const [state, dispatch] = React.useReducer(columnReducer, { calendar: ['provider'] });
-  // NOTE: you *might* need to memoize this value
-  // Learn more in http://kcd.im/optimize-context
+  // NOTE: *might* need to memoize... Learn more http://kcd.im/optimize-context
   const value = { state, dispatch };
   return <ColumnContext.Provider value={value}>{children}</ColumnContext.Provider>;
 }

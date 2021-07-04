@@ -7,14 +7,12 @@ import {
   TAB_SCHEDULE,
   TAB_MATCHUPS
 } from '../stores/tmx/types/tabs';
-import { COMPONENT_SPLASH, COMPONENT_CALENDAR, COMPONENT_TOURNAMENT } from '../stores/tmx/types/components';
 import { MENU_PARTICIPANT, ASSIGNED_PLAYER, MATCH_UMPIRE } from '../stores/tmx/types/menus';
 
 export const env = {
   version,
   template: 'tmx',
   visibleTabs: [TAB_TOURNAMENT, TAB_PARTICIPANTS, TAB_EVENTS, TAB_LOCATIONS, TAB_SCHEDULE, TAB_MATCHUPS],
-  enabledComponents: [COMPONENT_SPLASH, COMPONENT_CALENDAR, COMPONENT_TOURNAMENT],
   enabledPDFs: [TAB_PARTICIPANTS, TAB_EVENTS, TAB_SCHEDULE, TAB_MATCHUPS],
 
   enabledMenus: [MENU_PARTICIPANT, ASSIGNED_PLAYER, MATCH_UMPIRE],

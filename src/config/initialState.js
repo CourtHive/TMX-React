@@ -27,7 +27,7 @@ export function setupTMX() {
 
   tmxStore.dispatch({
     type: 'set initial state',
-    payload: { visibleTabs: env.visibleTabs, enabledComponents: env.enabledComponents }
+    payload: { visibleTabs: env.visibleTabs }
   });
 
   initDB().then(tmxReady, initializationFailed);

@@ -51,7 +51,6 @@ const locationsVisible = (state, action) =>
 
 const setInitialState = (state, action) =>
   produce(state, (draftState) => {
-    if (action.payload.enabledComponents) draftState.enabled.components = action.payload.enabledComponents;
     if (action.payload.visibleTabs) draftState.visible.tabs = action.payload.visibleTabs;
     draftState.initialized = true;
   });
