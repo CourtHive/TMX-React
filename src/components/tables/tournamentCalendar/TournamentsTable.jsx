@@ -38,11 +38,11 @@ export function TournamentsTable() {
 
   const [checkboxSelection, setCheckBoxSelection] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
-  const [tournaments, setValues] = useState([]);
+  const [calendarEntries, setCalendarEntries] = useState([]);
   const [filterValue, setFilterValue] = useState();
   const [gridApi, setGridApi] = useState(null);
 
-  const dataForTable = filterValue ? filteredData : tournaments;
+  const dataForTable = filterValue ? filteredData : calendarEntries;
 
   const hiddenColumns = useSelector((state) => state.tmx.hiddenColumns.tournaments) || [];
   const isHidden = (name) => hiddenColumns.includes(name);
@@ -50,11 +50,16 @@ export function TournamentsTable() {
   const toggleCheckboxes = () => setCheckBoxSelection(!checkboxSelection);
   const onGridReady = (params) => setGridApi(params.api);
 
-  // FILTER_TABLE_DATA___________________________________________________________
+  // INITIAL_DATA_LOAD__________________________________________________________
+  useEffect(() => {
+    if (calendarEntries.length === 0) populateCalendar();
+  }, [calendarEntries.length]);
+
+  // FILTER_TABLE_DATA__________________________________________________________
   const handleOnChangeFilter = (event) => {
     const targetValue = event?.target?.value;
     setFilterValue(targetValue);
-    setFilteredData(filterTableRows(tournaments, undefined, targetValue));
+    setFilteredData(filterTableRows(calendarEntries, undefined, targetValue));
   };
 
   // allow searching by any value across all columns and select tournament on ENTER
@@ -68,32 +73,33 @@ export function TournamentsTable() {
     }
   };
 
-  // USE_EFFECT________________________________________________________________
+  // LISTENERS_FOR_UPDATED_TOURNAMENTS__________________________________________
   useEffect(() => {
     function handleTournamentUpdate(data) {
       const tournamentId = data?.tournamentId || data?.unifiedTournamentId?.tournamentId;
       if (tournamentId) {
-        const tournament = tournaments.reduce((p, c) => (c.tournamentId === tournamentId ? c : p), undefined);
+        const tournament = calendarEntries.reduce((p, c) => (c.tournamentId === tournamentId ? c : p), undefined);
         const calendarEntry = calendarRecord(tournament);
         if (tournament) {
-          const index = tournaments.indexOf(tournament);
-          tournaments[index] = calendarEntry;
-          setValues(tournaments);
+          const tournamentIds = calendarEntries.map(({ tournamentId }) => tournamentId);
+          const index = tournamentIds.indexOf(tournament.tournamentId);
+          calendarEntries[index] = calendarEntry;
+          setCalendarEntries(calendarEntries);
         } else {
-          tournaments.push(calendarEntry);
-          setValues(tournaments);
+          calendarEntries.push(calendarEntry);
+          setCalendarEntries(calendarEntries);
         }
       }
     }
 
     function refreshTournaments(records) {
-      const tournaments = (records || [])
+      const calendarEntries = (records || [])
         .filter((f) => f.tournamentId || f.unifiedTournamentId?.tournamentId)
         .map(calendarRecord)
         .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
 
       const todaysDate = new Date();
-      const todayOrAfterIndex = tournaments.findIndex((tournament) => new Date(tournament.startDate) >= todaysDate);
+      const todayOrAfterIndex = calendarEntries.findIndex((tournament) => new Date(tournament.startDate) >= todaysDate);
 
       if (gridApi) {
         const initialScrollOffset = todayOrAfterIndex;
@@ -104,7 +110,7 @@ export function TournamentsTable() {
         // next, we can jump to the row
         gridApi.ensureIndexVisible(initialScrollOffset);
       }
-      setValues(tournaments);
+      setCalendarEntries(calendarEntries);
     }
 
     context.ee.addListener('updateTournament', handleTournamentUpdate);
@@ -117,12 +123,6 @@ export function TournamentsTable() {
     // [] as second parameter insures useEffect runs once; cleanup still called on unmount
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (tournaments.length === 0) {
-      populateCalendar();
-    }
-  }, [tournaments.length]);
 
   // _RENDERERS________________________________________________________________
   const actionsButtonRenderer = (params) => {
@@ -221,6 +221,19 @@ export function TournamentsTable() {
     }
   ];
 
+  // examples for later
+  const onRowClicked = (rowData) => {
+    if (!rowData) console.log('row Clicked', { rowData });
+  };
+  const onRowSelected = (rowData) => {
+    if (!rowData) console.log('row selected', { rowData });
+  };
+  const isRowSelectable = (rowNode) => {
+    return rowNode.data ? true : false;
+    // return rowNode.data ? rowNode.data.name.toLowerCase().startsWith('new') : false;
+  };
+
+  // ACTION_BUTTON_ROW
   const setColumnHiddenState = ({ key }) => {
     dispatch({
       type: 'hide column',
@@ -271,18 +284,6 @@ export function TournamentsTable() {
         )}
       </>
     );
-  };
-
-  // examples for later
-  const onRowClicked = (rowData) => {
-    if (!rowData) console.log('row Clicked', { rowData });
-  };
-  const onRowSelected = (rowData) => {
-    if (!rowData) console.log('row selected', { rowData });
-  };
-  const isRowSelectable = (rowNode) => {
-    return rowNode.data ? true : false;
-    // return rowNode.data ? rowNode.data.name.toLowerCase().startsWith('new') : false;
   };
 
   return (
