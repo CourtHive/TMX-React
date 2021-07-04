@@ -14,6 +14,8 @@ import { tmxStore } from 'stores/tmxStore';
 import { DndProvider } from 'react-dnd';
 import { theme } from 'theme/theme';
 
+import { ColumnProvider } from '../hooks/useColumnToggle';
+
 const SplashImage = <img src={SPLASH} style={{ width: '100%', maxWidth: '800px' }} alt="tmxLogo" />;
 import SPLASH from 'images/splash.png';
 
@@ -43,13 +45,15 @@ const TMX = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Provider store={tmxStore}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <ThemeProvider theme={responsiveFontSizes(theme)}>
-            <BrowserRouter basename={BASENAME}>
-              <SplashInterceptor />
-            </BrowserRouter>
-          </ThemeProvider>
-        </MuiPickersUtilsProvider>
+        <ColumnProvider>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <ThemeProvider theme={responsiveFontSizes(theme)}>
+              <BrowserRouter basename={BASENAME}>
+                <SplashInterceptor />
+              </BrowserRouter>
+            </ThemeProvider>
+          </MuiPickersUtilsProvider>
+        </ColumnProvider>
       </Provider>
     </DndProvider>
   );

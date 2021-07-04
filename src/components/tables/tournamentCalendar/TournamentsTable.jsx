@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Chip } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -29,22 +29,27 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { calendarRecord } from 'data/mappings/calendarRecord';
+import { useColumnToggle } from 'hooks/useColumnToggle';
 
 export function TournamentsTable() {
+  const {
+    state: { calendar: hiddenColumns },
+    dispatch: columnDispatch
+  } = useColumnToggle();
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
 
   const [checkboxSelection, setCheckBoxSelection] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
   const [calendarEntries, setCalendarEntries] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [filterValue, setFilterValue] = useState();
   const [gridApi, setGridApi] = useState(null);
 
   const dataForTable = filterValue ? filteredData : calendarEntries;
 
-  const hiddenColumns = useSelector((state) => state.tmx.hiddenColumns.tournaments) || [];
   const isHidden = (name) => hiddenColumns.includes(name);
 
   const toggleCheckboxes = () => setCheckBoxSelection(!checkboxSelection);
@@ -235,14 +240,11 @@ export function TournamentsTable() {
 
   // ACTION_BUTTON_ROW
   const setColumnHiddenState = ({ key }) => {
-    dispatch({
-      type: 'hide column',
-      payload: { table: 'tournaments', field: key, hidden: !isHidden(key) }
-    });
+    columnDispatch({ table: 'calendar', columnName: key });
+    setTimeout(() => gridApi.resetRowHeights(), 50);
   };
-
   const columnMenuItems = columnDefs
-    .filter((col) => !['name', 'index'].includes(col.field))
+    .filter((col) => !['name', 'index', 'actions'].includes(col.field))
     .map((col) => ({
       id: col.field,
       key: col.field,
