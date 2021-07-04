@@ -32,11 +32,6 @@ import { calendarRecord } from 'data/mappings/calendarRecord';
 import { useColumnToggle } from 'hooks/useColumnToggle';
 
 export function TournamentsTable() {
-  const {
-    state: { calendar: hiddenColumns = [] },
-    dispatch: columnDispatch
-  } = useColumnToggle();
-
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
@@ -50,10 +45,17 @@ export function TournamentsTable() {
 
   const dataForTable = filterValue ? filteredData : calendarEntries;
 
+  const {
+    state: { calendar: hiddenColumns = [] },
+    dispatch: columnDispatch
+  } = useColumnToggle();
   const isHidden = (name) => hiddenColumns.includes(name);
 
   const toggleCheckboxes = () => setCheckBoxSelection(!checkboxSelection);
   const onGridReady = (params) => setGridApi(params.api);
+
+  // TODO: make this configurable as part of Token
+  const allowAdd = env?.calendar?.addTournaments;
 
   // INITIAL_DATA_LOAD__________________________________________________________
   useEffect(() => {
@@ -133,9 +135,7 @@ export function TournamentsTable() {
   const actionsButtonRenderer = (params) => {
     function loadTournament(params) {
       const tournamentId = params?.data?.tournamentId;
-      if (tournamentId && !checkboxSelection) {
-        displayTournament({ tournamentId, history });
-      }
+      if (tournamentId && !checkboxSelection) displayTournament({ tournamentId, history });
     }
 
     return <TMXButton title={'Go'} id="go" onClick={() => loadTournament(params)} />;
@@ -239,10 +239,11 @@ export function TournamentsTable() {
   };
 
   // ACTION_BUTTON_ROW
-  const setColumnHiddenState = ({ key }) => {
+  const toggleColumnHiddenState = ({ key }) => {
     columnDispatch({ table: 'calendar', columnName: key });
     setTimeout(() => gridApi.resetRowHeights(), 50);
   };
+
   const columnMenuItems = columnDefs
     .filter((col) => !['name', 'index', 'actions'].includes(col.field))
     .map((col) => ({
@@ -250,11 +251,10 @@ export function TournamentsTable() {
       key: col.field,
       text: col.headerName,
       checked: !isHidden(col.field),
-      onClick: setColumnHiddenState
+      onClick: toggleColumnHiddenState
     }));
 
   const addTournament = () => dispatch({ type: 'visible drawer', payload: 'tournament' });
-  const allowAdd = env?.calendar?.addTournaments;
 
   const ButtonGroup = () => {
     return (
