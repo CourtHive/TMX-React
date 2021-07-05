@@ -29,7 +29,7 @@
     "dexie": "3.0.3",
     "esri-leaflet": "3.0.2",
     "i18next": "20.3.2",
-    "immer": "9.0.3",
+    "immer": "9.0.5",
     "json": "11.0.0",
     "jwt-decode": "3.1.2",
     "leaflet": "1.7.1",
