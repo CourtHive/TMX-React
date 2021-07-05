@@ -22,13 +22,11 @@ import { SyncPlayersButton } from 'components/buttons/syncPlayers';
 import { GenderSelector } from 'components/selectors/GenderSelector';
 import { TeamSelector } from 'components/selectors/TeamSelector';
 
-import { Drawer, Grid, IconButton, InputAdornment, Tooltip, Typography } from '@material-ui/core/';
+import { Drawer, Grid, IconButton, InputAdornment, Typography } from '@material-ui/core/';
 
 import { filterTableRows } from 'components/tables/utils';
 
 import TMXInput from 'components/inputs/TMXInput';
-import CheckboxCell from 'components/tables/common/CheckboxCell';
-import EndlessTable from 'components/tables/EndlessTable';
 import Actions from 'components/tables/actions/Actions';
 import PersonForm from 'components/forms/Person/personForm';
 
@@ -36,7 +34,6 @@ import { generatePlayerTableData } from './participantTableData';
 import { ActionPanelMenu } from './ActionPanelMenu';
 import { IconButtonGroup } from './IconButtonGroup';
 import { AddToGrouping } from './AddToGrouping';
-import { getActionPanelBounds } from 'services/dynamicStyles/actionPanelBounds';
 
 import { AgGridReact } from 'ag-grid-react';
 import { useColumnToggle } from 'hooks/useColumnToggle';
@@ -76,7 +73,7 @@ export const ParticipantsTable = () => {
   const [hoverActions, setHoverActions] = useState(null);
   const [groupingOpen, setGroupingOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [actionPanelStyle, setActionPanelStyle] = useState({});
+  const [selectedRows, setSelectedRows] = useState(false);
 
   const [gridApi, setGridApi] = useState(null);
   const onGridReady = (params) => {
@@ -378,14 +375,8 @@ export const ParticipantsTable = () => {
     setTimeout(() => gridApi?.resetRowHeights(), 50);
   };
 
-  const triggerActionPanelStyle = () => {
-    const { style: actionStyle } = getActionPanelBounds(actionBoundsRef);
-    setActionPanelStyle(actionStyle);
-  };
-
   useEffect(() => {
     const handleResize = () => {
-      triggerActionPanelStyle();
       setTimeout(() => gridApi?.resetRowHeights(), 50);
     };
 
@@ -393,94 +384,12 @@ export const ParticipantsTable = () => {
     return () => window.removeEventListener('resize', handleResize, false);
   });
 
-  const handleTitleCheckboxToggle = (event) => {
-    const toggleRow = () => event.target.checked;
-    if (filterValue) {
-      const newFilteredData = filteredData.map((row) => ({ ...row, checked: toggleRow() }));
-      setFilteredData(newFilteredData);
-
-      const filteredIds = filteredData.map((f) => f.id);
-      const filterToggleRow = (row) => {
-        return filteredIds.includes(row.id) ? toggleRow() : row.checked;
-      };
-      const newTableData = data.map((row) => ({ ...row, checked: filterToggleRow(row) }));
-      setTableData(newTableData);
-    } else {
-      const newTableData = data.map((row) => ({ ...row, checked: toggleRow() }));
-      setTableData(newTableData);
-    }
-    triggerActionPanelStyle();
-  };
-
-  const handleCheckBoxToggle = (_, __, row) => {
-    const { id } = row;
-    const tableDataIndex = data.findIndex((d) => d.id === id);
-    const tableDataItem = data[tableDataIndex];
-    tableDataItem.checked = !tableDataItem.checked;
-    const newTableData = data.map((item) => {
-      return item.id === id ? tableDataItem : item;
-    });
-    newTableData[tableDataIndex] = tableDataItem;
-    const mappedDataToFilter = filteredData.map((filteredItem) => {
-      return data.find((item) => item?.id === filteredItem.id);
-    });
-
-    setFilteredData(mappedDataToFilter);
-    setTableData(newTableData);
-    triggerActionPanelStyle();
-  };
-
-  const renderCheckboxColumnTitle = () => ({
-    node: <CheckboxCell onChange={handleTitleCheckboxToggle} row={0} />,
-    className: classes.TableIndexCell
-  });
-  const renderCheckboxValue = (row) => ({
-    node: <CheckboxCell onChange={handleCheckBoxToggle} row={row} />,
-    className: classes.TableIndexCell
-  });
-  const renderIndexValue = (row) => ({ node: row.index, className: classes.TableIndexCell });
-  const renderIndexColumnTitle = () => ({
-    node: '#',
-    className: `${classes.headerCells} ${classes.TableIndexCell}`
-  });
-
   const clickSignIn = (row) => {
     if (row.participantId) changeSignInStatus(row);
-  };
-  const renderSignedIn = (row) => {
-    const status = row.signedIn ? <CheckCircleIcon style={{ color: green[500] }} /> : <NotInterestedIcon />;
-    const node = (
-      <div style={{ paddingLeft: '.5em' }} onClick={() => clickSignIn(row)}>
-        {status}
-      </div>
-    );
-    return { node };
   };
 
   const clickPaid = (row) => {
     if (row.participantId) console.log('PAID', { row });
-  };
-  const renderPaid = (row) => {
-    const status = row.paid ? (
-      <AccountBalanceIcon style={{ color: green[500] }} />
-    ) : (
-      <ErrorOutlineIcon style={{ color: red[500] }} />
-    );
-    const node = <div onClick={() => clickPaid(row)}>{status}</div>;
-    return { node };
-  };
-
-  const renderSignedInTitle = () => {
-    return {
-      node: (
-        <Tooltip title={t('Signed In')}>
-          <IconButton>
-            <CheckCircleIcon />
-          </IconButton>
-        </Tooltip>
-      ),
-      className: classes.signedInColumn
-    };
   };
   function contains(target, lookingFor) {
     return target && target.indexOf(lookingFor) >= 0;
@@ -555,12 +464,18 @@ export const ParticipantsTable = () => {
       minWidth: 150,
       initialFlex: 1,
       cellStyle: { paddingRight: '5px' },
-      headerCheckboxSelectionFilteredOnly: true
+      // floatingFilter: true,
+      filterParams: {
+        buttons: ['reset']
+      }
     },
     {
       field: 'firstName',
       headerName: 'First Name',
-      hide: isHidden('firstName')
+      hide: isHidden('firstName'),
+      filterParams: {
+        buttons: ['reset']
+      }
     },
     {
       field: 'lastName',
@@ -605,81 +520,6 @@ export const ParticipantsTable = () => {
     }
   ];
 
-  const columns = [
-    {
-      key: 'checkbox',
-      getTitle: renderCheckboxColumnTitle,
-      getValue: renderCheckboxValue,
-      hidden: () => !editMode
-    },
-    {
-      key: 'index',
-      getTitle: renderIndexColumnTitle,
-      getValue: renderIndexValue
-    },
-    {
-      key: 'signedIn',
-      getTitle: renderSignedInTitle,
-      getValue: renderSignedIn,
-      hidden: () => isHidden('signedIn') || selectedSignInStatus !== '-'
-    },
-    {
-      key: 'name',
-      getTitle: () => ({ node: t('nm'), className: `${classes.headerCells} ${classes.EPFullNameCell}` }),
-      getValue: (row) => ({ node: row.name })
-    },
-    {
-      key: 'sex',
-      getTitle: () => ({ node: t('gdr'), className: classes.countColumn }),
-      getValue: (row) => ({ node: row.sex }),
-      hidden: () => isHidden('sex')
-    },
-    {
-      key: 'firstName',
-      getTitle: () => ({ node: 'First Name', className: classes.headerCells }),
-      getValue: (row) => ({ node: row.firstName }),
-      hidden: () => isHidden('firstName')
-    },
-    {
-      key: 'lastName',
-      getTitle: () => ({ node: 'Last Name', className: classes.headerCells }),
-      getValue: (row) => ({ node: row.lastName }),
-      hidden: () => isHidden('lastName')
-    },
-    {
-      key: 'otherName',
-      getTitle: () => ({ node: 'Other Name', className: classes.headerCells }),
-      getValue: (row) => ({ node: row.otherName }),
-      hidden: () => isHidden('otherName')
-    },
-    {
-      key: 'teamName',
-      getTitle: () => ({ node: t('team'), className: classes.headerCells }),
-      getValue: (row) => ({ node: row.teamName }),
-      hidden: () => isHidden('teamName') || teamIds.length
-    },
-    {
-      key: 'groups',
-      getTitle: () => ({ node: t('Groups'), className: classes.groupsColumn }),
-      getValue: (row) => ({ node: row.groups, className: classes.groupsColumn }),
-      hidden: () => isHidden('groups')
-    },
-    {
-      key: 'nationality',
-      getTitle: () => ({ node: t('cnt'), className: classes.headerCells }),
-      getValue: (row) => ({ node: row.nationality }),
-      hidden: () => isHidden('nationality')
-    },
-    {
-      key: 'paid',
-      getTitle: () => ({ node: t('Paid'), className: classes.countColumn }),
-      getValue: renderPaid,
-      hidden: () => isHidden('paid')
-    }
-  ];
-
-  const visibleColumns = columns.filter((column) => (column.hidden ? !column.hidden() : true));
-
   const columnsToFilter = ['checkbox', 'index', 'name'];
   if (selectedSignInStatus !== '-') columnsToFilter.push('signedIn');
   const columnMenuItems = columnDefs
@@ -698,26 +538,10 @@ export const ParticipantsTable = () => {
     setFilteredData(filterTableRows(data, undefined, targetValue));
   };
 
-  const cellConfig = {
-    className: classes.EPCellConfig
-  };
-  const getRowSize = () => 48;
-  const isDraggableRow = () => false;
-  const rowConfig = {
-    draggableRow: isDraggableRow,
-    rowSize: getRowSize
-  };
-  const tableConfig = {
-    className: classes.EPTableConfig,
-    tableHeight: 200
-    // tableHeight: window.innerHeight - 330
-  };
-
   const filteredRowIds = filteredData.map((row) => row.id);
   const dataForTable = data.filter((row) => {
     return !filterValue.length || filteredRowIds.includes(row.id);
   });
-  const rowIsChecked = !!tableData.find((row) => row.checked);
 
   const showFilterCount = filterValue.length || data.length !== participants.length;
   const filteredCount = `${t('Showing')} ${dataForTable.length} ${t('of')} ${participants.length} ${t('pyr')}`;
@@ -757,38 +581,6 @@ export const ParticipantsTable = () => {
     );
   }
 
-  /*
-  const handleOnRowMouseOver = (event, rowItem, rowIndex) => {
-    if (editMode || !editState) return;
-    const inEvent = participantsInEvents.includes(rowItem.participantId);
-    if (
-      rowIndex !== hoverActions?.index &&
-      event?.relatedTarget?.getAttribute('data-img-selector') !== 'actions-wrapper'
-    ) {
-      const width = tableRef?.current?.getBoundingClientRect().width;
-      setHoverActions({
-        inEvent,
-        index: rowIndex,
-        elementDimensions: {
-          top: event.currentTarget.parentElement.getBoundingClientRect().top + window.scrollY,
-          height: event.currentTarget.getBoundingClientRect().height,
-          width
-        },
-        participantId: rowItem.participantId
-      });
-    }
-  };
-  const handleOnMouseOut = (event, _, rowIndex) => {
-    const canGetAttribute = event?.relatedTarget?.getAttribute;
-    if (
-      rowIndex === hoverActions?.index &&
-      canGetAttribute &&
-      event.relatedTarget.getAttribute('data-img-selector') !== 'actions-wrapper'
-    ) {
-      setHoverActions(null);
-    }
-  };
-    */
   const onCellMouseOver = (rowData) => {
     const inEvent = participantsInEvents.includes(rowData.participantId);
     const { rowIndex, event } = rowData;
@@ -822,13 +614,13 @@ export const ParticipantsTable = () => {
     }
   };
 
+  const onSelectionChanged = () => {
+    const selectedRows = gridApi.getSelectedRows();
+    setSelectedRows(!!selectedRows.length);
+  };
+
   return (
     <>
-      {!rowIsChecked || !editMode ? null : (
-        <div style={actionPanelStyle}>
-          <ActionPanelMenu {...actionPanelProps} />
-        </div>
-      )}
       <AddToGrouping
         open={groupingOpen}
         tableData={tableData}
@@ -844,58 +636,53 @@ export const ParticipantsTable = () => {
         <PersonForm {...personData} />
       </Drawer>
       <Grid ref={actionBoundsRef} container direction="row" justify="space-between">
-        <Grid item>
-          <Grid container spacing={2} direction="row" justify="flex-start">
-            <Grid item sm="auto">
-              <TMXInput
-                inputRef={searchInput}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton>
-                      {' '}
-                      <SearchIcon />{' '}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                onChange={handleOnChangeFilter}
-              />
-            </Grid>
-            {genderOptions?.length > 0 && (
-              <Grid item sm="auto">
-                <GenderSelector options={genderOptions} />
-              </Grid>
-            )}
-            {teamParticipants?.length > 0 && (
-              <Grid item sm="auto">
-                <TeamSelector teamContext="players" />
-              </Grid>
-            )}
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Grid container direction="row" spacing={2}>
+        {selectedRows && editMode ? (
+          <ActionPanelMenu {...actionPanelProps} />
+        ) : (
+          <>
             <Grid item>
-              <IconButtonGroup {...iconButtonGroupProps} />
+              <Grid container spacing={2} direction="row" justify="flex-start">
+                <Grid item sm="auto">
+                  <TMXInput
+                    inputRef={searchInput}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton>
+                          {' '}
+                          <SearchIcon />{' '}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    onChange={handleOnChangeFilter}
+                  />
+                </Grid>
+                {genderOptions?.length > 0 && (
+                  <Grid item sm="auto">
+                    <GenderSelector options={genderOptions} />
+                  </Grid>
+                )}
+                {teamParticipants?.length > 0 && (
+                  <Grid item sm="auto">
+                    <TeamSelector teamContext="players" />
+                  </Grid>
+                )}
+              </Grid>
             </Grid>
-            <Grid item />
-          </Grid>
-        </Grid>
+            <Grid item>
+              <Grid container direction="row" spacing={2}>
+                <Grid item>
+                  <IconButtonGroup {...iconButtonGroupProps} />
+                </Grid>
+                <Grid item />
+              </Grid>
+            </Grid>
+          </>
+        )}
       </Grid>
       <Typography variant="h1" className={classes.playersCount}>
         {playersCount}
       </Typography>
-      <div style={{ marginBottom: '1em' }} />
-      <div ref={tableRef}>
-        <EndlessTable
-          cellConfig={cellConfig}
-          columns={visibleColumns}
-          data={dataForTable}
-          id={'participantsTable'}
-          rowConfig={rowConfig}
-          tableConfig={tableConfig}
-        />
-      </div>
-      <div className="ag-theme-material" style={{ height: '200px', width: '100%' }} ref={tableRef}>
+      <div className="ag-theme-material" style={{ height: window.innerHeight - 300, width: '100%' }} ref={tableRef}>
         <AgGridReact
           rowData={dataForTable}
           columnDefs={columnDefs}
@@ -907,14 +694,10 @@ export const ParticipantsTable = () => {
           onCellMouseOut={onCellMouseOut}
           suppressCellSelection={true}
           suppressRowClickSelection={true}
+          onSelectionChanged={onSelectionChanged}
         ></AgGridReact>
         {hoverActions ? <Actions actions={actionIcons} dataImgSelector="actions-wrapper" style={actionStyles} /> : null}
       </div>
     </>
   );
 };
-
-/*
-          onRowMouseOver={handleOnRowMouseOver}
-          onRowMouseOut={handleOnMouseOut}
-          */

@@ -9,6 +9,7 @@ import GroupIcon from '@material-ui/icons/Group';
 import SignInIcon from '@material-ui/icons/EmojiPeople';
 
 import TMXIconButton from 'components/buttons/TMXIconButton';
+import { BACKGROUND_GREY } from 'theme/colors';
 
 export const ActionPanelMenu = (props) => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ export const ActionPanelMenu = (props) => {
     selectedSignInStatus,
     deleteSelectedParticipants,
     modifyParticipantsSignInState,
+    backgroundColor = BACKGROUND_GREY,
     addSelectedParticipantsToGrouping
   } = props;
 
@@ -30,7 +32,7 @@ export const ActionPanelMenu = (props) => {
 
   return (
     <>
-      <Grid container direction="row" justify="space-between">
+      <Grid container direction="row" justify="space-between" style={{ backgroundColor }}>
         <Grid item>
           <Typography variant="h1" className={classes.itemsCount}>
             {selectedCount}
