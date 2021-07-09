@@ -2,7 +2,16 @@ import React from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { useStyles } from 'components/progress/styles';
+import { makeStyles } from '@material-ui/core';
+
+export const useStyles = makeStyles((theme) => ({
+  pageProgress: {
+    height: '100vh'
+  },
+  circularProgress: {
+    color: theme.palette.primary.main
+  }
+}));
 
 const TMXCircularProgress = ({ ...props }) => {
   const classes = useStyles();
