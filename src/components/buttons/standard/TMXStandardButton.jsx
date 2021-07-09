@@ -11,7 +11,7 @@ const TMXStandardButton = ({ children, loading, ...props }) => {
   return (
     <ThemeProvider theme={theme}>
       <Button className={classes.button} color="primary" {...props}>
-        {loading ? <TMXCircularProgress className={classes.loader} size={18} /> : { children }}
+        {loading ? <TMXCircularProgress className={classes.loader} size={18} /> : children}
       </Button>
     </ThemeProvider>
   );
