@@ -8,10 +8,13 @@ const COMPETITION_ENGINE = 'competitionEngine';
 const TournamentContext = React.createContext();
 
 function TournamentProvider({ children }) {
-  const [tournamentState, setTournamentState] = React.useState({ tournamentId: undefined, tournamentRecords: {} });
-  competitionEngine.setDeepCopy(false);
+  const [tournamentState, setTournamentState] = React.useState({
+    refreshCount: 0,
+    tournamentRecords: {},
+    tournamentId: undefined
+  });
 
-  function setTournamentRecords(records) {
+  const setTournamentRecords = (records) => {
     const result = competitionEngine.setState(records);
     if (result.error) {
       throw new Error(result.error);
@@ -22,17 +25,18 @@ function TournamentProvider({ children }) {
         tournamentState.tournamentId && tournamentIds.includes(tournamentState.tournamentId)
           ? tournamentState.tournamentId
           : tournamentIds[0];
-      setTournamentState({ tournamentId, tournamentRecords });
+      const refreshCount = (tournamentState.refreshCount += 1);
+      setTournamentState({ refreshCount, tournamentId, tournamentRecords });
     }
-  }
+  };
 
-  function setTournamentId(tournamentId) {
+  const setTournamentId = (tournamentId) => {
     const tournamentIds = Object.keys(tournamentState.tournamentRecords);
     const newTournamentId = tournamentIds.includes(tournamentId) ? tournamentId : tournamentIds[0];
     setTournamentState({ ...tournamentState, tournamentId: newTournamentId });
-  }
+  };
 
-  function engineMethods({ engine, methods }) {
+  function engineMethods({ engine, methods, refresh = true }) {
     const result = !tournamentState.tournamentId
       ? { error: 'No Tournament Record(s)' }
       : engine === TOURNAMENT_ENGINE
@@ -45,7 +49,8 @@ function TournamentProvider({ children }) {
       throw new Error(`Engine: ${engine}, Error: ${result.error}`);
     } else {
       const { tournamentRecords } = competitionEngine.getState();
-      setTournamentState({ ...tournamentState, tournamentRecords });
+      const refreshCount = tournamentState.refreshCount + refresh ? 1 : 0;
+      setTournamentState({ ...tournamentState, refreshCount, tournamentRecords });
     }
   }
   const value = { setTournamentId, tournamentState, setTournamentRecords, engineMethods };
