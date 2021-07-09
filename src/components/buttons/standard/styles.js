@@ -6,5 +6,8 @@ export const useStyles = makeStyles((theme) => ({
     '& > span': {
       textTransform: 'initial'
     }
+  },
+  loader: {
+    color: theme.palette.primary.main
   }
 }));

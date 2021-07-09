@@ -19,6 +19,7 @@
     "react/prop-types": 0,
     "react/display-name": 0,
     "react-hooks/exhaustive-deps": "warn",
+    "react/react-in-jsx-scope": "off",
     "no-debugger": "warn",
     "no-unused-vars": "off",
     "prettier/prettier": 2,
