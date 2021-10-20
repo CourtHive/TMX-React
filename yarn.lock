@@ -2267,10 +2267,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@hookform/resolvers@2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.7.0.tgz#f34577899294738541ef0905a50eb23b3ff43bb1"
-  integrity sha512-uWKw0hSFiljLmNe4FR/k6bZ/dp7xvZG9CAXFUM24E7CunGhU5Ltvu6KUrkNDOKsoIrpc01pQsQ1Sjim1P6FaAg==
+"@hookform/resolvers@2.8.2":
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.8.2.tgz#590dcc23212a659bad08212138261c3950ef09f1"
+  integrity sha512-oDTGrm7yHxT4VIv4kJcfjvWvozCbdcL0/jrpbAkeo39FYn78XnKOrrGTNmrXdfu+EQVkNIdZ47IYRFManZ4jUA==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
