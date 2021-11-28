@@ -6627,10 +6627,10 @@ esrecurse@^4.1.0, esrecurse@^4.3.0:
   dependencies:
     estraverse "^5.2.0"
 
-esri-leaflet@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/esri-leaflet/-/esri-leaflet-3.0.2.tgz#368ff662aeb8de21d70d59b362a821b0dcabf6b5"
-  integrity sha512-Dr5Ie52yH+gojfnGXdzHGkrgn9U3kp9QKB7xqXZX/mPIE9gKyqC5Er8jRifJx+DTgeM67F+P7F09ZJsIvWbheQ==
+esri-leaflet@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/esri-leaflet/-/esri-leaflet-3.0.3.tgz#5fa42c47df1e266653ed9cb7d9919eb012b48829"
+  integrity sha512-TTfUQ00r9dMVhb8ipTEIN/cF3SDvCQj2kQcmnwNyuFO5wcOM3y59ou3xwTMp5mMjpyYfelPl9s5LjosaqgxGaQ==
   dependencies:
     "@terraformer/arcgis" "^2.0.7"
     tiny-binary-search "^1.0.3"
