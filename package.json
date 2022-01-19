@@ -35,7 +35,7 @@
     "leaflet": "1.7.1",
     "node-forge": "0.10.0",
     "normalize-text": "2.3.3",
-    "pdfmake": "0.2.2",
+    "pdfmake": "0.2.4",
     "prop-types": "15.7.2",
     "qrious": "4.0.2",
     "qs": "6.10.1",
