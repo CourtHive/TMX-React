@@ -10138,10 +10138,10 @@ normalize-range@^0.1.2:
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
   integrity sha1-LRDAa9/TEuqXd2laTShDlFa3WUI=
 
-normalize-text@2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/normalize-text/-/normalize-text-2.3.2.tgz#8d53cee17cc539a7db6cd579a1bb6d2f3d20e5d0"
-  integrity sha512-Fx6aBqYLlVLQEV6h0ejhPqaF1vUPI+yIxU7uYtb5rPu+WzRr7KypJKGJFdbSIZpC+ELiiCut/WGU3QDCFff1EA==
+normalize-text@2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/normalize-text/-/normalize-text-2.3.3.tgz#799763ef13a7bf1f87697eba3a662202f0a34b80"
+  integrity sha512-LR9nmMC2TIJ9eAJsxvF3ySroXtLFEQrO+ByQBLg/eLslTdY2iId8GvTp7Ggj/RL2wz6nv1d8gGuB6DhmaKEqUA==
   dependencies:
     "@bitty/pipe" "^0.2.1"
 
