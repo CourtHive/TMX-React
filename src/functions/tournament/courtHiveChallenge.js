@@ -3,10 +3,13 @@ import { db } from 'services/storage/db';
 import { mocksEngine } from 'tods-competition-factory';
 
 import { utilities } from 'tods-competition-factory';
-const {
-  UUID,
-  dateTime: { futureDate }
-} = utilities;
+const { UUID } = utilities;
+
+function futureDate(days = 1) {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + days);
+  return currentDate;
+}
 
 export function courtHiveChallenge() {
   const { participants: maleParticipants } = mocksEngine.generateParticipants({
