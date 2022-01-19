@@ -60,7 +60,7 @@
     "socket.io": "4.1.2",
     "source-map-explorer": "2.5.2",
     "tods-competition-factory": "0.92.0",
-    "tods-matchup-format-code": "1.1.4",
+    "tods-matchup-format-code": "1.1.7",
     "tods-react-draws": "0.1.20",
     "tods-tournament-pdfs": "0.1.6",
     "typeface-roboto": "1.1.13",
