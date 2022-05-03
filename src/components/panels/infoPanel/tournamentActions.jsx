@@ -15,6 +15,7 @@ import { Grid } from '@material-ui/core/';
 
 import { deleteTournamentRecord } from 'services/storage/deleteTournamentRecord';
 import { useStyles } from 'components/panels/infoPanel/style';
+import { convertTMX2TODS } from 'tods-tmx-classic-converter';
 import { env } from 'config/defaults';
 
 export function TournamentActions(props) {
@@ -42,6 +43,11 @@ export function TournamentActions(props) {
     const filename = `${tournamentId}.json`;
     exportFx.downloadJSON(filename, tournamentRecord);
   }
+  function exportTODSTournamentRecord() {
+    const filename = `${tournamentId}.tods.json`;
+    const { tournamentRecord: TODS } = convertTMX2TODS({ tournament: tournamentRecord });
+    exportFx.downloadJSON(filename, TODS);
+  }
 
   function uploadTournamentRecord() {
     //
@@ -62,15 +68,26 @@ export function TournamentActions(props) {
           </Grid>
         )}
         {!editState || mobile ? null : (
-          <Grid item>
-            <TMXIconButton
-              id="exportTournamentRecord"
-              title={t('Export')}
-              onClick={exportTournamentRecord}
-              className={classes.iconMargin}
-              icon={<GetAppIcon />}
-            />
-          </Grid>
+          <>
+            <Grid item>
+              <TMXIconButton
+                id="exportTournamentRecord"
+                title={t('Export Classic')}
+                onClick={exportTournamentRecord}
+                className={classes.iconMargin}
+                icon={<GetAppIcon />}
+              />
+            </Grid>
+            <Grid item>
+              <TMXIconButton
+                id="exportTournamentRecord"
+                title={t('Export TODS')}
+                onClick={exportTODSTournamentRecord}
+                className={classes.iconMargin}
+                icon={<GetAppIcon />}
+              />
+            </Grid>
+          </>
         )}
         {!editState ? null : (
           <Grid item>
