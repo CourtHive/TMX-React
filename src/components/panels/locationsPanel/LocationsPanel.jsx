@@ -19,7 +19,7 @@ export const LocationsPanel = ({ tournamentId }) => {
 
   const locationView = useSelector((state) => state.tmx.visible.locationView);
   const selectedVenueId = useSelector((state) => state.tmx.select.venues.venue);
-  const { venues } = tournamentEngine.getVenues() || [];
+  const { venues } = tournamentEngine.getVenuesAndCourts() || [];
   const selectedLocation = venues.find((venue) => venue.venueId === selectedVenueId);
 
   return (
