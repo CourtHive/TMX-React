@@ -104,7 +104,11 @@ export function TournamentOverview(props) {
       }
       dispatch({
         type: 'tournamentEngine',
-        payload: { methods: [{ method: 'setTournamentStartDate', params: { startDate: newStartDate } }] }
+        payload: {
+          methods: [
+            { method: 'setTournamentDates', params: { startDate: newStartDate, endDate: tournamentRecord.endDate } }
+          ]
+        }
       });
     }
   };
@@ -119,7 +123,11 @@ export function TournamentOverview(props) {
       }
       dispatch({
         type: 'tournamentEngine',
-        payload: { methods: [{ method: 'setTournamentEndDate', params: { endDate: newEndDate } }] }
+        payload: {
+          methods: [
+            { method: 'setTournamentDates', params: { endDate: newEndDate, startDate: tournamentRecord.startDate } }
+          ]
+        }
       });
     }
   };
