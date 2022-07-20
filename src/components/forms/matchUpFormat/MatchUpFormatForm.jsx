@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Grid from '@material-ui/core/Grid';
-import { matchUpFormatCode } from 'tods-matchup-format-code';
+import { matchUpFormatCode } from 'tods-competition-factory';
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MuiMenuItem from '@material-ui/core/MenuItem';

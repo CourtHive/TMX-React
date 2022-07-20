@@ -17,7 +17,7 @@ import TMXStandardButton from 'components/buttons/standard/TMXStandardButton';
 import KeyScoreEntry from 'components/inputs/keyScoreEntry/KeyScoreEntry';
 import MatchUpFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
 
-import { matchUpFormatCode } from 'tods-matchup-format-code';
+import { matchUpFormatCode } from 'tods-competition-factory';
 
 export const MatchOutcomeDialog = (props) => {
   const { matchUp, isOpen, closeDialog, setOutcome, acceptOutcome } = props;
