@@ -59,7 +59,7 @@
     "redux": "4.2.0",
     "socket.io": "4.5.1",
     "source-map-explorer": "2.5.2",
-    "tods-competition-factory": "0.261.0",
+    "tods-competition-factory": "0.267.0",
     "tods-react-draws": "0.1.26",
     "tods-tmx-classic-converter": "1.1.1",
     "tods-tournament-pdfs": "0.1.6",
