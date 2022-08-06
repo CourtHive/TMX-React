@@ -13,7 +13,7 @@ import CancelButton from 'components/buttons/cancel/CancelButton';
 import CustomDialog from 'components/dialogs/CustomDialog';
 import MatchUpFormatForm from 'components/forms/matchUpFormat/MatchUpFormatForm';
 import KeyScoreEntry from 'components/inputs/keyScoreEntry/KeyScoreEntry';
-import { matchUpFormatCode } from 'tods-matchup-format-code';
+import { matchUpFormatCode } from 'tods-competition-factory';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 
