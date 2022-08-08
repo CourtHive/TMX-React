@@ -37,8 +37,5 @@ jobs:
       - name: Lint source files
         run: yarn lint
 
-      - name: Run tests
-        run: yarn test
-
       - name: Build Application
         run: yarn build
