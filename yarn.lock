@@ -12427,25 +12427,25 @@ tods-competition-factory@^0.280.0:
   resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.280.0.tgz#fb5c1cc146a14e5bca544493f6156b3c033f9331"
   integrity sha512-E1E5FVNFRxWXnTadvdmBtW9WmYxUNGHyJcp06yM3szmez8xfX5t7wqZQ8lcD9jScHlh4/NBSOGvAwyKXbNeh4A==
 
-tods-competition-factory@^0.76.0:
-  version "0.76.0"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.76.0.tgz#c3b73f414534ab62544ea115b89cd60fd6db5c4d"
-  integrity sha512-Jydw7yDfr7Zf/DzEwaz8NyHGkFarppW3rYy9moqffOm1+HH7WtlPJTQndwVugZuHtoVqt0Ap2z/82CSKW5pF2A==
+tods-competition-factory@^0.283.0:
+  version "0.283.0"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.283.0.tgz#5038b9437b4e81537ee88be0f007e4bd36c4e026"
+  integrity sha512-bWNnJWxA9vjC6M92pGcJW+s2aBddy2G7cSDtPV845ms8lzdR9LyVccKJsGcIf7Lggo1uRss90Z+BfAgRWagyIw==
 
 tods-matchup-format-code@1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/tods-matchup-format-code/-/tods-matchup-format-code-1.1.4.tgz#b072e42f48dee9d254868787c38cc98ba1c7a193"
   integrity sha512-ebhVu4me44xiOHRSqBVTupJdQDdXlk/SAhjbqDj2mRS7jrZRR8GefjaShO7oDYyePtIexNVyGkUKRbKhdrpgog==
 
-tods-react-draws@0.1.26:
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.1.26.tgz#032becc29ee4139e8cf717724f7d8068b85cf2a9"
-  integrity sha512-t0+5vdN3woNkzEL93YQ2Av4dhtvqBPewJxDMAcT9IiwpPMFKX8S/MVqoZFZ1Rnx7Eoltnm6repcN8FZTbw1gUw==
+tods-react-draws@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/tods-react-draws/-/tods-react-draws-0.2.0.tgz#761b3f5bcfe4fe5c4021e7c779605939634e6a0e"
+  integrity sha512-P3wZBBa2d7QCNAPSjBjlQVIp9WF3t4HuaIB5py2GGT1zeyKedofEzNeE5m4UCSmDO4LLccRBup9RV1c2McNgtQ==
   dependencies:
     "@material-ui/core" "4.12.3"
     "@material-ui/icons" "^4.11.2"
     classnames "^2.2.6"
-    tods-competition-factory "^0.76.0"
+    tods-competition-factory "^0.283.0"
 
 tods-tmx-classic-converter@1.8.0:
   version "1.8.0"

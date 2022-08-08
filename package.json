@@ -55,7 +55,7 @@
     "socket.io": "4.5.1",
     "source-map-explorer": "2.5.2",
     "tods-competition-factory": "0.287.0",
-    "tods-react-draws": "0.1.26",
+    "tods-react-draws": "0.2.0",
     "tods-tmx-classic-converter": "1.8.0",
     "tods-tournament-pdfs": "0.1.6",
     "typeface-roboto": "1.1.13",
