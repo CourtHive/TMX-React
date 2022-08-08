@@ -22,6 +22,8 @@ export function idiomSetup() {
     resources,
     lng,
     fallbackLng: 'en',
+    compatibilityJSON: 'v3',
+    skipOnVariables: false,
 
     interpolation: {
       escapeValue: false
