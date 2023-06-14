@@ -15,7 +15,6 @@ import { Grid } from '@material-ui/core/';
 
 import { deleteTournamentRecord } from 'services/storage/deleteTournamentRecord';
 import { useStyles } from 'components/panels/infoPanel/style';
-import { convertTMX2TODS } from 'tods-tmx-classic-converter';
 import { env } from 'config/defaults';
 
 export function TournamentActions(props) {
@@ -45,8 +44,7 @@ export function TournamentActions(props) {
   }
   function exportTODSTournamentRecord() {
     const filename = `${tournamentId}.tods.json`;
-    const { tournamentRecord: TODS } = convertTMX2TODS({ tournament: tournamentRecord });
-    exportFx.downloadJSON(filename, TODS);
+    console.log({ filename });
   }
 
   function uploadTournamentRecord() {
