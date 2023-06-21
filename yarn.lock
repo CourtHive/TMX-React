@@ -12718,10 +12718,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tods-competition-factory@0.287.0:
-  version "0.287.0"
-  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.287.0.tgz#540e24e81a60868ef6f7c0fb246d88ee47b11506"
-  integrity sha512-HR6C6gK44IV1n+P49PgF5JG2Bd1D6mOWvztmFl/zaH1wcx9Uhk4ht9+Et/zzNaj7y0mwzfiQYAayPBVWvip9pw==
+tods-competition-factory@0.512.8:
+  version "0.512.8"
+  resolved "https://registry.yarnpkg.com/tods-competition-factory/-/tods-competition-factory-0.512.8.tgz#243e2de39016e96b051d9c8e793a4a8288c3ba83"
+  integrity sha512-hnlUa8kInIIR6od28CjVr5TWWE+a2+sCgCzq82Cwsv/kcPfUGBaCjtkIvLVr9R0j3pEDSdxwX36/Ku1BsBnE1Q==
 
 tods-competition-factory@0.7.4:
   version "0.7.4"
