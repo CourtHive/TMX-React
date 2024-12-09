@@ -28,7 +28,7 @@
     "axios": "0.27.2",
     "classnames": "2.3.1",
     "date-fns": "2.29.1",
-    "dexie": "3.2.2",
+    "dexie": "3.2.7",
     "esri-leaflet": "3.0.8",
     "i18next": "21.8.16",
     "immer": "9.0.15",
